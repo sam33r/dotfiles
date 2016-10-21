@@ -13,8 +13,10 @@ backup_dir=$HOME/dotfiles_old
 # Add a new entry here for each new file.
 declare -A dotfiles=(
         ["$HOME/.bashrc"]="bashrc"
+        ["$HOME/.bash_aliases"]="bash_aliases"
         ["$HOME/.vimrc"]="vimrc"
-        ["$HOME/.config/liquidpromtrc"]="liquidpromptrc" 
+        ["$HOME/.config/liquidpromtrc"]="liquidpromptrc"
+        ["$HOME/.xmonad/xmonad.hs"]="xmonad.hs"
 )
 
 #---------------------------------------------------------------

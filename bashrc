@@ -74,7 +74,9 @@ esac
 
 # Override default prompt with liquidprompt
 [[ $- = *i* ]] && source ~/liquidprompt/liquidprompt
-
+# Set editor.
+export VISUAL=vim
+export EDITOR="$VISUAL"
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
