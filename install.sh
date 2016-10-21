@@ -9,12 +9,16 @@ dir=$HOME/dotfiles
 # dotfiles.
 backup_dir=$HOME/dotfiles_old
 
-# Map of dotflie path to its name within the dotfiles folder.
+# Map of dotfile path to its name within the dotfiles folder.
 # Add a new entry here for each new file.
 declare -A dotfiles=(
         ["$HOME/.bashrc"]="bashrc"
         ["$HOME/.vimrc"]="vimrc"
-        ["$HOME/.config/liquidpromtrc"]="liquidpromptrc" 
+        ["$HOME/.config/liquidpromtrc"]="liquidpromptrc"
+        ["$HOME/.config/fish/functions/fish_prompt.fish"]="fish/fish_prompt.fish"
+        ["$HOME/.config/fish/functions/apps.fish"]="fish/apps.fish"
+        ["$HOME/.config/fish/functions/l.fish"]="fish/l.fish"
+        ["$HOME/.config/fish/config.fish"]="fish/config.fish"
 )
 
 #---------------------------------------------------------------
@@ -25,11 +29,17 @@ mkdir -p $backup_dir
 echo "Changing to the $dir directory"
 cd $dir
 
+read -p "Backup is best-effort and fails silently. Proceed (y/n)? " -n 1 -r
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+            exit 1
+fi
+
 # Move existing files to backup_dir, and then create symlinks.
 for d_path in "${!dotfiles[@]}"; do
-        printf "\nMoving ${d_path} to ${backup_dir}."
-        printf "This will fail if the file does not exist or is already a link.\n"
-        mv "${d_path}" "${backup_dir}"/"${dotfiles[${d_path}]}"
-        printf "\nLinking ${d_path} to ${dir}/${dotfiles[${d_path}]}.\n"
+        printf "\n${d_path}"
+        printf "\n ⇒ ${backup_dir}"
+        mv "${d_path}" "${backup_dir}"/"${dotfiles[${d_path}]}" 2>/dev/null
+        printf "\n → ${dir}/${dotfiles[${d_path}]}\n"
         ln -fs "${dir}"/"${dotfiles[${d_path}]}" "${d_path}"
 done
