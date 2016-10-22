@@ -72,6 +72,19 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
+" airline config
+let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
+" the separator used on the left side
+let g:airline_left_sep=''
+" " the separator used on the right side 
+let g:airline_right_sep=''
+let g:airline_theme='bubblegum'
+
+
 filetype plugin indent on    " required
 
 " To ignore plugin indent changes, instead use:
@@ -102,6 +115,7 @@ set expandtab
 set relativenumber
 set number
 set hlsearch
+set laststatus=2
 
 " Some other good ones: torte, slate, primary
 colorscheme torte
