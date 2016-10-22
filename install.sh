@@ -21,6 +21,7 @@ declare -A dotfiles=(
         ["$HOME/.config/fish/functions/apps.fish"]="fish/apps.fish"
         ["$HOME/.config/fish/functions/l.fish"]="fish/l.fish"
         ["$HOME/.config/fish/config.fish"]="fish/config.fish"
+        ["$HOME/.config/redshift.conf"]="redshift.conf"
 )
 
 #---------------------------------------------------------------
