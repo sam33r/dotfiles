@@ -99,6 +99,7 @@ set t_Co=256
 set ruler
 set autoindent
 set expandtab
+set relativenumber
 set number
 set hlsearch
 
