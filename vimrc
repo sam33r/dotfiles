@@ -61,6 +61,7 @@ let g:syntastic_mode_map = {'mode': 'passive'}
 
 " nerdtree config:
 map <C-n> :NERDTreeFind<cr>
+let NERDTreeQuitOnOpen=1
 
 " Tagbar config:
 nmap <F8> :TagbarToggle<CR>
@@ -111,11 +112,17 @@ syntax on
 set t_Co=256
 set ruler
 set autoindent
-set expandtab
 set relativenumber
 set number
 set hlsearch
 set laststatus=2
+" Set indent.
+set tabstop=2           " Width of \t
+set shiftwidth=2        " Indents width
+set softtabstop=2       " Number of columns per TAB
+set expandtab           " Expand to spaces.
+
+
 
 " Some other good ones: torte, slate, primary
 colorscheme torte

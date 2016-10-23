@@ -70,9 +70,9 @@ main = do
                         }
                      >> updatePointer (0.5, 0.5) (1, 1)
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
-        , borderWidth        = 4
+        , borderWidth        = 5
         , normalBorderColor  = "#000000"
-        , focusedBorderColor = "#E87F2A"
+        , focusedBorderColor = "#b9e843"
         , handleEventHook = mconcat 
 			  [ docksEventHook
                           , handleEventHook defaultConfig
