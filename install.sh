@@ -40,9 +40,16 @@ fi
 
 # Move existing files to backup_dir, and then create symlinks.
 for d_path in "${!dotfiles[@]}"; do
-        printf "\n${d_path}"
-        printf "\n ⇒ ${backup_dir}"
-        mv "${d_path}" "${backup_dir}"/"${dotfiles[${d_path}]}" 2>/dev/null
-        printf "\n → ${dir}/${dotfiles[${d_path}]}\n"
-        ln -fs "${dir}"/"${dotfiles[${d_path}]}" "${d_path}"
+  printf "\n\n"
+  read -p "Install to ${d_path} (y/n)? " -n 1 -r
+  if [[ ! $REPLY =~ ^[Yy]$ ]]
+  then
+    printf "\nSkipping ${d_path}\n"
+    continue
+  fi
+  printf "\n${d_path}"
+  printf "\n ⇒ ${backup_dir}"
+  mv "${d_path}" "${backup_dir}"/"${dotfiles[${d_path}]}" 2>/dev/null
+  printf "\n → ${dir}/${dotfiles[${d_path}]}\n"
+  ln -fs "${dir}"/"${dotfiles[${d_path}]}" "${d_path}"
 done
