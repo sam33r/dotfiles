@@ -112,17 +112,24 @@ syntax on
 set t_Co=256
 set ruler
 set autoindent
-set relativenumber
-set number
-set hlsearch
-set laststatus=2
+set relativenumber                  " Show relative number of other lines.
+set number                          " Show number of the current line.
+set hlsearch                        " Highlight search results (Use * for hl of current word).
+set laststatus=2                    " Always show bottom status bar.
 " Set indent.
-set tabstop=2           " Width of \t
-set shiftwidth=2        " Indents width
-set softtabstop=2       " Number of columns per TAB
-set expandtab           " Expand to spaces.
+set tabstop=2                       " Width of \t
+set shiftwidth=2                    " Indents width
+set softtabstop=2                   " Number of columns per TAB
+set expandtab                       " Expand to spaces.
+set colorcolumn=80,100              " Highlight 80th and 100th column.
+hi ColorColumn ctermbg=darkgrey
 
-
+" Read from local config if it exists.
+try
+  source ~/.vimrc.local
+catch
+  " Ignore.
+endtry
 
 " Some other good ones: torte, slate, primary
 colorscheme torte
