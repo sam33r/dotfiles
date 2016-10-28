@@ -30,7 +30,7 @@ myManageHook = composeAll
 
 myLogHook :: X ()
 myLogHook = fadeInactiveLogHook fadeAmount
-    where fadeAmount = 0.8
+    where fadeAmount = 0.9
 
 -- myStartupHook = do
 --   spawnOnce "/usr/bin/redshift"
@@ -96,8 +96,12 @@ main = do
         , ((mod4Mask .|. controlMask, xK_KP_Up), spawn "xdotool click 4")
         , ((mod4Mask .|. controlMask, xK_KP_Down), spawn "xdotool click 5")
         -- Manage workspaces
-        , ((mod1Mask .|. controlMask, xK_Left), moveTo Prev NonEmptyWS)       -- These are weird because of my Mac Keyboard.
-        , ((mod1Mask .|. controlMask, xK_Right), moveTo Next NonEmptyWS)      -- mod1 and mod4 will swap for regular keyboards.
+        , ((mod1Mask .|. controlMask, xK_k), moveTo Prev NonEmptyWS)      -- These are weird because of my Mac Keyboard.
+        , ((mod1Mask .|. controlMask, xK_j), moveTo Next NonEmptyWS)      -- mod1 and mod4 will swap for regular keyboards.
+        , ((mod4Mask .|. controlMask .|. shiftMask, xK_k), shiftToPrev)
+        , ((mod4Mask .|. controlMask .|. shiftMask, xK_j), shiftToNext)
+        , ((mod1Mask .|. controlMask, xK_Left), moveTo Prev NonEmptyWS)       
+        , ((mod1Mask .|. controlMask, xK_Right), moveTo Next NonEmptyWS)     
         , ((mod4Mask .|. controlMask .|. shiftMask, xK_Left), shiftToPrev)
         , ((mod4Mask .|. controlMask .|. shiftMask, xK_Right), shiftToNext)
         -- XMonad Prompt
