@@ -30,7 +30,7 @@ myManageHook = composeAll
 
 myLogHook :: X ()
 myLogHook = fadeInactiveLogHook fadeAmount
-    where fadeAmount = 0.8
+    where fadeAmount = 0.9
 
 -- myStartupHook = do
 --   spawnOnce "/usr/bin/redshift"
@@ -70,6 +70,7 @@ main = do
                         }
                      >> updatePointer (0.5, 0.5) (1, 1)
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
+        , focusFollowsMouse = True
         , borderWidth        = 5
         , normalBorderColor  = "#000000"
         , focusedBorderColor = "#b9e843"
@@ -83,12 +84,11 @@ main = do
         , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
         , ((0, xK_Print), spawn "scrot")
         -- Operate mouse with numpad
-        , ((0, xK_KP_Begin), spawn "xdotool click 1")
-	, ((0, xK_F8), spawn "xdotool click 1")
-        , ((0, xK_KP_Left), spawn "xdotool mousemove_relative -- -10 0")
-        , ((0, xK_KP_Down), spawn "xdotool mousemove_relative -- 0 10")
-        , ((0, xK_KP_Up), spawn "xdotool mousemove_relative -- 0 -10")
-        , ((0, xK_KP_Right), spawn "xdotool mousemove_relative -- 10 0")
+        , ((mod4Mask, xK_KP_Begin), spawn "xdotool click 1")
+        --, ((0, xK_KP_Left), spawn "xdotool mousemove_relative -- -10 0")
+        --, ((0, xK_KP_Down), spawn "xdotool mousemove_relative -- 0 10")
+        --, ((0, xK_KP_Up), spawn "xdotool mousemove_relative -- 0 -10")
+        --, ((0, xK_KP_Right), spawn "xdotool mousemove_relative -- 10 0")
         , ((mod4Mask, xK_KP_Left), spawn "xdotool mousemove_relative -- -100 0")
         , ((mod4Mask, xK_KP_Down), spawn "xdotool mousemove_relative -- 0 100")
         , ((mod4Mask, xK_KP_Up), spawn "xdotool mousemove_relative -- 0 -100")
@@ -96,8 +96,12 @@ main = do
         , ((mod4Mask .|. controlMask, xK_KP_Up), spawn "xdotool click 4")
         , ((mod4Mask .|. controlMask, xK_KP_Down), spawn "xdotool click 5")
         -- Manage workspaces
-        , ((mod1Mask .|. controlMask, xK_Left), moveTo Prev NonEmptyWS)       -- These are weird because of my Mac Keyboard.
-        , ((mod1Mask .|. controlMask, xK_Right), moveTo Next NonEmptyWS)      -- mod1 and mod4 will swap for regular keyboards.
+        , ((mod1Mask .|. controlMask, xK_k), moveTo Prev NonEmptyWS)      -- These are weird because of my Mac Keyboard.
+        , ((mod1Mask .|. controlMask, xK_j), moveTo Next NonEmptyWS)      -- mod1 and mod4 will swap for regular keyboards.
+        , ((mod4Mask .|. controlMask .|. shiftMask, xK_k), shiftToPrev)
+        , ((mod4Mask .|. controlMask .|. shiftMask, xK_j), shiftToNext)
+        , ((mod1Mask .|. controlMask, xK_Left), moveTo Prev NonEmptyWS)       
+        , ((mod1Mask .|. controlMask, xK_Right), moveTo Next NonEmptyWS)     
         , ((mod4Mask .|. controlMask .|. shiftMask, xK_Left), shiftToPrev)
         , ((mod4Mask .|. controlMask .|. shiftMask, xK_Right), shiftToNext)
         -- XMonad Prompt
