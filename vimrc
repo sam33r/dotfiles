@@ -39,9 +39,12 @@ Plugin 'honza/vim-snippets'
 " Surround plugin
 Plugin 'tpope/vim-surround'
 
+" ALL THE THEMES. Remove this after finding a good theme?
+Plugin 'flazz/vim-colorschemes'
+
 " Golang support
 " https://github.com/fatih/vim-go-tutorial
-" Plugin 'fatih/vim-go'
+Plugin 'fatih/vim-go'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -121,8 +124,8 @@ set tabstop=2                       " Width of \t
 set shiftwidth=2                    " Indents width
 set softtabstop=2                   " Number of columns per TAB
 set expandtab                       " Expand to spaces.
-set colorcolumn=80,100              " Highlight 80th and 100th column.
-hi ColorColumn ctermbg=darkgrey
+" set colorcolumn=80,100              " Highlight 80th and 100th column.
+" hi ColorColumn ctermbg=darkgrey
 
 " Read from local config if it exists.
 try
@@ -132,4 +135,4 @@ catch
 endtry
 
 " Some other good ones: torte, slate, primary
-colorscheme torte
+colorscheme candycode
