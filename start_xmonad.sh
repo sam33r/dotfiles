@@ -7,8 +7,9 @@ redshift-gtk &            # redshift
 
 # compton composition manager.
 # Another option is 
-xcompmgr -c &
-# compton --backend glx &
+# xcompmgr -cfF -t-9 -l-11 -r0 -o.95 -D7 &
+# Compton config is at ~/.config/compton.conf
+compton --backend glx &
 
 # Set wallpaper
 feh --bg-scale ~/Wallpapers/021\ -\ 7sHZDxH.jpg
