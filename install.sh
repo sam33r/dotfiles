@@ -23,6 +23,7 @@ declare -A dotfiles=(
         ["$HOME/.config/fish/functions/l.fish"]="fish/l.fish"
         ["$HOME/.config/fish/config.fish"]="fish/config.fish"
         ["$HOME/.config/redshift.conf"]="redshift.conf"
+        ["$HOME/.config/compton.conf"]="compton.conf"
         ["$HOME/start_xmonad.sh"]="start_xmonad.sh"
 )
 
