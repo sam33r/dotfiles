@@ -11,8 +11,8 @@ redshift-gtk &            # redshift
 # Compton config is at ~/.config/compton.conf
 compton --backend glx &
 
-# Set wallpaper
-feh --bg-scale ~/Wallpapers/021\ -\ 7sHZDxH.jpg
+# Set random wallpaper
+feh --bg-scale ~/Wallpapers/`ls ~/Wallpapers | shuf -n 1`
 
 # tray app
 trayer --align right --widthtype request --height 18 --transparent true \
