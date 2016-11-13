@@ -27,7 +27,6 @@ myManageHook = composeAll
     , resource =? "stalonetray" --> doIgnore
     ]
 
-
 myLogHook :: X ()
 myLogHook = fadeInactiveLogHook fadeAmount
     where fadeAmount = 0.9
@@ -69,7 +68,6 @@ main = do
                         , ppTitle = xmobarColor "#5dce3d" "" . shorten 100
                         }
                      >> updatePointer (0.5, 0.5) (1, 1)
-        , modMask = mod4Mask     -- Rebind Mod to the Windows key
         , focusFollowsMouse = True
         , borderWidth        = 5
         , normalBorderColor  = "#000000"
@@ -85,10 +83,10 @@ main = do
         , ((0, xK_Print), spawn "scrot")
         -- Operate mouse with numpad
         , ((mod4Mask, xK_KP_Begin), spawn "xdotool click 1")
-        --, ((0, xK_KP_Left), spawn "xdotool mousemove_relative -- -10 0")
-        --, ((0, xK_KP_Down), spawn "xdotool mousemove_relative -- 0 10")
-        --, ((0, xK_KP_Up), spawn "xdotool mousemove_relative -- 0 -10")
-        --, ((0, xK_KP_Right), spawn "xdotool mousemove_relative -- 10 0")
+        , ((0, xK_KP_Left), spawn "xdotool mousemove_relative -- -10 0")
+        , ((0, xK_KP_Down), spawn "xdotool mousemove_relative -- 0 10")
+        , ((0, xK_KP_Up), spawn "xdotool mousemove_relative -- 0 -10")
+        , ((0, xK_KP_Right), spawn "xdotool mousemove_relative -- 10 0")
         , ((mod4Mask, xK_KP_Left), spawn "xdotool mousemove_relative -- -100 0")
         , ((mod4Mask, xK_KP_Down), spawn "xdotool mousemove_relative -- 0 100")
         , ((mod4Mask, xK_KP_Up), spawn "xdotool mousemove_relative -- 0 -100")
