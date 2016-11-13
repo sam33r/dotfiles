@@ -1,0 +1,12 @@
+$HOME/.bashrc,bashrc
+$HOME/.bash_aliases,bash_aliases
+$HOME/.vimrc,vimrc
+$HOME/.config/liquidpromtrc,liquidpromptrc
+$HOME/.xmonad/xmonad.hs,xmonad.hs
+$HOME/.config/fish/functions/fish_prompt.fish,fish/fish_prompt.fish
+$HOME/.config/fish/functions/apps.fish,fish/apps.fish
+$HOME/.config/fish/functions/l.fish,fish/l.fish
+$HOME/.config/fish/config.fish,fish/config.fish
+$HOME/.config/redshift.conf,redshift.conf
+$HOME/.config/compton.conf,compton.conf
+$HOME/start_xmonad.sh,start_xmonad.sh
