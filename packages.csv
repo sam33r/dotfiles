@@ -1,2 +1,9 @@
 tmux,Terminal multiplexer useful for remoting
 xmonad,Tiling windows manager
+xmobar,Status bar for xmonad
+trayer,Simple tray app for xmonad
+compton,Simple standalone composite manager (For use with xmonad)
+feh,Image viewer useful for setting wallpaper in linux
+fish,fish terminal
+chromium,open source web browser
+w3m,command line based web browser
