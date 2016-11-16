@@ -20,3 +20,4 @@ w3m,command line based web browser
 xdotool,control mouse cursor with keyboard
 xmobar,Status bar for xmonad
 xmonad,Tiling windows manager
+neovim,neovim editor

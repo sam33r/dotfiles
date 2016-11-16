@@ -27,12 +27,14 @@ mkdir -p $backup_dir
 echo "Changing to the $dir directory"
 cd $dir
 
+# Run pre-install script
 read -p "Run pre-install script (y/n)? " -n 1 -r </dev/tty 
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
   source pre_install.sh
 fi
 
+# Install packages
 read -p "Install packages (y/n)? " -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
@@ -55,7 +57,7 @@ printf "\n\n"
 read -p "Backup is best-effort and fails silently. Proceed (y/n)? " -n 1 -r </dev/tty
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
-            exit 1
+  exit 1
 fi
 
 while IFS=, read config_path dotfile_path
@@ -78,6 +80,7 @@ do
   ln -fs "${dir}"/"${dpath}" "${cpath}"
 done < $dotfiles_list
 
+# Run post-install script
 read -p "Run post-install script (y/n)? " -n 1 -r </dev/tty 
 if [[ $REPLY =~ ^[Yy]$ ]]
 then

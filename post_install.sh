@@ -31,3 +31,5 @@ confirm pip install howdoi
 confirm git clone https://github.com/nojhan/liquidprompt.git
 
 confirm git clone https://github.com/VundleVim/Vundle.vim.git /home/sameer/.vim/bundle/Vundle.vim
+ln -s /home/sameer/.vim /home/sameer/.config/nvim
+ln -s /home/sameer/.vimrc /home/sameer/.config/nvim/init.vim

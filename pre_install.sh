@@ -26,3 +26,4 @@ confirm sudo add-apt-repository ppa:graphics-drivers/ppa
 confirm sudo add-apt-repository ppa:lexical/hwe-wireless
 confirm sudo add-apt-repository ppa:fish-shell/release-2
 confirm sudo add-apt-repository ppa:bit-team/stable
+confirm sudo add-apt-repository ppa:neovim-ppa/unstable
