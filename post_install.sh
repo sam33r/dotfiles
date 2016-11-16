@@ -30,3 +30,4 @@ confirm pip install howdoi
 # Install liquidprompt
 confirm git clone https://github.com/nojhan/liquidprompt.git
 
+confirm git clone https://github.com/VundleVim/Vundle.vim.git /home/sameer/.vim/bundle/Vundle.vim
