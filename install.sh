@@ -27,6 +27,11 @@ mkdir -p $backup_dir
 echo "Changing to the $dir directory"
 cd $dir
 
+read -p "Run pre-install script (y/n)? " -n 1 -r </dev/tty 
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  source pre_install.sh
+fi
 
 read -p "Install packages (y/n)? " -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
@@ -53,7 +58,6 @@ then
             exit 1
 fi
 
-
 while IFS=, read config_path dotfile_path
 do
   printf "\n\n"
@@ -73,3 +77,9 @@ do
   printf "\n ← ${dir}/${dpath}\n"
   ln -fs "${dir}"/"${dpath}" "${cpath}"
 done < $dotfiles_list
+
+read -p "Run post-install script (y/n)? " -n 1 -r </dev/tty 
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  source post_install.sh
+fi
