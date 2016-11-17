@@ -6,9 +6,11 @@ feh,Image viewer useful for setting wallpaper in linux
 fish,fish terminal
 googler,google search from command line
 gparted,partition management utility
+neovim,neovim editor
 network-manager-gnome,network management ui
 redshift,reduce blue light at night
 redshift-gtk,reduce blue light at night
+suckless-tools,for dmenu (app launcher for xmonad)
 timeshift,backup utility
 tmux,Terminal multiplexer useful for remoting
 trayer,Simple tray app for xmonad
@@ -20,4 +22,3 @@ w3m,command line based web browser
 xdotool,control mouse cursor with keyboard
 xmobar,Status bar for xmonad
 xmonad,Tiling windows manager
-neovim,neovim editor
