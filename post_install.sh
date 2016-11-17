@@ -30,6 +30,12 @@ confirm pip install howdoi
 # Install liquidprompt
 confirm git clone https://github.com/nojhan/liquidprompt.git
 
-confirm git clone https://github.com/VundleVim/Vundle.vim.git /home/sameer/.vim/bundle/Vundle.vim
-ln -s /home/sameer/.vim /home/sameer/.config/nvim
-ln -s /home/sameer/.vimrc /home/sameer/.config/nvim/init.vim
+confirm git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
+confirm vim +PluginInstall +qall
+
+ln -s $HOME/.vim $HOME/.config/nvim
+ln -s $HOME/.vimrc $HOME/.config/nvim/init.vim
+
+echo "Content of /usr/share/xsessions/xmonad.desktop:"
+cat /usr/share/xsessions/xmonad.desktop
+echo "Make sure Exec links to your start xmonad file."

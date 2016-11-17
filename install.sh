@@ -13,12 +13,11 @@ backup_dir=$HOME/dotfiles_backup/`date +%s`
 # dotfiles config file.
 # This is a dumber-than-csv file, each line should be of the form
 # <Original Config File Path>,<Path within the ${dir} directory>
-dotfiles_list="dotfiles.csv"
-
+dotfiles_list="$dir/dotfiles.csv" 
 
 # List of packages to install.
 # Each line should be of the format <package_name>,<description>
-packages_list="packages.csv"
+packages_list="$dir/packages.csv"
 #---------------------------------------------------------------
 
 echo "Creating $backup_dir"
@@ -35,6 +34,7 @@ then
 fi
 
 # Install packages
+printf "\n\n"
 read -p "Install packages (y/n)? " -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
@@ -77,12 +77,15 @@ do
   printf "\n ⇒ ${backup_dir}"
   mv "${cpath}" "${backup_dir}"/"${dpath}" 2>/dev/null
   printf "\n ← ${dir}/${dpath}\n"
+  mkdir -p `dirname ${cpath}`
   ln -fs "${dir}"/"${dpath}" "${cpath}"
 done < $dotfiles_list
 
 # Run post-install script
+printf "\n\n"
 read -p "Run post-install script (y/n)? " -n 1 -r </dev/tty 
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
+  printf "\n\n"
   source post_install.sh
 fi
