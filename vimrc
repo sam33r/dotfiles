@@ -83,6 +83,9 @@ Plugin 'plasticboy/vim-markdown'
 " Lightweight auto-correct
 Plugin 'reedes/vim-litecorrect'
 
+" Distraction free writing
+Plugin 'junegunn/goyo.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -132,6 +135,10 @@ let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]
 let g:hardtime_ignore_quickfix = 1
 let g:hardtime_allow_different_key = 1
 let g:hardtime_maxcount = 2
+
+" signify config
+let g:signify_vcs_list = [ 'git', 'perforce', 'svn' ]
+let g:signify_skip_filename_pattern = ['\.pipertmp.*']
 
 " text file editing
 augroup pencil
