@@ -1,4 +1,3 @@
-i3blocks,scheduler for i3bar blocks
 broadcom-sta-dkms,broadcom wifi drivers
 chromium,open source web browser
 compton,Simple standalone composite manager (For use with xmonad)
@@ -8,6 +7,7 @@ fish,fish terminal
 googler,google search from command line
 gparted,partition management utility
 i3,tiling windows manager
+i3blocks,scheduler for i3bar blocks
 neovim,neovim editor
 network-manager-gnome,network management ui
 redshift,reduce blue light at night

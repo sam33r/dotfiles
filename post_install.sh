@@ -66,6 +66,22 @@ install_spotify() {
 }
 confirm install_spotify
 
-echo "Content of /usr/share/xsessions/xmonad.desktop:"
-cat /usr/share/xsessions/xmonad.desktop
-echo "Make sure Exec links to your start xmonad file."
+install_arc_theme_ubuntu_1604_only() {
+	sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/Horst3180/xUbuntu_16.04/ /' > /etc/apt/sources.list.d/arc-theme.list"
+	sudo apt-get update
+	sudo apt-get install arc-theme
+  gsettings set org.gnome.desktop.interface gtk-theme Arc-Darker
+}
+confirm install_arc_theme_ubuntu_1604_only
+
+install_fonts() {
+  wget -O $HOME/.fonts/"System San Francisco Display Bold.ttf" https://github.com/supermarin/YosemiteSanFranciscoFont/raw/master/System%20San%20Francisco%20Display%20Bold.ttf
+  wget -O $HOME/.fonts/"System San Francisco Display Regular.ttf" https://github.com/supermarin/YosemiteSanFranciscoFont/raw/master/System%20San%20Francisco%20Display%20Regular.ttf
+  wget -O $HOME/.fonts/"System San Francisco Display Thin.ttf" https://github.com/supermarin/YosemiteSanFranciscoFont/raw/master/System%20San%20Francisco%20Display%20Thin.ttf
+  wget -O $HOME/.fonts/"System San Francisco Display Ultralight.ttf" https://github.com/supermarin/YosemiteSanFranciscoFont/raw/master/System%20San%20Francisco%20Display%20Ultralight.ttf
+}
+confirm install_fonts
+  
+# Set system preferences. 
+gsettings set org.gnome.desktop.background show-desktop-icons false
+gsettings set com.canonical.desktop.interface scrollbar-mode normal

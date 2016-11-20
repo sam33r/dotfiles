@@ -7,17 +7,15 @@ printf "\n\n"
 read -p "Install packages (y/n)? " -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-  packages=""
+  sudo apt-get update
   while IFS=, read package description
   do
     printf "\n\n$package : $description\n"
     read -p "Install (y/n)? " -n 1 -r </dev/tty
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
-      packages+=" $package"
+      sudo apt-get install $package
     fi
   done < $dir/$packages_list
   printf "\n\n"
-  sudo apt-get update
-  sudo apt-get install $packages
 fi
