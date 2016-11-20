@@ -1,3 +1,4 @@
+i3blocks,scheduler for i3bar blocks
 broadcom-sta-dkms,broadcom wifi drivers
 chromium,open source web browser
 compton,Simple standalone composite manager (For use with xmonad)
@@ -6,10 +7,12 @@ feh,Image viewer useful for setting wallpaper in linux
 fish,fish terminal
 googler,google search from command line
 gparted,partition management utility
+i3,tiling windows manager
 neovim,neovim editor
 network-manager-gnome,network management ui
 redshift,reduce blue light at night
 redshift-gtk,reduce blue light at night
+rofi,app switcher
 suckless-tools,for dmenu (app launcher for xmonad)
 timeshift,backup utility
 tmux,Terminal multiplexer useful for remoting

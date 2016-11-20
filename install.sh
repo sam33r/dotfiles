@@ -1,30 +1,14 @@
 #!/bin/bash
 
-# Configuration
-#---------------------------------------------------------------
-
-# Path of this (dotfiles) directory.
-dir=$HOME/dotfiles            
-
-# Where to backup any existing dotfiles before linking to new
-# dotfiles.
-backup_dir=$HOME/dotfiles_backup/`date +%s`
-
-# dotfiles config file.
-# This is a dumber-than-csv file, each line should be of the form
-# <Original Config File Path>,<Path within the ${dir} directory>
-dotfiles_list="$dir/dotfiles.csv" 
-
-# List of packages to install.
-# Each line should be of the format <package_name>,<description>
-packages_list="$dir/packages.csv"
-#---------------------------------------------------------------
-
-echo "Creating $backup_dir"
-mkdir -p $backup_dir
+# Directory of this project.
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $dir/config.sh
 
 echo "Changing to the $dir directory"
 cd $dir
+
+echo "Creating $backup_dir"
+mkdir -p $backup_dir
 
 # Run pre-install script
 read -p "Run pre-install script (y/n)? " -n 1 -r </dev/tty 
@@ -33,25 +17,7 @@ then
   source pre_install.sh
 fi
 
-# Install packages
-printf "\n\n"
-read -p "Install packages (y/n)? " -n 1 -r
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-  packages=""
-  while IFS=, read package description
-  do
-    printf "\n\n$package : $description\n"
-    read -p "Install (y/n)? " -n 1 -r </dev/tty
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
-      packages+=" $package"
-    fi
-  done < $packages_list
-  printf "\n\n"
-  sudo apt-get update
-  sudo apt-get install $packages
-fi
+source install_packages.sh
 
 printf "\n\n"
 read -p "Backup is best-effort and fails silently. Proceed (y/n)? " -n 1 -r </dev/tty
