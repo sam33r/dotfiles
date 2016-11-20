@@ -3,6 +3,9 @@ set nocompatible
 
 " Vundle config
 " ----------------------------------------------------------------------
+" Disclaimer: This list is bloated and perhaps unjustifiable. The end
+" goal is to document the purpose and key commands of the plugins I
+" decide to keep.
 
 filetype off                  " required
 
@@ -49,6 +52,40 @@ Plugin 'flazz/vim-colorschemes'
 " https://github.com/fatih/vim-go-tutorial
 Plugin 'fatih/vim-go'
 
+" Hard time plugin, temporary.
+Plugin 'takac/vim-hardtime'
+
+" Show delta of file with base version.
+Plugin 'mhinz/vim-signify'
+
+" Auto-save buffers.
+" Toggle by :AutoSaveToggle
+Plugin 'vim-scripts/vim-auto-save'
+
+" Plugins for markdown editing.
+
+" Vim pencil plugin, utility functions for text editing.
+" :Pencil to initialize
+"   :PencilSoft for soft line wrap mode
+"   :PencilHard for hard line break mode
+Plugin 'reedes/vim-pencil'
+
+" Pencil color theme
+Plugin 'reedes/vim-colors-pencil'
+
+" Screen anchored scrolling
+Plugin 'reedes/vim-wheel'
+
+" Markdown support
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+
+" Lightweight auto-correct
+Plugin 'reedes/vim-litecorrect'
+
+" Distraction free writing
+Plugin 'junegunn/goyo.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -87,9 +124,36 @@ endif
 let g:airline_symbols.space = "\ua0"
 " the separator used on the left side
 let g:airline_left_sep=''
-" " the separator used on the right side 
+" " the separator used on the right side
 let g:airline_right_sep=''
 let g:airline_theme='bubblegum'
+
+" hardtime config
+let g:hardtime_default_on = 1
+let g:hardtime_showmsg = 1
+let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]
+let g:hardtime_ignore_quickfix = 1
+let g:hardtime_allow_different_key = 1
+let g:hardtime_maxcount = 2
+
+" signify config
+let g:signify_vcs_list = [ 'git', 'perforce', 'svn' ]
+let g:signify_skip_filename_pattern = ['\.pipertmp.*']
+
+" text file editing
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+augroup END
+
+augroup litecorrect
+  autocmd!
+  autocmd FileType markdown,mkd call litecorrect#init()
+augroup END
+
+" auto-save config
+let g:auto_save = 0
+let g:auto_save_in_insert_mode = 0
 
 
 filetype plugin indent on    " required
@@ -113,6 +177,10 @@ filetype plugin indent on    " required
 autocmd BufEnter * let &titlestring = ' VIM : ' . expand("%:t")
 set title
 
+" Set *.md as markdown filetype.
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
+
 filetype plugin indent on
 syntax on
 set t_Co=256
@@ -122,6 +190,8 @@ set relativenumber                  " Show relative number of other lines.
 set number                          " Show number of the current line.
 set hlsearch                        " Highlight search results (Use * for hl of current word).
 set laststatus=2                    " Always show bottom status bar.
+set showcmd                         " Show command as it is being typed.
+
 " Set indent.
 set tabstop=2                       " Width of \t
 set shiftwidth=2                    " Indents width

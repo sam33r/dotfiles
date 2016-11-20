@@ -11,3 +11,5 @@ $HOME/.config/redshift.conf,redshift.conf
 $HOME/.config/compton.conf,compton.conf
 $HOME/start_xmonad.sh,start_xmonad.sh
 $HOME/.config/xmobar/xmobarrc,xmobarrc
+$HOME/.config/i3/config,i3config
+$HOME/.i3blocks.conf,i3blocks.conf
