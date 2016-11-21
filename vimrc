@@ -180,6 +180,8 @@ set title
 " Set *.md as markdown filetype.
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
+" Always delete trailing whitespace on file save.
+autocmd BufWritePre * %s/\s\+$//e
 
 filetype plugin indent on
 syntax on
