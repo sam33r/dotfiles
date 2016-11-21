@@ -5,6 +5,10 @@
 # tasks, like cloning git packages or installing applications
 # not available via package manager.
 
+# Directory of this project.
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. $dir/config.sh
+cd $dir
 
 # If a command is globally applicable, enter it as-is in this
 # file. If it needs user confirmation, use the confirm() util
@@ -23,13 +27,18 @@ confirm() {
   fi
 }
 
-cd
-
 # Install howdoi
 confirm pip install howdoi
 
 # Install liquidprompt
-confirm git clone https://github.com/nojhan/liquidprompt.git
+install_update_liquidprompt() {
+  cd $HOME
+  git clone https://github.com/nojhan/liquidprompt.git
+  cd liquidprompt
+  git pull origin master
+  cd $dir
+}
+confirm install_update_liquidprompt
 
 confirm git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 confirm vim +PluginInstall +qall
@@ -87,6 +96,43 @@ install_arc_theme_ubuntu_1604_only() {
   gsettings set org.gnome.desktop.interface gtk-theme Arc-Darker
 }
 confirm install_arc_theme_ubuntu_1604_only
+
+# install rofi manually (not available on apt-get in 14.04)
+install_rofi_manually() {
+  if type "rofi" > /dev/null; then
+		echo "rofi already exists"
+		return
+	fi	
+	# install deps. 
+	yes | sudo apt-get install libxinerama-dev libxft2 libpango1.0-dev libpangocairo-1.0-0 libcairo2-dev libglib2.0-dev libx11-dev libstartup-notification0-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb1-dev libx11-xcb-dev libxcb-ewmh-dev libxcb-icccm4-dev libxcb-util0-dev libxcb-xinerama0-dev
+	wget https://github.com/DaveDavenport/rofi/releases/download/1.1.0/rofi-1.1.0.tar.gz -O $HOME/rofi.tgz
+  cd $HOME	
+  tar xvzf rofi.tgz
+	cd $HOME/rofi*
+	./configure
+	make
+	sudo make install 
+	cd $dir
+	rm -rf $HOME/rofi*
+}
+confirm install_rofi_manually
+
+# install i3blocks manually (not available on apt-get in 14.04)
+install_i3blocks_manually() {
+  if type "i3blocks" > /dev/null; then
+		echo "i3blocks already exists"
+		return
+	fi
+	cd $HOME	
+	git clone https://github.com/vivien/i3blocks.git
+	cd i3blocks
+	make clean all
+	sudo make install
+	cd $HOME
+	rm -rf i3blocks
+	cd $dir
+}
+confirm install_i3blocks_manually
 
 install_fonts() {
   mkdir -p $HOME/.fonts
