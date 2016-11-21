@@ -190,49 +190,49 @@ mode "mouse" {
 
     set $slow 2
     set $quick 25
-    set $fast 50
+    set $fast 100
 
     # Mouse movement (slow/fine-tuned) -- vim keybindings
 
-    bindsym h exec xdotool mousemove_relative -- -$slow 0
-    bindsym j exec xdotool mousemove_relative 0 $slow
-    bindsym k exec xdotool mousemove_relative -- 0 -$slow
-    bindsym l exec xdotool mousemove_relative $slow 0
+    bindsym Shift+h exec xdotool mousemove_relative -- -$slow 0
+    bindsym Shift+j exec xdotool mousemove_relative 0 $slow
+    bindsym Shift+k exec xdotool mousemove_relative -- 0 -$slow
+    bindsym Shift+l exec xdotool mousemove_relative $slow 0
 
     # Mouse movement (slow/fine-tuned) -- arrow keys
 
-    bindsym Left exec xdotool mousemove_relative -- -$slow 0
-    bindsym Down exec xdotool mousemove_relative 0 $slow
-    bindsym Up exec xdotool mousemove_relative -- 0 -$slow
-    bindsym Right exec xdotool mousemove_relative $slow 0
+    bindsym Shift+Left exec xdotool mousemove_relative -- -$slow 0
+    bindsym Shift+Down exec xdotool mousemove_relative 0 $slow
+    bindsym Shift+Up exec xdotool mousemove_relative -- 0 -$slow
+    bindsym Shift+Right exec xdotool mousemove_relative $slow 0
 
     # Mouse movement (quicker) -- vim keybindings
 
-    bindsym Shift+h exec xdotool mousemove_relative -- -$quick 0
-    bindsym Shift+j exec xdotool mousemove_relative 0 $quick
-    bindsym Shift+k exec xdotool mousemove_relative -- 0 -$quick
-    bindsym Shift+l exec xdotool mousemove_relative $quick 0
+    bindsym h exec xdotool mousemove_relative -- -$quick 0
+    bindsym j exec xdotool mousemove_relative 0 $quick
+    bindsym k exec xdotool mousemove_relative -- 0 -$quick
+    bindsym l exec xdotool mousemove_relative $quick 0
 
     # Mouse movement (quicker) -- arrow keys
 
-    bindsym Shift+Left exec xdotool mousemove_relative -- -$quick 0
-    bindsym Shift+Down exec xdotool mousemove_relative 0 $quick
-    bindsym Shift+Up exec xdotool mousemove_relative -- 0 -$quick
-    bindsym Shift+Right exec xdotool mousemove_relative $quick 0
+    bindsym Left exec xdotool mousemove_relative -- -$quick 0
+    bindsym Down exec xdotool mousemove_relative 0 $quick
+    bindsym Up exec xdotool mousemove_relative -- 0 -$quick
+    bindsym Right exec xdotool mousemove_relative $quick 0
 
     # Mouse movement (fast) -- vim keybindings
 
-    bindsym Shift+Control+h exec xdotool mousemove_relative -- -$fast 0
-    bindsym Shift+Control+j exec xdotool mousemove_relative 0 $fast
-    bindsym Shift+Control+k exec xdotool mousemove_relative -- 0 -$fast
-    bindsym Shift+Control+l exec xdotool mousemove_relative $fast 0
+    bindsym Control+h exec xdotool mousemove_relative -- -$fast 0
+    bindsym Control+j exec xdotool mousemove_relative 0 $fast
+    bindsym Control+k exec xdotool mousemove_relative -- 0 -$fast
+    bindsym Control+l exec xdotool mousemove_relative $fast 0
 
     # Mouse movement (fast) -- arrow keys
 
-    bindsym Shift+Control+Left exec xdotool mousemove_relative -- -$fast 0
-    bindsym Shift+Control+Down exec xdotool mousemove_relative 0 $fast
-    bindsym Shift+Control+Up exec xdotool mousemove_relative -- 0 -$fast
-    bindsym Shift+Control+Right exec xdotool mousemove_relative $fast 0
+    bindsym Control+Left exec xdotool mousemove_relative -- -$fast 0
+    bindsym Control+Down exec xdotool mousemove_relative 0 $fast
+    bindsym Control+Up exec xdotool mousemove_relative -- 0 -$fast
+    bindsym Control+Right exec xdotool mousemove_relative $fast 0
 
     # Left Click
     bindsym f exec xdotool click 1
@@ -310,7 +310,10 @@ exec gnome-settings-daemon
 exec redshift-gtk
 # Run compton composition manager.
 exec_always compton -f
-# Start spotify.
+# Run spotify
 exec --no-startup-id spotify
 # Start feh for wallpaper.
 exec feh --randomize --bg-fill ~/Wallpapers/*
+
+# Start google-chrome or chromium
+exec --no-startup-id i3-msg 'workspace "9: Comms"; exec google-chrome || chromium'
