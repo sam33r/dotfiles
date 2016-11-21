@@ -1,10 +1,11 @@
+lm-sensors,sensors information
+acpi,used to display battery status
 broadcom-sta-dkms,broadcom wifi drivers
 chromium,open source web browser
 compton,Simple standalone composite manager (For use with xmonad)
 docker-engine,docker
 feh,Image viewer useful for setting wallpaper in linux
 fish,fish terminal
-googler,google search from command line
 gparted,partition management utility
 i3,tiling windows manager
 i3blocks,scheduler for i3bar blocks
@@ -22,6 +23,7 @@ vim,vim!
 vim-gtk,gvim
 volti,control volume
 w3m,command line based web browser
+xbacklight,Change display brightness
 xdotool,control mouse cursor with keyboard
 xmobar,Status bar for xmonad
 xmonad,Tiling windows manager

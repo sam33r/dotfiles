@@ -2,7 +2,7 @@
 
 # Directory of this project.
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source $dir/config.sh
+. $dir/config.sh
 
 echo "Changing to the $dir directory"
 cd $dir
@@ -14,11 +14,11 @@ mkdir -p $backup_dir
 read -p "Run pre-install script (y/n)? " -n 1 -r </dev/tty 
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-  source pre_install.sh
+  . $dir/pre_install.sh
 fi
 
 # Install packages
-source install_packages.sh
+. $dir/install_packages.sh
 
 printf "\n\n"
 read -p "Backup is best-effort and fails silently. Proceed (y/n)? " -n 1 -r </dev/tty
@@ -54,5 +54,5 @@ read -p "Run post-install script (y/n)? " -n 1 -r </dev/tty
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
   printf "\n\n"
-  source post_install.sh
+  . $dir/post_install.sh
 fi

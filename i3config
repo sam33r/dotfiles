@@ -114,7 +114,7 @@ bindsym $mod+Shift+s sticky toggle
 bindsym $mod+Shift+x exec i3lock --color 475263
 
 # start rofi (a program launcher)
-bindsym $mod+d exec rofi -show run -lines 5 -eh 2 -width 50 -padding 80 -opacity "90" -bw 2 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd"
+bindsym $mod+d exec rofi -show run -lines 5 -eh 2 -width 50 -padding 80 -opacity "90" -bw 2 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" || dmenu_run
 
 # workspace names
 set $ws1 "1: Main"
@@ -185,7 +185,7 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-  status_command i3blocks
+  status_command i3blocks || i3status
   tray_output primary
   colors {
 		background $inactive-bg-color

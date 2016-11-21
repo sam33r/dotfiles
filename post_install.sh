@@ -50,6 +50,20 @@ install_playerctl() {
 }
 confirm install_playerctl
 
+# Install googler (command-line google search)
+# TODO: Common function for installing non-standard packages
+# from github.
+install_googler() {
+  # This retrieves download link of latest release.
+  dlink=`curl -s https://api.github.com/repos/jarun/googler/releases | grep browser_download_url | head -n 1 | cut -d '"' -f 4`
+  dpath="$HOME/Downloads/googler.deb"
+  wget -O $dpath $dlink
+  sudo dpkg -i $dpath
+  sudo apt-get install -f
+  rm -f $dpath
+}
+confirm install_googler
+
 # Install spotify (requires adding spotify repository)
 install_spotify() {
   # 1. Add the Spotify repository signing key 
@@ -62,7 +76,7 @@ install_spotify() {
   # 3. Update list of available packages
   sudo apt-get update
   # 4. Install Spotify
-  sudo apt-get install spotify-client
+  yes | sudo apt-get install spotify-client
 }
 confirm install_spotify
 
@@ -75,6 +89,7 @@ install_arc_theme_ubuntu_1604_only() {
 confirm install_arc_theme_ubuntu_1604_only
 
 install_fonts() {
+  mkdir -p $HOME/.fonts
   wget -O $HOME/.fonts/"System San Francisco Display Bold.ttf" https://github.com/supermarin/YosemiteSanFranciscoFont/raw/master/System%20San%20Francisco%20Display%20Bold.ttf
   wget -O $HOME/.fonts/"System San Francisco Display Regular.ttf" https://github.com/supermarin/YosemiteSanFranciscoFont/raw/master/System%20San%20Francisco%20Display%20Regular.ttf
   wget -O $HOME/.fonts/"System San Francisco Display Thin.ttf" https://github.com/supermarin/YosemiteSanFranciscoFont/raw/master/System%20San%20Francisco%20Display%20Thin.ttf

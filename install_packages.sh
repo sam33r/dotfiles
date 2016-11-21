@@ -14,7 +14,7 @@ then
     read -p "Install (y/n)? " -n 1 -r </dev/tty
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
-      sudo apt-get install $package
+      yes | sudo apt-get install $package
     fi
   done < $dir/$packages_list
   printf "\n\n"
