@@ -46,7 +46,7 @@ do
   printf "\n ← ${dir}/${dpath}\n"
   mkdir -p `dirname ${cpath}`
   ln -fs "${dir}"/"${dpath}" "${cpath}"
-done < $dotfiles_list
+done < $dir/$dotfiles_list
 
 # Run post-install script
 printf "\n\n"
