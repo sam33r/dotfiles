@@ -28,7 +28,10 @@ confirm() {
 }
 
 # Install howdoi
-confirm pip install howdoi
+sudo confirm pip install howdoi
+
+# Install jrnl
+sudo confirm pip install jrnl[encrypted]
 
 # Install liquidprompt
 install_update_liquidprompt() {
