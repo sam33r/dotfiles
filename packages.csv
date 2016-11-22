@@ -1,4 +1,3 @@
-lm-sensors,sensors information
 acpi,used to display battery status
 broadcom-sta-dkms,broadcom wifi drivers
 chromium,open source web browser
@@ -6,11 +5,16 @@ compton,Simple standalone composite manager (For use with xmonad)
 docker-engine,docker
 feh,Image viewer useful for setting wallpaper in linux
 fish,fish terminal
+gcc,gnu compilers
+glances,Python based system info tool
 gparted,partition management utility
 i3,tiling windows manager
 i3blocks,scheduler for i3bar blocks
+lm-sensors,sensors information
 neovim,neovim editor
 network-manager-gnome,network management ui
+python-dev,python
+python-pip,pip installer
 redshift,reduce blue light at night
 redshift-gtk,reduce blue light at night
 rofi,app switcher

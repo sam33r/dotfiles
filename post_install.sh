@@ -16,7 +16,7 @@ cd $dir
 
 # Utility function to confirm a command before running it.
 confirm() {
-  printf "\n\n" 
+  printf "\n\n"
   echo -n "Do you want to run $*? [y/n] " </dev/tty
   read -N 1 REPLY
   echo
@@ -59,6 +59,8 @@ install_playerctl() {
 }
 confirm install_playerctl
 
+# install/upgrade psutil (used by glances)
+confirm sudo pip install psutil --upgrade
 # Install googler (command-line google search)
 # TODO: Common function for installing non-standard packages
 # from github.
@@ -75,7 +77,7 @@ confirm install_googler
 
 # Install spotify (requires adding spotify repository)
 install_spotify() {
-  # 1. Add the Spotify repository signing key 
+  # 1. Add the Spotify repository signing key
   #to be able to verify downloaded packages
   sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 \
     --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
@@ -90,9 +92,9 @@ install_spotify() {
 confirm install_spotify
 
 install_arc_theme_ubuntu_1604_only() {
-	sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/Horst3180/xUbuntu_16.04/ /' > /etc/apt/sources.list.d/arc-theme.list"
-	sudo apt-get update
-	sudo apt-get install arc-theme
+  sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/Horst3180/xUbuntu_16.04/ /' > /etc/apt/sources.list.d/arc-theme.list"
+  sudo apt-get update
+  sudo apt-get install arc-theme
   gsettings set org.gnome.desktop.interface gtk-theme Arc-Darker
 }
 confirm install_arc_theme_ubuntu_1604_only
@@ -100,37 +102,37 @@ confirm install_arc_theme_ubuntu_1604_only
 # install rofi manually (not available on apt-get in 14.04)
 install_rofi_manually() {
   if type "rofi" > /dev/null; then
-		echo "rofi already exists"
-		return
-	fi	
-	# install deps. 
-	yes | sudo apt-get install libxinerama-dev libxft2 libpango1.0-dev libpangocairo-1.0-0 libcairo2-dev libglib2.0-dev libx11-dev libstartup-notification0-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb1-dev libx11-xcb-dev libxcb-ewmh-dev libxcb-icccm4-dev libxcb-util0-dev libxcb-xinerama0-dev
-	wget https://github.com/DaveDavenport/rofi/releases/download/1.1.0/rofi-1.1.0.tar.gz -O $HOME/rofi.tgz
-  cd $HOME	
+    echo "rofi already exists"
+    return
+  fi
+  # install deps.
+  yes | sudo apt-get install libxinerama-dev libxft2 libpango1.0-dev libpangocairo-1.0-0 libcairo2-dev libglib2.0-dev libx11-dev libstartup-notification0-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb1-dev libx11-xcb-dev libxcb-ewmh-dev libxcb-icccm4-dev libxcb-util0-dev libxcb-xinerama0-dev
+  wget https://github.com/DaveDavenport/rofi/releases/download/1.1.0/rofi-1.1.0.tar.gz -O $HOME/rofi.tgz
+  cd $HOME
   tar xvzf rofi.tgz
-	cd $HOME/rofi*
-	./configure
-	make
-	sudo make install 
-	cd $dir
-	rm -rf $HOME/rofi*
+  cd $HOME/rofi*
+  ./configure
+  make
+  sudo make install
+  cd $dir
+  rm -rf $HOME/rofi*
 }
 confirm install_rofi_manually
 
 # install i3blocks manually (not available on apt-get in 14.04)
 install_i3blocks_manually() {
   if type "i3blocks" > /dev/null; then
-		echo "i3blocks already exists"
-		return
-	fi
-	cd $HOME	
-	git clone https://github.com/vivien/i3blocks.git
-	cd i3blocks
-	make clean all
-	sudo make install
-	cd $HOME
-	rm -rf i3blocks
-	cd $dir
+    echo "i3blocks already exists"
+    return
+  fi
+  cd $HOME
+  git clone https://github.com/vivien/i3blocks.git
+  cd i3blocks
+  make clean all
+  sudo make install
+  cd $HOME
+  rm -rf i3blocks
+  cd $dir
 }
 confirm install_i3blocks_manually
 
@@ -142,7 +144,7 @@ install_fonts() {
   wget -O $HOME/.fonts/"System San Francisco Display Ultralight.ttf" https://github.com/supermarin/YosemiteSanFranciscoFont/raw/master/System%20San%20Francisco%20Display%20Ultralight.ttf
 }
 confirm install_fonts
-  
-# Set system preferences. 
+
+# Set system preferences.
 gsettings set org.gnome.desktop.background show-desktop-icons false
 gsettings set com.canonical.desktop.interface scrollbar-mode normal
