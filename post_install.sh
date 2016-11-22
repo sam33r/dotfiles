@@ -28,7 +28,7 @@ confirm() {
 }
 
 # Install howdoi
-confirm pip install howdoi
+confirm sudo pip install howdoi
 
 # Install liquidprompt
 install_update_liquidprompt() {
