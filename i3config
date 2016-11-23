@@ -115,6 +115,11 @@ bindsym $mod+x exec i3lock --color 475263
 # suspend
 bindsym $mod+Shift+x exec i3lock --color 475263 && dbus-send --system --dest=org.freedesktop.UPower --type=method_call --print-reply /org/freedesktop/UPower org.freedesktop.UPower.Suspend
 
+# mouse bindings
+# toggle floating with right click
+bindsym button3 floating toggle
+# middle click to kill window
+bindsym button2 kill
 
 # start rofi (a program launcher)
 bindsym $mod+d exec rofi -show run -lines 5 -eh 2 -width 50 -padding 80 -opacity "90" -bw 2 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" || dmenu_run
@@ -147,6 +152,11 @@ bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
+
+# enable workspace auto back-and-forth
+# ie press the 'move to workspace' shortcut again
+# to return to the original workspace.
+workspace_auto_back_and_forth yes
 
 # move to scratchpad
 bindsym $mod+Shift+minus move scratchpad

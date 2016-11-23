@@ -193,14 +193,13 @@ set number                          " Show number of the current line.
 set hlsearch                        " Highlight search results (Use * for hl of current word).
 set laststatus=2                    " Always show bottom status bar.
 set showcmd                         " Show command as it is being typed.
+set colorcolumn=80,100              " Set rulers at column 80 and 100.
 
 " Set indent.
 set tabstop=2                       " Width of \t
 set shiftwidth=2                    " Indents width
 set softtabstop=2                   " Number of columns per TAB
 set expandtab                       " Expand to spaces.
-" set colorcolumn=80,100              " Highlight 80th and 100th column.
-" hi ColorColumn ctermbg=darkgrey
 
 " Read from local config if it exists.
 try
@@ -211,3 +210,7 @@ endtry
 
 " Some other good ones: torte, slate, primary
 colorscheme candycode
+
+" Override the theme's color for column rulers to a more sane value.
+" highlight color for rulers.
+highlight ColorColumn ctermbg=DarkGrey guibg=#4c4c4c
