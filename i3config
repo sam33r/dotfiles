@@ -332,3 +332,6 @@ exec feh --randomize --bg-fill ~/Wallpapers/*
 
 # Start google-chrome or chromium
 exec --no-startup-id i3-msg 'workspace "9: Comms"; exec google-chrome || chromium'
+
+# Machine specific commands
+exec --no-startup-id ~/startup.local.sh
