@@ -1,4 +1,5 @@
 acpi,used to display battery status
+libssl-dev,cryptography libraries (needed for jrnl[encrypted])
 broadcom-sta-dkms,broadcom wifi drivers
 chromium,open source web browser
 compton,Simple standalone composite manager (For use with xmonad)
