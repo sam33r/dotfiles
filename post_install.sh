@@ -44,7 +44,7 @@ install_update_liquidprompt() {
 confirm install_update_liquidprompt
 
 confirm git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
-confirm vim +PluginInstall +qall
+confirm vim +PluginInstall! +qall
 
 # Bind neovim to vim configs.
 ln -s $HOME/.vim $HOME/.config/nvim
