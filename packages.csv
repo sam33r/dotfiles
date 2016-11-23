@@ -1,7 +1,8 @@
 acpi,used to display battery status
+nvidia-370,latest nvidia graphics drivers
 libssl-dev,cryptography libraries (needed for jrnl[encrypted])
 broadcom-sta-dkms,broadcom wifi drivers
-chromium,open source web browser
+chromium-browser,open source web browser
 compton,Simple standalone composite manager (For use with xmonad)
 docker-engine,docker
 feh,Image viewer useful for setting wallpaper in linux
