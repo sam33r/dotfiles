@@ -1,6 +1,4 @@
 acpi,used to display battery status
-nvidia-370,latest nvidia graphics drivers
-libssl-dev,cryptography libraries (needed for jrnl[encrypted])
 broadcom-sta-dkms,broadcom wifi drivers
 chromium-browser,open source web browser
 compton,Simple standalone composite manager (For use with xmonad)
@@ -12,9 +10,12 @@ glances,Python based system info tool
 gparted,partition management utility
 i3,tiling windows manager
 i3blocks,scheduler for i3bar blocks
+libssl-dev,cryptography libraries (needed for jrnl[encrypted])
 lm-sensors,sensors information
 neovim,neovim editor
 network-manager-gnome,network management ui
+nvidia-370,latest nvidia graphics drivers
+pandoc,convert between different document formats
 python-dev,python
 python-pip,pip installer
 redshift,reduce blue light at night
