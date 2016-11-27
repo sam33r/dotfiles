@@ -188,6 +188,7 @@ syntax on
 set t_Co=256
 set ruler
 set autoindent
+set incsearch                       " Enable incremental highlighing of search.
 set relativenumber                  " Show relative number of other lines.
 set number                          " Show number of the current line.
 set hlsearch                        " Highlight search results (Use * for hl of current word).
