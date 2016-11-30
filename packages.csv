@@ -8,26 +8,27 @@ fish,fish terminal
 gcc,gnu compilers
 glances,Python based system info tool
 gparted,partition management utility
-i3,tiling windows manager
 i3blocks,scheduler for i3bar blocks
+i3,tiling windows manager
 libssl-dev,cryptography libraries (needed for jrnl[encrypted])
 lm-sensors,sensors information
 neovim,neovim editor
 network-manager-gnome,network management ui
+network-manager,Network management applet
 nvidia-370,latest nvidia graphics drivers
 pandoc,convert between different document formats
 python-dev,python
 python-pip,pip installer
-redshift,reduce blue light at night
 redshift-gtk,reduce blue light at night
+redshift,reduce blue light at night
 rofi,app switcher
 suckless-tools,for dmenu (app launcher for xmonad)
 timeshift,backup utility
 tmux,Terminal multiplexer useful for remoting
 trayer,Simple tray app for xmonad
 tree,better than ls for viewing folder tree
-vim,vim!
 vim-gtk,gvim
+vim,vim!
 volti,control volume
 w3m,command line based web browser
 xbacklight,Change display brightness
