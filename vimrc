@@ -18,10 +18,8 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" Google color scheme
-Plugin 'google/vim-colorscheme-primary'
-
 " Browse file tree
+" Ctrl+N bound below to open nerdtree on current file.
 Plugin 'scrooloose/nerdtree'
 
 " Commenting
@@ -35,6 +33,8 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
 " sidebar with class/function names
+" :TagbarOpen or :TagbarToggle to view tags
+" These tags are independent of ctags.
 Plugin 'majutsushi/tagbar'
 
 " Snippets manager
@@ -50,6 +50,7 @@ Plugin 'flazz/vim-colorschemes'
 
 " Golang support
 " https://github.com/fatih/vim-go-tutorial
+" TODO: Make a 'local plugins' file and move this plugin there.
 Plugin 'fatih/vim-go'
 
 " Hard time plugin, temporary.
@@ -72,9 +73,6 @@ Plugin 'reedes/vim-pencil'
 
 " Pencil color theme
 Plugin 'reedes/vim-colors-pencil'
-
-" Screen anchored scrolling
-Plugin 'reedes/vim-wheel'
 
 " Markdown support
 Plugin 'godlygeek/tabular'
@@ -188,6 +186,7 @@ syntax on
 set t_Co=256
 set ruler
 set autoindent
+set incsearch                       " Enable incremental highlighing of search.
 set relativenumber                  " Show relative number of other lines.
 set number                          " Show number of the current line.
 set hlsearch                        " Highlight search results (Use * for hl of current word).
