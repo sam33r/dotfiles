@@ -34,6 +34,8 @@ confirm sudo pip install howdoi
 confirm sudo pip install cryptography
 confirm sudo pip install jrnl[encrypted]
 
+# Install terminal_velocity
+confirm sudo pip install terminal_velocity
 # Install liquidprompt
 install_update_liquidprompt() {
   cd $HOME
