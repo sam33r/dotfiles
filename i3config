@@ -44,6 +44,13 @@ font pango: System San Francisco Display 10
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+# Start editors with unused Function keys.
+bindsym F9 exec emacs
+bindsym F10 exec gvim
+
+# Start chromium / chrome
+bindsym F7 exec chromium-browser || google-chrome
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -318,6 +325,9 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
+# Always move terminal to scratchpad.
+for_window [class="^Gnome-terminal$"] move scratchpad
+
 # Run startup programs
 # This enables gtk settings from gnome, required for gtk themes.
 exec gnome-settings-daemon
@@ -335,3 +345,4 @@ exec --no-startup-id i3-msg 'workspace "9: Comms"; exec google-chrome || chromiu
 
 # Machine specific commands
 exec --no-startup-id ~/startup.local.sh
+
