@@ -27,6 +27,9 @@ confirm() {
   fi
 }
 
+# Upgrade pip
+confirm sudo pip install --upgrade pip
+
 # Install howdoi
 confirm sudo pip install howdoi
 
@@ -150,6 +153,14 @@ install_fonts() {
   wget -O $HOME/.fonts/"System San Francisco Display Ultralight.ttf" https://github.com/supermarin/YosemiteSanFranciscoFont/raw/master/System%20San%20Francisco%20Display%20Ultralight.ttf
 }
 confirm install_fonts
+
+install_update_spacemacs() {
+  git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+  cd ~/.emacs.d
+  git pull origin master
+  cd $dir
+}
+confirm install_update_spacemacs
 
 # Set system preferences.
 gsettings set org.gnome.desktop.background show-desktop-icons false

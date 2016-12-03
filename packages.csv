@@ -3,6 +3,7 @@ broadcom-sta-dkms,broadcom wifi drivers
 chromium-browser,open source web browser
 compton,Simple standalone composite manager (For use with xmonad)
 docker-engine,docker
+emacs24-lucid,emacs (lucid version)
 feh,Image viewer useful for setting wallpaper in linux
 fish,fish terminal
 gcc,gnu compilers
