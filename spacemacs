@@ -50,9 +50,6 @@ values."
             shell-default-position 'bottom)
      spell-checking
      syntax-checking
-     ;; chrome                                ;; edit chrome fields with emacs?!
-     ;; vim-powerline
-     ;; version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
