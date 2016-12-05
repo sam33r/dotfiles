@@ -175,6 +175,11 @@ assign [class="Spotify"] $ws10
 # spotify does not assign a class at startup, workaround:
 for_window [class="Spotify"] move to workspace $ws10
 
+# focus on specific applications.
+bindsym $mod+u [class="Emacs.*"] focus
+bindsym $mod+i [class="Gnome-terminal"] focus
+bindsym $mod+o [class=".*chromium-browser|google-chrome"] focus
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
