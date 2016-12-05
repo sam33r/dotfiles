@@ -320,6 +320,10 @@ you should place your code here."
   ;; j/k go to next visual line.
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+
+  ;; now load any local init.
+  (load-file "~/.spacemacs.local")
+  (dotspacemacs-local-init/init)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -332,8 +336,11 @@ you should place your code here."
  '(browse-url-browser-function (quote browse-url-chromium))
  '(org-agenda-files
    (quote
-    ("~/dotfiles/TODOs.org" "/home/sameer/Notes/PIM.org" "/home/sameer/Notes/TouchTyping.org" "/home/sameer/Notes/Winter_Vacation_2016.org" "/home/sameer/Notes/journal.org" "/home/sameer/Notes/notes.org" "/home/sameer/Notes/spacemacs.org" "/home/sameer/Notes/tasks.org")))
+    ("~/dotfiles/TODOs.org" "~/Notes/PIM.org" "~/Notes/TouchTyping.org" "~/Notes/Winter_Vacation_2016.org" "~/Notes/journal.org" "~/Notes/notes.org" "~/Notes/spacemacs.org" "~/Notes/tasks.org")))
  '(org-startup-truncated nil)
+ '(package-selected-packages
+   (quote
+    (xterm-color web-mode tagedit smeargle slim-mode shell-pop scss-mode sass-mode pug-mode orgit org-projectile org-present org org-pomodoro alert log4e gntp org-download multi-term magit-gitflow less-css-mode htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode company-web web-completion-data company-statistics company-anaconda company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc macrostep lorem-ipsum live-py-mode linum-relative link-hint info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word cython-mode column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
  '(tab-stop-list (quote (2 4 6 8)))
  '(truncate-lines nil))
 (custom-set-faces
@@ -341,4 +348,4 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-)
+ )

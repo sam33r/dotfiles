@@ -45,11 +45,11 @@ font pango: System San Francisco Display 10
 bindsym $mod+Return exec i3-sensible-terminal
 
 # Start editors with unused Function keys.
-bindsym F9 exec emacs
+bindsym F9 exec google-emacs || emacs
 bindsym F10 exec gvim
 
 # Start chromium / chrome
-bindsym F7 exec chromium-browser || google-chrome
+bindsym F7 exec google-chrome || chromium-browser
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -178,8 +178,8 @@ for_window [class="Spotify"] move to workspace $ws10
 # focus on specific applications.
 bindsym $mod+u [class="Emacs.*"] focus
 bindsym $mod+i [class="Gnome-terminal"] focus
-bindsym $mod+o [class="chromium-browser|google-chrome"] focus
-bindsym $mod+y [title=".*Gmail.*"] focus
+bindsym $mod+o [class="chromium-browser|Google-chrome"] focus
+bindsym $mod+y [title=".* Mail.*|.*Gmail.*"] focus
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
