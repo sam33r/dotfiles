@@ -331,9 +331,6 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-# Always move terminal to scratchpad.
-for_window [class="^Gnome-terminal$"] move scratchpad
-
 # Run startup programs
 # This enables gtk settings from gnome, required for gtk themes.
 exec gnome-settings-daemon
