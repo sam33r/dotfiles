@@ -21,6 +21,9 @@ mv $HOME/$src_path $dpath/$dest_path
 echo "Adding to dotfiles config"
 echo \$HOME/$src_path,$dest_path >> $dpath/dotfiles.csv
 
+sort $dpath/$dotfiles_list -o $dpath/$dotfiles_list
+
+
 echo "Linking $HOME/$src_path to $dpath/$dest_path"
 ln -fs $dpath/$dest_path $HOME/$src_path
 

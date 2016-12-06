@@ -26,3 +26,5 @@ $HOME/.config/i3blocks/temperature,i3blocks/temperature
 $HOME/.config/fish/functions/gitm.fish,fish/gitm.fish
 $HOME/.config/fish/functions/c.fish,fish/c.fish
 $HOME/.config/fish/functions/restart.fish,fish/restart.fish
+$HOME/.tvrc,tvrc
+$HOME/.spacemacs,spacemacs

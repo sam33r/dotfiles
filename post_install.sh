@@ -27,6 +27,9 @@ confirm() {
   fi
 }
 
+# Upgrade pip
+confirm sudo pip install --upgrade pip
+
 # Install howdoi
 confirm sudo pip install howdoi
 
@@ -142,14 +145,25 @@ install_i3blocks_manually() {
 }
 confirm install_i3blocks_manually
 
-install_fonts() {
+install_update_fonts() {
   mkdir -p $HOME/.fonts
-  wget -O $HOME/.fonts/"System San Francisco Display Bold.ttf" https://github.com/supermarin/YosemiteSanFranciscoFont/raw/master/System%20San%20Francisco%20Display%20Bold.ttf
-  wget -O $HOME/.fonts/"System San Francisco Display Regular.ttf" https://github.com/supermarin/YosemiteSanFranciscoFont/raw/master/System%20San%20Francisco%20Display%20Regular.ttf
-  wget -O $HOME/.fonts/"System San Francisco Display Thin.ttf" https://github.com/supermarin/YosemiteSanFranciscoFont/raw/master/System%20San%20Francisco%20Display%20Thin.ttf
-  wget -O $HOME/.fonts/"System San Francisco Display Ultralight.ttf" https://github.com/supermarin/YosemiteSanFranciscoFont/raw/master/System%20San%20Francisco%20Display%20Ultralight.ttf
+
+  git clone https://github.com/supermarin/YosemiteSanFranciscoFont.git $HOME/.fonts/san-francisco
+  cd $HOME/.fonts/san-francisco
+  git pull origin master
+  cd $dir
+
+  sudo fc-cache -f -v
 }
-confirm install_fonts
+confirm install_update_fonts
+
+install_update_spacemacs() {
+  git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+  cd ~/.emacs.d
+  git pull origin master
+  cd $dir
+}
+confirm install_update_spacemacs
 
 # Set system preferences.
 gsettings set org.gnome.desktop.background show-desktop-icons false

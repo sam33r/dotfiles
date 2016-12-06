@@ -9,7 +9,7 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-set $mod Mod1
+set $mod Mod4
 
 # color config
 set $bg-color            #464f63
@@ -43,6 +43,13 @@ font pango: System San Francisco Display 10
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
+
+# Start editors with unused Function keys.
+bindsym F9 exec google-emacs || emacs
+bindsym F10 exec gvim
+
+# Start chromium / chrome
+bindsym F7 exec google-chrome || chromium-browser
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -167,6 +174,12 @@ bindsym $mod+minus scratchpad show
 assign [class="Spotify"] $ws10
 # spotify does not assign a class at startup, workaround:
 for_window [class="Spotify"] move to workspace $ws10
+
+# focus on specific applications.
+bindsym $mod+u [class="Emacs.*"] focus
+bindsym $mod+i [class="Gnome-terminal"] focus
+bindsym $mod+o [class="chromium-browser|Google-chrome"] focus
+bindsym $mod+y [title=".* Mail.*|.*Gmail.*"] focus
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -318,6 +331,9 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
+# Always move terminal to scratchpad.
+for_window [class="^Gnome-terminal$"] move scratchpad
+
 # Run startup programs
 # This enables gtk settings from gnome, required for gtk themes.
 exec gnome-settings-daemon
@@ -341,3 +357,4 @@ exec volti
 
 # Machine specific commands
 exec --no-startup-id ~/startup.local.sh
+
