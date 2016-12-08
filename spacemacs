@@ -51,6 +51,7 @@ values."
             shell-default-position 'bottom)
      spell-checking
      syntax-checking
+     version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -304,6 +305,8 @@ you should place your code here."
   ;; org-mode configuration.
   (setq org-agenda-files '("~/Notes"))
   ;; (setq org-default-notes-file "~/Notes/journal.org")
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "ACTIVE(a!)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "~/Notes/tasks.org" "Tasks")
            "* TODO %?\n  %i\n  %a")
@@ -318,6 +321,11 @@ you should place your code here."
            :publishing-directory "~/n"
            :recursive            t
            :publishing-function  org-twbs-publish-to-html
+           :auto-sitemap         t
+           :sitemap-filename     "index.org"
+           :sitemap-title        "Index"
+           :sitemap-sort-folders 'last
+           :sitemap-ignore-case  t
            )))
   (setq tab-width 2)
   (define-key global-map "\C-cc" 'org-capture)
@@ -325,6 +333,11 @@ you should place your code here."
   ;; j/k go to next visual line.
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+
+  ;; Activate column indicator in prog-mode and text-mode, except for org-mode
+  (add-hook 'prog-mode-hook 'turn-on-fci-mode)
+  (add-hook 'text-mode-hook 'turn-on-fci-mode)
+  (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
 
   ;; now load any local init.
   (load-file "~/.spacemacs.local")
@@ -340,13 +353,10 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(browse-url-browser-function (quote browse-url-chromium))
  '(evil-want-Y-yank-to-eol nil)
- '(org-agenda-files
-   (quote
-    ("~/dotfiles/TODOs.org" "~/Notes/PIM.org" "~/Notes/TouchTyping.org" "~/Notes/Winter_Vacation_2016.org" "~/Notes/journal.org" "~/Notes/notes.org" "~/Notes/spacemacs.org" "~/Notes/tasks.org")))
  '(org-startup-truncated nil)
  '(package-selected-packages
    (quote
-    (ox-twbs gmail-message-mode ham-mode html-to-markdown edit-server xterm-color web-mode tagedit smeargle slim-mode shell-pop scss-mode sass-mode pug-mode orgit org-projectile org-present org org-pomodoro alert log4e gntp org-download multi-term magit-gitflow less-css-mode htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode company-web web-completion-data company-statistics company-anaconda company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc macrostep lorem-ipsum live-py-mode linum-relative link-hint info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word cython-mode column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+    (git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl ox-twbs gmail-message-mode ham-mode html-to-markdown edit-server xterm-color web-mode tagedit smeargle slim-mode shell-pop scss-mode sass-mode pug-mode orgit org-projectile org-present org org-pomodoro alert log4e gntp org-download multi-term magit-gitflow less-css-mode htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode company-web web-completion-data company-statistics company-anaconda company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc macrostep lorem-ipsum live-py-mode linum-relative link-hint info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word cython-mode column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
  '(tab-stop-list (quote (2 4 6 8)))
  '(truncate-lines nil))
 (custom-set-faces
