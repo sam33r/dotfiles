@@ -1,8 +1,0 @@
-#+TITLE:dotfiles tasks
-
-* TODO Modularize install scripts.
-  Should be able to list sub-modules, and run an arbitrary module. This will also get rid of the artificial separation of pre_ and post_ install scripts.
-
-* TODO Better user input.
-  Replace the tens of y/n prompts with something smarter. At the very least the prompts should be compatible with the yes command. ie yes | install.sh should not require any further prompts except for sudo credentials.
-

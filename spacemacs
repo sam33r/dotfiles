@@ -324,7 +324,8 @@ you should place your code here."
            :auto-sitemap         t
            :sitemap-filename     "index.org"
            :sitemap-title        "Index"
-           :sitemap-sort-folders 'last
+           ;; This doesn't seem to work, disabling for now.
+           ;; :sitemap-sort-folders 'last
            :sitemap-ignore-case  t
            )))
   (setq tab-width 2)
