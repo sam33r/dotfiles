@@ -114,7 +114,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
-" airline config
+" airline config:
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
@@ -126,19 +126,19 @@ let g:airline_left_sep=''
 let g:airline_right_sep=''
 let g:airline_theme='bubblegum'
 
-" hardtime config
-let g:hardtime_default_on = 1
+" hardtime config:
+let g:hardtime_default_on = 0
 let g:hardtime_showmsg = 1
 let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]
 let g:hardtime_ignore_quickfix = 1
 let g:hardtime_allow_different_key = 1
 let g:hardtime_maxcount = 2
 
-" signify config
+" signify config:
 let g:signify_vcs_list = [ 'git', 'perforce', 'svn' ]
 let g:signify_skip_filename_pattern = ['\.pipertmp.*']
 
-" text file editing
+" text file editing:
 augroup pencil
   autocmd!
   autocmd FileType markdown,mkd call pencil#init()
