@@ -23,6 +23,7 @@ $HOME/.config/i3blocks/memory,i3blocks/memory
 $HOME/.config/i3blocks/volume,i3blocks/volume
 $HOME/.config/i3blocks/wifi,i3blocks/wifi
 $HOME/.config/i3blocks/temperature,i3blocks/temperature
+$HOME/.config/i3blocks/mediastatus,i3blocks/mediastatus
 $HOME/.config/fish/functions/gitm.fish,fish/gitm.fish
 $HOME/.config/fish/functions/c.fish,fish/c.fish
 $HOME/.config/fish/functions/restart.fish,fish/restart.fish
