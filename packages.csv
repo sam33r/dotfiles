@@ -28,7 +28,7 @@ suckless-tools,for dmenu (app launcher for xmonad)
 timeshift,backup utility
 tmux,Terminal multiplexer useful for remoting
 trayer,Simple tray app for xmonad
-tree,better than ls for viewing folder tree
+ranger,ls on steroids
 vim-gtk,gvim
 vim,vim!
 volti,control volume
