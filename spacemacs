@@ -274,7 +274,7 @@ values."
    dotspacemacs-highlight-delimiters 'all
    ;; If non nil, advise quit functions to keep server open when quitting.
    ;; (default nil)
-   dotspacemacs-persistent-server 'true
+   dotspacemacs-persistent-server nil
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    ;; (default '("ag" "pt" "ack" "grep"))
@@ -308,26 +308,26 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   ;; org-mode configuration.
-  (setq org-agenda-files (list "~/Notes"
-                               "~/Notes/Projects/"
-                               "~/Notes/Work/"))
+  (setq org-agenda-files (list "~/Notes"))
+  (setq org-refile-targets
+        '((nil :maxlevel . 3)
+          (org-agenda-files :maxlevel . 2)))
   ;; (setq org-default-notes-file "~/Notes/journal.org")
   (setq org-todo-keywords
         '((sequence "TODO(t)" "ACTIVE(a!)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/Notes/tasks.org" "Tasks")
+        '(("t" "Todo" entry (file+headline "~/Notes/projects.org" "Refile Tasks")
            "* TODO %?\n  %i\n  %a")
           ("j" "Journal" entry (file+datetree "~/Notes/journal.org")
            "* %?\nEntered on %U\n  %i\n  %a")
-          ("s" "shortcut_or_tip" entry (file+headline "~/Notes/spacemacs.org" "Useful Shortcuts and Tips")
-           "* %?\n  %U")))
+           ))
   (setq org-publish-project-alist
         `(("notes"
            :base-directory       "~/Notes"
            :base-extension       "org"
            :publishing-directory "~/n"
            :recursive            t
-           :publishing-function  org-twbs-publish-to-html
+           :publishing-function  org-html-publish-to-html
            :auto-sitemap         t
            :sitemap-filename     "index.org"
            :sitemap-title        "Index"
