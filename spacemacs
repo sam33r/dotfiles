@@ -307,12 +307,19 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
   ;; org-mode configuration.
+
   (setq org-agenda-files (list "~/Notes"))
+
+  ;; Setup refiling.
+  (setq org-refile-use-outline-path t)
+  (setq org-outline-path-complete-in-steps nil)
   (setq org-refile-targets
         '((nil :maxlevel . 3)
           (org-agenda-files :maxlevel . 2)))
-  ;; (setq org-default-notes-file "~/Notes/journal.org")
+
+  ;; Capture mode.
   (setq org-todo-keywords
         '((sequence "TODO(t)" "ACTIVE(a!)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
   (setq org-capture-templates
@@ -320,7 +327,9 @@ you should place your code here."
            "* TODO %?\n  %i\n  %a")
           ("j" "Journal" entry (file+datetree "~/Notes/journal.org")
            "* %?\nEntered on %U\n  %i\n  %a")
-           ))
+          ))
+
+  ;; Publishing notes.
   (setq org-publish-project-alist
         `(("notes"
            :base-directory       "~/Notes"
@@ -335,9 +344,13 @@ you should place your code here."
            ;; :sitemap-sort-folders 'last
            :sitemap-ignore-case  t
            )))
+  (define-key global-map "\C-cc" 'org-capture)
+
+  ;; Other misc org-mode settings.
   (setq org-startup-folded 'show-all)
   (setq tab-width 2)
-  (define-key global-map "\C-cc" 'org-capture)
+
+  ;; Other spacemacs settings.
 
   ;; j/k go to next visual line.
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -347,6 +360,10 @@ you should place your code here."
   (add-hook 'prog-mode-hook 'turn-on-fci-mode)
   (add-hook 'text-mode-hook 'turn-on-fci-mode)
   (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
+
+  ;; Prefer splitting horizontally.
+  (setq split-height-threshold nil)
+  (setq split-width-threshold 80)
 
   ;; now load any local init.
   (load-file "~/.spacemacs.local")
