@@ -1,6 +1,7 @@
 acpi,used to display battery status
 broadcom-sta-dkms,broadcom wifi drivers
 chromium-browser,open source web browser
+clonezilla,Bare-metal backup for linux.
 compton,Simple standalone composite manager (For use with xmonad)
 docker-engine,docker
 emacs24-lucid,emacs (lucid version)
@@ -21,6 +22,7 @@ nvidia-370,latest nvidia graphics drivers
 pandoc,convert between different document formats
 python-dev,python
 python-pip,pip installer
+ranger,ls on steroids
 redshift-gtk,reduce blue light at night
 redshift,reduce blue light at night
 rofi,app switcher
@@ -28,7 +30,6 @@ suckless-tools,for dmenu (app launcher for xmonad)
 timeshift,backup utility
 tmux,Terminal multiplexer useful for remoting
 trayer,Simple tray app for xmonad
-ranger,ls on steroids
 vim-gtk,gvim
 vim,vim!
 volti,control volume

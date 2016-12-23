@@ -165,6 +165,22 @@ install_update_spacemacs() {
 }
 confirm install_update_spacemacs
 
+install_omf_and_fish_theme() {
+  curl -L http://get.oh-my.fish | fish
+}
+confirm install_omf_and_fish_theme
+
+install_powerline_fonts() {
+    cd $HOME
+    git clone https://github.com/powerline/fonts.git plfonts
+    cd plfonts
+    . ./install.sh
+    cd $HOME
+    yes | rm -R plfonts
+    cd $dir
+}
+confirm install_powerline_fonts
+
 # Set system preferences.
 gsettings set org.gnome.desktop.background show-desktop-icons false
 gsettings set com.canonical.desktop.interface scrollbar-mode normal
