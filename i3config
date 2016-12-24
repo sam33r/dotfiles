@@ -378,3 +378,7 @@ exec --no-startup-id ~/startup.local.sh
 # Start google chrome and move it to scratchpad
 exec --no-startup-id google-chrome
 for_window [class="Google-chrome"] move scratchpad
+
+# Start gnome terminal and move it to scratchpad
+exec --no-startup-id gnome-terminal --role scratchpad
+for_window [window_role="scratchpad"] move scratchpad
