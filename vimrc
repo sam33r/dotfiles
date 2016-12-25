@@ -119,11 +119,6 @@ let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
-let g:airline_symbols.space = "\ua0"
-" the separator used on the left side
-let g:airline_left_sep=''
-" " the separator used on the right side
-let g:airline_right_sep=''
 let g:airline_theme='bubblegum'
 
 " hardtime config:
@@ -199,6 +194,13 @@ set tabstop=2                       " Width of \t
 set shiftwidth=2                    " Indents width
 set softtabstop=2                   " Number of columns per TAB
 set expandtab                       " Expand to spaces.
+
+" gvim options
+set guioptions-=m  "remove menu bar
+set guioptions-=T  "remove toolbar
+set guioptions-=r  "remove right-hand scroll bar
+set guioptions-=L  "remove left-hand scroll bar
+set gfn=Cousine\ for\ Powerline\ 12
 
 " Read from local config if it exists.
 try
