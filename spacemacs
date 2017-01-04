@@ -313,6 +313,8 @@ you should place your code here."
   (setq org-agenda-files (list "~/Notes"))
 
   (require 'org-contacts)
+  (setq org-contacts-files '("~/Notes/people.org"))
+
   ;; Setup refiling.
   (setq org-refile-use-outline-path t)
   (setq org-outline-path-complete-in-steps nil)
@@ -320,9 +322,16 @@ you should place your code here."
         '((nil :maxlevel . 3)
           (org-agenda-files :maxlevel . 2)))
 
-  ;; Capture mode.
+  ;; Task tags
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "ACTIVE(a!)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
+        '((sequence "TODO(t)" "ICKY(i)" "NEXT(n!)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
+  (setq org-todo-keyword-faces
+        '(("TODO" . "orange") ("ICKY" . org-warning)
+          ("NEXT" . (:foreground "orange" :weight bold))
+          ("WAIT" .(:foreground "purple" :weight bold))
+          ("CANCELED" . (:foreground "blue" :weight bold))
+          ("DONE" . (:foreground "green" :weight bold))))
+  ;; Capture mode.
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "~/Notes/projects.org" "Refile Tasks")
            "* TODO %?\n  %i\n  %a")
@@ -350,6 +359,7 @@ you should place your code here."
   ;; Other misc org-mode settings.
   (setq org-startup-folded 'show-all)
   (setq tab-width 2)
+
 
   ;; Other spacemacs settings.
 
