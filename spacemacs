@@ -372,6 +372,16 @@ you should place your code here."
   (add-hook 'text-mode-hook 'turn-on-fci-mode)
   (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
 
+  ;; Turn off line numbers for org-mode. This causes weird slowdowns for large
+  ;; org files.
+  (defun nolinum ()
+    (interactive)
+    (message "Deactivated linum mode")
+    (global-linum-mode 0)
+    (linum-mode 0)
+  )
+  (add-hook 'org-mode-hook 'nolinum)
+
   ;; Prefer splitting horizontally.
   (setq split-height-threshold nil)
   (setq split-width-threshold 80)
