@@ -29,3 +29,5 @@ $HOME/.config/fish/functions/c.fish,fish/c.fish
 $HOME/.config/fish/functions/restart.fish,fish/restart.fish
 $HOME/.tvrc,tvrc
 $HOME/.spacemacs,spacemacs
+$HOME/.config/fish/functions/eo.fish,fish/eo.fish
+$HOME/.config/fish/functions/agenda.fish,fish/agenda.fish
