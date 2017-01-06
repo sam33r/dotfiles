@@ -181,6 +181,16 @@ install_powerline_fonts() {
 }
 confirm install_powerline_fonts
 
+install_update_transcrypt() {
+  cd $HOME
+  git clone https://github.com/elasticdog/transcrypt.git
+  cd $HOME/transcrypt
+  git pull origin master
+  sudo ln -s ${PWD}/transcrypt /usr/local/bin/transcrypt
+  cd $dir
+}
+confirm install_update_transcrypt
+
 # Set system preferences.
 gsettings set org.gnome.desktop.background show-desktop-icons false
 gsettings set com.canonical.desktop.interface scrollbar-mode normal

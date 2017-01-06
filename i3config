@@ -332,6 +332,7 @@ bar {
 		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
 		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
   }
+  position top
 }
 
 # Add keybindings for media and special function keys.
@@ -382,3 +383,6 @@ for_window [class="Google-chrome"] move scratchpad
 # Start gnome terminal and move it to scratchpad
 exec --no-startup-id gnome-terminal --role scratchpad
 for_window [window_role="scratchpad"] move scratchpad
+
+# No borders or title bars.
+new_window 1pixel
