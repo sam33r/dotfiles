@@ -395,6 +395,10 @@ you should place your code here."
   (org-agenda-list)
   (delete-other-windows))
 
+(defun sa/todos ()
+  (org-todo-list)
+  (delete-other-windows))
+
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 (custom-set-variables

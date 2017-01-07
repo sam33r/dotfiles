@@ -8,7 +8,6 @@ $HOME/.config/fish/functions/eo.fish,fish/eo.fish
 $HOME/.config/fish/functions/gitm.fish,fish/gitm.fish
 $HOME/.config/fish/functions/l.fish,fish/l.fish
 $HOME/.config/fish/functions/restart.fish,fish/restart.fish
-$HOME/.config/i3/config,i3config
 $HOME/.config/i3blocks/bandwidth,i3blocks/bandwidth
 $HOME/.config/i3blocks/battery,i3blocks/battery
 $HOME/.config/i3blocks/cpu_usage,i3blocks/cpu_usage
@@ -20,12 +19,17 @@ $HOME/.config/i3blocks/memory,i3blocks/memory
 $HOME/.config/i3blocks/temperature,i3blocks/temperature
 $HOME/.config/i3blocks/volume,i3blocks/volume
 $HOME/.config/i3blocks/wifi,i3blocks/wifi
+$HOME/.config/i3/config,i3config
 $HOME/.config/liquidpromtrc,liquidpromptrc
+$HOME/.config/omf/bundle,omf/bundle
+$HOME/.config/omf/channel,omf/channel
+$HOME/.config/omf/init.fish,omf/init.fish
+$HOME/.config/omf/theme,omf/theme
 $HOME/.config/redshift.conf,redshift.conf
 $HOME/.config/xmobar/xmobarrc,xmobarrc
 $HOME/.i3blocks.conf,i3blocks.conf
 $HOME/.spacemacs,spacemacs
+$HOME/start_xmonad.sh,start_xmonad.sh
 $HOME/.tvrc,tvrc
 $HOME/.vimrc,vimrc
 $HOME/.xmonad/xmonad.hs,xmonad.hs
-$HOME/start_xmonad.sh,start_xmonad.sh
