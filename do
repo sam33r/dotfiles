@@ -20,20 +20,10 @@ packages_list="packages.csv"
 
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-
-function help()
-{
-  printf "\n"
-  echo "Usage: do <function>"
-  printf "\n"
-  echo "Valid functions:"
-  grep "^function" $0
-}
-
-
 #--------------------------------------------------------------------------------
 # Configuration Functions
 #--------------------------------------------------------------------------------
+# Add new configuration operations here as functions.
 # Rules of engagement:
 # - Each function should be idempotent and avoid any side effects.
 # - No params allowed.
@@ -298,6 +288,37 @@ function set_gnome_preferences()
 }
 
 #--------------------------------------------------------------------------------
+# Common functions (Don't change)
+#--------------------------------------------------------------------------------
+
+function everystall()                                                            # Run all installation functions.
+{
+  install_fns=`awk '/^function install_/{ print substr($2, 1, length($2) - 2)}' $0`
+  printf "The following functions will be run, in the order specified here:"
+  printf "\n\n$install_fns\n\n"
+
+  echo -n "Continue (y/n)? "
+  read answer
+  if echo "$answer" | grep -iq "^n" ;then
+    exit
+  fi
+
+  for install_fn in $install_fns
+  do
+    echo $install_fn
+    $install_fn
+    printf "\n\n"
+  done
+}
+
+function help()
+{
+  printf "\n"
+  echo "Usage: do <function>"
+  printf "\n"
+  echo "Valid functions:"
+  grep "^function" $0
+}
 
 if [ "_$1" = "_" ]; then
   help
