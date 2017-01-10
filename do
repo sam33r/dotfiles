@@ -150,6 +150,15 @@ function install_update_liquidprompt()                                          
   cd $dir
 }
 
+function install_update_z()
+{
+  cd $HOME
+  git clone https://github.com/rupa/z.git
+  cd z/
+  git pull origin master
+  cd $dir
+}
+
 function install_playerctl()                                                     # PlayerCTL provides command-line tools to manage media playback.
 {
   # This retrieves download link of latest release.
@@ -287,6 +296,7 @@ function set_gnome_preferences()
   gsettings set com.canonical.desktop.interface scrollbar-mode normal
 }
 
+
 #--------------------------------------------------------------------------------
 # Common functions (Don't change)
 #--------------------------------------------------------------------------------
@@ -306,9 +316,15 @@ function everystall()                                                           
   for install_fn in $install_fns
   do
     echo $install_fn
+    cd $dir
     $install_fn
     printf "\n\n"
   done
+}
+
+function edit()
+{
+  vim $0
 }
 
 function help()

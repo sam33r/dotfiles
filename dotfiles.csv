@@ -22,6 +22,7 @@ $HOME/.config/i3blocks/temperature,i3blocks/temperature
 $HOME/.config/i3blocks/volume,i3blocks/volume
 $HOME/.config/i3blocks/wifi,i3blocks/wifi
 $HOME/.config/liquidpromtrc,liquidpromptrc
+$HOME/.config/omf/before.init.fish,omf/before.init.fish
 $HOME/.config/omf/bundle,omf/bundle
 $HOME/.config/omf/channel,omf/channel
 $HOME/.config/omf/init.fish,omf/init.fish

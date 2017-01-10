@@ -129,4 +129,6 @@ if [ -f ~/.bashrc.local ]; then
   . ~/.bashrc.local
 fi
 
+. $HOME/z/z.sh
+
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
