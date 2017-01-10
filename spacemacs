@@ -423,7 +423,13 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(browse-url-browser-function (quote eww-browse-url))
  '(evil-want-Y-yank-to-eol nil)
- '(org-enforce-todo-dependencies t)
+ '(org-agenda-prefix-format
+   (quote
+    ((agenda . " %i %-12:c%?-12t% s")
+     (timeline . "  % s")
+     (todo . " %i %-12:c %(concat \"[ \"(org-format-outline-path (org-get-outline-path)) \" ]\") ")
+     (tags . " %i %-12:c")
+     (search . " %i %-12:c"))))
  '(org-agenda-span (quote fortnight))
  '(org-agenda-sticky t)
  '(org-agenda-time-grid
@@ -431,6 +437,7 @@ you should place your code here."
     ((daily weekly today require-timed)
      "----------------"
      (800 1000 1200 1400 1600 1800 2000))))
+ '(org-enforce-todo-dependencies t)
  '(org-startup-truncated nil)
  '(org-stuck-projects (quote ("+LEVEL=2/-DONE" ("NEXT") nil "")))
  '(package-selected-packages
