@@ -370,9 +370,6 @@ exec nm-applet
 # Start volume applet.
 exec volti
 
-# Start serving notes.
-exec --no-startup-id ~/dotfiles/utils/serve_notes.sh
-
 # Machine specific commands
 exec --no-startup-id ~/startup.local.sh
 
