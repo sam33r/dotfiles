@@ -373,6 +373,9 @@ you should place your code here."
   (add-hook 'text-mode-hook 'turn-on-fci-mode)
   (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
 
+  ;; Activate writeroom mode for org-mode
+  (add-hook 'org-mode-hook 'writeroom-mode 'append)
+
   ;; Turn off line numbers for org-mode. This causes weird slowdowns for large
   ;; org files.
   (defun nolinum ()
@@ -407,7 +410,8 @@ you should place your code here."
   (delete-other-windows))
 
 (defun sa/todos ()
-  (org-todo-list)
+  ;; Pick which TODO type on load.
+  (org-agenda nil "T")
   (delete-other-windows))
 
 ;; Do not write anything past this comment. This is where Emacs will
