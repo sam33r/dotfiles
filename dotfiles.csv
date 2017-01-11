@@ -28,10 +28,7 @@ $HOME/.config/omf/channel,omf/channel
 $HOME/.config/omf/init.fish,omf/init.fish
 $HOME/.config/omf/theme,omf/theme
 $HOME/.config/redshift.conf,redshift.conf
-$HOME/.config/xmobar/xmobarrc,xmobarrc
 $HOME/.i3blocks.conf,i3blocks.conf
 $HOME/.spacemacs,spacemacs
 $HOME/.tvrc,tvrc
 $HOME/.vimrc,vimrc
-$HOME/.xmonad/xmonad.hs,xmonad.hs
-$HOME/start_xmonad.sh,start_xmonad.sh
