@@ -36,4 +36,9 @@ fi
 if [[ "${INFO_TITLE}" != "" ]] && [[ "${INFO_ARTIST}" != "" ]]; then
   echo "${INFO_ARTIST} - ${INFO_TITLE}  ${CUR_ICON}"
   echo "${INFO_ARTIST} - ${INFO_TITLE}  ${CUR_ICON}"
+else
+  # playerctl sometimes returns empty status for spotify, this workaround
+  # allows play/pause functionality in such cases.
+  # TODO: Determine cause of empty status.
+  echo "***"
 fi
