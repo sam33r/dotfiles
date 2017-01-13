@@ -172,9 +172,9 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+Shift+apostrophe move scratchpad
 
 # show terminal scratchpad window
-bindsym $mod+minus [class="Gnome-terminal"] scratchpad show
+bindsym $mod+apostrophe [class="Gnome-terminal"] scratchpad show
 # show chrome scratchpad window
-bindsym $mod+apostrophe [class="Google-chrome"] scratchpad show
+bindsym $mod+minus [class="Google-chrome"] scratchpad show
 
 # This binding never works because the system binds it to some other action
 # before it even reaches i3. Not sure what that binding is.
@@ -187,11 +187,6 @@ for_window [class="Spotify"] move to workspace $ws10
 
 # Float google-chrome windows
 for_window [class="Google-chrome"] floating enable
-
-# Setup signal windows
-for_window [title="^Signal$"] floating enable
-for_window [title="^Signal$"] resize set 800 500
-for_window [title="^Signal$"] move position 1650 1000
 
 # Set max float size
 floating_maximum_size 1600 x 1400

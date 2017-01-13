@@ -425,7 +425,7 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(browse-url-browser-function (quote eww-browse-url))
+ '(browse-url-browser-function (quote 'browse-url-chromium))
  '(evil-want-Y-yank-to-eol nil)
  '(golden-ratio-mode t)
  '(org-agenda-custom-commands
@@ -448,7 +448,7 @@ you should place your code here."
     ((daily weekly today require-timed)
      "----------------"
      (800 1000 1200 1400 1600 1800 2000))))
- '(org-blank-before-new-entry (quote ((heading . auto) (plain-list-item . t))))
+ '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
