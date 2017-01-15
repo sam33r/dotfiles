@@ -362,8 +362,8 @@ exec feh --randomize --bg-fill ~/Wallpapers/*
 # Start the network management applet.
 exec nm-applet
 
-# Start volume applet.
-exec volti
+# Start pulse volume control system tray applet.
+exec pasystray
 
 # Machine specific commands
 exec --no-startup-id ~/startup.local.sh

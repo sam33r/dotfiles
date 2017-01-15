@@ -17,6 +17,8 @@ network-manager-gnome,network management ui
 network-manager,Network management applet
 nvidia-370,latest nvidia graphics drivers
 pandoc,convert between different document formats
+pasystray,Pulse audio system tray
+pavucontrol,Pulse audio controls
 python-dev,python
 python-pip,pip installer
 ranger,ls on steroids
@@ -27,7 +29,6 @@ suckless-tools,for dmenu (app launcher for xmonad)
 tmux,Terminal multiplexer useful for remoting
 vim-gtk,gvim
 vim,vim!
-volti,control volume
 w3m,command line based web browser
 xbacklight,Change display brightness
 xdotool,control mouse cursor with keyboard
