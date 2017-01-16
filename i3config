@@ -203,7 +203,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "$HOME/dotfiles/utils/power_menu"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -214,15 +214,15 @@ mode "resize" {
 # Pressing up will shrink the window’s height.
 # Pressing down will grow the window’s height.
   bindsym j resize grow width 10 px or 10 ppt
-    bindsym k resize shrink width 10 px or 10 ppt
-    bindsym l resize grow height 10 px or 10 ppt
-    bindsym h resize shrink height 10 px or 10 ppt
+    bindsym k resize shrink width 20 px or 20 ppt
+    bindsym l resize grow height 20 px or 20 ppt
+    bindsym h resize shrink height 20 px or 20 ppt
 
 # same bindings, but for the arrow keys
-    bindsym Left resize shrink width 10 px or 10 ppt
-    bindsym Down resize grow height 10 px or 10 ppt
-    bindsym Up resize shrink height 10 px or 10 ppt
-    bindsym Right resize grow width 10 px or 10 ppt
+    bindsym Left resize shrink width 20 px or 20 ppt
+    bindsym Down resize grow height 20 px or 20 ppt
+    bindsym Up resize shrink height 20 px or 20 ppt
+    bindsym Right resize grow width 20 px or 20 ppt
 
 # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -233,9 +233,9 @@ bindsym $mod+r mode "resize"
 
 mode "mouse" {
 
-    set $slow 2
-    set $quick 25
-    set $fast 100
+    set $slow 5
+    set $quick 100
+    set $fast 200
 
     # Mouse movement (slow/fine-tuned) -- vim keybindings
 
@@ -317,6 +317,7 @@ bindsym $mod+m mode "mouse"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+  font pango: Cousine for Powerline 10
   status_command i3blocks || i3status
   #tray_output primary
   colors {
