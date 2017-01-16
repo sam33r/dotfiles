@@ -374,8 +374,9 @@ you should place your code here."
   (add-hook 'text-mode-hook 'turn-on-fci-mode)
   (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
 
-  ;; Activate writeroom mode for org-mode
+  ;; Activate writeroom mode for org-mode and markdown-mode
   (add-hook 'org-mode-hook 'writeroom-mode 'append)
+  (add-hook 'markdown-mode-hook 'writeroom-mode 'append)
 
   ;; Turn off line numbers for org-mode. This causes weird slowdowns for large
   ;; org files.
