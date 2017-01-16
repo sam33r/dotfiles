@@ -7,11 +7,13 @@ docker-engine,docker
 feh,Image viewer useful for setting wallpaper in linux
 fish,fish terminal
 gcc,gnu compilers
+git-gui,GUI for git.
 gnome-sushi,Preview for nautilus
 gparted,partition management utility
 i3blocks,scheduler for i3bar blocks
 i3,tiling windows manager
 lm-sensors,sensors information
+meld,Diff tool.
 neovim,neovim editor
 network-manager-gnome,network management ui
 network-manager,Network management applet
