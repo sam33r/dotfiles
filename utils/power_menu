@@ -91,7 +91,8 @@ while getopts "hcp:" option; do
     p) preferred_launcher="${OPTARG}"
        check_launcher "${preferred_launcher}"
        ;;
-    *) exit 1
+    *) echo "Invalid CLI argument."
+       exit 1
        ;;
   esac
 done
@@ -103,6 +104,8 @@ function command_exists() {
 
 # systemctl required
 if ! command_exists systemctl ; then
+  echo "systemctl does not exist, using fallback."
+  i3-nagbar -t warning -m 'Exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'
   exit 1
 fi
 
@@ -152,6 +155,7 @@ done
 
 # No launcher available
 if [[ -z "${launcher_exe}" ]]; then
+  echo "No launcher was available"
   exit 1
 fi
 
