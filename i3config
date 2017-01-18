@@ -45,8 +45,7 @@ font pango: System San Francisco Display 10
 bindsym $mod+Return exec i3-sensible-terminal
 
 # Start editors with unused Function keys.
-bindsym F9 exec google-emacs || emacs
-bindsym F10 exec gvim
+bindsym F8 exec emacsclient -c
 
 # Start chromium / chrome
 bindsym F6 exec chromium-browser
@@ -186,7 +185,7 @@ assign [class="Spotify"] $ws10
 for_window [class="Spotify"] move to workspace $ws10
 
 # Float google-chrome windows
-for_window [class="Google-chrome"] floating enable
+# for_window [class="Google-chrome"] floating enable
 
 # Set max float size
 floating_maximum_size 1600 x 1400
@@ -349,6 +348,9 @@ bindsym XF86AudioPlay exec playerctl play
 bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
+bindsym F10 exec playerctl previous
+bindsym F11 exec playerctl play-pause
+bindsym F12 exec playerctl next
 
 # Run startup programs
 # This enables gtk settings from gnome, required for gtk themes.
@@ -371,11 +373,13 @@ exec --no-startup-id ~/startup.local.sh
 
 # Start google chrome and move it to scratchpad
 exec --no-startup-id google-chrome
-for_window [class="Google-chrome"] move scratchpad
+# for_window [class="Google-chrome"] move scratchpad
 
 # Start gnome terminal and move it to scratchpad
 exec --no-startup-id gnome-terminal --role scratchpad
 for_window [window_role="scratchpad"] move scratchpad
+
+for_window [title="Nexus 6P"] floating enable
 
 # No borders or title bars.
 new_window 1pixel
