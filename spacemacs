@@ -137,8 +137,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light)
+   dotspacemacs-themes '(spacemacs-dark ujelly spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -419,6 +418,24 @@ you should place your code here."
   (org-agenda nil "T")
   (delete-other-windows))
 
+(defun sa/write ()
+  (interactive)
+  (turn-off-fci-mode)
+  (setq word-wrap t)
+  (spacemacs/toggle-fringe-off)
+  (load-theme 'tao-yin t)
+  (linum-mode 0)
+  (writeroom-mode t)
+  (message "Activating writing mode"))
+
+(defun sa/code ()
+  (interactive)
+  (turn-on-fci-mode)
+  (spacemacs/toggle-fringe-on)
+  (writeroom-mode nil)
+  (load-theme 'spacemacs-dark t)
+  (message "Activating coding mode"))
+
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 (custom-set-variables
@@ -427,6 +444,9 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(browse-url-browser-function (quote 'browse-url-chromium))
+ '(custom-safe-themes
+   (quote
+    ("63dd8ce36f352b92dbf4f80e912ac68216c1d7cf6ae98195e287fd7c7f7cb189" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
  '(evil-want-Y-yank-to-eol nil)
  '(golden-ratio-mode t)
  '(org-agenda-custom-commands
