@@ -37,7 +37,6 @@ function install_external_repositories()                                        
   sudo add-apt-repository ppa:graphics-drivers/ppa
   sudo add-apt-repository ppa:lexical/hwe-wireless
   sudo add-apt-repository ppa:fish-shell/release-2
-  sudo add-apt-repository ppa:bit-team/stable
   sudo add-apt-repository ppa:neovim-ppa/unstable
 }
 
