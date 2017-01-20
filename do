@@ -321,6 +321,26 @@ function everystall()                                                           
   done
 }
 
+function tiny_install()                                                          # Do a tiny install of command line editing tools for servers etc.
+{
+  # Add support for installing external repositories.
+  sudo apt-get install software-properties-common
+
+  # Add emacs from a pre-built stable release.
+  # NOTE: This can go away when universal has emacs25.
+  sudo add-apt-repository ppa:kelleyk/emacs
+  sudo apt-get update
+  sudo apt-get install emacs25
+
+  sudo apt-get install vim openssl
+  install_update_vim_plugins
+  install_update_liquidprompt
+  install_update_spacemacs
+  install_update_transcrypt
+
+  install_dotfiles
+}
+
 function edit()
 {
   vim $0
