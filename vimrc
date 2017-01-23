@@ -63,6 +63,11 @@ Plugin 'mhinz/vim-signify'
 " Toggle by :AutoSaveToggle
 Plugin 'vim-scripts/vim-auto-save'
 
+" org-mode
+Plugin 'jceb/vim-orgmode'
+" Deps
+Plugin 'tpope/vim-speeddating'
+
 " Plugins for markdown editing.
 
 " Vim pencil plugin, utility functions for text editing.

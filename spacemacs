@@ -443,7 +443,7 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(browse-url-browser-function (quote 'browse-url-chromium))
+ '(browse-url-browser-function (quote (quote browse-url-chromium)))
  '(custom-safe-themes
    (quote
     ("63dd8ce36f352b92dbf4f80e912ac68216c1d7cf6ae98195e287fd7c7f7cb189" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
@@ -469,6 +469,7 @@ you should place your code here."
     ((daily weekly today require-timed)
      "----------------"
      (800 1000 1200 1400 1600 1800 2000))))
+ '(org-agenda-window-setup (quote current-window))
  '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))
  '(org-modules
    (quote
