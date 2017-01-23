@@ -421,11 +421,11 @@ you should place your code here."
 (defun sa/write ()
   (interactive)
   (turn-off-fci-mode)
-  (setq word-wrap t)
   (spacemacs/toggle-fringe-off)
   (load-theme 'tao-yin t)
   (linum-mode 0)
   (writeroom-mode t)
+  (setq word-wrap t)
   (message "Activating writing mode"))
 
 (defun sa/code ()
