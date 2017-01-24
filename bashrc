@@ -132,3 +132,10 @@ fi
 . $HOME/z/z.sh
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+if echo $- | grep -q 'i' && [[ -x /usr/bin/fish ]]; then
+  # safeguard to only work for interactive shells and only if /usr/bin/fish is executable
+  exec /usr/bin/fish -i
+fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

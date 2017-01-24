@@ -158,6 +158,15 @@ function install_update_z()
   cd $dir
 }
 
+function install_update_fzf()                                                    # Install fzf for command searches.
+{
+  git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+  $HOME/.fzf/install
+  cd $HOME/.fzf
+  git pull origin master
+  cd $dir
+}
+
 function install_playerctl()                                                     # PlayerCTL provides command-line tools to manage media playback.
 {
   # This retrieves download link of latest release.
