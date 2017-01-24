@@ -43,7 +43,12 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-complete-with-key-sequence "jk"
+                      auto-completion-complete-with-key-sequence-delay 0.07
+                      auto-completion-enable-help-tooltip t
+                      )
      emacs-lisp
      git
      (org :variables
@@ -57,6 +62,7 @@ values."
      version-control
      search-engine
      themes-megapack
+     ycmd
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -401,6 +407,9 @@ you should place your code here."
 
   ;; Turn on word wrap
   (setq word-wrap t)
+
+  ;; Enable auto-completion everywhere.
+  (global-company-mode)
 
   ;; Use tmp for backups and autosave.
   (setq backup-directory-alist
