@@ -123,7 +123,7 @@ bindsym $mod+x exec "~/dotfiles/utils/lock.sh"
 # lock automatically after inactivity
 exec xautolock -time 4 -locker "~/dotfiles/utils/lock.sh" &
 # notify user of auto-lock
-exec "~/dotfiles/utils/idle_notification.py" &
+exec "~/dotfiles/utils/idle_notification.py"
 
 # suspend
 bindsym $mod+Shift+x exec i3lock --color 475263 && dbus-send --system --dest=org.freedesktop.UPower --type=method_call --print-reply /org/freedesktop/UPower org.freedesktop.UPower.Suspend
