@@ -136,6 +136,9 @@ bindsym button2 kill
 
 # start rofi (a program launcher)
 bindsym $mod+d exec rofi -show run -lines 5 -eh 2 -width 50 -padding 80 -opacity "90" -bw 2 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" || dmenu_run
+# search desktop entries
+bindsym F2 exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -i'
+
 
 # workspace names
 set $ws1 "1: Main"
@@ -211,26 +214,26 @@ bindsym $mod+Shift+e exec "$HOME/dotfiles/utils/power_menu"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-# These bindings trigger as soon as you enter the resize mode
+  # These bindings trigger as soon as you enter the resize mode
 
-# Pressing left will shrink the window’s width.
-# Pressing right will grow the window’s width.
-# Pressing up will shrink the window’s height.
-# Pressing down will grow the window’s height.
-  bindsym j resize grow width 10 px or 10 ppt
-    bindsym k resize shrink width 20 px or 20 ppt
-    bindsym l resize grow height 20 px or 20 ppt
-    bindsym h resize shrink height 20 px or 20 ppt
+  # Pressing left will shrink the window’s width.
+  # Pressing right will grow the window’s width.
+  # Pressing up will shrink the window’s height.
+  # Pressing down will grow the window’s height.
+  bindsym j resize grow width 20 px or 20 ppt
+  bindsym k resize shrink width 20 px or 20 ppt
+  bindsym l resize grow height 20 px or 20 ppt
+  bindsym h resize shrink height 20 px or 20 ppt
 
-# same bindings, but for the arrow keys
-    bindsym Left resize shrink width 20 px or 20 ppt
-    bindsym Down resize grow height 20 px or 20 ppt
-    bindsym Up resize shrink height 20 px or 20 ppt
-    bindsym Right resize grow width 20 px or 20 ppt
+  # same bindings, but for the arrow keys
+  bindsym Left resize shrink width 20 px or 20 ppt
+  bindsym Down resize grow height 20 px or 20 ppt
+  bindsym Up resize shrink height 20 px or 20 ppt
+  bindsym Right resize grow width 20 px or 20 ppt
 
-# back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+  # back to normal: Enter or Escape
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
 }
 
 bindsym $mod+r mode "resize"
