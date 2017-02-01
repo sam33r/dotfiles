@@ -401,10 +401,6 @@ you should place your code here."
   (setq split-height-threshold nil)
   (setq split-width-threshold 80)
 
-  ;; now load any local init.
-  (load-file "~/.spacemacs.local")
-  (dotspacemacs-local-init/init)
-
   ;; Use spaces for indent.
   (setq indent-tabs-mode nil)
   (setq tab-width 2)
@@ -420,6 +416,11 @@ you should place your code here."
         `((".*" . ,temporary-file-directory)))
   (setq auto-save-file-name-transforms
         `((".*" ,temporary-file-directory t)))
+
+
+  ;; load any local init.
+  (load-file "~/.spacemacs.local")
+  (dotspacemacs-local-init/init)
   )
 
 (defun sa/orgmode ()
@@ -484,6 +485,7 @@ you should place your code here."
      (800 1000 1200 1400 1600 1800 2000))))
  '(org-agenda-window-setup (quote current-window))
  '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))
+ '(org-habit-show-habits-only-for-today t)
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
