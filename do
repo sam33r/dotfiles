@@ -167,6 +167,15 @@ function install_update_fzf()                                                   
   cd $dir
 }
 
+function install_update_term_theme()                                             # Installs solarized theme for Gnome Terminal.
+{
+  cd $HOME
+  git clone https://github.com/sigurdga/gnome-terminal-colors-solarized.git
+  cd $HOME/gnome-terminal-colors-solarized
+  git pull origin master
+  cd $dir
+}
+
 function install_playerctl()                                                     # PlayerCTL provides command-line tools to manage media playback.
 {
   # This retrieves download link of latest release.
