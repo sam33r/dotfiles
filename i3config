@@ -13,6 +13,7 @@ set $mod Mod4
 
 # color config
 set $bg-color            #464f63
+set $bg-color-highlight  #deffcc
 set $inactive-bg-color   #2f343f
 set $text-color          #f3f4f5
 set $inactive-text-color #676E7D
@@ -20,7 +21,7 @@ set $urgent-bg-color     #E53935
 
 # window colors
  #                       border              background         text                 indicator
- client.focused          $bg-color           $bg-color          $text-color          #00ff00
+ client.focused          $bg-color-highlight $bg-color          $text-color          #00ff00
  client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color #00ff00
  client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color #00ff00
  client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #00ff00
@@ -144,7 +145,7 @@ bindsym F2 exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -i'
 set $ws1 "1: Main"
 set $ws8 "8: TP"
 set $ws9 "9: Comms"
-set $ws10 "10: Music"
+set $ws10 "10: Agenda"
 # switch to workspace
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace 2
@@ -330,10 +331,10 @@ bar {
   colors {
 		background $inactive-bg-color
 	  separator #757575
-		#                  border             background         text
-		focused_workspace  $bg-color          $bg-color          $text-color
-		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
-		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+		#                  border              background         text
+		focused_workspace  $bg-color-highlight $bg-color          $text-color
+		inactive_workspace $inactive-bg-color  $inactive-bg-color $inactive-text-color
+		urgent_workspace   $urgent-bg-color    $urgent-bg-color   $text-color
   }
   position top
 }
@@ -386,8 +387,9 @@ exec --no-startup-id google-chrome
 # Start gnome terminal and move it to scratchpad
 exec --no-startup-id gnome-terminal --role scratchpad
 for_window [window_role="scratchpad"] move scratchpad
+for_window [window_role="scratchpad"] resize set 1600 1400
 
 for_window [title="Nexus 6P"] floating enable
 
 # No borders or title bars.
-new_window 1pixel
+new_window pixel 10
