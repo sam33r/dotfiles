@@ -386,8 +386,7 @@ exec --no-startup-id google-chrome
 
 # Start gnome terminal and move it to scratchpad
 exec --no-startup-id gnome-terminal --role scratchpad
-for_window [window_role="scratchpad"] move scratchpad
-for_window [window_role="scratchpad"] resize set 1600 1400
+for_window [window_role="scratchpad"] move scratchpad; resize set 1600 1400
 
 for_window [title="Nexus 6P"] floating enable
 
