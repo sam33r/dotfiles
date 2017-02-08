@@ -180,9 +180,9 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+Shift+apostrophe move scratchpad
 
 # show terminal scratchpad window
-bindsym $mod+apostrophe [class="Gnome-terminal"] scratchpad show
+bindsym $mod+minus [class="Gnome-terminal"] scratchpad show
 # show chrome scratchpad window
-bindsym $mod+minus [class="Google-chrome"] scratchpad show
+bindsym $mod+apostrophe [class="Google-chrome"] scratchpad show
 
 # This binding never works because the system binds it to some other action
 # before it even reaches i3. Not sure what that binding is.
