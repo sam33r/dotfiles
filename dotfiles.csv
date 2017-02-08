@@ -34,5 +34,6 @@ $HOME/.config/omf/theme,omf/theme
 $HOME/.config/redshift.conf,redshift.conf
 $HOME/.i3blocks.conf,i3blocks.conf
 $HOME/.spacemacs,spacemacs
+$HOME/startup.sh,startup.sh
 $HOME/.tvrc,tvrc
 $HOME/.vimrc,vimrc

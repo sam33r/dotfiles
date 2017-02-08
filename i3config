@@ -193,6 +193,8 @@ assign [class="Spotify"] $ws10
 # spotify does not assign a class at startup, workaround:
 for_window [class="Spotify"] move to workspace $ws10
 
+for_window [title="Nexus 6P"] floating enable
+
 # Float google-chrome windows
 # for_window [class="Google-chrome"] floating enable
 
@@ -364,21 +366,11 @@ bindsym F10 exec playerctl previous
 bindsym F11 exec playerctl play-pause
 bindsym F12 exec playerctl next
 
+# No borders or title bars.
+new_window pixel 10
+
 # Run startup programs
-# This enables gtk settings from gnome, required for gtk themes.
-exec gnome-settings-daemon
-# Hide from blue light at night.
-exec redshift-gtk
-# Run compton composition manager.
-exec_always compton -f
-# Start feh for wallpaper.
-exec feh --randomize --bg-fill ~/Wallpapers/*
-
-# Start the network management applet.
-exec nm-applet
-
-# Start pulse volume control system tray applet.
-exec pasystray
+exec --no-startup-id ~/startup.sh
 
 # Machine specific commands
 exec --no-startup-id ~/startup.local.sh
@@ -391,7 +383,3 @@ exec --no-startup-id google-chrome
 exec --no-startup-id gnome-terminal --role scratchpad
 for_window [window_role="scratchpad"] move scratchpad; resize set 1600 1400
 
-for_window [title="Nexus 6P"] floating enable
-
-# No borders or title bars.
-new_window pixel 10
