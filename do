@@ -311,6 +311,7 @@ function set_gnome_preferences()
 {
   gsettings set org.gnome.desktop.background show-desktop-icons false
   gsettings set com.canonical.desktop.interface scrollbar-mode normal
+  gsettings set org.gnome.desktop.interface cursor-size 48
 }
 
 
