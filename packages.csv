@@ -10,6 +10,7 @@ gcc,gnu compilers
 git-gui,GUI for git.
 gnome-sushi,Preview for nautilus
 gparted,partition management utility
+htop,top on steroids
 i3blocks,scheduler for i3bar blocks
 i3,tiling windows manager
 lm-sensors,sensors information
