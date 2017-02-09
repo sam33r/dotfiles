@@ -9,6 +9,7 @@ $HOME/.config/fish/functions/eo.fish,fish/eo.fish
 $HOME/.config/fish/functions/gitm.fish,fish/gitm.fish
 $HOME/.config/fish/functions/l.fish,fish/l.fish
 $HOME/.config/fish/functions/light.fish,fish/light.fish
+$HOME/.config/fish/functions/notify.fish,fish/notify.fish
 $HOME/.config/fish/functions/restart.fish,fish/restart.fish
 $HOME/.config/fish/functions/todos.fish,fish/todos.fish
 $HOME/.config/i3blocks/bandwidth,i3blocks/bandwidth
