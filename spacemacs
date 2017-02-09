@@ -204,7 +204,7 @@ values."
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
    ;; (default 'cache)
-   dotspacemacs-auto-save-file-location 'cache
+   dotspacemacs-auto-save-file-location 'original
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
@@ -225,7 +225,7 @@ values."
    dotspacemacs-enable-paste-transient-state nil
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
-   dotspacemacs-which-key-delay 0.4
+   dotspacemacs-which-key-delay 0.3
    ;; Which-key frame position. Possible values are `right', `bottom' and
    ;; `right-then-bottom'. right-then-bottom tries to display the frame to the
    ;; right; if there is insufficient space it displays it at the bottom.
@@ -435,7 +435,6 @@ you should place your code here."
   (interactive)
   ;; (turn-off-fci-mode)
   (spacemacs/toggle-fringe-off)
-  (load-theme 'tao-yin t)
   ;; (linum-mode 0)
   (writeroom-mode t)
   (setq word-wrap t)
@@ -443,7 +442,6 @@ you should place your code here."
 
 (defun sa/code ()
   (interactive)
-  (load-theme 'spacemacs-dark t)
   (fci-mode)
   (linum-mode 1)
   (spacemacs/toggle-fringe-on)
@@ -457,6 +455,7 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(browse-url-browser-function (quote (quote browse-url-chromium)))
+ '(create-lockfiles nil)
  '(custom-safe-themes
    (quote
     ("63dd8ce36f352b92dbf4f80e912ac68216c1d7cf6ae98195e287fd7c7f7cb189" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
@@ -502,3 +501,9 @@ you should place your code here."
  '(tab-stop-list (quote (2 4 6 8)))
  '(truncate-lines nil)
  '(vc-follow-symlinks t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:background nil)))))
