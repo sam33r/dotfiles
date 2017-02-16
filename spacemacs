@@ -420,6 +420,10 @@ you should place your code here."
         `((".*" . ,temporary-file-directory)))
   (setq auto-save-file-name-transforms
         `((".*" ,temporary-file-directory t)))
+
+  ;; Smarter frame title
+  (setq-default frame-title-format '("%b (emacs)"))
+
     )
 
 (defun sa/orgmode ()
