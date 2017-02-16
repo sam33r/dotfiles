@@ -136,9 +136,16 @@ bindsym button3 floating toggle
 bindsym button2 kill
 
 # start rofi (a program launcher)
-bindsym $mod+d exec rofi -show run -lines 5 -eh 2 -width 50 -padding 80 -opacity "90" -bw 2 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" || dmenu_run
+# TODO: The color scheme for rofi is a work in ugly progress.
+bindsym $mod+d exec rofi -show run -lines 5 -eh 2 -width 50 -padding 200 \
+-opacity "90" -color.enabled \
+-color-window "$bg-color" "$bg-color" "$text-color" "$bg-color" "#9575cd" \
+-bw 2 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" \
+-hlfg "#9575cd" || dmenu_run
 # search desktop entries
 bindsym F2 exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -i'
+# switch windows
+bindsym F3 exec --no-startup-id rofi -show window
 
 
 # workspace names
@@ -223,16 +230,16 @@ mode "resize" {
   # Pressing right will grow the window’s width.
   # Pressing up will shrink the window’s height.
   # Pressing down will grow the window’s height.
-  bindsym j resize grow width 20 px or 20 ppt
-  bindsym k resize shrink width 20 px or 20 ppt
-  bindsym l resize grow height 20 px or 20 ppt
-  bindsym h resize shrink height 20 px or 20 ppt
+  bindsym j resize grow width 10 px or 10 ppt
+  bindsym k resize shrink width 10 px or 10 ppt
+  bindsym l resize grow height 10 px or 10 ppt
+  bindsym h resize shrink height 10 px or 10 ppt
 
   # same bindings, but for the arrow keys
-  bindsym Left resize shrink width 20 px or 20 ppt
-  bindsym Down resize grow height 20 px or 20 ppt
-  bindsym Up resize shrink height 20 px or 20 ppt
-  bindsym Right resize grow width 20 px or 20 ppt
+  bindsym Left resize shrink width 10 px or 10 ppt
+  bindsym Down resize grow height 10 px or 10 ppt
+  bindsym Up resize shrink height 10 px or 10 ppt
+  bindsym Right resize grow width 10 px or 10 ppt
 
   # blow up window (for floating windows)
   bindsym b resize set 1600 1400; move absolute position center
@@ -382,4 +389,3 @@ exec --no-startup-id google-chrome
 # Start gnome terminal and move it to scratchpad
 exec --no-startup-id gnome-terminal --role scratchpad
 for_window [window_role="scratchpad"] move scratchpad; resize set 1600 1400
-
