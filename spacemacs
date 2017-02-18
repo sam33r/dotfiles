@@ -424,7 +424,16 @@ you should place your code here."
   ;; Smarter frame title
   (setq-default frame-title-format '("%b (emacs)"))
 
-    )
+  )
+
+
+(defun sa/notify (headline-string message-string)
+  """Send message to notification"""
+  (shell-command (concat "notify-send --expire-time=30000 --icon=emacs \""
+                         headline-string
+                         "\" \""
+                         message-string
+                         "\"")))
 
 (defun sa/orgmode ()
   (org-agenda)
