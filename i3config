@@ -41,16 +41,10 @@ font pango: System San Francisco Display 10
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
-
-# start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
-
-# Start editors with unused Function keys.
-bindsym F8 exec emacsclient -c
-
-# Start chromium / chrome
-bindsym F6 exec chromium-browser
+# Function keys to open common apps.
+bindsym F6 exec i3-sensible-terminal
 bindsym F7 exec google-chrome
+bindsym F8 exec emacsclient -c ~
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -139,16 +133,16 @@ bindsym button3 floating toggle
 bindsym button2 kill
 
 # start rofi (a program launcher)
-# TODO: The color scheme for rofi is a work in ugly progress.
-bindsym $mod+d exec rofi -show run -lines 5 -eh 2 -width 50 -padding 200 \
--opacity "90" -color.enabled \
--color-window "$bg-color" "$bg-color" "$text-color" "$bg-color" "#9575cd" \
--bw 2 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" \
--hlfg "#9575cd" || dmenu_run
 # search desktop entries
 bindsym F2 exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -i'
 # switch windows
 bindsym F3 exec --no-startup-id rofi -show window
+# TODO: The color scheme for rofi is a work in ugly progress.
+bindsym F4 exec rofi -show run -lines 5 -eh 2 -width 50 -padding 200 \
+-opacity "90" -color.enabled \
+-color-window "$bg-color" "$bg-color" "$text-color" "$bg-color" "#9575cd" \
+-bw 2 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" \
+-hlfg "#9575cd" || dmenu_run
 
 
 # workspace names
