@@ -30,4 +30,3 @@ sleep 2
 # Start pulse volume control system tray applet.
 pasystray &
 
-
