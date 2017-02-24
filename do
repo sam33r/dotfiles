@@ -248,6 +248,12 @@ function install_update_transcrypt()
   cd $dir
 }
 
+function update_hosts()                                                          # Update the system hosts file (Via StevenBlack/hosts).
+{
+  sudo python $HOME/hosts/updateHostsFile.py --extensions fakenews \
+      gambling porn social
+}
+
 function set_gnome_preferences()
 {
   gsettings set org.gnome.desktop.background show-desktop-icons false
