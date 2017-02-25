@@ -12,7 +12,7 @@
 set $mod Mod4
 
 # color config
-set $bg-color            #464f63
+set $bg-color            #0086b7
 set $bg-color-highlight  #deffcc
 set $inactive-bg-color   #2f343f
 set $text-color          #f3f4f5
@@ -137,6 +137,7 @@ bindsym button2 kill
 bindsym F2 exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -i'
 # switch windows
 bindsym F3 exec --no-startup-id rofi -show window
+bindsym $mod+Return exec --no-startup-id rofi -show window
 # TODO: The color scheme for rofi is a work in ugly progress.
 bindsym F4 exec rofi -show run -lines 5 -eh 2 -width 50 -padding 200 \
 -opacity "90" -color.enabled \
@@ -146,15 +147,18 @@ bindsym F4 exec rofi -show run -lines 5 -eh 2 -width 50 -padding 200 \
 
 
 # workspace names
-set $ws1 "1: Main"
-set $ws8 "8: TP"
-set $ws9 "9: Comms"
-set $ws10 "10: Agenda"
+set $ws1 "1 P1"
+set $ws2 "2 P1"
+set $ws3 "3 P2"
+set $ws4 "4 P2"
+set $ws8 "8 TP"
+set $ws9 "9 Comms"
+set $ws10 "0 Agenda"
 # switch to workspace
 bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
 bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
@@ -164,9 +168,9 @@ bindsym $mod+0 workspace $ws10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
 bindsym $mod+Shift+5 move container to workspace 5
 bindsym $mod+Shift+6 move container to workspace 6
 bindsym $mod+Shift+7 move container to workspace 7
@@ -184,9 +188,9 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+Shift+apostrophe move scratchpad
 
 # show terminal scratchpad window
-bindsym $mod+minus [class="Gnome-terminal"] scratchpad show
+bindsym $mod+minus scratchpad show
 # show chrome scratchpad window
-bindsym $mod+apostrophe [class="Google-chrome"] scratchpad show
+bindsym $mod+apostrophe workspace back_and_forth
 
 # This binding never works because the system binds it to some other action
 # before it even reaches i3. Not sure what that binding is.
@@ -205,19 +209,19 @@ for_window [title="Nexus 6P"] floating enable
 # Set max float size
 floating_maximum_size 1600 x 1400
 
-# focus on specific applications.
-bindsym $mod+y [title=".* Mail.*|.*Gmail.*"] focus
-bindsym $mod+u [class="Emacs.*|Gvim"] focus
-bindsym $mod+i [class="Gnome-terminal"] focus
-bindsym $mod+o [class="chromium-browser"] focus
-bindsym $mod+p [class="Google-chrome"] focus
-
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "$HOME/dotfiles/utils/power_menu"
+
+# passthrough mode (pass through i3 keybindings).
+mode "passthrough" {
+  bindsym Escape mode "default"
+}
+
+bindsym $mod+p mode "passthrough"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -331,6 +335,8 @@ mode "mouse" {
 
 bindsym $mod+m mode "mouse"
 
+
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
@@ -387,3 +393,7 @@ exec --no-startup-id google-chrome
 # Start gnome terminal and move it to scratchpad
 exec --no-startup-id gnome-terminal --role scratchpad
 for_window [window_role="scratchpad"] move scratchpad; resize set 1600 1400
+
+# Start i3 utils
+exec_always --no-startup-id python ~/dotfiles/utils/i3utils.py
+

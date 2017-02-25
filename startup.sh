@@ -10,11 +10,6 @@ sleep 2
 # Run compton composition manager.
 compton -f &
 
-sleep 5
-
-# Hide from blue light at night.
-redshift-gtk &
-
 sleep 2
 
 # Start feh for wallpaper.
@@ -29,4 +24,16 @@ sleep 2
 
 # Start pulse volume control system tray applet.
 pasystray &
+
+sleep 10
+
+# Start offlineimap.
+# TODO: This should be a daemon instead.
+offlineimap &
+
+sleep 5
+
+# Hide from blue light at night.
+redshift-gtk &
+
 

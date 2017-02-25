@@ -1,6 +1,5 @@
 acpi,used to display battery status
 broadcom-sta-dkms,broadcom wifi drivers
-chromium-browser,open source web browser
 clonezilla,Bare-metal backup for linux.
 compton,Simple standalone composite manager (For use with xmonad)
 docker-engine,docker
@@ -9,6 +8,7 @@ fish,fish terminal
 gcc,gnu compilers
 git-gui,GUI for git.
 gnome-sushi,Preview for nautilus
+gnutls-bin,Sending mail from mu4e.
 gparted,partition management utility
 htop,top on steroids
 i3blocks,scheduler for i3bar blocks
