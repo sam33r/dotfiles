@@ -498,14 +498,26 @@ you should place your code here."
 
   ;; Use tmp for backups and autosave.
   (setq backup-directory-alist
-        `((".*" . ,temporary-file-directory)))
+        `((".*" . , "~/.emacs_backups")))
   (setq auto-save-file-name-transforms
         `((".*" ,temporary-file-directory t)))
+  ;; Store many backups
+  (setq delete-old-versions -1)
+  (setq version-control t)
+  (setq vc-make-backup-files t)
+  ;; Keep history
+  (setq savehist-file "~/.emacs_history")
+  (savehist-mode 1)
+  (setq history-length 1)
+  (setq history-delete-duplicates t)
+  (setq savehist-save-minibuffer-history 1)
 
   ;; Smarter frame title
   (setq-default frame-title-format '("%b (emacs)"))
 
   )
+
+
 
 
 (defun sa/notify (headline-string message-string)

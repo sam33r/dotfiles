@@ -50,32 +50,6 @@ function install_update_packages()
   done < $dir/$packages_list
 }
 
-function edit_packages()
-{
-  vim $dir/$packages_list
-}
-
-function add_package()                                                           # Install a package and add it to the package list
-{
-  set -e
-
-  echo "Package: "
-  read package
-
-  printf "\n\n"
-
-  echo "Purpose: "
-  read description
-
-  sudo apt-get install $package
-
-  echo "Installed package, now adding to registry."
-  echo "$package,$description" >> $dir/$packages_list
-  sort $dir/$packages_list -o $dir/$packages_list
-
-  echo "Done."
-}
-
 function install_dotfiles()
 {
   while IFS=, read config_path dotfile_path
@@ -92,40 +66,6 @@ function install_dotfiles()
     mkdir -p `dirname ${cpath}`
     ln -fs "${dir}"/"${dpath}" "${cpath}"
   done < $dir/$dotfiles_list
-}
-
-function edit_dotfiles()                                                         # Edit the dotfiles list
-{
-  vim $dir/$dotfiles_list
-}
-
-function dotify()                                                                # Move an existing dotfile to this project
-{
-  set -e
-
-  echo "Enter source file path (relative to $HOME):"
-  printf $HOME/
-  read src_path
-
-  echo "Enter destination path:"
-  printf $dir/
-  read dest_path
-
-  echo "Moving $HOME/$src_path to $dir/$dest_path"
-
-  mkdir -p `dirname $dir/$dest_path`
-  mv $HOME/$src_path $dir/$dest_path
-
-  echo "Adding to dotfiles config"
-  echo \$HOME/$src_path,$dest_path >> $dir/dotfiles.csv
-
-  sort $dir/$dotfiles_list -o $dir/$dotfiles_list
-
-
-  echo "Linking $HOME/$src_path to $dir/$dest_path"
-  ln -fs $dir/$dest_path $HOME/$src_path
-
-  echo "Done."
 }
 
 function install_pip_packages()
@@ -308,6 +248,12 @@ function install_update_transcrypt()
   cd $dir
 }
 
+function update_hosts()                                                          # Update the system hosts file (Via StevenBlack/hosts).
+{
+  sudo python $HOME/hosts/updateHostsFile.py --extensions fakenews \
+      gambling porn social
+}
+
 function set_gnome_preferences()
 {
   gsettings set org.gnome.desktop.background show-desktop-icons false
@@ -315,6 +261,70 @@ function set_gnome_preferences()
   gsettings set org.gnome.desktop.interface cursor-size 48
 }
 
+function dotify()                                                                # Move an existing dotfile to this project.
+{
+  set -e
+
+  echo "Enter source file path (relative to $HOME):"
+  printf $HOME/
+  read src_path
+
+  echo "Enter destination path:"
+  printf $dir/
+  read dest_path
+
+  echo "Moving $HOME/$src_path to $dir/$dest_path"
+
+  mkdir -p `dirname $dir/$dest_path`
+  mv $HOME/$src_path $dir/$dest_path
+
+  echo "Adding to dotfiles config"
+  echo \$HOME/$src_path,$dest_path >> $dir/dotfiles.csv
+
+  sort $dir/$dotfiles_list -o $dir/$dotfiles_list
+
+
+  echo "Linking $HOME/$src_path to $dir/$dest_path"
+  ln -fs $dir/$dest_path $HOME/$src_path
+
+  echo "Done."
+}
+
+function add_package()                                                           # Install a package and add it to the package list
+{
+  set -e
+
+  echo "Package: "
+  read package
+
+  printf "\n\n"
+
+  echo "Purpose: "
+  read description
+
+  sudo apt-get install $package
+
+  echo "Installed package, now adding to registry."
+  echo "$package,$description" >> $dir/$packages_list
+  sort $dir/$packages_list -o $dir/$packages_list
+
+  echo "Done."
+}
+
+function edit()
+{
+  vim $0
+}
+
+function edit_packages()                                                         # Edit the packages list.
+{
+  vim $dir/$packages_list
+}
+
+function edit_dotfiles()                                                         # Edit the dotfiles list.
+{
+  vim $dir/$dotfiles_list
+}
 
 #--------------------------------------------------------------------------------
 # Common functions (Don't change)
@@ -326,15 +336,14 @@ function everystall()                                                           
   printf "The following functions will be run, in the order specified here:"
   printf "\n\n$install_fns\n\n"
 
-  echo -n "Continue (y/n)? "
-  read answer
-  if echo "$answer" | grep -iq "^n" ;then
-    exit
-  fi
-
   for install_fn in $install_fns
   do
-    echo $install_fn
+    printf "\n\n$install_fn\n\n"
+    echo -n "Run this? (y/n) "
+    read answer
+    if echo "$answer" | grep -iq "^n" ;then
+      continue
+    fi
     cd $dir
     $install_fn
     printf "\n\n"
@@ -361,18 +370,14 @@ function tiny_install()                                                         
   install_dotfiles
 }
 
-function edit()
-{
-  vim $0
-}
-
 function help()
 {
   printf "\n"
   echo "Usage: do <function>"
   printf "\n"
   echo "Valid functions:"
-  grep "^function" $0
+  printf "\n"
+  awk '/^function /{s = ""; for (i = 4; i <= NF; i++) s = s $i " "; printf("%40s   %s\n",substr($2, 1, length($2) - 2), s)}' $0
 }
 
 if [ "_$1" = "_" ]; then
