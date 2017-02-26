@@ -248,6 +248,27 @@ function install_update_transcrypt()
   cd $dir
 }
 
+function install_mu4e_from_tarball()                                             # Install mu4e from github tarball (apt version is too old).
+{
+  if type "mu" > /dev/null; then
+    echo "mu already exists"
+    return
+  fi
+
+  wget -O "$HOME/Downloads/mu.tar.gz" \
+      "https://github.com/djcb/mu/releases/download/0.9.18/mu-0.9.18.tar.gz"
+  cd $HOME/Downloads
+  tar xvfz mu.tar.gz
+  cd mu
+  ./configure && make
+  sudo make install
+
+  cd ..
+  rm -Rf mu
+  rm -f mu.tar.gz
+  cd $dir
+}
+
 function update_hosts()                                                          # Update the system hosts file (Via StevenBlack/hosts).
 {
   sudo python $HOME/hosts/updateHostsFile.py --extensions fakenews \
