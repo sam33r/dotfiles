@@ -1,4 +1,5 @@
 acpi,used to display battery status
+autoconf-archive,For manual make
 broadcom-sta-dkms,broadcom wifi drivers
 clonezilla,Bare-metal backup for linux.
 compton,Simple standalone composite manager (For use with xmonad)
