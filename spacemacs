@@ -308,6 +308,8 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  ;; load mu4e from local build path.
+  (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
   )
 
 (defun dotspacemacs/user-config ()
@@ -407,6 +409,7 @@ you should place your code here."
   (setq mu4e-drafts-folder "/[Gmail].Drafts")
   (setq mu4e-sent-folder "/[Gmail].Sent Mail")
   (setq mu4e-trash-folder "/[Gmail].Trash")
+  (setq mu4e-refile-folder "/[Gmail].All Mail")
 
   ;; setup some handy shortcuts
   ;; you can quickly switch to your Inbox -- press ``ji''
@@ -414,7 +417,7 @@ you should place your code here."
   ;; the 'All Mail' folder by pressing ``ma''.
   (setq mu4e-maildir-shortcuts
         '( ("/INBOX"               . ?i)
-           ("/[Gmail].Sent Mail"   . ?s)
+           ("/[Gmail].Starred"   . ?s)
            ("/[Gmail].Trash"       . ?t)
            ("/[Gmail].All Mail"    . ?a)))
 
@@ -422,13 +425,11 @@ you should place your code here."
   (setq mu4e-sent-messages-behavior 'delete)
 
   ;; convert html to text.
-  (setq mu4e-html2text-command "html2text utf8")
-  ;;(setq mu4e-html2text-command "pandoc -f html -t plain --normalize")
-
-  ;; add option to view html message in a browser
-  ;; `aV` in view to activate
-  (add-to-list 'mu4e-view-actions
-               '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+  ;; (setq mu4e-html2text-command 'mu4e-shr2text')
+  ;; (setq mu4e-html2text-command "html2markdown --body-width=0 | sed \"s/&nbsp_place_holder;/ /g; /^$/d\"")
+  ;; (setq mu4e-html2text-command "w3m -T text/html")
+  ;; (setq mu4e-html2text-command "html2text -utf8")
+  ;; (setq mu4e-html2text-command "pandoc -f html -t plain --normalize")
 
   ;; Bookmarks for the homepage.
   (setq mu4e-bookmarks
@@ -557,7 +558,7 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(browse-url-browser-function (quote (quote browse-url-chromium)))
+ '(browse-url-browser-function (quote browse-url-chrome))
  '(create-lockfiles nil)
  '(custom-safe-themes
    (quote
