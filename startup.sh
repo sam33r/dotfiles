@@ -31,12 +31,6 @@ gnome-keyring-daemon &
 
 sleep 10
 
-# Start offlineimap.
-# TODO: This should be a daemon instead.
-offlineimap &
-
-sleep 5
-
 # Hide from blue light at night.
 redshift-gtk &
 
