@@ -406,21 +406,7 @@ you should place your code here."
   ;; Account is configured in the .local config, the following assumes it's a
   ;; gmail account.
 
-  (setq mu4e-drafts-folder "/[Gmail].Drafts")
-  (setq mu4e-sent-folder "/[Gmail].Sent Mail")
-  (setq mu4e-trash-folder "/[Gmail].Trash")
-  (setq mu4e-refile-folder "/[Gmail].All Mail")
-
-  ;; setup some handy shortcuts
-  ;; you can quickly switch to your Inbox -- press ``ji''
-  ;; then, when you want archive some messages, move them to
-  ;; the 'All Mail' folder by pressing ``ma''.
-  (setq mu4e-maildir-shortcuts
-        '( ("/INBOX"               . ?i)
-           ("/[Gmail].Starred"   . ?s)
-           ("/[Gmail].Trash"       . ?t)
-           ("/[Gmail].All Mail"    . ?a)))
-
+  
   ;; don't save message to Sent Messages, GMail/IMAP will take care of this
   (setq mu4e-sent-messages-behavior 'delete)
 
@@ -490,10 +476,6 @@ you should place your code here."
   ;; Enable auto-completion everywhere.
   (global-company-mode)
 
-  ;; load any local init.
-  (load-file "~/.spacemacs.local")
-  (dotspacemacs-local-init/init)
-
   ;; Use tmp for backups and autosave.
   (setq backup-directory-alist
         `((".*" . , "~/.emacs_backups")))
@@ -513,6 +495,9 @@ you should place your code here."
   ;; Smarter frame title
   (setq-default frame-title-format '("%b (emacs)"))
 
+  ;; load any local init.
+  (load-file "~/.spacemacs.local")
+  (dotspacemacs-local-init/init)
   )
 
 
