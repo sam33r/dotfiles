@@ -259,12 +259,12 @@ function install_mu4e_from_tarball()                                            
       "https://github.com/djcb/mu/releases/download/0.9.18/mu-0.9.18.tar.gz"
   cd $HOME/Downloads
   tar xvfz mu.tar.gz
-  cd mu
+  cd "mu-0.9.18"
   ./configure && make
   sudo make install
 
   cd ..
-  rm -Rf mu
+  rm -Rf "mu-0.9.18"
   rm -f mu.tar.gz
   cd $dir
 }
