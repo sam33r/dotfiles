@@ -23,7 +23,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 
 " Commenting
-Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-commentary'
 
 " Syntax checking
 Plugin 'scrooloose/syntastic'
@@ -88,6 +88,9 @@ Plugin 'reedes/vim-litecorrect'
 
 " Distraction free writing
 Plugin 'junegunn/goyo.vim'
+
+" Spacemacs keybindings for vim
+Plugin 'meitham/vim-spacemacs'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -170,6 +173,10 @@ filetype plugin indent on    " required
 
 " VIM Config
 " -------------------------------------------------------------------------
+
+" Set leaders (space to mimic spacemacs).
+let mapleader=" "
+let maplocalleader=","
 
 " Set terminal window title based on vim buffer.
 autocmd BufEnter * let &titlestring = ' VIM : ' . expand("%:t")
