@@ -378,11 +378,7 @@ you should place your code here."
   ;;
   ;; Hooks.
   ;;
-
-  ;; Format C++ files on save.
-  (add-hook 'c++-mode-hook
-            (lambda()
-              (add-hook 'before-save-hook 'clang-format-buffer)))
+  (add-hook 'before-save-hook 'sa/formatcpponsave)
 
   ;; Activate column indicator in prog-mode and text-mode, except for org-mode
   (add-hook 'prog-mode-hook 'fci-mode)
@@ -515,9 +511,6 @@ you should place your code here."
   (dotspacemacs-local-init/init)
   )
 
-
-
-
 (defun sa/notify (headline-string message-string)
   """Send message to notification"""
   (shell-command (concat "notify-send --expire-time=30000 --icon=emacs \""
@@ -550,6 +543,13 @@ you should place your code here."
   (linum-mode 1)
   (spacemacs/toggle-fringe-on)
   (message "Activating coding mode"))
+
+;; Format C++ files on save.
+(defun sa/formatcpponsave ()
+  (interactive)
+  (message "In before-hook")
+  (when (eq major-mode 'c++-mode) (clang-format-buffer))
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
