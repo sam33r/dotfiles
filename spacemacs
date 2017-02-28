@@ -426,6 +426,7 @@ you should place your code here."
   ;; (setq mu4e-html2text-command "pandoc -f html -t plain --normalize")
 
   ;; Bookmarks for the homepage.
+  ;; TODO: These need to be context-sensitive.
   (setq mu4e-bookmarks
         `(("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
           ("date:today..now" "Today's messages" ?t)
@@ -446,6 +447,12 @@ you should place your code here."
   (with-eval-after-load 'mu4e-alert
     ;; Enable Desktop notifications
     (mu4e-alert-set-default-style 'notifications)) ; For linux
+
+  ;; Display images inline.
+  (setq mu4e-view-show-images t)
+  ;; use imagemagick, if available
+  (when (fboundp 'imagemagick-register-types)
+    (imagemagick-register-types))
 
 
   ;;
