@@ -44,7 +44,7 @@ font pango: System San Francisco Display 10
 # Function keys to open common apps.
 bindsym F6 exec i3-sensible-terminal
 bindsym F7 exec google-chrome
-bindsym F8 exec emacsclient -c ~
+bindsym F8 exec emacsclient -c -e '(spacemacs/switch-to-scratch-buffer)'
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -385,15 +385,9 @@ exec --no-startup-id ~/startup.sh
 # Machine specific commands
 exec --no-startup-id ~/startup.local.sh
 
-# Start google chrome and move it to scratchpad
-exec --no-startup-id google-chrome
-# for_window [class="Google-chrome"] move scratchpad
-# no_focus [class="Google-chrome"]
-
 # Start gnome terminal and move it to scratchpad
 exec --no-startup-id gnome-terminal --role scratchpad
 for_window [window_role="scratchpad"] move scratchpad; resize set 1600 1400
 
 # Start i3 utils
 exec_always --no-startup-id python ~/dotfiles/utils/i3utils.py
-
