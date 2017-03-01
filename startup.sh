@@ -28,10 +28,3 @@ pasystray &
 sleep 2
 
 gnome-keyring-daemon &
-
-sleep 10
-
-# Hide from blue light at night.
-redshift-gtk &
-
-
