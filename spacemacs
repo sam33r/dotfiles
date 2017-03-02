@@ -470,6 +470,12 @@ you should place your code here."
   (when (fboundp 'imagemagick-register-types)
     (imagemagick-register-types))
 
+  ;; Allow reflowing of emails.
+  ;; https://www.djcbsoftware.nl/code/mu/mu4e/Writing-messages.html
+  (setq mu4e-compose-format-flowed t)
+
+  ;; Don't CC myself in sent emails.
+  (setq mu4e-compose-keep-self-cc nil)
 
   ;;
   ;; Other spacemacs settings.
