@@ -405,17 +405,21 @@ you should place your code here."
   ;; prefer html rendering by default.
   (setq mu4e-view-prefer-html t)
 
-  (defun sa/mu4e-view-toggle-html ()
-    "Toggle between preferring html and non-html views of a message.
-     The current message is refreshed with the new setting, but the
-     setting applies to all messages. Note that based on the email content, the
+  (defun sa/mu4e-prefer-html ()
+    "Prefer html formatting. Note that based on the email content, the
      actual view might not change."
     (interactive)
-    (setq mu4e-view-prefer-html (not mu4e-view-prefer-html))
+    (setq mu4e-view-prefer-html t)
+    (mu4e-view-refresh))
+  (defun sa/mu4e-prefer-text ()
+    "Prefer html formatting. Note that based on the email content, the
+     actual view might not change."
+    (interactive)
+    (setq mu4e-view-prefer-html nil)
     (mu4e-view-refresh))
 
   ;; convert html to text.
-  (setq mu4e-html2text-command 'mu4e-shr2text)
+  ;; (setq mu4e-html2text-command 'mu4e-shr2text)
   ;; (setq mu4e-html2text-command "html2markdown --body-width=0 | sed \"s/&nbsp_place_holder;/ /g; /^$/d\"")
   ;; (setq mu4e-html2text-command "w3m -T text/html")
   ;; (setq mu4e-html2text-command "html2text -utf8")
