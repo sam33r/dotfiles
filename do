@@ -269,6 +269,11 @@ function install_mu4e_from_tarball()                                            
   cd $dir
 }
 
+function theme()                                                                 # Change Gnome Terminal theme.
+{
+  wget -O xt  http://git.io/vGz67 && chmod +x xt && ./xt && rm xt
+}
+
 function update_hosts()                                                          # Update the system hosts file (Via StevenBlack/hosts).
 {
   sudo python $HOME/hosts/updateHostsFile.py --extensions fakenews \
