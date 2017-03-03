@@ -481,6 +481,10 @@ you should place your code here."
   ;; Other spacemacs settings.
   ;;
 
+  ;; Toggle menu bar on by default.
+  ;; ~SPC t m~ to toggle at runtime.
+  (spacemacs/toggle-menu-bar-on)
+
   ;; j/k go to next visual line.
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
