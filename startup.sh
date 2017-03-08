@@ -16,8 +16,9 @@ compton -f &
 
 sleep 2
 
-# Start feh for wallpaper.
-feh --randomize --bg-fill ~/Wallpapers/* &
+# Hack to unlock keyring manually, because I can't figure out
+# how to unlock keyring automatically for i3.
+gnome-terminal -e "python -c 'import keyring; keyring.get_password(\"\",\"\")'"
 
 sleep 2
 
@@ -28,3 +29,8 @@ sleep 2
 
 # Start pulse volume control system tray applet.
 pasystray &
+
+sleep 2
+
+# Start feh for wallpaper.
+feh --randomize --bg-fill ~/Wallpapers/* &
