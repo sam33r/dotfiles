@@ -135,9 +135,12 @@ bindsym button2 kill
 # start rofi (a program launcher)
 # search desktop entries
 bindsym F2 exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -i'
-# switch windows
-bindsym F3 exec --no-startup-id rofi -show window
-bindsym $mod+Return exec --no-startup-id rofi -show window
+# switch and kill windows
+bindsym $mod+Return exec --no-startup-id python3 ~/dotfiles/utils/i3-container-commander.py \
+    --menu=rofi --group-by=none -- -i
+bindsym $mod+Shift+Return exec --no-startup-id python3 ~/dotfiles/utils/i3-container-commander.py \
+    --menu=rofi --group-by=none --command=kill -- -i
+
 # TODO: The color scheme for rofi is a work in ugly progress.
 bindsym F4 exec rofi -show run -lines 5 -eh 2 -width 50 -padding 200 \
 -opacity "90" -color.enabled \
