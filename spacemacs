@@ -446,7 +446,7 @@ you should place your code here."
   (setq mu4e-bookmarks
         `(("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
           ("date:today..now" "Today's messages" ?t)
-          ("date:7d..now" "Last 7 days" ?w)
+          ("flag:flagged" "Flagged (ie Starred)" ?s)
           ("mime:image/*" "Messages with images" ?p)
           (,(mapconcat 'identity
                        (mapcar
