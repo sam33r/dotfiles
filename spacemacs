@@ -329,6 +329,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   ;; load mu4e from local build path.
   (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
+
+  (setq-default git-magit-status-fullscreen t)
   )
 
 (defun dotspacemacs/user-config ()
