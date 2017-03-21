@@ -9,6 +9,7 @@ $HOME/.config/fish/functions/dark.fish,fish/dark.fish
 $HOME/.config/fish/functions/do.fish,fish/do.fish
 $HOME/.config/fish/functions/eo.fish,fish/eo.fish
 $HOME/.config/fish/functions/gitm.fish,fish/gitm.fish
+$HOME/.config/fish/functions/h.fish,fish/h.fish
 $HOME/.config/fish/functions/l.fish,fish/l.fish
 $HOME/.config/fish/functions/light.fish,fish/light.fish
 $HOME/.config/fish/functions/notify.fish,fish/notify.fish
