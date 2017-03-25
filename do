@@ -352,6 +352,15 @@ function edit_dotfiles()                                                        
   vim $dir/$dotfiles_list
 }
 
+# -------------------------------------------------------------------------------
+# Docker Functions:
+# Experimenting with using docker to load tui/gui apps.
+# -------------------------------------------------------------------------------
+function htop()                                                                  # Run htop
+{
+  docker run --rm -it --pid host jess/htop
+}
+
 #--------------------------------------------------------------------------------
 # Common functions (Don't change)
 #--------------------------------------------------------------------------------
