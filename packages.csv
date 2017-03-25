@@ -23,6 +23,7 @@ nvidia-370,latest nvidia graphics drivers
 pandoc,convert between different document formats
 pasystray,Pulse audio system tray
 pavucontrol,Pulse audio controls
+python3-pip,pip for python3
 python-dev,python
 python-pip,pip installer
 ranger,ls on steroids
