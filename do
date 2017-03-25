@@ -73,6 +73,7 @@ function install_pip_packages()
   sudo pip install --upgrade pip
   sudo pip install --upgrade howdoi
   sudo pip install --upgrade i3ipc
+  sudo pip3 install --upgrade i3ipc
 }
 
 function install_update_vim_plugins()
