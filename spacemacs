@@ -329,6 +329,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   ;; load mu4e from local build path.
   (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
+
+  (setq-default git-magit-status-fullscreen t)
   )
 
 (defun dotspacemacs/user-config ()
@@ -493,6 +495,8 @@ you should place your code here."
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 
 
+
+
   ;; Turn off line numbers for org-mode. This causes weird slowdowns for large
   ;; org files.
   (defun nolinum ()
@@ -576,6 +580,23 @@ you should place your code here."
   (linum-mode 1)
   (spacemacs/toggle-fringe-on)
   (message "Activating coding mode"))
+
+(defun sa/shell-insert (command)
+  "Run a shell command and insert output"
+  (interactive "sCommand to run: ")
+  (insert (shell-command-to-string command)))
+
+(defun sa/shell-on-range-insert (command)
+  "Run a shell command and insert output"
+  (interactive "sCommand to run (prefixes any selected text): ")
+  (insert (shell-command-to-string
+           (concat command " " (buffer-substring (region-beginning) (region-end))))))
+
+(defun sa/mail ()
+  "Open emacs and run mu4e"
+  (dotspacemacs/user-config)
+  (mu4e))
+
 
 ;; Format C++ files on save.
 (defun sa/formatcpponsave ()

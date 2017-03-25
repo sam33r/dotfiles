@@ -8,7 +8,9 @@ $HOME/.config/fish/functions/c.fish,fish/c.fish
 $HOME/.config/fish/functions/dark.fish,fish/dark.fish
 $HOME/.config/fish/functions/do.fish,fish/do.fish
 $HOME/.config/fish/functions/eo.fish,fish/eo.fish
+$HOME/.config/fish/functions/g.fish,fish/g.fish
 $HOME/.config/fish/functions/gitm.fish,fish/gitm.fish
+$HOME/.config/fish/functions/h.fish,fish/h.fish
 $HOME/.config/fish/functions/l.fish,fish/l.fish
 $HOME/.config/fish/functions/light.fish,fish/light.fish
 $HOME/.config/fish/functions/notify.fish,fish/notify.fish
@@ -34,6 +36,7 @@ $HOME/.config/omf/channel,omf/channel
 $HOME/.config/omf/init.fish,omf/init.fish
 $HOME/.config/omf/key_bindings.fish,omf/key_bindings.fish
 $HOME/.config/omf/theme,omf/theme
+$HOME/.config/ranger/rc.conf,ranger.conf
 $HOME/.config/redshift.conf,redshift.conf
 $HOME/.i3blocks.conf,i3blocks.conf
 $HOME/.spacemacs,spacemacs

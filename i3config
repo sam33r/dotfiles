@@ -42,6 +42,7 @@ font pango: System San Francisco Display 10
 # font, it doesn’t scale on retina/hidpi displays.
 
 # Function keys to open common apps.
+bindsym F5 exec ~/email.sh
 bindsym F6 exec i3-sensible-terminal
 bindsym F7 exec google-chrome
 bindsym F8 exec emacsclient -c -e '(spacemacs/switch-to-scratch-buffer)'
@@ -399,5 +400,5 @@ exec --no-startup-id ~/startup.local.sh
 exec --no-startup-id gnome-terminal --role scratchpad
 for_window [window_role="scratchpad"] move scratchpad; resize set 1600 1400
 
-# Start i3 utils
-exec_always --no-startup-id python ~/dotfiles/utils/i3utils.py
+# For now disable i3utils.
+# exec_always --no-startup-id python ~/dotfiles/utils/i3utils.py
