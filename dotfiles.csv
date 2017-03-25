@@ -8,6 +8,7 @@ $HOME/.config/fish/functions/c.fish,fish/c.fish
 $HOME/.config/fish/functions/dark.fish,fish/dark.fish
 $HOME/.config/fish/functions/do.fish,fish/do.fish
 $HOME/.config/fish/functions/eo.fish,fish/eo.fish
+$HOME/.config/fish/functions/g.fish,fish/g.fish
 $HOME/.config/fish/functions/gitm.fish,fish/gitm.fish
 $HOME/.config/fish/functions/h.fish,fish/h.fish
 $HOME/.config/fish/functions/l.fish,fish/l.fish
