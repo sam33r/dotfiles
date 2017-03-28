@@ -400,5 +400,8 @@ exec --no-startup-id ~/startup.local.sh
 exec --no-startup-id gnome-terminal --role scratchpad
 for_window [window_role="scratchpad"] move scratchpad; resize set 1600 1400
 
+# load emails.
+exec --no-startup-id ~/load_mails.sh &
+
 # For now disable i3utils.
 # exec_always --no-startup-id python ~/dotfiles/utils/i3utils.py
