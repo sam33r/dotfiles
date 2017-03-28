@@ -369,7 +369,7 @@ you should place your code here."
           ("DONE" . (:foreground "green" :weight bold))))
   ;; Capture mode.
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/Notes/projects.org" "Refile Tasks")
+        '(("t" "Todo" entry (file+headline "~/Notes/refile.org" "Refile Tasks")
            "* TODO %?\n  %i\n  %a")
           ("j" "Journal" entry (file+datetree "~/Notes/journal.org")
            "* %?\nEntered on %U\n  %i")
@@ -405,6 +405,7 @@ you should place your code here."
   (add-hook 'prog-mode-hook 'fci-mode)
   (add-hook 'text-mode-hook 'fci-mode)
   (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
+  (add-hook 'org-mode-hook 'sa/write 'append)
 
   ;; Activate writeroom mode for org-mode and markdown-mode
   (add-hook 'org-mode-hook 'writeroom-mode 'append)
@@ -543,6 +544,12 @@ you should place your code here."
   ;; Smarter frame title
   (setq-default frame-title-format '("%b (emacs)"))
 
+
+  ;; Custom keybindings.
+  (spacemacs/declare-prefix ":" "custom-bindings")
+  (evil-leader/set-key ":w" #'sa/write)
+  (evil-leader/set-key ":c" #'sa/code)
+
   ;; load any local init.
   (load-file "~/.spacemacs.local")
   (dotspacemacs-local-init/init)
@@ -624,9 +631,10 @@ you should place your code here."
  '(golden-ratio-mode t)
  '(org-agenda-custom-commands
    (quote
-    (("n" "Agenda and next TODOs"
+    (("n" "Agenda, next TODOs and all TODOs"
       ((agenda "" nil)
-       (todo "NEXT"))
+       (todo "NEXT")
+       (todo "TODO"))
       nil))))
  '(org-agenda-prefix-format
    (quote
