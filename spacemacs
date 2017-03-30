@@ -629,6 +629,8 @@ you should place your code here."
  '(evil-want-Y-yank-to-eol nil)
  '(global-vi-tilde-fringe-mode nil)
  '(golden-ratio-mode t)
+ '(mu4e-index-update-in-background t)
+ '(mu4e-update-interval 300)
  '(org-agenda-custom-commands
    (quote
     (("n" "Agenda, next TODOs and all TODOs"
