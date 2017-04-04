@@ -102,11 +102,16 @@ function install_update_z()
 
 function install_update_fzf()                                                    # Install fzf for command searches.
 {
+  if type "fzf" > /dev/null; then
+    echo "fzf already exists, updating."
+    cd $HOME/.fzf
+    git pull origin master
+    cd $dir
+    return
+  fi
+
   git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
   $HOME/.fzf/install
-  cd $HOME/.fzf
-  git pull origin master
-  cd $dir
 }
 
 function install_update_term_theme()                                             # Installs solarized theme for Gnome Terminal.
