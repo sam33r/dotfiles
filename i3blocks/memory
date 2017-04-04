@@ -60,6 +60,8 @@ END {
 		print("#FFAE00\n")
 	} else if (pct > 70) {
 		print("#FFF600\n")
-	}
+	} else {
+                print("#777777\n")
+        }
 }
 ' /proc/meminfo
