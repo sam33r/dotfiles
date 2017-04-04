@@ -9,6 +9,8 @@ alias lk='gnome-screensaver-command -l'
 
 alias vimrc='vim ~/.vimrc'
 
+alias d='~/dotfiles/do'
+
 # XMonad and Friends.
 alias xcomp='xcompmgr -a &'
 alias xmobarconf='vim ~/.config/xmobar/xmobarrc'
