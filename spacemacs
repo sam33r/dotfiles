@@ -369,7 +369,7 @@ you should place your code here."
           ("DONE" . (:foreground "green" :weight bold))))
   ;; Capture mode.
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/Notes/projects.org" "Refile Tasks")
+        '(("t" "Todo" entry (file+headline "~/Notes/refile.org" "Refile Tasks")
            "* TODO %?\n  %i\n  %a")
           ("j" "Journal" entry (file+datetree "~/Notes/journal.org")
            "* %?\nEntered on %U\n  %i")
@@ -404,7 +404,9 @@ you should place your code here."
   ;; Activate column indicator in prog-mode and text-mode, except for org-mode
   (add-hook 'prog-mode-hook 'fci-mode)
   (add-hook 'text-mode-hook 'fci-mode)
+  (add-hook 'prog-mode-hook 'sa/code)
   (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
+  (add-hook 'org-mode-hook 'sa/write 'append)
 
   ;; Activate writeroom mode for org-mode and markdown-mode
   (add-hook 'org-mode-hook 'writeroom-mode 'append)
@@ -449,9 +451,10 @@ you should place your code here."
   ;; Bookmarks for the homepage.
   ;; TODO: These need to be context-sensitive.
   (setq mu4e-bookmarks
-        `(("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
+        `(("flag:flagged" "Flagged (ie Starred)" ?s)
+          ("maildir:/@Me flag:unread" "Unread @Me" ?m)
+          ("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
           ("date:today..now" "Today's messages" ?t)
-          ("flag:flagged" "Flagged (ie Starred)" ?s)
           ("mime:image/*" "Messages with images" ?p)
           (,(mapconcat 'identity
                        (mapcar
@@ -467,7 +470,10 @@ you should place your code here."
   (setq mu4e-enable-notifications t)
   (with-eval-after-load 'mu4e-alert
     ;; Enable Desktop notifications
-    (mu4e-alert-set-default-style 'notifications)) ; For linux
+    (mu4e-alert-set-default-style 'notifications) ; For linux
+    )
+  (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
+  (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)
 
   ;; Display images inline.
   (setq mu4e-view-show-images t)
@@ -543,6 +549,12 @@ you should place your code here."
   ;; Smarter frame title
   (setq-default frame-title-format '("%b (emacs)"))
 
+
+  ;; Custom keybindings.
+  (spacemacs/declare-prefix ":" "custom-bindings")
+  (evil-leader/set-key ":w" #'sa/write)
+  (evil-leader/set-key ":c" #'sa/code)
+
   ;; load any local init.
   (load-file "~/.spacemacs.local")
   (dotspacemacs-local-init/init)
@@ -578,6 +590,7 @@ you should place your code here."
   (interactive)
   (fci-mode)
   (linum-mode 1)
+  (set-fringe-mode "default")
   (spacemacs/toggle-fringe-on)
   (message "Activating coding mode"))
 
@@ -622,11 +635,14 @@ you should place your code here."
  '(evil-want-Y-yank-to-eol nil)
  '(global-vi-tilde-fringe-mode nil)
  '(golden-ratio-mode t)
+ '(mu4e-index-update-in-background t)
+ '(mu4e-update-interval 300)
  '(org-agenda-custom-commands
    (quote
-    (("n" "Agenda and next TODOs"
+    (("n" "Agenda, next TODOs and all TODOs"
       ((agenda "" nil)
-       (todo "NEXT"))
+       (todo "NEXT")
+       (todo "TODO"))
       nil))))
  '(org-agenda-prefix-format
    (quote
