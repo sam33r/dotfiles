@@ -66,7 +66,6 @@ values."
      ;; Trial Layers:
      ;; Colorize variables and nyan cat
      (colors :variables
-             colors-colorize-identifiers 'variables
              )
      ;; fast access to dired (-)
      vinegar
@@ -320,6 +319,76 @@ values."
    dotspacemacs-whitespace-cleanup 'trailing
    ))
 
+
+;; Custom functions.
+(defun sa/notify (headline-string message-string)
+  """Send message to notification"""
+  (shell-command (concat "notify-send --expire-time=30000 --icon=emacs \""
+                         headline-string
+                         "\" \""
+                         message-string
+                         "\"")))
+
+(defun sa/orgmode ()
+  (org-agenda)
+  (delete-other-windows))
+
+(defun sa/todos ()
+  ;; Pick which TODO type on load.
+  (org-agenda nil "T")
+  (delete-other-windows))
+
+(defun sa/write ()
+  (interactive)
+  (turn-off-fci-mode)
+  (spacemacs/toggle-fringe-off)
+  (linum-mode 0)
+  (writeroom-mode t)
+  (setq word-wrap t)
+  (message "Activating writing mode"))
+
+(defun sa/code ()
+  (interactive)
+  (fci-mode)
+  (linum-mode 1)
+  (set-fringe-mode "default")
+  (spacemacs/toggle-fringe-on)
+  (message "Activating coding mode"))
+
+(defun sa/shell-insert (command)
+  "Run a shell command and insert output"
+  (interactive "sCommand to run: ")
+  (insert (shell-command-to-string command)))
+
+(defun sa/shell-on-range-insert (command)
+  "Run a shell command and insert output"
+  (interactive "sCommand to run (prefixes any selected text): ")
+  (insert (shell-command-to-string
+           (concat command " " (buffer-substring (region-beginning) (region-end))))))
+
+(defun sa/mail ()
+  "Open emacs and run mu4e"
+  (dotspacemacs/user-config)
+  (mu4e))
+
+
+;; Format C++ files on save.
+(defun sa/formatcpponsave ()
+  (interactive)
+  (message "In before-hook")
+  (when (eq major-mode 'c++-mode) (clang-format-buffer))
+  )
+
+(defun sa/clock-in ()
+  (shell-command "touch /tmp/org-clock-flag")
+  (sa/notify "ORG CLOCK-IN" "Org-mode clocking in"))
+
+(defun sa/clock-out ()
+  (shell-command "rm -f /tmp/org-clock-flag")
+  (sa/notify "ORG CLOCK-OUT" "Org-mode clocking out"))
+
+
+
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init', before layer configuration
@@ -412,6 +481,9 @@ you should place your code here."
   (add-hook 'org-mode-hook 'writeroom-mode 'append)
   (add-hook 'markdown-mode-hook 'writeroom-mode 'append)
 
+  ;; Add hooks for clocking-in and out.
+  (add-hook 'org-clock-in-hook 'sa/clock-in)
+  (add-hook 'org-clock-out-hook 'sa/clock-out)
 
   ;;
   ;; mu4e settings.
@@ -448,20 +520,6 @@ you should place your code here."
   ;; (setq mu4e-html2text-command "html2text -utf8")
   ;; (setq mu4e-html2text-command "pandoc -f html -t plain --normalize")
 
-  ;; Bookmarks for the homepage.
-  ;; TODO: These need to be context-sensitive.
-  (setq mu4e-bookmarks
-        `(("flag:flagged" "Flagged (ie Starred)" ?s)
-          ("maildir:/@Me flag:unread" "Unread @Me" ?m)
-          ("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
-          ("date:today..now" "Today's messages" ?t)
-          ("mime:image/*" "Messages with images" ?p)
-          (,(mapconcat 'identity
-                       (mapcar
-                        (lambda (maildir)
-                          (concat "maildir:" (car maildir)))
-                        mu4e-maildir-shortcuts) " OR ")
-           "All inboxes" ?i)))
 
   ;; don't keep message buffers around
   (setq message-kill-buffer-on-exit t)
@@ -560,64 +618,6 @@ you should place your code here."
   (dotspacemacs-local-init/init)
   )
 
-(defun sa/notify (headline-string message-string)
-  """Send message to notification"""
-  (shell-command (concat "notify-send --expire-time=30000 --icon=emacs \""
-                         headline-string
-                         "\" \""
-                         message-string
-                         "\"")))
-
-(defun sa/orgmode ()
-  (org-agenda)
-  (delete-other-windows))
-
-(defun sa/todos ()
-  ;; Pick which TODO type on load.
-  (org-agenda nil "T")
-  (delete-other-windows))
-
-(defun sa/write ()
-  (interactive)
-  (turn-off-fci-mode)
-  (spacemacs/toggle-fringe-off)
-  (linum-mode 0)
-  (writeroom-mode t)
-  (setq word-wrap t)
-  (message "Activating writing mode"))
-
-(defun sa/code ()
-  (interactive)
-  (fci-mode)
-  (linum-mode 1)
-  (set-fringe-mode "default")
-  (spacemacs/toggle-fringe-on)
-  (message "Activating coding mode"))
-
-(defun sa/shell-insert (command)
-  "Run a shell command and insert output"
-  (interactive "sCommand to run: ")
-  (insert (shell-command-to-string command)))
-
-(defun sa/shell-on-range-insert (command)
-  "Run a shell command and insert output"
-  (interactive "sCommand to run (prefixes any selected text): ")
-  (insert (shell-command-to-string
-           (concat command " " (buffer-substring (region-beginning) (region-end))))))
-
-(defun sa/mail ()
-  "Open emacs and run mu4e"
-  (dotspacemacs/user-config)
-  (mu4e))
-
-
-;; Format C++ files on save.
-(defun sa/formatcpponsave ()
-  (interactive)
-  (message "In before-hook")
-  (when (eq major-mode 'c++-mode) (clang-format-buffer))
-  )
-
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 (custom-set-variables
@@ -635,6 +635,7 @@ you should place your code here."
  '(evil-want-Y-yank-to-eol nil)
  '(global-vi-tilde-fringe-mode nil)
  '(golden-ratio-mode t)
+ '(mu4e-headers-skip-duplicates t)
  '(mu4e-index-update-in-background t)
  '(mu4e-update-interval 300)
  '(org-agenda-custom-commands
