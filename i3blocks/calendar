@@ -1,0 +1,16 @@
+#!/bin/bash
+# Prints the next google calendar event today.
+
+status=`gcalcli agenda now 11:59pm --calendar $CALENDAR --nocolor | head -n 2 | tr -d '\n' | cut -c -50`
+case $BLOCK_BUTTON in
+  1) out=`gcalcli agenda now 11:59pm --calendar $CALENDAR --detail_location --nocolor | head -n 3 |tail -n 1 | tr -d '\n'` ;;
+  2) out=`gcalcli agenda now 11:59pm --calendar $CALENDAR --detail_description --nocolor --nolineart | tr -d '-' |tr -d '|' | awk '{$1=$1};1' | tail -n +5 | sed "/++/q"` ;;
+  3) out=`gcalcli agenda now 11:59pm --calendar $CALENDAR --detail_length --nocolor | head -n 3 |tail -n 1 | tr -d '\n'`;;
+esac
+
+printf "$status"
+
+if [ "$out" != "" ]; then
+  notify-send --expire-time=60000 "$out"
+fi
+

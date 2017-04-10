@@ -18,12 +18,16 @@ $HOME/.config/fish/functions/restart.fish,fish/restart.fish
 $HOME/.config/fish/functions/todos.fish,fish/todos.fish
 $HOME/.config/i3blocks/bandwidth,i3blocks/bandwidth
 $HOME/.config/i3blocks/battery,i3blocks/battery
+$HOME/.config/i3blocks/calendar,i3blocks/calendar
 $HOME/.config/i3blocks/cpu_usage,i3blocks/cpu_usage
 $HOME/.config/i3blocks/disk,i3blocks/disk
 $HOME/.config/i3blocks/iface,i3blocks/iface
 $HOME/.config/i3blocks/load_average,i3blocks/load_average
+$HOME/.config/i3blocks/mail,i3blocks/mail
 $HOME/.config/i3blocks/mediastatus,i3blocks/mediastatus
 $HOME/.config/i3blocks/memory,i3blocks/memory
+$HOME/.config/i3blocks/org-clock,i3blocks/org-clock
+$HOME/.config/i3blocks/process_cpu,i3blocks/process_cpu
 $HOME/.config/i3blocks/temperature,i3blocks/temperature
 $HOME/.config/i3blocks/volume,i3blocks/volume
 $HOME/.config/i3blocks/wifi,i3blocks/wifi
@@ -39,6 +43,7 @@ $HOME/.config/omf/theme,omf/theme
 $HOME/.config/ranger/rc.conf,ranger.conf
 $HOME/.config/redshift.conf,redshift.conf
 $HOME/.i3blocks.conf,i3blocks.conf
+$HOME/.profile,profile
 $HOME/.spacemacs,spacemacs
 $HOME/startup.sh,startup.sh
 $HOME/.tvrc,tvrc

@@ -1,0 +1,16 @@
+#!/bin/bash
+# Prints count of new mails in the maildir.
+
+new=`ls $NOTIFY_MAILDIR  | wc -w`
+color="#777777"
+
+if (( new > 100 )); then
+  color="red"
+elif (( new > 10 )); then
+  color="yellow"
+elif (( new > 0 )); then
+  color="#ffffff"
+fi
+
+echo "<span color='#777777'>📫  </span><span color='$color'>" $new "</span>"
+
