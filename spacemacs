@@ -351,7 +351,6 @@ values."
   (interactive)
   (fci-mode)
   (linum-mode 1)
-  (set-fringe-mode "default")
   (spacemacs/toggle-fringe-on)
   (message "Activating coding mode"))
 
@@ -612,6 +611,7 @@ you should place your code here."
   (spacemacs/declare-prefix ":" "custom-bindings")
   (evil-leader/set-key ":w" #'sa/write)
   (evil-leader/set-key ":c" #'sa/code)
+  (evil-leader/set-key "::" #'helm-semantic-or-imenu)
 
   ;; load any local init.
   (load-file "~/.spacemacs.local")
