@@ -358,6 +358,19 @@ function edit_dotfiles()                                                        
   vim $dir/$dotfiles_list
 }
 
+function fetchmail()                                                             # Fetch email (this runs in an infinite loop).
+{
+  while true; do
+    offlineimap
+    printf "\n\n\nDone Fetching. Now waiting.\n\n\n"
+
+    for (( i = 3; i > 0 ; i-- )); do
+      printf "\n\n\nFetching in $i minutes...\n\n\n"
+      sleep 60
+    done
+  done
+}
+
 # -------------------------------------------------------------------------------
 # Docker Functions:
 # Experimenting with using docker to load tui/gui apps.
