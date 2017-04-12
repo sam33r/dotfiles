@@ -608,10 +608,11 @@ you should place your code here."
 
 
   ;; Custom keybindings.
-  (spacemacs/declare-prefix ":" "custom-bindings")
-  (evil-leader/set-key ":w" #'sa/write)
-  (evil-leader/set-key ":c" #'sa/code)
-  (evil-leader/set-key "::" #'helm-semantic-or-imenu)
+  (spacemacs/declare-prefix "o" "custom-bindings")
+  (evil-leader/set-key "ow" #'sa/write)
+  (evil-leader/set-key "oc" #'sa/code)
+  (evil-leader/set-key "oo" #'helm-semantic-or-imenu)
+  (evil-leader/set-key "ou" #'org-dblock-update)
 
   ;; load any local init.
   (load-file "~/.spacemacs.local")
