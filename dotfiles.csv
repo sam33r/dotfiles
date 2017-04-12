@@ -11,6 +11,7 @@ $HOME/.config/fish/functions/eo.fish,fish/eo.fish
 $HOME/.config/fish/functions/g.fish,fish/g.fish
 $HOME/.config/fish/functions/gitm.fish,fish/gitm.fish
 $HOME/.config/fish/functions/h.fish,fish/h.fish
+$HOME/.config/fish/functions/keepdoing.fish,fish/keepdoing.fish
 $HOME/.config/fish/functions/l.fish,fish/l.fish
 $HOME/.config/fish/functions/light.fish,fish/light.fish
 $HOME/.config/fish/functions/notify.fish,fish/notify.fish
