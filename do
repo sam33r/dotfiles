@@ -48,7 +48,7 @@ function install_update_packages()
   done < $dir/$packages_list
 }
 
-function install_esoteric_packages()                                             # Packages and crap only needed for custom hardware
+function custom_install_esoteric_packages()                                             # Packages and crap only needed for custom hardware
 {
   sudo add-apt-repository ppa:graphics-drivers/ppa
   sudo add-apt-repository ppa:lexical/hwe-wireless
