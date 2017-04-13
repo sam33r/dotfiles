@@ -45,6 +45,7 @@ $HOME/.config/ranger/rc.conf,ranger.conf
 $HOME/.config/redshift.conf,redshift.conf
 $HOME/.i3blocks.conf,i3blocks.conf
 $HOME/.profile,profile
+$HOME/.screenrc,screenrc
 $HOME/.spacemacs,spacemacs
 $HOME/startup.sh,startup.sh
 $HOME/.tvrc,tvrc
