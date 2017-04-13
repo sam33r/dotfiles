@@ -170,7 +170,7 @@ function install_spotify()                                                      
 }
 
 
-function install_arc_theme_ubuntu_1604_only()                                    # Install gnome theme of choice.
+function custom_install_arc_theme_ubuntu_1604_only()                             # Install gnome theme of choice.
 {
   sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/Horst3180/xUbuntu_16.04/ /' > /etc/apt/sources.list.d/arc-theme.list"
   sudo apt-get update
