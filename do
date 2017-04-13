@@ -34,8 +34,6 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function install_external_repositories()                                         # Add non-universal repositories to apt-get
 {
-  sudo add-apt-repository ppa:graphics-drivers/ppa
-  sudo add-apt-repository ppa:lexical/hwe-wireless
   sudo add-apt-repository ppa:fish-shell/release-2
   sudo add-apt-repository ppa:neovim-ppa/unstable
 }
@@ -48,6 +46,15 @@ function install_update_packages()
     printf "\n\n\n$package : $description\n\n"
     yes | sudo apt-get install $package
   done < $dir/$packages_list
+}
+
+function install_esoteric_packages()                                             # Packages and crap only needed for custom hardware
+{
+  sudo add-apt-repository ppa:graphics-drivers/ppa
+  sudo add-apt-repository ppa:lexical/hwe-wireless
+
+  sudo apt-get install broadcom-sta-dkms
+  sudo apt-get install nvidia-370
 }
 
 function install_dotfiles()

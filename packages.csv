@@ -1,6 +1,5 @@
 acpi,used to display battery status
 autoconf-archive,For manual make
-broadcom-sta-dkms,broadcom wifi drivers
 clonezilla,Bare-metal backup for linux.
 compton,Simple standalone composite manager (For use with xmonad)
 docker-engine,docker
@@ -18,7 +17,6 @@ meld,Diff tool.
 neovim,neovim editor
 network-manager-gnome,network management ui
 network-manager,Network management applet
-nvidia-370,latest nvidia graphics drivers
 pandoc,convert between different document formats
 pasystray,Pulse audio system tray
 pavucontrol,Pulse audio controls
