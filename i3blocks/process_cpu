@@ -1,0 +1,18 @@
+#!/bin/bash
+
+out=`ps -e -o  pcpu,comm | sort -r | head -2 | tail -1 | cut -c -30`
+usage=`echo $out | awk '{print $1;}'`
+
+# Convert to int.
+usage=$( printf "%.0f" $usage )
+
+color="#777777"
+if (( usage > 90 )); then
+  color="red"
+elif (( usage > 80 )); then
+  color="yellow"
+elif (( usage > 50 )); then
+  color="#ffffff"
+fi
+
+printf "$out\n$out\n$color"

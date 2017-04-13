@@ -1,0 +1,6 @@
+#!/bin/bash
+# Prints alert if being clocked.
+
+if [ -f /tmp/org-clock-flag ]; then
+    echo "<span color='green' bgcolor='white'><b>  CLOCK: ON  </b></span>"
+fi
