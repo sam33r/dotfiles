@@ -273,6 +273,8 @@ function install_mu4e_from_tarball()                                            
     return
   fi
 
+  sudo apt-get install libgmime-2.6-dev
+
   wget -O "$HOME/Downloads/mu.tar.gz" \
       "https://github.com/djcb/mu/releases/download/0.9.18/mu-0.9.18.tar.gz"
   cd $HOME/Downloads
