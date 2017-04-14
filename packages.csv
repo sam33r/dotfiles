@@ -8,6 +8,7 @@ fish,fish terminal
 gcc,gnu compilers
 git-gui,GUI for git.
 gnome-sushi,Preview for nautilus
+gnupg-agent,Password entry agent
 gnutls-bin,Sending mail from mu4e.
 gparted,partition management utility
 i3blocks,scheduler for i3bar blocks
