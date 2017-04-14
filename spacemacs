@@ -414,10 +414,10 @@ you should place your code here."
   ;; org-mode configuration.
   ;;
 
-  (setq org-agenda-files (list "~/Notes"))
+  (setq org-agenda-files (list "~/n"))
 
   (require 'org-contacts)
-  (setq org-contacts-files '("~/Notes/people.org"))
+  (setq org-contacts-files '("~/n/people.org.gpg"))
 
   ;; Setup refiling.
   (setq org-refile-use-outline-path t)
@@ -636,9 +636,6 @@ you should place your code here."
  '(evil-want-Y-yank-to-eol nil)
  '(global-vi-tilde-fringe-mode nil)
  '(golden-ratio-mode t)
- '(mu4e-headers-skip-duplicates t)
- '(mu4e-index-update-in-background t)
- '(mu4e-update-interval 300)
  '(org-agenda-custom-commands
    (quote
     (("n" "Agenda, next TODOs and all TODOs"
@@ -646,6 +643,7 @@ you should place your code here."
        (todo "NEXT")
        (todo "TODO"))
       nil))))
+ '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
  '(org-agenda-prefix-format
    (quote
     ((agenda . " %i %-12:c%?-12t% s")
@@ -661,6 +659,7 @@ you should place your code here."
      "----------------"
      (800 1000 1200 1400 1600 1800 2000))))
  '(org-agenda-window-setup (quote current-window))
+ '(org-archive-location "~/n/archive.org.gpg::datetree/* Finished Tasks")
  '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))
  '(org-habit-show-habits-only-for-today t)
  '(org-modules

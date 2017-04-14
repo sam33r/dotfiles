@@ -28,6 +28,7 @@ ranger,ls on steroids
 redshift-gtk,reduce blue light at night
 redshift,reduce blue light at night
 rofi,app switcher
+screen,terminal multiplexing
 scrot,Screenshots
 suckless-tools,for dmenu (app launcher for xmonad)
 tmux,Terminal multiplexer useful for remoting
