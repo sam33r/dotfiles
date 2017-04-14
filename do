@@ -75,12 +75,15 @@ function install_dotfiles()
   done < $dir/$dotfiles_list
 }
 
-function install_pip_packages()
+function install_pips()
 {
+  # TODO: Use a CSV for this?
   sudo pip install --upgrade pip
   sudo pip install --upgrade howdoi
   sudo pip install --upgrade i3ipc
   sudo pip3 install --upgrade i3ipc
+  sudo pip install --upgrade vobject parsedatetime
+  sudo pip install --upgrade gcalcli
 }
 
 function install_update_vim_plugins()
