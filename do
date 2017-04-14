@@ -95,6 +95,7 @@ function install_update_liquidprompt()                                          
   git clone https://github.com/nojhan/liquidprompt.git
   cd liquidprompt
   git pull origin master
+  source liquidprompt
   cd $dir
 }
 
@@ -104,6 +105,7 @@ function install_update_z()
   git clone https://github.com/rupa/z.git
   cd z/
   git pull origin master
+  
   cd $dir
 }
 
