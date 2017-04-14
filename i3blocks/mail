@@ -1,6 +1,10 @@
 #!/bin/bash
 # Prints count of new mails in the maildir.
 
+if [ ! -d "$NOTIFY_MAILDIR" ]; then
+  exit 1
+fi
+
 new=`ls $NOTIFY_MAILDIR  | wc -w`
 color="#777777"
 
