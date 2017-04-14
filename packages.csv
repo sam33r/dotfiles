@@ -17,6 +17,7 @@ meld,Diff tool.
 neovim,neovim editor
 network-manager-gnome,network management ui
 network-manager,Network management applet
+offlineimap,Sync maildirs
 pandoc,convert between different document formats
 pasystray,Pulse audio system tray
 pavucontrol,Pulse audio controls
