@@ -5,3 +5,4 @@ function fish_vi_cursor; end
 # Set environment variables.
 set -gx BROWSER "w3m"
 
+source ~/fish-init.local.fish
