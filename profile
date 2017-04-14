@@ -23,10 +23,6 @@ fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
-export VISUAL="vim"
-export EDITOR="vim"
-export NOTIFY_MAILDIR="$HOME/mail/samahuja@google.com/@Me/new"
-
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 export VISUAL="vim"
