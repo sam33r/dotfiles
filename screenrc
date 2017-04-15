@@ -1,11 +1,27 @@
-hardstatus alwayslastline '%{= kG}[ %{G}%H | %{=kw}%?%-Lw%?%{g}%n*%f%t%?(%u)%? %{g}]%{w}%?%+Lw%?%?%=%{g}[ %{K}%l %{g}][ %{B}%Y-%m-%d %{W    }%c %{g}]'
+shell '/usr/bin/fish'
+
+# status
+hardstatus off
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W} %c %{g}]'
+
 defscrollback 10000
-startup_message on
+startup_message off
 autodetach on
-#escape ^Zz    # Save Ctrl-A for bash
+
+# Use x scrolling mechanism.
+termcapinfo xterm* ti@:te@
+
 termcapinfo xterm* ti@:te@    # For mouse scroll
-altscreen on    # Clear screen after quitting vim
+altscreen on                  # Clear screen after quitting vim
 
 # This puts screen's clipboard in x clipboard
 # http://stackoverflow.com/questions/16111548/how-to-copy-the-gnu-screen-copy-buffer-to-clipboard
 bindkey -m ' ' eval 'stuff \040' 'writebuf' 'exec sh -c "/usr/bin/xsel -b < /tmp/screen-exchange"'
+
+# Assorted hackery to enable 256 colors.
+# https://wiki.archlinux.org/index.php/GNU_Screen#Use_256_colors
+term xterm-256color
+attrcolor b ".I"    # allow bold colors - necessary for some reason
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'   # tell screen how to set colors. AB = background, AF=foreground
+defbce on    # use current bg color for erased chars
