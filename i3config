@@ -44,8 +44,10 @@ font pango:DejaVu Sans Mono 8
 # Function keys to open common apps.
 bindsym F5 exec ~/email.sh
 bindsym F6 exec i3-sensible-terminal
+bindsym Shift+F6 exec gnome-terminal -e "bash"
 bindsym F7 exec google-chrome
-bindsym F8 exec emacsclient -c -e '(spacemacs/switch-to-scratch-buffer)'
+bindsym F8 exec "$EMACS"
+# bindsym F8 exec emacsclient -c -e '(spacemacs/switch-to-scratch-buffer)'
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -144,9 +146,9 @@ bindsym button2 kill
 # search desktop entries
 bindsym F2 exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -i'
 # switch and kill windows
-bindsym $mod+Return exec --no-startup-id python3 ~/dotfiles/utils/i3-container-commander.py \
+bindsym $mod+Return exec --no-startup-id ~/py3env/bin/python3 ~/dotfiles/utils/i3-container-commander.py \
     --menu=rofi --group-by=none -- -i
-bindsym $mod+Shift+Return exec --no-startup-id python3 ~/dotfiles/utils/i3-container-commander.py \
+bindsym $mod+Shift+Return exec --no-startup-id ~/py3env/bin/python3 ~/dotfiles/utils/i3-container-commander.py \
     --menu=rofi --group-by=none --command=kill -- -i
 
 # TODO: The color scheme for rofi is a work in ugly progress.
