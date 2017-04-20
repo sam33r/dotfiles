@@ -5,14 +5,12 @@ hardstatus off
 hardstatus alwayslastline
 hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W} %c %{g}]'
 
-defscrollback 10000
+defscrollback 20000
 startup_message off
 autodetach on
 
 # Use x scrolling mechanism.
 termcapinfo xterm* ti@:te@
-
-termcapinfo xterm* ti@:te@    # For mouse scroll
 altscreen on                  # Clear screen after quitting vim
 
 # This puts screen's clipboard in x clipboard

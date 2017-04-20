@@ -16,12 +16,6 @@ compton -f &
 
 sleep 2
 
-# Hack to unlock keyring manually, because I can't figure out
-# how to unlock keyring automatically for i3.
-gnome-terminal -e "python -c 'import keyring; keyring.get_password(\"\",\"\")'"
-
-sleep 2
-
 # Start the network management applet.
 nm-applet &
 

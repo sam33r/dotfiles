@@ -48,7 +48,7 @@ function install_update_packages()
   done < $dir/$packages_list
 }
 
-function custom_install_esoteric_packages()                                             # Packages and crap only needed for custom hardware
+function custom_install_esoteric_packages()                                      # Packages and crap only needed for custom hardware
 {
   sudo add-apt-repository ppa:graphics-drivers/ppa
   sudo add-apt-repository ppa:lexical/hwe-wireless
@@ -75,15 +75,24 @@ function install_dotfiles()
   done < $dir/$dotfiles_list
 }
 
-function install_pips()
+function install_pips()                                                          # virtual envs for pip, and packages
 {
-  # TODO: Use a CSV for this?
-  sudo pip install --upgrade pip
-  sudo pip install --upgrade howdoi
-  sudo pip install --upgrade i3ipc
-  sudo pip3 install --upgrade i3ipc
-  sudo pip install --upgrade vobject parsedatetime
-  sudo pip install --upgrade gcalcli
+  sudo python easy_install pip
+  sudo pip install --upgrade virtualenv
+
+  if [ ! -d "$HOME/pyenv" ]; then
+    virtualenv $HOME/pyenv
+  fi
+
+  if [ ! -d "$HOME/py3env" ]; then
+    virtualenv -p python3 $HOME/py3env
+  fi
+  $HOME/pyenv/bin/pip install urllib3[secure]
+  $HOME/pyenv/bin/pip install --upgrade howdoi
+  $HOME/pyenv/bin/pip install --upgrade i3ipc
+  $HOME/py3env/bin/pip3 install --upgrade i3ipc
+  $HOME/pyenv/bin/pip install --upgrade vobject parsedatetime
+  $HOME/pyenv/bin/pip install --upgrade gcalcli
 }
 
 function install_update_vim_plugins()
@@ -108,7 +117,7 @@ function install_update_z()
   git clone https://github.com/rupa/z.git
   cd z/
   git pull origin master
-  
+
   cd $dir
 }
 
@@ -374,15 +383,10 @@ function edit_dotfiles()                                                        
 
 function fetchmail()                                                             # Fetch email (this runs in an infinite loop).
 {
-  while true; do
-    offlineimap
-    printf "\n\n\nDone Fetching. Now waiting.\n\n\n"
-
-    for (( i = 3; i > 0 ; i-- )); do
-      printf "\n\n\nFetching in $i minutes...\n\n\n"
-      sleep 60
-    done
-  done
+  offlineimap
+  printf "\n\n\nDone Fetching. Now caching.\n\n\n"
+  mu index --maildir="$MAILDIR"
+  printf "\n\n\nDone Fetching. Now caching.\n\n\n"
 }
 
 # -------------------------------------------------------------------------------
