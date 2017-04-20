@@ -48,7 +48,7 @@ function install_update_packages()
   done < $dir/$packages_list
 }
 
-function custom_install_esoteric_packages()                                             # Packages and crap only needed for custom hardware
+function custom_install_esoteric_packages()                                      # Packages and crap only needed for custom hardware
 {
   sudo add-apt-repository ppa:graphics-drivers/ppa
   sudo add-apt-repository ppa:lexical/hwe-wireless
@@ -383,15 +383,10 @@ function edit_dotfiles()                                                        
 
 function fetchmail()                                                             # Fetch email (this runs in an infinite loop).
 {
-  while true; do
-    offlineimap
-    printf "\n\n\nDone Fetching. Now waiting.\n\n\n"
-
-    for (( i = 3; i > 0 ; i-- )); do
-      printf "\n\n\nFetching in $i minutes...\n\n\n"
-      sleep 60
-    done
-  done
+  offlineimap
+  printf "\n\n\nDone Fetching. Now caching.\n\n\n"
+  mu index --maildir="$MAILDIR"
+  printf "\n\n\nDone Fetching. Now caching.\n\n\n"
 }
 
 # -------------------------------------------------------------------------------
