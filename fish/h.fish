@@ -1,3 +1,3 @@
 function h
-	howdoi -n 3 -c $argv
+	~/pyenv/bin/howdoi -n 3 -c $argv
 end
