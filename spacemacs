@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     yaml
      javascript
      go
      shell-scripts
@@ -151,11 +152,7 @@ values."
    ;; `recents' `bookmarks' `projects' `agenda' `todos'."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((bookmarks . 5)
-                                (recents . 5)
-                                (projects . 5)
-                                (todos . 5)
-                                (agenda . 5))
+   dotspacemacs-startup-lists nil
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
@@ -223,7 +220,7 @@ values."
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
    ;; (default 'cache)
-   dotspacemacs-auto-save-file-location 'original
+   dotspacemacs-auto-save-file-location 'cache
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
@@ -244,7 +241,7 @@ values."
    dotspacemacs-enable-paste-transient-state nil
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
-   dotspacemacs-which-key-delay 0.3
+   dotspacemacs-which-key-delay 0.4
    ;; Which-key frame position. Possible values are `right', `bottom' and
    ;; `right-then-bottom'. right-then-bottom tries to display the frame to the
    ;; right; if there is insufficient space it displays it at the bottom.
@@ -282,8 +279,18 @@ values."
    ;; scrolling overrides the default behavior of Emacs which recenters point
    ;; when it reaches the top or bottom of the screen. (default t)
    dotspacemacs-smooth-scrolling t
-   ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
-   ;; derivatives. If set to `relative', also turns on relative line numbers.
+   ;; Control line numbers activation.
+   ;; If set to `t' or `relative' line numbers are turned on in all `prog-mode' and
+   ;; `text-mode' derivatives. If set to `relative', line numbers are relative.
+   ;; This variable can also be set to a property list for finer control:
+   ;; '(:relative nil
+   ;;   :disabled-for-modes dired-mode
+   ;;                       doc-view-mode
+   ;;                       markdown-mode
+   ;;                       org-mode
+   ;;                       pdf-view-mode
+   ;;                       text-mode
+   ;;   :size-limit-kb 1000)
    ;; (default nil)
    dotspacemacs-line-numbers 'relative
    ;; Code folding method. Possible values are `evil' and `origami'.
@@ -437,18 +444,18 @@ you should place your code here."
           ("DONE" . (:foreground "green" :weight bold))))
   ;; Capture mode.
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/Notes/refile.org" "Refile Tasks")
+        '(("t" "Todo" entry (file+headline "~/n/refile.org.gpg" "Refile Tasks")
            "* TODO %?\n  %i\n  %a")
-          ("j" "Journal" entry (file+datetree "~/Notes/journal.org")
+          ("j" "Journal" entry (file+datetree "~/n/journal.org")
            "* %?\nEntered on %U\n  %i")
           ))
 
   ;; Publishing notes.
   (setq org-publish-project-alist
         `(("notes"
-           :base-directory       "~/Notes"
+           :base-directory       "~/n"
            :base-extension       "org"
-           :publishing-directory "~/n"
+           :publishing-directory "~/pub"
            :recursive            t
            :publishing-function  org-html-publish-to-html
            :auto-sitemap         t
@@ -633,9 +640,11 @@ you should place your code here."
  '(custom-safe-themes
    (quote
     ("63dd8ce36f352b92dbf4f80e912ac68216c1d7cf6ae98195e287fd7c7f7cb189" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+ '(epa-file-cache-passphrase-for-symmetric-encryption t)
  '(evil-want-Y-yank-to-eol nil)
  '(global-vi-tilde-fringe-mode nil)
  '(golden-ratio-mode t)
+ '(mu4e-get-mail-command "offlineimap")
  '(org-agenda-custom-commands
    (quote
     (("n" "Agenda, next TODOs and all TODOs"
