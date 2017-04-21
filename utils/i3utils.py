@@ -1,6 +1,9 @@
 import i3ipc
 from threading import Timer
 
+ENABLE_RESIZING = False
+ENABLE_WORKSPACE_APPS = False
+
 # Mapping of (Number of windows in the workspace) -> (Window resize settings).
 RESIZE_SETTINGS = {
     2: {
@@ -128,10 +131,11 @@ def on_workspace(i3, e):
 
 
 # Subscribe to events
-if WIDTH < RESIZE_SETTINGS['max_screen_width']:
+if WIDTH < RESIZE_SETTINGS['max_screen_width'] and ENABLE_RESIZING:
   i3.on('window::focus', on_window_focus)
 i3.on('window::new', on_new_window)
-i3.on('workspace::focus', on_workspace)
+if ENABLE_WORKSPACE_APPS:
+  i3.on('workspace::focus', on_workspace)
 
 # Start the main loop and wait for events to come in.
 i3.main()
