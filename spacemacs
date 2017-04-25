@@ -445,7 +445,7 @@ you should place your code here."
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "~/n/refile.org.gpg" "Refile Tasks")
            "* TODO %?\n  %i\n  %a")
-          ("j" "Journal" entry (file+datetree "~/n/journal.org")
+          ("j" "Journal" entry (file+datetree "~/n/journal.org.gpg")
            "* %?\nEntered on %U\n  %i")
           ))
 
