@@ -77,7 +77,7 @@ function install_dotfiles()
 
 function install_pips()                                                          # virtual envs for pip, and packages
 {
-  sudo python easy_install pip
+  sudo easy_install pip
   sudo pip install --upgrade virtualenv
 
   if [ ! -d "$HOME/pyenv" ]; then
