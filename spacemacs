@@ -613,13 +613,14 @@ you should place your code here."
   ;; Smarter frame title
   (setq-default frame-title-format '("%b (emacs)"))
 
-
   ;; Custom keybindings.
   (spacemacs/declare-prefix "o" "custom-bindings")
   (evil-leader/set-key "ow" #'sa/write)
   (evil-leader/set-key "oc" #'sa/code)
   (evil-leader/set-key "oo" #'helm-semantic-or-imenu)
   (evil-leader/set-key "ou" #'org-dblock-update)
+  (evil-leader/set-key "os" #'sa/shell-insert)
+  (evil-leader/set-key "oS" #'sa/shell-on-range-insert)
 
   ;; load any local init.
   (load-file "~/.spacemacs.local")
