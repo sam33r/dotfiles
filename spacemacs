@@ -71,19 +71,19 @@ values."
      ;; fast access to dired (-)
      vinegar
      ;; command log, toggle with ~SPC a L~
-     command-log
+     ;; command-log
      ;; semantic layer: show function header while inside it, and support
      ;; common refactoring. (~SPC m r~ to refactor at point).
      ;; Disabling for now because the refactoring features don't work for
      ;; me and the always-visible-header is not that useful for me.
-     ;; semantic
+     semantic
      ;; Show file outline in a sidebar. Keybindings:
      ;; SPC b i	toggle imenu-list window
      ;; q	      quit imenu-list window
      ;; RET	    go to current entry
      ;; d	      display current entry, keep focus on imenu-list window
      ;; f	      fold/unfold current section
-     imenu-list
+     ;; imenu-list
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
