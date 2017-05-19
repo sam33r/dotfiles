@@ -307,6 +307,33 @@ function install_mu4e_from_tarball()                                            
   cd $dir
 }
 
+function install_i3gaps()
+{
+  cd $HOME
+
+  # TODO: Maybe use https://github.com/maestrogerardo/i3-gaps-deb
+  echo "This assumes dependencies are installed."
+  echo "See https://github.com/Airblader/i3/wiki/Compiling-&-Installing"
+
+  # clone the repository
+  git clone https://www.github.com/Airblader/i3 i3-gaps
+  cd i3-gaps
+  git pull origin master
+
+  # compile & install
+  autoreconf --force --install
+  rm -rf build/
+  mkdir -p build && cd build/
+
+  # Disabling sanitizers is important for release versions!
+  # The prefix and sysconfdir are, obviously, dependent on the distribution.
+  ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
+  make
+  sudo make install
+
+  cd $dir
+}
+
 function theme()                                                                 # Change Gnome Terminal theme.
 {
   wget -O xt  http://git.io/vGz67 && chmod +x xt && ./xt && rm xt
