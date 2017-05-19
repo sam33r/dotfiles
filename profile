@@ -44,7 +44,7 @@ if test -f $HOME/.gpg-agent-info && \
     GPG_AGENT_INFO=`cat $HOME/.gpg-agent-info | cut -c 16-`
 else
     # No, gpg-agent not available; start gpg-agent
-    eval `gpg-agent --daemon --no-grab --write-env-file $HOME/.gpg-agent-info --log-file /tmp/gpg-agent.log`
+    eval `gpg-agent --daemon --no-grab  --log-file /tmp/gpg-agent.log`
 fi
 export GPG_TTY=`tty`
 export GPG_AGENT_INFO
