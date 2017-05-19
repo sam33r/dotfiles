@@ -390,7 +390,7 @@ bindsym F11 exec playerctl play-pause
 bindsym F12 exec playerctl next
 
 # No borders or title bars.
-new_window pixel 10
+new_window pixel 1
 
 # Run startup programs
 exec --no-startup-id ~/startup.sh
