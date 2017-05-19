@@ -390,7 +390,7 @@ bindsym F11 exec playerctl play-pause
 bindsym F12 exec playerctl next
 
 # No borders or title bars.
-new_window pixel 1
+new_window pixel 0
 
 # Run startup programs
 exec --no-startup-id ~/startup.sh
@@ -407,3 +407,7 @@ exec --no-startup-id ~/load_mails.sh &
 
 # For now disable i3utils.
 # exec_always --no-startup-id python ~/dotfiles/utils/i3utils.py
+
+# i3gaps settings.
+gaps inner 15
+gaps outer 0
