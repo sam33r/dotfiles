@@ -12,6 +12,7 @@ use utf8;
 use Getopt::Long;
 
 # default values
+my $t_show = 25;
 my $t_warn = 50;
 my $t_crit = 80;
 my $cpu_usage = -1;
@@ -43,6 +44,11 @@ while (<MPSTAT>) {
 close(MPSTAT);
 
 $cpu_usage eq -1 and die 'Can\'t find CPU information';
+
+# Short circuit if insignificant.
+if ($cpu_usage <= $t_show) {
+    exit 0;
+}
 
 # Print short_text, full_text
 printf "%.${decimals}f%%\n", $cpu_usage;

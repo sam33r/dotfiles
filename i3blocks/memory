@@ -47,6 +47,11 @@ END {
 	}
 	pct=used/total*100
 
+  # short circuit if usage is too low.
+	if (pct < 50) {
+		exit 0
+	}
+
 	# full text
 	printf("%.1fG/%.1fG (%.f%%)\n", used, total, pct)
 

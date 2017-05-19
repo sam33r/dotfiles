@@ -55,6 +55,10 @@ close(SENSORS);
 
 $temperature eq -9999 and die 'Cannot find temperature';
 
+if ($temperature <= 35) {
+    exit 0;
+}
+
 # Print short_text, full_text
 print "$temperature°C\n" x2;
 

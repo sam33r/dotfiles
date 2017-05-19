@@ -13,6 +13,8 @@ elif (( usage > 80 )); then
   color="yellow"
 elif (( usage > 50 )); then
   color="#ffffff"
+elif (( usage < 25 )); then
+  exit 0
 fi
 
 printf "$out\n$out\n$color"
