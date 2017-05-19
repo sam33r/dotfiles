@@ -13,7 +13,7 @@ set $mod Mod4
 
 # color config
 set $bg-color            #0086b7
-set $bg-color-highlight  #deffcc
+set $bg-color-highlight  #0086b7
 set $inactive-bg-color   #2f343f
 set $text-color          #f3f4f5
 set $inactive-text-color #676E7D
@@ -405,8 +405,8 @@ for_window [window_role="scratchpad"] move scratchpad; resize set 1600 1400
 # load emails.
 exec --no-startup-id ~/load_mails.sh &
 
-# For now disable i3utils.
-# exec_always --no-startup-id python ~/dotfiles/utils/i3utils.py
+# Run small i3 customizations.
+exec_always --no-startup-id ~/pyenv/bin/python ~/dotfiles/utils/i3utils.py
 
 # i3gaps settings.
 gaps inner 15
