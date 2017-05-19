@@ -60,7 +60,9 @@ values."
      ;;        shell-default-position 'bottom)
      spell-checking
      syntax-checking
-     version-control
+     (version-control :variables
+                      version-control-diff-tool 'diff-hl
+                      version-control-diff-side 'right)
      ycmd
      mu4e
      ;; Trial Layers:
@@ -569,9 +571,6 @@ you should place your code here."
   ;; j/k go to next visual line.
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
-
-
-
 
   ;; Turn off line numbers for org-mode. This causes weird slowdowns for large
   ;; org files.
