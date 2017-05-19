@@ -164,7 +164,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("DejaVu Sans Mono for Powerline"
+   dotspacemacs-default-font '("Input"
                                :size 16
                                :weight normal
                                :width normal
@@ -557,7 +557,14 @@ you should place your code here."
 
   ;; Toggle menu bar on by default.
   ;; ~SPC t m~ to toggle at runtime.
-  (spacemacs/toggle-menu-bar-on)
+  ;; (spacemacs/toggle-menu-bar-on)
+
+  ;; Set up modeline.
+  (spacemacs/toggle-mode-line-minor-modes-off)
+  (spacemacs/toggle-mode-line-major-mode-off)
+  (spacemacs/toggle-mode-line-org-clock-on)
+  (spacemacs/toggle-display-time-on)
+  (setq powerline-default-separator nil)
 
   ;; j/k go to next visual line.
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
