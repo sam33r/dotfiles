@@ -27,6 +27,7 @@ binmode(STDOUT, ":utf8");
 # default values
 my $t_warn = 70;
 my $t_crit = 90;
+my $t_show = 40;
 my $chip = "";
 my $temperature = -9999;
 
@@ -55,7 +56,7 @@ close(SENSORS);
 
 $temperature eq -9999 and die 'Cannot find temperature';
 
-if ($temperature <= 35) {
+if ($temperature <= $t_show) {
     exit 0;
 }
 

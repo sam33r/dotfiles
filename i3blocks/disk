@@ -21,12 +21,12 @@ df -h -P -l "$DIR" | awk -v alert_low=$ALERT_LOW '
 /\/.*/ {
 	use=$5
 	gsub(/%$/,"",use)
-  if (use < 80) {
+  if (use + 0 < 80) {
     exit 0
   }
 
   # full text
-	print $4
+	print use
 
 	# short text
 	# print $4
@@ -39,7 +39,7 @@ df -h -P -l "$DIR" | awk -v alert_low=$ALERT_LOW '
 END {
 	gsub(/%$/,"",use)
 
-  if (use < 80) {
+  if (use + 0 < 80) {
     exit 0
   }
 

@@ -6,6 +6,12 @@ if [ ! -d "$NOTIFY_MAILDIR" ]; then
 fi
 
 new=`ls $NOTIFY_MAILDIR  | wc -w`
+
+# Short circuit if not enough emails.
+if (( new < 10 )); then
+  exit 0
+fi
+
 color="#777777"
 
 if (( new > 100 )); then
@@ -17,4 +23,3 @@ elif (( new > 0 )); then
 fi
 
 echo "<span color='#777777'>📫  </span><span color='$color'>" $new "</span>"
-
