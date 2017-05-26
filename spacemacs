@@ -374,6 +374,19 @@ values."
   (insert (shell-command-to-string
            (concat command " " (buffer-substring (region-beginning) (region-end))))))
 
+(defun sa/howdoi (command)
+  "Run howdoi with user-input text"
+  (interactive "sQuery: ")
+  (setq sa-file-extension (file-name-extension (buffer-file-name)))
+  (setq sa-lang "")
+  (if (string-equal sa-file-extension "go") (setq sa-lang "golang"))
+  (if (string-equal sa-file-extension "sh") (setq sa-lang "bash"))
+  (if (string-equal sa-file-extension "py") (setq sa-lang "python"))
+  (if (string-equal sa-file-extension "h") (setq sa-lang "c++"))
+  (if (string-equal sa-file-extension "cc") (setq sa-lang "c++"))
+  (insert (shell-command-to-string (concat "~/pyenv/bin/howdoi -n 3 " sa-lang " " command)))
+  )
+
 (defun sa/mail ()
   "Open emacs and run mu4e"
   (dotspacemacs/user-config)
