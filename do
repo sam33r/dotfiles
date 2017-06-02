@@ -307,6 +307,30 @@ function install_mu4e_from_tarball()                                            
   cd $dir
 }
 
+function install_nvim_from_source()
+{
+  # install build prerequisites
+  sudo apt-get install libtool autoconf automake cmake g++ pkg-config python-pip python-dev
+
+  # build
+  cd ~/tmp
+  # The latest release as of May 2017 is v0.2.0. Verify that it is still the
+  # case at https://github.com/neovim/neovim/releases/latest, and change the
+  # --branch flag if there is a new release.
+  git clone --branch v0.2.0 https://github.com/neovim/neovim.git
+  cd neovim
+  make install CMAKE_EXTRA_FLAGS=-DCMAKE_INSTALL_PREFIX=$HOME/.local CMAKE_BUILD_TYPE=Release
+
+  # In order to run Python plugins, you need the neovim Python library
+  pip2 install --user neovim
+
+  # Symlink vim configs to nvim locations
+  ln -s ~/.vim ~/.config/nvim
+  ln -s ~/.vimrc ~/.config/nvim/init.vim
+
+  cd $dir
+}
+
 function install_i3gaps()
 {
   cd $HOME
