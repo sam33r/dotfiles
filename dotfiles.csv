@@ -14,9 +14,12 @@ $HOME/.config/fish/functions/h.fish,fish/h.fish
 $HOME/.config/fish/functions/keepdoing.fish,fish/keepdoing.fish
 $HOME/.config/fish/functions/l.fish,fish/l.fish
 $HOME/.config/fish/functions/light.fish,fish/light.fish
+$HOME/.config/fish/functions/n.fish,fish/n.fish
 $HOME/.config/fish/functions/notify.fish,fish/notify.fish
 $HOME/.config/fish/functions/restart.fish,fish/restart.fish
+$HOME/.config/fish/functions/today.fish,fish/today.fish
 $HOME/.config/fish/functions/todos.fish,fish/todos.fish
+$HOME/.config/fish/functions/week.fish,fish/week.fish
 $HOME/.config/i3blocks/bandwidth,i3blocks/bandwidth
 $HOME/.config/i3blocks/battery,i3blocks/battery
 $HOME/.config/i3blocks/calendar,i3blocks/calendar
