@@ -1,3 +1,3 @@
 function n
-	neovim $argv
+	nvim $argv
 end
