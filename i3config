@@ -406,8 +406,8 @@ for_window [window_role="scratchpad"] move scratchpad; resize set 1600 1400
 exec --no-startup-id ~/load_mails.sh &
 
 # Run small i3 customizations.
-exec_always --no-startup-id ~/pyenv/bin/python ~/dotfiles/utils/i3utils.py
+exec_always --no-startup-id ~/py3env/bin/python3 ~/dotfiles/utils/i3utils.py
 
 # i3gaps settings.
-gaps inner 15
-gaps outer 0
+# gaps inner 15
+# gaps outer 0

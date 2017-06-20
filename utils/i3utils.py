@@ -50,7 +50,7 @@ i3 = i3ipc.Connection()
 # does not change.
 w = i3.get_workspaces()
 WIDTH = w[0].rect.width
-print WIDTH
+print(WIDTH)
 
 # Timer to wait before resizing window.
 _RESIZE_TIMER = None
@@ -68,7 +68,7 @@ def resize(i3, window_id, increment):
     #else:
     # i3.command('[con_id=%s] resize shrink width ' % window_id)
 
-  print 'resized, iterations: %d' % iterations
+  print('resized, iterations: %d' % iterations)
 
 
 def set_resize_timer(i3, increment, window_id):
@@ -90,16 +90,16 @@ def on_window_focus(i3, e):
   # not the total number of leaves. Also need to check if splitting is
   # horizontal.
   leaves = len(workspace.leaves())
-  print leaves
+  print(leaves)
   if leaves not in RESIZE_SETTINGS:
-    print 'ignoring focus because leaves count is %d' % leaves
+    print('ignoring focus because leaves count is %d' % leaves)
     return
 
   desired_ratio = RESIZE_SETTINGS[leaves]['desired_ratio']
   acceptable_ratio = RESIZE_SETTINGS[leaves]['acceptable_ratio']
 
   if focused.name in PRESET_WIDTHS:
-    print 'found a preset window %s' % focused.name
+    print('found a preset window %s' % focused.name)
     acceptable_ratio = (PRESET_WIDTHS[focused.name] * 1.0 / WIDTH)
     desired_ratio = (PRESET_WIDTHS[focused.name] * 1.0 / WIDTH)
 
@@ -110,8 +110,8 @@ def on_window_focus(i3, e):
   increment = int((desired_ratio - current_ratio) * 100)
 
   if increment > 0 and current_ratio > acceptable_ratio:
-    print 'Window is acceptably wide already. %d %d' % (current_ratio,
-                                                        acceptable_ratio)
+    print('Window is acceptably wide already. %d %d' % (current_ratio,
+                                                        acceptable_ratio))
     return
 
   set_resize_timer(i3, increment, window_id)
@@ -126,7 +126,7 @@ def on_new_window(i3, e):
 # Run associated app when a workspace is initialized.
 def on_workspace(i3, e):
   if e.current.props.name in WORKSPACE_APPS and not len(e.current.leaves()):
-    print 'Running %s' % WORKSPACE_APPS[e.current.props.name]
+    print('Running %s' % WORKSPACE_APPS[e.current.props.name])
     i3.command('exec {}'.format(WORKSPACE_APPS[e.current.props.name]))
 
 
