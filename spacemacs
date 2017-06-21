@@ -521,6 +521,9 @@ you should place your code here."
   ;; https://gist.github.com/areina/3879626
   ;; http://spacemacs.org/layers/+email/mu4e/README.html
 
+
+  (setq mu4e-get-mail-command "offlineimap")
+
   ;; don't save message to Sent Messages, GMail/IMAP will take care of this
   (setq mu4e-sent-messages-behavior 'delete)
 
@@ -690,7 +693,6 @@ you should place your code here."
  '(evil-want-Y-yank-to-eol nil)
  '(global-vi-tilde-fringe-mode nil)
  '(golden-ratio-mode t)
- '(mu4e-get-mail-command "offlineimap")
  '(org-agenda-custom-commands
    (quote
     (("n" "Agenda, next TODOs and all TODOs"
