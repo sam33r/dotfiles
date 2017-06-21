@@ -1,18 +1,19 @@
 #!/bin/bash
-
-out=`ps -e -o  pcpu,comm | sort -r | head -2 | tail -1 | cut -c -30`
-usage=`echo $out | awk '{print $1;}'`
+pname=`top -n 1 | head -n 8 | tail -n 1 | sed 's/ \+/ /g' | cut -f 13 -d ' '`
+usage=`top -n 1 | head -n 8 | tail -n 1 | sed 's/ \+/ /g' | cut -f 10 -d ' '`
 
 # Convert to int.
 usage=$( printf "%.0f" $usage )
 
+out="$pname"
+
 color="#777777"
 if (( usage > 90 )); then
-  color="red"
+  color="#FF0000"
 elif (( usage > 80 )); then
   color="yellow"
 elif (( usage > 50 )); then
-  color="#ffffff"
+  color="#FFFFFF"
 elif (( usage < 25 )); then
   exit 0
 fi
