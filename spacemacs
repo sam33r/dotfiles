@@ -521,8 +521,8 @@ you should place your code here."
   ;; https://gist.github.com/areina/3879626
   ;; http://spacemacs.org/layers/+email/mu4e/README.html
 
-
-  (setq mu4e-get-mail-command "offlineimap")
+  ;; This should be overridden by local config.
+  (setq mu4e-get-mail-command "")
 
   ;; don't save message to Sent Messages, GMail/IMAP will take care of this
   (setq mu4e-sent-messages-behavior 'delete)
