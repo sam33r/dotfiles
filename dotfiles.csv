@@ -46,6 +46,7 @@ $HOME/.config/omf/key_bindings.fish,omf/key_bindings.fish
 $HOME/.config/omf/theme,omf/theme
 $HOME/.config/ranger/rc.conf,ranger.conf
 $HOME/.config/redshift.conf,redshift.conf
+$HOME/.gnupg/gpg-agent.conf,gpg-agent.conf
 $HOME/.i3blocks.conf,i3blocks.conf
 $HOME/.profile,profile
 $HOME/.screenrc,screenrc
