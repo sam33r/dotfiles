@@ -446,8 +446,10 @@ you should place your code here."
   ;; org-mode configuration.
   ;;
 
-  (setq org-agenda-files (list "~/n"))
+  ;; In org-agenda log show completed recurring tasks.
+  (setq org-agenda-log-mode-items '(closed clock state))
 
+  (setq org-agenda-files (list "~/n"))
   (require 'org-contacts)
   (setq org-contacts-files '("~/n/people.org.gpg"))
 
