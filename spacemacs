@@ -70,7 +70,7 @@ values."
      (colors :variables
              )
      ;; fast access to dired (-)
-     vinegar
+     ;; vinegar
      ;; command log, toggle with ~SPC a L~
      ;; command-log
      ;; semantic layer: show function header while inside it, and support
