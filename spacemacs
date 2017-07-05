@@ -449,9 +449,35 @@ you should place your code here."
   ;; In org-agenda log show completed recurring tasks.
   (setq org-agenda-log-mode-items '(closed clock state))
 
+  ;; Agenda location
   (setq org-agenda-files (list "~/n"))
   (require 'org-contacts)
   (setq org-contacts-files '("~/n/people.org.gpg"))
+  ;; Archive in a datetree.
+  (setq org-archive-location "~/n/shelved/archive.org.gpg::datetree/* Finished Tasks")
+  ;; Capture mode.
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file+headline "~/n/refile.org.gpg" "Refile Tasks")
+           "* TODO %?\n  %i\n  %a")
+          ("j" "Journal" entry (file+datetree "~/n/journal.org.gpg")
+           "* %?\nEntered on %U\n  %i")
+          ))
+  (define-key global-map "\C-cc" 'org-capture)
+  ;; Publishing notes.
+  (setq org-publish-project-alist
+        `(("notes"
+           :base-directory       "~/n"
+           :base-extension       "org"
+           :publishing-directory "~/pub"
+           :recursive            t
+           :publishing-function  org-html-publish-to-html
+           :auto-sitemap         t
+           :sitemap-filename     "index.org"
+           :sitemap-title        "Index"
+           ;; This doesn't seem to work, disabling for now.
+           ;; :sitemap-sort-folders 'last
+           :sitemap-ignore-case  t
+           )))
 
   ;; custom keybindings
   ;; (spacemacs/set-leader-keys-for-major-mode 'org-mode
@@ -487,30 +513,8 @@ you should place your code here."
           ("WAIT" .(:foreground "purple" :weight bold))
           ("CANCELED" . (:foreground "blue" :weight bold))
           ("DONE" . (:foreground "green" :weight bold))))
-  ;; Capture mode.
-  (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/n/refile.org.gpg" "Refile Tasks")
-           "* TODO %?\n  %i\n  %a")
-          ("j" "Journal" entry (file+datetree "~/n/journal.org.gpg")
-           "* %?\nEntered on %U\n  %i")
-          ))
 
-  ;; Publishing notes.
-  (setq org-publish-project-alist
-        `(("notes"
-           :base-directory       "~/n"
-           :base-extension       "org"
-           :publishing-directory "~/pub"
-           :recursive            t
-           :publishing-function  org-html-publish-to-html
-           :auto-sitemap         t
-           :sitemap-filename     "index.org"
-           :sitemap-title        "Index"
-           ;; This doesn't seem to work, disabling for now.
-           ;; :sitemap-sort-folders 'last
-           :sitemap-ignore-case  t
-           )))
-  (define-key global-map "\C-cc" 'org-capture)
+
 
   ;; Other misc org-mode settings.
   (setq org-startup-folded 'show-all)
@@ -772,7 +776,6 @@ you should place your code here."
      "----------------"
      (800 1000 1200 1400 1600 1800 2000))))
  '(org-agenda-window-setup (quote current-window))
- '(org-archive-location "~/n/archive.org.gpg::datetree/* Finished Tasks")
  '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))
  '(org-habit-completed-glyph 42)
  '(org-habit-preceding-days 28)
