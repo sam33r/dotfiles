@@ -752,13 +752,14 @@ you should place your code here."
  '(evil-want-Y-yank-to-eol nil)
  '(global-vi-tilde-fringe-mode nil)
  '(golden-ratio-mode t)
+ '(neo-window-fixed-size t)
+ '(neo-window-width 40)
  '(org-M-RET-may-split-line nil)
  '(org-agenda-custom-commands
    (quote
-    (("n" "Agenda, next TODOs and all TODOs"
+    (("n" "Agenda and next TODOs"
       ((agenda "" nil)
-       (todo "NEXT")
-       (todo "TODO"))
+       (todo "NEXT"))
       nil))))
  '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
  '(org-agenda-prefix-format
