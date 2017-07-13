@@ -342,9 +342,22 @@ values."
 
 
 ;; Custom functions.
+
+(defun sa/local-shell-command (command)
+  """Run command in local machine's shell."""
+  (let ((default-directory "~"))
+    (shell-command command))
+)
+
+(defun sa/try-local-shell-command (command)
+  """Run command in local machine's shell."""
+  (interactive "sCommand: ")
+  (sa/local-shell-command command)
+)
+
 (defun sa/notify (headline-string message-string)
   """Send message to notification"""
-  (shell-command (concat "notify-send --expire-time=30000 --icon=emacs \""
+  (sa/local-shell-command (concat "notify-send --expire-time=30000 --icon=emacs \""
                          headline-string
                          "\" \""
                          message-string
@@ -411,14 +424,12 @@ values."
   )
 
 (defun sa/clock-in ()
-  (shell-command "touch /tmp/org-clock-flag")
+  (sa/local-shell-command "touch /tmp/org-clock-flag")
   (sa/notify "ORG CLOCK-IN" "Org-mode clocking in"))
 
 (defun sa/clock-out ()
-  (shell-command "rm -f /tmp/org-clock-flag")
+  (sa/local-shell-command "rm -f /tmp/org-clock-flag")
   (sa/notify "ORG CLOCK-OUT" "Org-mode clocking out"))
-
-
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
