@@ -765,7 +765,7 @@ you should place your code here."
  '(global-vi-tilde-fringe-mode nil)
  '(golden-ratio-mode t)
  '(neo-window-fixed-size t)
- '(neo-window-width 40)
+ '(neo-window-width 40 t)
  '(org-M-RET-may-split-line nil)
  '(org-agenda-custom-commands
    (quote
@@ -791,7 +791,8 @@ you should place your code here."
  '(org-agenda-window-setup (quote current-window))
  '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))
  '(org-habit-completed-glyph 42)
- '(org-habit-preceding-days 28)
+ '(org-habit-graph-column 85)
+ '(org-habit-preceding-days 30)
  '(org-habit-show-habits-only-for-today t)
  '(org-modules
    (quote
