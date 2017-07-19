@@ -73,11 +73,13 @@ values."
      ;; vinegar
      ;; command log, toggle with ~SPC a L~
      ;; command-log
+
      ;; semantic layer: show function header while inside it, and support
      ;; common refactoring. (~SPC m r~ to refactor at point).
-     ;; Disabling for now because the refactoring features don't work for
-     ;; me and the always-visible-header is not that useful for me.
-     semantic
+     ;; Disabled in elisp because the combination is insufferable.
+     ;; https://github.com/syl20bnr/spacemacs/issues/7038
+     (semantic :disabled-for emacs-lisp)
+
      ;; Show file outline in a sidebar. Keybindings:
      ;; SPC b i	toggle imenu-list window
      ;; q	      quit imenu-list window
