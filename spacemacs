@@ -73,11 +73,13 @@ values."
      ;; vinegar
      ;; command log, toggle with ~SPC a L~
      ;; command-log
+
      ;; semantic layer: show function header while inside it, and support
      ;; common refactoring. (~SPC m r~ to refactor at point).
-     ;; Disabling for now because the refactoring features don't work for
-     ;; me and the always-visible-header is not that useful for me.
-     semantic
+     ;; Disabled in elisp because the combination is insufferable.
+     ;; https://github.com/syl20bnr/spacemacs/issues/7038
+     (semantic :disabled-for emacs-lisp)
+
      ;; Show file outline in a sidebar. Keybindings:
      ;; SPC b i	toggle imenu-list window
      ;; q	      quit imenu-list window
@@ -85,7 +87,9 @@ values."
      ;; d	      display current entry, keep focus on imenu-list window
      ;; f	      fold/unfold current section
      imenu-list
+
      themes-megapack
+
      ;; Improves evil find bindings.
      ;; Adds keybinding s/S to search for two characters forward or backward
      ;; in the file.
@@ -260,7 +264,7 @@ values."
    ;; `right-then-bottom'. right-then-bottom tries to display the frame to the
    ;; right; if there is insufficient space it displays it at the bottom.
    ;; (default 'bottom)
-   dotspacemacs-which-key-position 'right-then-bottom
+   dotspacemacs-which-key-position 'bottom
    ;; If non nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
    ;; nil to boost the loading time. (default t)
@@ -342,9 +346,22 @@ values."
 
 
 ;; Custom functions.
+
+(defun sa/local-shell-command (command)
+  """Run command in local machine's shell."""
+  (let ((default-directory "~"))
+    (shell-command command))
+)
+
+(defun sa/try-local-shell-command (command)
+  """Run command in local machine's shell."""
+  (interactive "sCommand: ")
+  (sa/local-shell-command command)
+)
+
 (defun sa/notify (headline-string message-string)
   """Send message to notification"""
-  (shell-command (concat "notify-send --expire-time=30000 --icon=emacs \""
+  (sa/local-shell-command (concat "notify-send --expire-time=30000 --icon=emacs \""
                          headline-string
                          "\" \""
                          message-string
@@ -411,14 +428,12 @@ values."
   )
 
 (defun sa/clock-in ()
-  (shell-command "touch /tmp/org-clock-flag")
+  (sa/local-shell-command "touch /tmp/org-clock-flag")
   (sa/notify "ORG CLOCK-IN" "Org-mode clocking in"))
 
 (defun sa/clock-out ()
-  (shell-command "rm -f /tmp/org-clock-flag")
+  (sa/local-shell-command "rm -f /tmp/org-clock-flag")
   (sa/notify "ORG CLOCK-OUT" "Org-mode clocking out"))
-
-
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
@@ -713,6 +728,7 @@ you should place your code here."
   (evil-leader/set-key "oi" #'sa/shell-insert)
   (evil-leader/set-key "oI" #'sa/shell-on-range-insert)
   (evil-leader/set-key "oh" #'sa/howdoi)
+  (evil-leader/set-key "ob" #'helm-bookmarks)
 
   ;; Experimental: Resume last helm command.
   (spacemacs/set-leader-keys "." 'helm-resume)
@@ -743,7 +759,7 @@ you should place your code here."
  '(browse-url-browser-function (quote browse-url-chrome))
  '(compilation-error-regexp-alist
    (quote
-    (google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google-blaze-error google-log-error google-log-warning google-log-info google-log-fatal-message google-forge-python gunit-stack-trace absoft ada aix ant bash borland python-tracebacks-and-caml comma cucumber msft edg-1 edg-2 epc ftnchek iar ibm irix java jikes-file maven jikes-line clang-include gcc-include ruby-Test::Unit gnu lcc makepp mips-1 mips-2 msft omake oracle perl php rxp sparc-pascal-file sparc-pascal-line sparc-pascal-example sun sun-ada watcom 4bsd gcov-file gcov-header gcov-nomark gcov-called-line gcov-never-called perl--Pod::Checker perl--Test perl--Test2 perl--Test::Harness weblint guile-file guile-line)))
+    (google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google-blaze-error google-log-error google-log-warning google-log-info google-log-fatal-message google-forge-python gunit-stack-trace absoft ada aix ant bash borland python-tracebacks-and-caml comma cucumber msft edg-1 edg-2 epc ftnchek iar ibm irix java jikes-file maven jikes-line clang-include gcc-include ruby-Test::Unit gnu lcc makepp mips-1 mips-2 msft omake oracle perl php rxp sparc-pascal-file sparc-pascal-line sparc-pascal-example sun sun-ada watcom 4bsd gcov-file gcov-header gcov-nomark gcov-called-line gcov-never-called perl--Pod::Checker perl--Test perl--Test2 perl--Test::Harness weblint guile-file guile-line)))
  '(create-lockfiles nil)
  '(custom-safe-themes
    (quote
@@ -753,13 +769,14 @@ you should place your code here."
  '(global-vi-tilde-fringe-mode nil)
  '(golden-ratio-mode t)
  '(mu4e-compose-dont-reply-to-self t)
+ '(neo-window-fixed-size t)
+ '(neo-window-width 40 t)
  '(org-M-RET-may-split-line nil)
  '(org-agenda-custom-commands
    (quote
-    (("n" "Agenda, next TODOs and all TODOs"
+    (("n" "Agenda and next TODOs"
       ((agenda "" nil)
-       (todo "NEXT")
-       (todo "TODO"))
+       (todo "NEXT"))
       nil))))
  '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
  '(org-agenda-prefix-format
@@ -779,7 +796,8 @@ you should place your code here."
  '(org-agenda-window-setup (quote current-window))
  '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))
  '(org-habit-completed-glyph 42)
- '(org-habit-preceding-days 28)
+ '(org-habit-graph-column 85)
+ '(org-habit-preceding-days 30)
  '(org-habit-show-habits-only-for-today t)
  '(org-modules
    (quote
