@@ -752,6 +752,7 @@ you should place your code here."
  '(evil-want-Y-yank-to-eol nil)
  '(global-vi-tilde-fringe-mode nil)
  '(golden-ratio-mode t)
+ '(mu4e-compose-dont-reply-to-self t)
  '(org-M-RET-may-split-line nil)
  '(org-agenda-custom-commands
    (quote
