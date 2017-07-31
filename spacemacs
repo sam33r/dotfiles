@@ -729,6 +729,7 @@ you should place your code here."
   (evil-leader/set-key "oI" #'sa/shell-on-range-insert)
   (evil-leader/set-key "oh" #'sa/howdoi)
   (evil-leader/set-key "ob" #'helm-bookmarks)
+  (evil-leader/set-key "oe" #'eshell)
 
   ;; Experimental: Resume last helm command.
   (spacemacs/set-leader-keys "." 'helm-resume)
