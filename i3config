@@ -21,10 +21,10 @@ set $urgent-bg-color     #E53935
 
 # window colors
  #                       border              background         text                 indicator
- client.focused          $bg-color-highlight $bg-color          $text-color          #00ff00
- client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color #00ff00
- client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color #00ff00
- client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #00ff00
+ client.focused          $bg-color-highlight $bg-color          $text-color          #0086b7
+ client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color #0086b7
+ client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color #0086b7
+ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #0086b7
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -213,8 +213,9 @@ bindsym $mod+apostrophe workspace back_and_forth
 assign [class="Spotify"] $ws10
 # spotify does not assign a class at startup, workaround:
 for_window [class="Spotify"] move to workspace $ws10
-
-for_window [title="Nexus 6P"] floating enable
+for_window [class="mpv"] floating enable
+for_window [class="mpv"] move position 50 px 1000 px
+for_window [class="mpv"] resize set 640 480
 
 # Float google-chrome windows
 # for_window [class="Google-chrome"] floating enable
