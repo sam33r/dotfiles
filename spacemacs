@@ -749,9 +749,12 @@ you should place your code here."
   (evil-leader/set-key "oh" #'sa/howdoi)
   (evil-leader/set-key "ob" #'helm-bookmarks)
   (evil-leader/set-key "oe" #'eshell)
+  (evil-leader/set-key "or" #'sa/read)
 
   ;; Experimental: Resume last helm command.
-  (spacemacs/set-leader-keys "." 'helm-resume)
+  ;; (spacemacs/set-leader-keys "." 'helm-resume)
+
+  ;; Hide modeline by default.
 
   ;; Allow pasting same string multiple times.
   ;; See: https://github.com/syl20bnr/spacemacs/blob/master/doc/FAQ.org
