@@ -390,6 +390,14 @@ values."
   (spacemacs/toggle-fringe-on)
   (message "Activating coding mode"))
 
+(defun sa/read ()
+  (interactive)
+  (setq word-wrap t)
+  (set-window-margins
+   (car (get-buffer-window-list (current-buffer) nil t)) 24 24)
+  (spacemacs/toggle-mode-line-off)
+  (message "Activating reading mode"))
+
 (defun sa/shell-insert (command)
   "Run a shell command and insert output"
   (interactive "sCommand to run: ")
