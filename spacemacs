@@ -555,6 +555,12 @@ you should place your code here."
   (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
   (add-hook 'org-mode-hook 'sa/write 'append)
 
+  ;; a bunch of hooks to disable modeline. Blanked disable doesn't seem to
+  ;; be working.
+  (add-hook 'text-mode-hook 'spacemacs/toggle-mode-line-off)
+  (add-hook 'prog-mode-hook 'spacemacs/toggle-mode-line-off)
+  (add-hook 'mu4e-headers-mode 'spacemacs/toggle-mode-line-off)
+
   ;; Activate writeroom mode for org-mode and markdown-mode
   (add-hook 'org-mode-hook 'writeroom-mode 'append)
   (add-hook 'markdown-mode-hook 'writeroom-mode 'append)
@@ -622,7 +628,6 @@ you should place your code here."
     (mu4e-alert-set-default-style 'notifications) ; For linux
     )
   (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
-  (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)
 
   ;; Display images inline.
   (setq mu4e-view-show-images t)
@@ -648,8 +653,14 @@ you should place your code here."
   ;; Set up modeline.
   (spacemacs/toggle-mode-line-minor-modes-off)
   (spacemacs/toggle-mode-line-major-mode-off)
-  (spacemacs/toggle-mode-line-org-clock-on)
-  (spacemacs/toggle-display-time-on)
+  (spacemacs/toggle-mode-line-org-clock-off)
+  (spacemacs/toggle-mode-line-point-position-off)
+  (spacemacs/toggle-display-time-off)
+
+  ;; disable modeline by default.
+  ;; This doesn't work, of course.
+  ;; (spacemacs/toggle-mode-line-off)
+
   (setq powerline-default-separator nil)
 
   ;; Centered cursor minor mode.
