@@ -93,6 +93,8 @@ function install_pips()                                                         
   $HOME/py3env/bin/pip3 install --upgrade i3ipc
   $HOME/pyenv/bin/pip install --upgrade vobject parsedatetime
   $HOME/pyenv/bin/pip install --upgrade gcalcli
+  $HOME/py3env/bin/pip3 install --upgrade youtube_dl
+  $HOME/py3env/bin/pip3 install --upgrade mps-youtube
 }
 
 function install_update_vim_plugins()
