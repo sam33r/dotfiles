@@ -84,6 +84,9 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+# Don't focus new chrome windows. These are usually reference material.
+no_focus [class="Google-chrome"]
+
 # split in horizontal orientation
 bindsym $mod+bar split h
 
