@@ -855,7 +855,13 @@ you should place your code here."
  '(vc-follow-symlinks t)
  '(web-mode-code-indent-offset 2)
  '(web-mode-css-indent-offset 2)
- '(web-mode-markup-indent-offset 2))
+ '(web-mode-markup-indent-offset 2)
+ '(writeroom-border-width 20)
+ '(writeroom-fullscreen-effect (quote maximized))
+ '(writeroom-global-effects
+   (quote
+    (writeroom-set-alpha writeroom-set-menu-bar-lines writeroom-set-tool-bar-lines writeroom-set-vertical-scroll-bars writeroom-set-bottom-divider-width)))
+ '(writeroom-width 80))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
