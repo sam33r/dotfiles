@@ -37,7 +37,7 @@ export NOTIFY_MAILDIR=""
 # Used with gcalcli
 export CALENDAR=""
 # default browser
-export BROWSER=w3m
+export BROWSER=google-chrome
 # emacs version
 export EMACS=""
 
