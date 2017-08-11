@@ -443,6 +443,10 @@ values."
   (sa/local-shell-command "rm -f /tmp/org-clock-flag")
   (sa/notify "ORG CLOCK-OUT" "Org-mode clocking out"))
 
+(defun sa/switch-to-elfeed ()
+  (interactive)
+  (switch-to-buffer "*elfeed-entry*")
+  )
 
 ;; Custom elfeed functions (to show date in headers)
 ;; See https://github.com/algernon/elfeed-goodies/issues/15
@@ -820,13 +824,14 @@ you should place your code here."
   ;; Eww browser keybindings
   (evil-define-key 'normal eww-mode-map
     "V" 'eww-browse-with-external-browser ;; default in eww-mode
-    "q" 'eww-quit ;
+    "Q" 'sa/switch-to-elfeed
+    "q" 'delete-window
     "a" 'eww-add-bookmark
     "yy" 'eww-copy-page-url
     "gu" 'eww-up-url
     "gt" 'eww-top-url
-    ;; "f" 'eww-lnum-follow
-    "F" 'eww-lnum-universal
+    "F" 'eww-lnum-follow
+    ;; "F" 'eww-lnum-universal
     "H" 'eww-back-url
     "L" 'eww-forward-url
     "r" 'eww-reload
@@ -936,6 +941,7 @@ you should place your code here."
  '(python-indent-offset 2)
  '(sh-basic-offset 2)
  '(sh-indentation 2)
+ '(shr-max-image-proportion 0.75)
  '(shr-width 80)
  '(spacemacs-theme-org-agenda-height nil)
  '(spacemacs-theme-org-height nil t)
