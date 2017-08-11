@@ -816,6 +816,31 @@ you should place your code here."
   (evil-leader/set-key "oe" #'eshell)
   (evil-leader/set-key "or" #'sa/read)
 
+
+  ;; Eww browser keybindings
+  (evil-define-key 'normal eww-mode-map
+    "V" 'eww-browse-with-external-browser ;; default in eww-mode
+    "q" 'eww-quit ;
+    "a" 'eww-add-bookmark
+    "yy" 'eww-copy-page-url
+    "gu" 'eww-up-url
+    "gt" 'eww-top-url
+    ;; "f" 'eww-lnum-follow
+    "F" 'eww-lnum-universal
+    "H" 'eww-back-url
+    "L" 'eww-forward-url
+    "r" 'eww-reload
+    "R" 'eww-readable
+    )
+
+  (spacemacs/set-leader-keys-for-major-mode 'eww-mode
+    "h"     'eww-history
+    "ba"    'eww-add-bookmark ;; also "a" in normal state
+    "bl"    'eww-list-bookmarks
+    "o"     'eww
+    "s"     'eww-view-source
+    "c"     'url-cookie-list)
+
   ;; Experimental: Resume last helm command.
   ;; (spacemacs/set-leader-keys "." 'helm-resume)
 
@@ -844,10 +869,10 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
- '(browse-url-browser-function (quote browse-url-chrome))
+ '(browse-url-browser-function (quote eww-browse-url))
  '(compilation-error-regexp-alist
    (quote
-    (google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google-blaze-error google-log-error google-log-warning google-log-info google-log-fatal-message google-forge-python gunit-stack-trace absoft ada aix ant bash borland python-tracebacks-and-caml comma cucumber msft edg-1 edg-2 epc ftnchek iar ibm irix java jikes-file maven jikes-line clang-include gcc-include ruby-Test::Unit gnu lcc makepp mips-1 mips-2 msft omake oracle perl php rxp sparc-pascal-file sparc-pascal-line sparc-pascal-example sun sun-ada watcom 4bsd gcov-file gcov-header gcov-nomark gcov-called-line gcov-never-called perl--Pod::Checker perl--Test perl--Test2 perl--Test::Harness weblint guile-file guile-line)))
+    (google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google-blaze-error google-log-error google-log-warning google-log-info google-log-fatal-message google-forge-python gunit-stack-trace absoft ada aix ant bash borland python-tracebacks-and-caml comma cucumber msft edg-1 edg-2 epc ftnchek iar ibm irix java jikes-file maven jikes-line clang-include gcc-include ruby-Test::Unit gnu lcc makepp mips-1 mips-2 msft omake oracle perl php rxp sparc-pascal-file sparc-pascal-line sparc-pascal-example sun sun-ada watcom 4bsd gcov-file gcov-header gcov-nomark gcov-called-line gcov-never-called perl--Pod::Checker perl--Test perl--Test2 perl--Test::Harness weblint guile-file guile-line)))
  '(create-lockfiles nil)
  '(custom-safe-themes
    (quote
