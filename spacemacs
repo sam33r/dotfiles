@@ -669,6 +669,23 @@ you should place your code here."
     (setq mu4e-view-prefer-html nil)
     (mu4e-view-refresh))
 
+ ;;; mu4e message view-in-chrome action
+  (defun mu4e-msgv-action-view-in-chrome (msg)
+    "View the body of the message in chrome."
+    (interactive)
+    (let ((html (mu4e-msg-field (mu4e-message-at-point t) :body-html))
+          (tmpfile (format "%s/%d.html" temporary-file-directory (random))))
+      (unless html (error "No html part for this message"))
+      (with-temp-file tmpfile
+        (insert
+         "<html>"
+         "<head><meta http-equiv=\"content-type\""
+         "content=\"text/html;charset=UTF-8\">"
+         html))
+      (browse-url-chrome (concat "file://" tmpfile))))
+  (add-to-list 'mu4e-view-actions
+               '("Chrome - View in Chrome" . mu4e-msgv-action-view-in-chrome) t)
+
   ;; convert html to text.
   ;; (setq mu4e-html2text-command 'mu4e-shr2text)
   ;; (setq mu4e-html2text-command "html2markdown --body-width=0 | sed \"s/&nbsp_place_holder;/ /g; /^$/d\"")
