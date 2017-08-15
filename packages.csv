@@ -1,6 +1,5 @@
 acpi,used to display battery status
 autoconf-archive,For manual make
-clonezilla,Bare-metal backup for linux.
 compton,Simple standalone composite manager (For use with xmonad)
 docker-engine,docker
 feh,Image viewer useful for setting wallpaper in linux
