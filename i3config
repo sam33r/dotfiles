@@ -268,6 +268,9 @@ mode "resize" {
   # blow up window (for floating windows)
   bindsym b resize set 1600 1400; move absolute position center
 
+  # picture-in-picture this window
+  bindsym p resize set 900 600; move absolute position 50 px 900 px
+
   # back to normal: Enter or Escape
   bindsym Return mode "default"
   bindsym Escape mode "default"
