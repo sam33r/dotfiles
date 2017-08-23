@@ -944,6 +944,7 @@ you should place your code here."
  '(org-habit-completed-glyph 42)
  '(org-habit-graph-column 85)
  '(org-habit-preceding-days 30)
+ '(org-habit-show-all-today t)
  '(org-habit-show-habits-only-for-today t)
  '(org-modules
    (quote
