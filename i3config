@@ -218,7 +218,7 @@ assign [class="Spotify"] $ws10
 # spotify does not assign a class at startup, workaround:
 for_window [class="Spotify"] move to workspace $ws10
 for_window [class="mpv"] floating enable
-for_window [class="mpv"] move position 50 px 1000 px
+for_window [class="mpv"] move position 1600 px 1000 px
 for_window [class="mpv"] resize set 640 480
 
 # Float google-chrome windows
@@ -269,7 +269,7 @@ mode "resize" {
   bindsym b resize set 1600 1400; move absolute position center
 
   # picture-in-picture this window
-  bindsym p resize set 900 600; move absolute position 50 px 900 px
+  bindsym p resize set 900 600; move absolute position 1600 px 900 px
 
   # back to normal: Enter or Escape
   bindsym Return mode "default"
