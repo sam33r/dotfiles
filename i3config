@@ -121,6 +121,10 @@ bindsym $mod+Shift+space floating toggle
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
+# shortcut for picture-in-picture
+# Float, resize, reposition and make sticky.
+bindsym $mod+i floating enable; resize set 900 600; move absolute position 1500 px 900 px; sticky enable
+
 # focus the parent container
 bindsym $mod+a focus parent
 
@@ -267,9 +271,6 @@ mode "resize" {
 
   # blow up window (for floating windows)
   bindsym b resize set 1600 1400; move absolute position center
-
-  # picture-in-picture this window
-  bindsym p resize set 900 600; move absolute position 1600 px 900 px
 
   # back to normal: Enter or Escape
   bindsym Return mode "default"
