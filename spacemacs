@@ -787,6 +787,9 @@ you should place your code here."
   (push '(?\[ "[[{(]") evil-snipe-aliases)
   (push '(?\] "[]})]") evil-snipe-aliases)
 
+  ;; Not sure why, but jump forward doesn't work right in spacemacs.
+  (define-key evil-normal-state-map (kbd "C-i") #'evil-jump-forward)
+
   ;; Turn off line numbers for org-mode. This causes weird slowdowns for large
   ;; org files.
   ;; (defun nolinum ()
