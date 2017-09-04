@@ -40,3 +40,4 @@ w3m,command line based web browser
 xbacklight,Change display brightness
 xdotool,control mouse cursor with keyboard
 xprintidle,Print user idle time.
+zsh,z shell
