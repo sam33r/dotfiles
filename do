@@ -130,10 +130,9 @@ function install_update_fzf()                                                   
     cd $HOME/.fzf
     git pull origin master
     cd $dir
-    return
+  else
+    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
   fi
-
-  git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
   $HOME/.fzf/install
 }
 
