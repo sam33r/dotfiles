@@ -362,6 +362,11 @@ function install_i3gaps()
   cd $dir
 }
 
+function install_update_antigen()
+{
+  curl -L git.io/antigen > $HOME/.antigen.zsh
+}
+
 function theme()                                                                 # Change Gnome Terminal theme.
 {
   wget -O xt  http://git.io/vGz67 && chmod +x xt && ./xt && rm xt

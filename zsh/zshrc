@@ -1,0 +1,29 @@
+source ~/.antigen.zsh
+
+antigen use oh-my-zsh
+antigen bundles <<EOBUNDLES
+git
+command-not-found
+colored-man-pages
+
+djui/alias-tips
+
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-completions
+zsh-users/zsh-syntax-highlighting
+rupa/z
+vi-mode
+EOBUNDLES
+antigen theme agnoster
+
+# Enable fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Aliases
+alias apps='sudo /usr/bin/software-center'
+alias c=clear
+alias d='$HOME/dotfiles/do'
+alias g=googler
+alias h='$HOME/pyenv/bin/howdoi -n 3 -c'
+alias today='gcalcli agenda now 11:59pm --calendar $CALENDAR --detail_location --detail_description'
+alias week='gcalcli agenda --calendar $CALENDAR'

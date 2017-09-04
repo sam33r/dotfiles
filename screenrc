@@ -1,4 +1,4 @@
-shell '/usr/bin/fish'
+shell '/usr/bin/zsh'
 
 # status
 hardstatus off
