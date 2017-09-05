@@ -130,10 +130,9 @@ function install_update_fzf()                                                   
     cd $HOME/.fzf
     git pull origin master
     cd $dir
-    return
+  else
+    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
   fi
-
-  git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
   $HOME/.fzf/install
 }
 
@@ -361,6 +360,11 @@ function install_i3gaps()
   sudo make install
 
   cd $dir
+}
+
+function install_update_antigen()
+{
+  curl -L git.io/antigen > $HOME/.antigen.zsh
 }
 
 function theme()                                                                 # Change Gnome Terminal theme.
