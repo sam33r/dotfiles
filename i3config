@@ -138,6 +138,9 @@ bindsym $mod+Shift+s sticky toggle
 # focus the child container
 bindsym $mod+d focus child
 
+# focus the alerted window
+bindsym $mod+y [urgent=latest] focus
+
 # lock machine
 bindsym $mod+x exec "~/dotfiles/utils/lock.sh"
 # lock automatically after inactivity
