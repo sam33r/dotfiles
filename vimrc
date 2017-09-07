@@ -92,11 +92,16 @@ Plugin 'junegunn/goyo.vim'
 " Spacemacs keybindings for vim
 Plugin 'meitham/vim-spacemacs'
 
+Plugin 'junegunn/fzf.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
 " Plugin config
 " ----------------------------------------------------------------------
+
+set rtp+=~/.fzf
+
 
 " syntastic config
 set statusline+=%#warningmsg#
@@ -213,6 +218,18 @@ set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
 set gfn=Cousine\ for\ Powerline\ 12
+
+" Custom commands
+
+" Command for git grep
+" - fzf#vim#grep(command, with_column, [options], [fullscreen])
+command! -bang -nargs=* GG
+  \ call fzf#vim#grep('git grep --line-number '.shellescape(<q-args>), 0, <bang>0)
+
+" Use fzf where-ever possible.
+autocmd VimEnter * map <leader>ff :Files<ENTER>
+autocmd VimEnter * map <leader>bb :Buffers<ENTER>
+autocmd VimEnter * map <leader>Ts :Colors<ENTER>
 
 " Read from local config if it exists.
 try
