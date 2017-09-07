@@ -89,12 +89,17 @@ function install_pips()                                                         
   fi
   $HOME/pyenv/bin/pip install urllib3[secure]
   $HOME/pyenv/bin/pip install --upgrade howdoi
+
   $HOME/pyenv/bin/pip install --upgrade i3ipc
   $HOME/py3env/bin/pip3 install --upgrade i3ipc
+
   $HOME/pyenv/bin/pip install --upgrade vobject parsedatetime
   $HOME/pyenv/bin/pip install --upgrade gcalcli
+
   $HOME/py3env/bin/pip3 install --upgrade youtube_dl
   $HOME/py3env/bin/pip3 install --upgrade mps-youtube
+
+  $HOME/pyenv/bin/pip install --upgrade Pygments
 }
 
 function install_update_vim_plugins()
