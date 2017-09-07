@@ -27,7 +27,7 @@ fo() {
 }
 
 # ff - fuzzy open with $EDITOR from anywhere
-# ex: vf word1 word2 ... (even part of a file name)
+# ex: ff word1 word2 ... (even part of a file name)
 # zsh autoload function
 ff() {
   local files
