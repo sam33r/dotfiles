@@ -1,5 +1,7 @@
 #!/bin/bash
 
+unclutter &
+
 sleep 2
 
 # This enables gtk settings from gnome, required for gtk themes.

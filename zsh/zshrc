@@ -21,6 +21,8 @@ antigen theme agnoster
 # Setup fzf and its util functions
 source ~/dotfiles/zsh/fzf.zsh
 
+source ~/.zshrc.local
+
 # Aliases
 
 alias apps='sudo /usr/bin/software-center'
