@@ -21,6 +21,9 @@ antigen theme agnoster
 # Setup fzf and its util functions
 source ~/dotfiles/zsh/fzf.zsh
 
+# Override environment variables
+export BROWSER="w3m"
+
 # Aliases
 
 alias apps='sudo /usr/bin/software-center'
