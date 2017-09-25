@@ -189,6 +189,13 @@ function install_spotify()                                                      
   yes | sudo apt-get install spotify-client
 }
 
+function install_emacs_snapshot()                                                # Install emacs nightly snapshots.
+{
+  sudo add-apt-repository ppa:ubuntu-elisp/ppa
+  sudo apt-get update
+  sudo apt-get install emacs-snapshot
+  sudo update-alternatives --config emacs
+}
 
 function custom_install_arc_theme_ubuntu_1604_only()                             # Install gnome theme of choice.
 {
@@ -294,7 +301,11 @@ function install_mu4e_from_tarball()                                            
 {
   if type "mu" > /dev/null; then
     echo "mu already exists"
-    return
+    echo -n "Do you still want to run this? (y/n) "
+    read answer
+    if echo "$answer" | grep -iq "^n" ;then
+      return
+    fi
   fi
 
   echo "Installing version 0.9.18. Check https://github.com/djcb/mu/releases"

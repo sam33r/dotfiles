@@ -34,6 +34,7 @@ scrot,Screenshots
 silversearcher-ag,Faster search
 suckless-tools,for dmenu (app launcher for xmonad)
 tmux,Terminal multiplexer useful for remoting
+unclutter,Hide mouse cursor when not being used.
 vim-gtk,gvim
 vim,vim!
 w3m,command line based web browser

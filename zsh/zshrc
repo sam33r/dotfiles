@@ -25,7 +25,6 @@ source ~/dotfiles/zsh/fzf.zsh
 export BROWSER="w3m"
 
 # Aliases
-
 alias apps='sudo /usr/bin/software-center'
 alias c=clear
 alias d='$HOME/dotfiles/do'
@@ -36,3 +35,6 @@ alias week='~/pyenv/bin/gcalcli agenda --calendar $CALENDAR'
 
 # Keybindings
 bindkey '^B' push-line-or-edit
+
+# Finally, source any local config.
+source ~/.zshrc.local
