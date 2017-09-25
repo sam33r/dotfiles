@@ -189,6 +189,13 @@ function install_spotify()                                                      
   yes | sudo apt-get install spotify-client
 }
 
+function install_emacs_snapshot()                                                # Install emacs nightly snapshots.
+{
+  sudo add-apt-repository ppa:ubuntu-elisp/ppa
+  sudo apt-get update
+  sudo apt-get install emacs-snapshot
+  sudo update-alternatives --config emacs
+}
 
 function custom_install_arc_theme_ubuntu_1604_only()                             # Install gnome theme of choice.
 {
