@@ -301,7 +301,11 @@ function install_mu4e_from_tarball()                                            
 {
   if type "mu" > /dev/null; then
     echo "mu already exists"
-    return
+    echo -n "Do you still want to run this? (y/n) "
+    read answer
+    if echo "$answer" | grep -iq "^n" ;then
+      return
+    fi
   fi
 
   echo "Installing version 0.9.18. Check https://github.com/djcb/mu/releases"
