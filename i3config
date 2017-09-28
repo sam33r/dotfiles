@@ -205,6 +205,9 @@ bindsym $mod+Shift+0 move container to workspace number 0
 # Shortcut to name a workspace.
 bindsym $mod+n exec i3-input -F 'rename workspace to %s' -P 'New name: '
 
+# Workspace 8 is special - float everything in that ws.
+for_window [workspace="8"] floating enable
+
 # enable workspace auto back-and-forth
 # ie press the 'move to workspace' shortcut again
 # to return to the original workspace.
