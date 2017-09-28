@@ -100,7 +100,11 @@ bindsym $mod+o move workspace to output left
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
+# Enter focused mode for current container.
 bindsym $mod+Shift+f exec "$HOME/dotfiles/utils/focus.sh"
+
+# Make current container a centered, floating column.
+bindsym $mod+c floating enable; resize set 1000 1900; move position center
 
 bindsym $mod+Shift+w exec "feh --randomize --bg-fill ~/Wallpapers/* &"
 
