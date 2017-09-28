@@ -85,8 +85,8 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # Don't focus new chrome windows. These are usually reference material.
-no_focus [class="Google-chrome"]
-no_focus [class="google-chrome"]
+# no_focus [class="Google-chrome"]
+# no_focus [class="google-chrome"]
 
 # split in horizontal orientation
 bindsym $mod+bar split h
