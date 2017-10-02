@@ -95,6 +95,7 @@ values."
      ;; https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Bvim/evil-snipe
      (evil-snipe :variables evil-snipe-enable-alternate-f-and-t-behaviors t)
      (elfeed :variables rmh-elfeed-org-files (list "~/n/feeds.org"))
+     twitter
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
