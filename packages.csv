@@ -2,6 +2,7 @@ acpi,used to display battery status
 autoconf-archive,For manual make
 compton,Simple standalone composite manager (For use with xmonad)
 docker-engine,docker
+fbterm,Framebuffer terminal emulator
 feh,Image viewer useful for setting wallpaper in linux
 fish,fish terminal
 gcc,gnu compilers
