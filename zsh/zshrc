@@ -14,7 +14,11 @@ zsh-users/zsh-syntax-highlighting
 rupa/z
 vi-mode
 EOBUNDLES
-antigen theme agnoster
+
+# Setup theme.
+antigen theme bhilburn/powerlevel9k
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir_writable dir rbenv vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time root_indicator background_jobs battery time)
 
 # Enable fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
