@@ -164,14 +164,11 @@ function install_playerctl()                                                    
 
 function install_googler()                                                       # Command-line tool to query google.
 {
-  # This retrieves download link of latest release.
-  dlink=`curl -s https://api.github.com/repos/jarun/googler/releases \
-              | grep browser_download_url | head -n 1 | cut -d '"' -f 4`
-  dpath="$HOME/Downloads/googler.deb"
-  wget -O $dpath $dlink
-  sudo dpkg -i $dpath
-  sudo apt-get install -f
-  rm -f $dpath
+  cd $HOME
+  git clone https://github.com/jarun/googler
+  cd googler
+  git pull origin master
+  sudo make install
 }
 
 function install_spotify()                                                       # Install spotify client (Requires adding a third party repository).
