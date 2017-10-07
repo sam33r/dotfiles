@@ -141,6 +141,19 @@ function install_update_fzf()                                                   
   $HOME/.fzf/install
 }
 
+function install_keybase()
+{
+  cd $HOME
+  curl -O https://prerelease.keybase.io/keybase_amd64.deb
+  # if you see an error about missing `libappindicator1`
+  # from the next command, you can ignore it, as the
+  # subsequent command corrects it
+  sudo dpkg -i keybase_amd64.deb
+  sudo apt-get install -f
+  run_keybase
+  cd $dir
+}
+
 function install_update_term_theme()                                             # Installs solarized theme for Gnome Terminal.
 {
   cd $HOME
