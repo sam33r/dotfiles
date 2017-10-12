@@ -1,5 +1,5 @@
 # FZF setup.
-export FZF_DEFAULT_OPTS='--height 50% --border --reverse --inline-info --preview "~/pyenv/bin/pygmentize {}"'
+export FZF_DEFAULT_OPTS='--height 50% --border --reverse --inline-info ' #--preview "~/pyenv/bin/pygmentize {}"'
 
 # Global alias for fzf fuzzy-matching files in current dir.
 alias -g F='$(fzf -m)'
