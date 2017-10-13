@@ -47,7 +47,7 @@ bindsym F6 exec i3-sensible-terminal
 bindsym Shift+F6 exec gnome-terminal -e "bash"
 bindsym F7 exec google-chrome
 # bindsym F8 exec "$EMACS"
-bindsym F8 exec emacsclient -c --alternate-editor=""
+bindsym F8 exec emacsclient -c -e '(spacemacs/switch-to-scratch-buffer)' --alternate-editor=""
 
 # kill focused window
 bindsym $mod+Shift+q kill
