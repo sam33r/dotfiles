@@ -1,3 +1,15 @@
+
+# Attempting to fix 256 color issues with fbterm.
+case "$TERM" in
+  xterm*)
+    export TERM=xterm-256color
+    ;;
+  linux)
+    [ -n "$FBTERM" ] && export TERM=fbterm
+    ;;
+esac
+
+
 source ~/.antigen.zsh
 
 antigen use oh-my-zsh
