@@ -233,6 +233,7 @@ for_window [class="Spotify"] move to workspace $ws10
 for_window [class="mpv"] floating enable
 for_window [class="mpv"] move position 1600 px 1000 px
 for_window [class="mpv"] resize set 640 480
+for_window [class="Emulator"] floating enable
 
 # Float google-chrome windows
 # for_window [class="Google-chrome"] floating enable
