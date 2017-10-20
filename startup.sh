@@ -30,3 +30,8 @@ sleep 2
 
 # Start feh for wallpaper.
 feh --randomize --bg-fill ~/Wallpapers/* &
+
+sleep 2
+
+# Start keybase
+run_keybase
