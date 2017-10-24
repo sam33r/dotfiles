@@ -103,6 +103,9 @@ bindsym $mod+f fullscreen toggle
 # Enter focused mode for current container.
 bindsym $mod+Shift+f exec "$HOME/dotfiles/utils/focus.sh"
 
+# Type snippet
+bindsym $mod+Shift+t exec "$HOME/dotfiles/utils/snippets.py"
+
 # Make current container a centered, floating column.
 bindsym $mod+c floating enable; resize set 1000 1900; move position center
 
@@ -233,6 +236,7 @@ for_window [class="Spotify"] move to workspace $ws10
 for_window [class="mpv"] floating enable
 for_window [class="mpv"] move position 1600 px 1000 px
 for_window [class="mpv"] resize set 640 480
+for_window [class="Emulator"] floating enable
 
 # Float google-chrome windows
 # for_window [class="Google-chrome"] floating enable
