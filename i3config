@@ -103,6 +103,9 @@ bindsym $mod+f fullscreen toggle
 # Enter focused mode for current container.
 bindsym $mod+Shift+f exec "$HOME/dotfiles/utils/focus.sh"
 
+# Type snippet
+bindsym $mod+Shift+t exec "$HOME/dotfiles/utils/snippets.py"
+
 # Make current container a centered, floating column.
 bindsym $mod+c floating enable; resize set 1000 1900; move position center
 
