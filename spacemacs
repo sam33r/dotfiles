@@ -414,6 +414,7 @@ values."
   (interactive "sQuery: ")
   (setq sa-file-extension (file-name-extension (buffer-file-name)))
   (setq sa-lang "")
+  (if (string-equal sa-file-extension "js") (setq sa-lang "javascript"))
   (if (string-equal sa-file-extension "go") (setq sa-lang "golang"))
   (if (string-equal sa-file-extension "sh") (setq sa-lang "bash"))
   (if (string-equal sa-file-extension "py") (setq sa-lang "python"))
