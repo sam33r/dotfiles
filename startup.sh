@@ -35,3 +35,7 @@ sleep 2
 
 # Start keybase
 run_keybase
+
+sleep 2
+
+greenclip daemon &

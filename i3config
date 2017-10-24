@@ -106,6 +106,9 @@ bindsym $mod+Shift+f exec "$HOME/dotfiles/utils/focus.sh"
 # Type snippet
 bindsym $mod+Shift+t exec "$HOME/dotfiles/utils/snippets.py"
 
+# Clipboard manager
+bindsym $mod+Shift+c exec "rofi -modi 'clipboard:greenclip print' -show clipboard"
+
 # Make current container a centered, floating column.
 bindsym $mod+c floating enable; resize set 1000 1900; move position center
 
@@ -244,8 +247,8 @@ for_window [class="Emulator"] floating enable
 # Set max float size
 floating_maximum_size 1600 x 1400
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
+# I rarely if ever use reload.
+# bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)

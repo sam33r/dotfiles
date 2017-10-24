@@ -108,6 +108,19 @@ function install_update_vim_plugins()
   vim +PluginInstall! +qall
 }
 
+function install_greenclip()                                                     # Install greenclip clipboard manager.
+{
+  if [ -e ~/bin/greenclip ]; then
+    echo "greenclip seems to already be installed. Make sure ~/bin is in $PATH."
+    return
+  fi
+  mkdir ~/bin
+  cd ~/bin
+  wget https://github.com/erebe/greenclip/releases/download/2.0/greenclip
+  chmod a+x ./greenclip
+  cd $dir
+}
+
 function install_update_liquidprompt()                                           # Install liquidprompt, outstanding bash prompt.
 {
   cd $HOME
