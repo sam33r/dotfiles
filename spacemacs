@@ -986,7 +986,6 @@ you should place your code here."
  '(python-indent-offset 2)
  '(sh-basic-offset 2)
  '(sh-indentation 2)
- '(shackle-default-rule (quote (:same t)))
  '(shackle-inhibit-window-quit-on-same-windows t)
  '(shr-external-browser (quote browse-url-chrome))
  '(shr-max-image-proportion 0.75)
