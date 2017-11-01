@@ -96,6 +96,9 @@ values."
      (evil-snipe :variables evil-snipe-enable-alternate-f-and-t-behaviors t)
      (elfeed :variables rmh-elfeed-org-files (list "~/n/feeds.org"))
      twitter
+     (shell :variables
+            shell-default-shell 'eshell
+            shell-enable-smart-eshell t)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -624,8 +627,6 @@ you should place your code here."
           ("CANCELED" . (:foreground "blue" :weight bold))
           ("DONE" . (:foreground "green" :weight bold))))
 
-
-
   ;; Other misc org-mode settings.
   (setq org-startup-folded 'show-all)
 
@@ -844,7 +845,7 @@ you should place your code here."
   (set-window-buffer nil (current-buffer))
 
   ;; Never create windows.
-  (setq shackle-default-rule '(:same t))
+  ;; (setq shackle-default-rule '(:same t))
   (shackle-mode)
 
   ;; Custom keybindings.
