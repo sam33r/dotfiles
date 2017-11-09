@@ -106,6 +106,9 @@ bindsym $mod+Shift+f exec "$HOME/dotfiles/utils/focus.sh"
 # Type snippet
 bindsym $mod+Shift+t exec "$HOME/dotfiles/utils/snippets.py"
 
+# Select working mode
+bindsym $mod+Shift+p exec "$HOME/dotfiles/utils/projects.sh"
+
 # Clipboard manager
 bindsym $mod+Shift+c exec "rofi -modi 'clipboard:greenclip print' -show clipboard"
 
@@ -217,7 +220,7 @@ for_window [workspace="8"] floating enable
 # enable workspace auto back-and-forth
 # ie press the 'move to workspace' shortcut again
 # to return to the original workspace.
-workspace_auto_back_and_forth yes
+# workspace_auto_back_and_forth yes
 
 # move to scratchpad
 bindsym $mod+Shift+minus move scratchpad
@@ -418,9 +421,6 @@ bindsym XF86AudioPlay exec playerctl play
 bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
-bindsym F10 exec playerctl previous
-bindsym F11 exec playerctl play-pause
-bindsym F12 exec playerctl next
 
 # No borders or title bars.
 new_window pixel 2
