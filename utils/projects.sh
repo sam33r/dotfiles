@@ -51,14 +51,18 @@ function timepass() {
 
 function reset() {
   killall -s TERM chrome &
+  sleep 0.2
+  killall -s TERM chrome &
   killall -s TERM gnome-terminal &
   killall -s TERM emacsclient &
   killall -s TERM nautilus &
-  i3-msg workspace 1 &
+  i3-msg workspace 0
+  i3-msg workspace 1
+  (screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill) &
   sleep 0.2
-  i3-msg layout splith &
+  i3-msg layout splith
 }
 
 reset
-sleep 0.5
+sleep 0.2
 "$selection"
