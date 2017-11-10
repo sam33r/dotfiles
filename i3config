@@ -107,7 +107,7 @@ bindsym $mod+Shift+f exec "$HOME/dotfiles/utils/focus.sh"
 bindsym $mod+Shift+t exec "$HOME/dotfiles/utils/snippets.py"
 
 # Select working mode
-bindsym $mod+Shift+p exec "$HOME/dotfiles/utils/projects.sh"
+bindsym $mod+Shift+m exec "$HOME/dotfiles/utils/projects.sh"
 
 # Clipboard manager
 bindsym $mod+Shift+c exec "rofi -modi 'clipboard:greenclip print' -show clipboard"
