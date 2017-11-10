@@ -20,6 +20,9 @@ function dotfiles() {
 function browser() {
   notify-send "Starting chrome..."
   google-chrome &
+  sleep 2
+  i3-msg move scratchpad
+  google-chrome &
 }
 
 function edit_projects() {
