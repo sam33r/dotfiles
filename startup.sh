@@ -39,3 +39,5 @@ run_keybase
 sleep 2
 
 greenclip daemon &
+
+emacs --daemon &
