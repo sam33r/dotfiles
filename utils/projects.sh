@@ -34,6 +34,8 @@ function mail() {
   emacsclient -c &
   sleep 1
   xdotool type " aM"
+  sleep 0.5
+  xdotool type "U"
 }
 
 function gmail() {
