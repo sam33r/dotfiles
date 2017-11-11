@@ -375,6 +375,11 @@ values."
   (org-agenda)
   (delete-other-windows))
 
+(defun sa/agenda ()
+  ;; Org Agenda
+  (org-agenda nil "n")
+  (delete-other-windows))
+
 (defun sa/todos ()
   ;; Pick which TODO type on load.
   (org-agenda nil "T")
