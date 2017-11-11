@@ -9,9 +9,22 @@ fi
 
 . ~/projects.local.sh
 
+function agenda() {
+  emacsclient -c -e "(sa/agenda)"
+}
 
-
-echo "selection is $selection"
+function journal() {
+  emacsclient -c -e "(org-capture)" &
+  sleep 1
+  xdotool type "j"
+  sleep 0.5
+  xdotool key "Escape"
+  xdotool type " wm"
+  sleep 0.5
+  xdotool type "a"
+  sleep 0.1
+  i3-msg fullscreen
+}
 
 function dotfiles() {
   emacsclient -c "~/dotfiles"
@@ -48,7 +61,7 @@ function gmail() {
 }
 
 function timepass() {
-  i3-msg workspace 8
+  i3-msg workspace number 8
   google-chrome https://instapaper.com &
   google-chrome https://read.amazon.com &
   google-chrome --app-id=bikioccmkafdpakkkcpdbppfkghcmihk
@@ -61,8 +74,8 @@ function reset() {
   killall -s TERM gnome-terminal &
   killall -s TERM emacsclient &
   killall -s TERM nautilus &
-  i3-msg workspace 0
-  i3-msg workspace 1
+  i3-msg workspace number 0
+  i3-msg workspace number 1
   (screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill) &
   sleep 0.2
   i3-msg layout splith
