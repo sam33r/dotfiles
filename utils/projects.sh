@@ -1,6 +1,6 @@
 #!/bin/bash
 
-selection=$(awk '/^function /{s = ""; for (i = 4; i <= NF; i++) s = s $i " "; printf("%s\n",substr($2, 1, length($2) - 2))}' ~/projects.local.sh $0 | rofi -fuzzy -dmenu)
+selection=$(awk '/^function [0-9]_/{s = ""; for (i = 4; i <= NF; i++) s = s $i " "; printf("%s\n",substr($2, 1, length($2) - 2))}' ~/projects.local.sh $0 | sort | rofi -i -sort -fuzzy -dmenu -p "PROJECT: ")
 
 if [ -z "$selection" ]
 then
