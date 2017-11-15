@@ -72,6 +72,7 @@ function reset() {
   sleep 0.2
   killall -s TERM chrome &
   killall -s TERM gnome-terminal &
+  (ps -A | grep gnome-terminal | cut -d" " -f2 | awk '{print $1}' | xargs kill) &
   killall -s TERM emacsclient &
   killall -s TERM nautilus &
   i3-msg workspace number 0
