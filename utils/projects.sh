@@ -9,11 +9,30 @@ fi
 
 . ~/projects.local.sh
 
-function agenda() {
+function reset() {
+  killall -s TERM chrome &
+  sleep 0.2
+  killall -s TERM chrome &
+  killall -s TERM gnome-terminal &
+  killall -s TERM emacsclient &
+  killall -s TERM nautilus &
+  killall -s TERM nemo &
+  i3-msg workspace number 0
+  i3-msg workspace number 1
+  (screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill) &
+  sleep 0.2
+  i3-msg layout splith
+}
+
+function 0_clean() {
+  notify-send "All clear." -t 1000
+}
+
+function 1_agenda() {
   emacsclient -c -e "(sa/agenda)"
 }
 
-function journal() {
+function 1_journal() {
   emacsclient -c -e "(org-capture)" &
   sleep 1
   xdotool type "j"
@@ -26,27 +45,27 @@ function journal() {
   i3-msg fullscreen
 }
 
-function dotfiles() {
+function 8_dotfiles() {
   emacsclient -c "~/dotfiles"
 }
 
-function browser() {
-  notify-send "Starting chrome..."
+function 8_browser() {
+  notify-send "Starting chrome..." -t 1000
   google-chrome &
   sleep 2
   i3-msg move scratchpad
   google-chrome &
 }
 
-function edit_projects() {
+function 8_edit_projects() {
   emacsclient -c "~/dotfiles/utils/projects.sh"
 }
 
-function edit_local_projects() {
+function 8_edit_local_projects() {
   emacsclient -c "~/projects.local.sh"
 }
 
-function mail() {
+function 8_mail() {
   emacsclient -c &
   sleep 1
   xdotool type " aM"
@@ -54,33 +73,20 @@ function mail() {
   xdotool type "U"
 }
 
-function gmail() {
+function 8_gmail() {
   google-chrome "gmail.com" &
   sleep 5
   xdotool key F11
 }
 
-function timepass() {
+function 9_timepass() {
   i3-msg workspace number 8
   google-chrome https://instapaper.com &
   google-chrome https://read.amazon.com &
   google-chrome --app-id=bikioccmkafdpakkkcpdbppfkghcmihk
 }
 
-function reset() {
-  killall -s TERM chrome &
-  sleep 0.2
-  killall -s TERM chrome &
-  killall -s TERM gnome-terminal &
-  killall -s TERM emacsclient &
-  killall -s TERM nautilus &
-  i3-msg workspace number 0
-  i3-msg workspace number 1
-  (screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill) &
-  sleep 0.2
-  i3-msg layout splith
-}
-
 reset
+reset_local
 sleep 0.2
 "$selection"
