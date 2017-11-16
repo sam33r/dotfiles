@@ -370,7 +370,7 @@ bar {
   }
   position bottom
   mode hide
-  modifier Shift
+  modifier Control
   workspace_buttons no
   binding_mode_indicator yes
 }
