@@ -23,6 +23,12 @@ function reset() {
   (screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill) &
   sleep 0.2
   i3-msg layout splith
+  gnome-terminal &
+  sleep 0.3
+  i3-msg move scratchpad
+  google-chrome &
+  sleep 2
+  i3-msg move scratchpad
 }
 
 function 0_clean() {
@@ -52,9 +58,9 @@ function 8_dotfiles() {
 
 function 8_browser() {
   notify-send "Starting chrome..." -t 1000
-  google-chrome &
-  sleep 2
-  i3-msg move scratchpad
+  # google-chrome &
+  # sleep 2
+  # i3-msg move scratchpad
   google-chrome &
 }
 
