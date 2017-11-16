@@ -42,8 +42,9 @@ font pango:DejaVu Sans Mono 8
 # font, it doesn’t scale on retina/hidpi displays.
 
 # Function keys to open common apps.
-bindsym F5 exec ~/email.sh
-bindsym F6 exec i3-sensible-terminal
+# search desktop entries
+bindsym F2 exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -i'
+bindsym F6 exec gnome-terminal
 bindsym Shift+F6 exec gnome-terminal -e "bash"
 bindsym F7 exec google-chrome
 # bindsym F8 exec "$EMACS"
@@ -89,10 +90,12 @@ bindsym $mod+Shift+Right move right
 # no_focus [class="google-chrome"]
 
 # split in horizontal orientation
-bindsym $mod+bar split h
+bindsym $mod+bar split h; \
+    exec "notify-send 'Split horizontally' --expire-time=2000"
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+v split v; \
+    exec "notify-send 'Split vertically' --expire-time=2000"
 
 # Move to the other workspace
 bindsym $mod+o move workspace to output left
@@ -112,18 +115,25 @@ bindsym $mod+Shift+m exec "$HOME/dotfiles/utils/projects.sh"
 # Clipboard manager
 bindsym $mod+Shift+c exec "rofi -modi 'clipboard:greenclip print' -show clipboard"
 
+# List/edit keybindings
+bindsym $mod+Shift+slash exec "$HOME/dotfiles/utils/i3_keybindings.sh"
+
+# Cycle wallpaper
+bindsym $mod+Shift+w exec "feh --randomize --bg-fill ~/Wallpapers/* &"
+
 # Make current container a centered, floating column.
 bindsym $mod+c floating enable; resize set 1000 1900; move position center
-
-bindsym $mod+Shift+w exec "feh --randomize --bg-fill ~/Wallpapers/* &"
 
 # Leave fullscreen on encountering popups
 popup_during_fullscreen leave_fullscreen
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+s layout stacking; \
+    exec "notify-send 'Enabled stacked layout' --expire-time=2000"
+bindsym $mod+w layout tabbed; \
+    exec "notify-send 'Enabled tabbed layout' --expire-time=2000"
+bindsym $mod+e layout toggle split; \
+    exec "notify-send 'Enabled split  layout' --expire-time=2000"
 
 # Make this window a tabbed container
 bindsym $mod+t split v; layout tabbed; \
@@ -171,21 +181,11 @@ bindsym button3 floating toggle
 bindsym button2 kill
 
 # start rofi (a program launcher)
-# search desktop entries
-bindsym F2 exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -i'
 # switch and kill windows
 bindsym $mod+Return exec --no-startup-id ~/py3env/bin/python3 ~/dotfiles/utils/i3-container-commander.py \
     --menu=rofi --group-by=none -- -i
 bindsym $mod+Shift+Return exec --no-startup-id ~/py3env/bin/python3 ~/dotfiles/utils/i3-container-commander.py \
     --menu=rofi --group-by=none --command=kill -- -i
-
-# TODO: The color scheme for rofi is a work in ugly progress.
-bindsym F4 exec rofi -show run -lines 5 -eh 2 -width 50 -padding 200 \
--opacity "90" -color.enabled \
--color-window "$bg-color" "$bg-color" "$text-color" "$bg-color" "#9575cd" \
--bw 2 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" \
--hlfg "#9575cd" || dmenu_run
-
 
 # switch to workspace
 # bindsym $mod+1 workspace number 1
@@ -217,41 +217,16 @@ bindsym $mod+n exec i3-input -F 'rename workspace to %s' -P 'New name: '
 # Workspace 8 is special - float everything in that ws.
 for_window [workspace="8"] floating enable
 
-# enable workspace auto back-and-forth
-# ie press the 'move to workspace' shortcut again
-# to return to the original workspace.
-# workspace_auto_back_and_forth yes
-
 # move to scratchpad
 bindsym $mod+Shift+minus move scratchpad
-bindsym $mod+Shift+apostrophe move scratchpad
 
-# show terminal scratchpad window
-bindsym $mod+minus scratchpad show
-# show chrome scratchpad window
-bindsym $mod+apostrophe workspace back_and_forth
-
-# This binding never works because the system binds it to some other action
-# before it even reaches i3. Not sure what that binding is.
-# bindsym $mod+backslash [class="Gnome-terminal"] scratchpad show
-
-# assign spotify to workspace 10
-assign [class="Spotify"] $ws10
-# spotify does not assign a class at startup, workaround:
-for_window [class="Spotify"] move to workspace $ws10
-for_window [class="mpv"] floating enable
-for_window [class="mpv"] move position 1600 px 1000 px
-for_window [class="mpv"] resize set 640 480
-for_window [class="Emulator"] floating enable
-
-# Float google-chrome windows
-# for_window [class="Google-chrome"] floating enable
+# show scratchpad windows
+bindsym $mod+minus [class="Gnome-terminal"] scratchpad show
+bindsym $mod+0 [class="Google-chrome"] scratchpad show
 
 # Set max float size
 floating_maximum_size 1600 x 1400
 
-# I rarely if ever use reload.
-# bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
@@ -268,9 +243,6 @@ bindsym $mod+p mode "passthrough"
 mode "resize" {
   # These bindings trigger as soon as you enter the resize mode
 
-  # Pressing left will shrink the window’s width.
-  # Pressing right will grow the window’s width.
-  # Pressing up will shrink the window’s height.
   # Pressing down will grow the window’s height.
   bindsym j resize grow width 10 px or 10 ppt
   bindsym k resize shrink width 10 px or 10 ppt
@@ -376,15 +348,11 @@ mode "mouse" {
     # Right Drag release
     bindsym Control+s exec xdotool mouseup 3
 
-
     # return to normal keybindings -- IMPORTANT!!
-
     bindsym Escape mode "default"
 }
 
 bindsym $mod+m mode "mouse"
-
-
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -422,7 +390,7 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-# No borders or title bars.
+# No title bars.
 new_window pixel 2
 
 # Run startup programs
