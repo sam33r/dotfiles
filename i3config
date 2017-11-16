@@ -116,7 +116,7 @@ bindsym $mod+Shift+m exec "$HOME/dotfiles/utils/projects.sh"
 bindsym $mod+Shift+c exec "rofi -modi 'clipboard:greenclip print' -show clipboard"
 
 # List/edit keybindings
-bindsym $mod+Shift+slash exec "$HOME/dotfiles/utils/i3_keybindings.sh"
+bindsym $mod+slash exec "$HOME/dotfiles/utils/i3_keybindings.sh"
 
 # Cycle wallpaper
 bindsym $mod+Shift+w exec "feh --randomize --bg-fill ~/Wallpapers/* &"
