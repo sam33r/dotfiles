@@ -73,6 +73,7 @@ function 8_edit_local_projects() {
 }
 
 function 8_mail() {
+  i3-msg layout tabbed
   emacsclient -c &
   sleep 1
   xdotool type " aM"
