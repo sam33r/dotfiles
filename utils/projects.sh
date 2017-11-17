@@ -58,9 +58,7 @@ function 8_dotfiles() {
 
 function 8_browser() {
   notify-send "Starting chrome..." -t 1000
-  # google-chrome &
-  # sleep 2
-  # i3-msg move scratchpad
+  i3-msg layout tabbed
   google-chrome &
 }
 
