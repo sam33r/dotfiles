@@ -58,7 +58,6 @@ function 8_dotfiles() {
 
 function 8_browser() {
   notify-send "Starting chrome..." -t 1000
-  i3-msg layout tabbed
   google-chrome &
 }
 
