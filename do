@@ -437,7 +437,7 @@ function theme()                                                                
 function update_hosts()                                                          # Update the system hosts file (Via StevenBlack/hosts).
 {
   sudo python $HOME/hosts/updateHostsFile.py --extensions fakenews \
-      gambling porn social
+      gambling porn
 }
 
 function set_gnome_preferences()
