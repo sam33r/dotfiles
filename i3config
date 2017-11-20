@@ -184,10 +184,11 @@ bindsym button2 kill
 
 # start rofi (a program launcher)
 # switch and kill windows
-bindsym $mod+Return exec --no-startup-id ~/py3env/bin/python3 ~/dotfiles/utils/i3-container-commander.py \
-    --menu=rofi --group-by=none -- -i
-bindsym $mod+Shift+Return exec --no-startup-id ~/py3env/bin/python3 ~/dotfiles/utils/i3-container-commander.py \
-    --menu=rofi --group-by=none --command=kill -- -i
+bindsym $mod+Return exec --no-startup-id "rofi -combi-modi window,drun -show combi -modi combi"
+#bindsym $mod+Return exec --no-startup-id ~/py3env/bin/python3 ~/dotfiles/utils/i3-container-commander.py \
+#    --menu=rofi --group-by=none -- -i
+#bindsym $mod+Shift+Return exec --no-startup-id ~/py3env/bin/python3 ~/dotfiles/utils/i3-container-commander.py \
+#    --menu=rofi --group-by=none --command=kill -- -i
 
 # switch to workspace
 # bindsym $mod+1 workspace number 1
