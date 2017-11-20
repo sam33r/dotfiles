@@ -220,6 +220,8 @@ bindsym $mod+n exec i3-input -F 'rename workspace to %s' -P 'New name: '
 # Workspace 8 is special - float everything in that ws.
 for_window [workspace="8"] floating enable
 
+for_window [class="copyq"] floating enable; resize set 1000 1000; move position center
+
 # move to scratchpad
 bindsym $mod+Shift+minus move scratchpad
 
