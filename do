@@ -121,6 +121,29 @@ function install_greenclip()                                                    
   cd $dir
 }
 
+function install_copyq_from_source()                                             # Install copyq clipboard manager.
+{
+	cd $HOME
+	sudo apt install \
+		git cmake \
+		qtbase5-private-dev \
+		qtscript5-dev \
+		qttools5-dev \
+		qttools5-dev-tools \
+		libqt5svg5-dev \
+		libxfixes-dev \
+		libxtst-dev \
+		libqt5svg5
+	git clone https://github.com/hluk/CopyQ.git
+	cd CopyQ
+	cmake -DCMAKE_INSTALL_PREFIX=/usr/local .
+	make
+	sudo make install
+  cd $HOME
+  rm -R CopyQ
+	cd $dir
+}
+
 function install_update_liquidprompt()                                           # Install liquidprompt, outstanding bash prompt.
 {
   cd $HOME
