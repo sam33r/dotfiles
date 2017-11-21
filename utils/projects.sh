@@ -72,7 +72,7 @@ function 8_edit_local_projects() {
   emacsclient -c "~/projects.local.sh"
 }
 
-function 8_mail() {
+function 7_mail() {
   i3-msg layout tabbed
   emacsclient -c &
   sleep 1
