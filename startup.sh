@@ -38,6 +38,7 @@ run_keybase
 
 sleep 2
 
-greenclip daemon &
+copyq &
+#greenclip daemon &
 
 emacs --daemon &

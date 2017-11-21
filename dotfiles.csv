@@ -1,6 +1,7 @@
 $HOME/.bash_aliases,bash_aliases
 $HOME/.bashrc,bashrc
 $HOME/.config/compton.conf,compton.conf
+$HOME/.config/copyq/copyq.conf,copyq.conf
 $HOME/.config/dunst/dunstrc,dunstrc
 $HOME/.config/fish/functions/agenda.fish,fish/agenda.fish
 $HOME/.config/fish/functions/apps.fish,fish/apps.fish

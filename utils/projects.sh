@@ -58,9 +58,6 @@ function 8_dotfiles() {
 
 function 8_browser() {
   notify-send "Starting chrome..." -t 1000
-  # google-chrome &
-  # sleep 2
-  # i3-msg move scratchpad
   google-chrome &
 }
 
@@ -79,6 +76,21 @@ function 7_mail() {
   xdotool type " aM"
   sleep 0.5
   xdotool type "U"
+}
+
+function 8_travel() {
+  start=$(zenity --entry --text="Starting Location: " --entry-text="SFO"  | sed "s/ /+/g")
+  dest=$(zenity --entry --text="Destination: " | sed "s/ /+/g")
+  duration=$(zenity --entry --text="Dates: " | sed "s/ /+/g")
+  i3-msg layout tabbed
+  google-chrome https://www.kayak.com/sherlock/opensearch/search/?q=rental+cars+in+$dest+$duration &
+  google-chrome https://www.google.com/search?q=hotels+in+$dest+$duration &
+  google-chrome https://www.google.com/flights?q=flights+from+$start+to+$dest+$duration &
+  google-chrome https://www.google.com/search?q=airbnb+$dest+$duration &
+  google-chrome https://www.google.com/search?q=things+to+do+in+$dest &
+  google-chrome https://www.google.com/search?q=monthly+weather+forecast+$dest &
+  google-chrome https://www.google.com/search?q=$dest+neighborhoods &
+  google-chrome https://www.google.com/maps/search/$dest &
 }
 
 function 8_gmail() {
