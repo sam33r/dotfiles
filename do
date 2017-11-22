@@ -319,7 +319,7 @@ function install_nvim_from_source()
   sudo apt-get install libtool autoconf automake cmake g++ pkg-config python-pip python-dev
 
   # build
-  cd ~/tmp
+  cd /tmp
   # The latest release as of Nov 2017 is v0.2.2. Verify that it is still the
   # case at https://github.com/neovim/neovim/releases/latest, and change the
   # --branch flag if there is a new release.
@@ -331,8 +331,8 @@ function install_nvim_from_source()
   pip2 install --user neovim
 
   # Symlink vim configs to nvim locations
-  ln -s ~/.vim ~/.config/nvim
-  ln -s ~/.vimrc ~/.config/nvim/init.vim
+  ln -s -f ~/.vim ~/.config/nvim
+  ln -s -f ~/.vimrc ~/.config/nvim/init.vim
 
   cd $dir
 }
