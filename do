@@ -32,12 +32,6 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #   should have the "install_" prefix.
 #--------------------------------------------------------------------------------
 
-function install_external_repositories()                                         # Add non-universal repositories to apt-get
-{
-  sudo add-apt-repository ppa:fish-shell/release-2
-  sudo add-apt-repository ppa:neovim-ppa/unstable
-}
-
 function install_update_packages()
 {
   sudo apt-get update && time sudo apt-get dist-upgrade
@@ -108,40 +102,26 @@ function install_update_vim_plugins()
   vim +PluginInstall! +qall
 }
 
-function install_greenclip()                                                     # Install greenclip clipboard manager.
+function install_copyq()                                             # Install copyq clipboard manager.
 {
-  if [ -e ~/bin/greenclip ]; then
-    echo "greenclip seems to already be installed. Make sure ~/bin is in $PATH."
-    return
-  fi
-  mkdir ~/bin
-  cd ~/bin
-  wget https://github.com/erebe/greenclip/releases/download/2.0/greenclip
-  chmod a+x ./greenclip
-  cd $dir
-}
-
-function install_copyq_from_source()                                             # Install copyq clipboard manager.
-{
-	cd $HOME
-	sudo apt install \
-		git cmake \
-		qtbase5-private-dev \
-		qtscript5-dev \
-		qttools5-dev \
-		qttools5-dev-tools \
-		libqt5svg5-dev \
-		libxfixes-dev \
-		libxtst-dev \
-		libqt5svg5
-	git clone https://github.com/hluk/CopyQ.git
-	cd CopyQ
-	cmake -DCMAKE_INSTALL_PREFIX=/usr/local .
-	make
-	sudo make install
   cd $HOME
-  rm -R CopyQ
-	cd $dir
+  sudo apt install \
+    git cmake \
+    qtbase5-private-dev \
+    qtscript5-dev \
+    qttools5-dev \
+    qttools5-dev-tools \
+    libqt5svg5-dev \
+    libxfixes-dev \
+    libxtst-dev \
+    libqt5svg5
+  git clone https://github.com/hluk/CopyQ.git
+  cd CopyQ
+  git pull origin master
+  cmake -DCMAKE_INSTALL_PREFIX=/usr/local .
+  make
+  sudo make install
+  cd $dir
 }
 
 function install_update_liquidprompt()                                           # Install liquidprompt, outstanding bash prompt.
@@ -160,7 +140,6 @@ function install_update_z()
   git clone https://github.com/rupa/z.git
   cd z/
   git pull origin master
-
   cd $dir
 }
 
@@ -190,15 +169,6 @@ function install_keybase()
   cd $dir
 }
 
-function install_update_term_theme()                                             # Installs solarized theme for Gnome Terminal.
-{
-  cd $HOME
-  git clone https://github.com/sigurdga/gnome-terminal-colors-solarized.git
-  cd $HOME/gnome-terminal-colors-solarized
-  git pull origin master
-  cd $dir
-}
-
 function install_playerctl()                                                     # PlayerCTL provides command-line tools to manage media playback.
 {
   # This retrieves download link of latest release.
@@ -220,22 +190,7 @@ function install_googler()                                                      
   sudo make install
 }
 
-function install_spotify()                                                       # Install spotify client (Requires adding a third party repository).
-{
-  # 1. Add the Spotify repository signing key
-  #to be able to verify downloaded packages
-  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 \
-       --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
-  # 2. Add the Spotify repository
-  echo deb http://repository.spotify.com stable non-free \
-      | sudo tee /etc/apt/sources.list.d/spotify.list
-  # 3. Update list of available packages
-  sudo apt-get update
-  # 4. Install Spotify
-  yes | sudo apt-get install spotify-client
-}
-
-function install_emacs_snapshot()                                                # Install emacs nightly snapshots.
+function custom_install_emacs_snapshot()                                         # Install emacs nightly snapshots.
 {
   sudo add-apt-repository ppa:ubuntu-elisp/ppa
   sudo apt-get update
@@ -328,21 +283,6 @@ function install_update_spacemacs()
   cd $dir
 }
 
-function install_omf()
-{
-  curl -L http://get.oh-my.fish | fish
-}
-
-function install_update_transcrypt()
-{
-  cd $HOME
-  git clone https://github.com/elasticdog/transcrypt.git
-  cd $HOME/transcrypt
-  git pull origin master
-  sudo ln -s ${PWD}/transcrypt /usr/local/bin/transcrypt
-  cd $dir
-}
-
 function install_mu4e_from_tarball()                                             # Install mu4e from github tarball (apt version is too old).
 {
   if type "mu" > /dev/null; then
@@ -380,10 +320,10 @@ function install_nvim_from_source()
 
   # build
   cd ~/tmp
-  # The latest release as of May 2017 is v0.2.0. Verify that it is still the
+  # The latest release as of Nov 2017 is v0.2.2. Verify that it is still the
   # case at https://github.com/neovim/neovim/releases/latest, and change the
   # --branch flag if there is a new release.
-  git clone --branch v0.2.0 https://github.com/neovim/neovim.git
+  git clone --branch v0.2.2 https://github.com/neovim/neovim.git
   cd neovim
   make install CMAKE_EXTRA_FLAGS=-DCMAKE_INSTALL_PREFIX=$HOME/.local CMAKE_BUILD_TYPE=Release
 
@@ -397,7 +337,7 @@ function install_nvim_from_source()
   cd $dir
 }
 
-function install_i3gaps()
+function custom_install_i3gaps()
 {
   cd $HOME
 
@@ -434,7 +374,7 @@ function theme()                                                                
   wget -O xt  http://git.io/vGz67 && chmod +x xt && ./xt && rm xt
 }
 
-function update_hosts()                                                          # Update the system hosts file (Via StevenBlack/hosts).
+function update_hosts()                                                          # Update the system hosts file (Via StevenBlack/hosts)
 {
   sudo python $HOME/hosts/updateHostsFile.py --extensions fakenews \
       gambling porn

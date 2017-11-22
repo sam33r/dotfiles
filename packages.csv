@@ -4,19 +4,16 @@ compton,Simple standalone composite manager (For use with xmonad)
 docker-engine,docker
 fbterm,Framebuffer terminal emulator
 feh,Image viewer useful for setting wallpaper in linux
-fish,fish terminal
 gcc,gnu compilers
-git-gui,GUI for git.
 gnome-sushi,Preview for nautilus
 gnupg-agent,Password entry agent
-gnutls-bin,Sending mail from mu4e.
+gnutls-bin,mu4e dependency
 gparted,partition management utility
 i3blocks,scheduler for i3bar blocks
 i3,tiling windows manager
 lm-sensors,sensors information
 meld,Diff tool.
 mpv,Media player
-neovim,neovim editor
 network-manager-gnome,network management ui
 network-manager,Network management applet
 offlineimap,Sync maildirs
@@ -33,7 +30,7 @@ rofi,app switcher
 screen,terminal multiplexing
 scrot,Screenshots
 silversearcher-ag,Faster search
-suckless-tools,for dmenu (app launcher for xmonad)
+suckless-tools,for dmenu and other niceties.
 systemd,Managing system power state
 tmux,Terminal multiplexer useful for remoting
 unclutter,Hide mouse cursor when not being used.

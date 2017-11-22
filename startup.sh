@@ -1,44 +1,26 @@
 #!/bin/bash
 
-unclutter &
-
-sleep 2
-
 # This enables gtk settings from gnome, required for gtk themes.
 gnome-settings-daemon &
-
-sleep 2
-
 gnome-keyring-daemon &
 
-sleep 2
+sleep 1
 
 # Run compton composition manager.
 compton -f &
 
-sleep 2
+sleep 1
 
 # Start the network management applet.
 nm-applet &
-
-sleep 2
-
 # Start pulse volume control system tray applet.
 pasystray &
-
-sleep 2
-
 # Start feh for wallpaper.
 feh --randomize --bg-fill ~/Wallpapers/* &
+unclutter &
 
-sleep 2
+sleep 1
 
-# Start keybase
 run_keybase
-
-sleep 2
-
 copyq &
-#greenclip daemon &
-
 emacs --daemon &
