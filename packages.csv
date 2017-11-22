@@ -11,6 +11,7 @@ gnutls-bin,mu4e dependency
 gparted,partition management utility
 i3blocks,scheduler for i3bar blocks
 i3,tiling windows manager
+libtool-bin,Requirement for building nvim
 lm-sensors,sensors information
 meld,Diff tool.
 mpv,Media player
