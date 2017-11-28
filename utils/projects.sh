@@ -110,12 +110,13 @@ function 8_gmail() {
 
 function 9_content_triage() {
   google-chrome &
-  sleep 1
+  sleep 2
   xdotool type "chrome://extensions/?id=njkbjdmigienhoeccpigopgjmlgmdine"
   xdotool key Return
-  sleep 0.2
+  sleep 2
   xdotool key space
-  sleep 0.5
+  sleep 1
+  google-chrome https://www.amazon.com/mn/dcw/myx.html/ref=kinw_myk_surl_1#/home/content/pdocs/dateDsc/ &
   google-chrome https://instapaper.com &
   google-chrome https://hckrnews.com &
   google-chrome https://lobste.rs &
