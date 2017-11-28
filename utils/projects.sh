@@ -55,7 +55,14 @@ function 1_journal() {
 }
 
 function 8_dotfiles() {
-  emacsclient -c "~/dotfiles"
+  emacsclient -c &
+  sleep 1
+  xdotool type " pp"
+  xdotool key Return
+  sleep 1
+  xdotool type "dotfiles/"
+  sleep 0.5
+  xdotool key Return
 }
 
 function 8_browser() {
