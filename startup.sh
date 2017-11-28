@@ -23,10 +23,9 @@ emacs --daemon &
 sleep 1
 
 run_keybase
+$HOME/dotfiles/utils/git_sync.sh "$HOME/n" &
 copyq &
 
 sleep 15
 # get all the prompts out of the way.
 emacsclient -c -e "(sa/agenda)"
-sleep 60
-$HOME/dotfiles/utils/git_sync.sh "$HOME/n" &
