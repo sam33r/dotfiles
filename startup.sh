@@ -24,3 +24,6 @@ sleep 1
 run_keybase
 copyq &
 emacs --daemon &
+
+sleep 60
+$HOME/dotfiles/utils/git-sync.sh "$HOME/n" &
