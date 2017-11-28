@@ -3,6 +3,7 @@
 # An unsophisticated script to sync a git repo. I use this to periodically sync
 # my notes repository. There's pretty much no error checking, as this script
 # is assumed to be running as a daemon on all my machines.
+# TODO: Send a mail or something when things break.
 
 if [ "$#" -ne 1 ]
 then
