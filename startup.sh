@@ -18,12 +18,15 @@ pasystray &
 # Start feh for wallpaper.
 feh --randomize --bg-fill ~/Wallpapers/* &
 unclutter &
+emacs --daemon &
 
 sleep 1
 
 run_keybase
 copyq &
-emacs --daemon &
 
+sleep 15
+# get all the prompts out of the way.
+emacsclient -c -e "(sa/agenda)"
 sleep 60
-$HOME/dotfiles/utils/git-sync.sh "$HOME/n" &
+$HOME/dotfiles/utils/git_sync.sh "$HOME/n" &
