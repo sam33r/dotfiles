@@ -108,6 +108,20 @@ function 8_gmail() {
   xdotool key F11
 }
 
+function 9_content_triage() {
+  google-chrome &
+  sleep 1
+  xdotool type "chrome://extensions/?id=njkbjdmigienhoeccpigopgjmlgmdine"
+  xdotool key Return
+  sleep 0.2
+  xdotool key space
+  sleep 0.5
+  google-chrome https://instapaper.com &
+  google-chrome https://hckrnews.com &
+  google-chrome https://lobste.rs &
+  google-chrome https://www.reddit.com/me/m/tech_obsessions/top/?sort=top&t=week &
+}
+
 function 9_timepass() {
   i3-msg workspace number 8
   google-chrome https://instapaper.com &
