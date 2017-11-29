@@ -38,7 +38,9 @@ function 0_clean() {
 }
 
 function 1_agenda() {
-  emacsclient -c -e "(sa/agenda)"
+  emacsclient -c -e "(sa/agenda)" &
+  sleep 1
+  xdotool type "r"
 }
 
 function 1_journal() {
