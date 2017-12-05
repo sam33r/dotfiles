@@ -27,8 +27,8 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 export PATH="$PATH:/usr/local/go/bin:$HOME/go/bin:$HOME/bin:$HOME/.local/bin" # Add local binaries.
 
-export VISUAL="vim"
-export EDITOR="vim"
+export VISUAL="gvim"
+export EDITOR="gvim"
 
 # For mail indexing
 export MAILDIR=""
