@@ -23,14 +23,15 @@ function reset() {
   i3-msg workspace number 1
   (screen -ls | grep Detached | grep -v persistent | grep -v Laptop | cut -d. -f1 | awk '{print $1}' | xargs kill) &
   sleep 0.2
-  i3-msg layout splith
-  sleep 1
   gnome-terminal -e "screen -D -R -S persistent" &
   sleep 0.3
   i3-msg move scratchpad
   google-chrome &
   sleep 2
   i3-msg move scratchpad
+  sleep 0.2
+  i3-msg layout splith
+  sleep 1
 }
 
 function 0_clean() {
