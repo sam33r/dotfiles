@@ -575,7 +575,7 @@ you should place your code here."
   (setq org-archive-location "~/n/shelved/archive.org.gpg::datetree/* Finished Tasks")
   ;; Capture mode.
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/n/refile.org.gpg" "Refile Tasks")
+        '(("t" "Todo" entry (file+headline "~/n/projects.org.gpg" "Refile Tasks")
            "* TODO %?\n  %i\n  %a")
           ("j" "Journal" entry (file+datetree "~/n/journal.org.gpg")
            "* %?\nEntered on %U\n  %i")
@@ -942,7 +942,7 @@ you should place your code here."
  '(mu4e-compose-dont-reply-to-self t)
  '(mu4e-headers-include-related t)
  '(mu4e-headers-leave-behavior (quote apply))
- '(mu4e-headers-results-limit 1000)
+ '(mu4e-headers-results-limit 5000)
  '(mu4e-headers-skip-duplicates t)
  '(mu4e-headers-visible-columns 120)
  '(mu4e-split-view (quote vertical))
