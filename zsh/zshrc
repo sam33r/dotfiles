@@ -1,4 +1,3 @@
-
 # Attempting to fix 256 color issues with fbterm.
 case "$TERM" in
   xterm*)

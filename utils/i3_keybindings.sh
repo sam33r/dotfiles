@@ -10,5 +10,5 @@ if [ -z "$linum" ]
 then
   echo "Nothing selected."
 else
-  emacsclient -c +$linum $I3CONFIG
+  gvim +$linum $I3CONFIG
 fi
