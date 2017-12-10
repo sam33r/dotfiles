@@ -811,7 +811,7 @@ you should place your code here."
   ;; (add-hook 'org-mode-hook 'nolinum)
 
   ;; Remove the ugly fringe tildes
-  ;; (spacemacs/toggle-vi-tilde-fringe-off)
+  (spacemacs/toggle-vi-tilde-fringe-off)
 
   ;; Prefer splitting horizontally.
   (setq split-height-threshold nil)
