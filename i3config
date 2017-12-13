@@ -137,7 +137,7 @@ bindsym $mod+space focus mode_toggle
 
 # shortcut for picture-in-picture
 # Float, resize, reposition and make sticky.
-bindsym $mod+i floating enable; resize set 900 600; move absolute position 1500 px 900 px; sticky enable
+bindsym $mod+Shift+i floating enable; resize set 900 600; move absolute position 1500 px 900 px; sticky enable
 
 # focus the parent container
 bindsym $mod+a focus parent
