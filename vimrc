@@ -238,8 +238,8 @@ catch
   " Ignore.
 endtry
 
-" Some other good ones: torte, slate, primary
-colorscheme candycode
+" Some other good ones: candycode, torte, slate, primary
+colorscheme 1989
 
 " Override the theme's color for column rulers to a more sane value.
 " highlight color for rulers.
