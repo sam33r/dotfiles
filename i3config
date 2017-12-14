@@ -186,6 +186,8 @@ for_window [class="copyq"] move position center
 
 for_window [title="Signal" class="Google-chrome"] floating enable
 
+for_window [title="Synergy"] floating enable
+
 for_window [class="Gvim"] floating enable
 for_window [class="Gvim"] move position center
 
