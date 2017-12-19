@@ -26,10 +26,13 @@ rupa/z
 vi-mode
 EOBUNDLES
 
+# vi-mode: reduce normal-mode-switch delay.
+export KEYTIMEOUT=1
+
 # Setup theme.
 antigen theme bhilburn/powerlevel9k
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir_writable dir rbenv vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time root_indicator background_jobs battery time)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status command_execution_time root_indicator background_jobs battery time)
 
 # Enable fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
