@@ -27,5 +27,6 @@ $HOME/dotfiles/utils/git_sync.sh "$HOME/n" &
 copyq &
 
 sleep 15
+
 # get all the prompts out of the way.
-emacsclient -c -e "(sa/agenda)"
+emacsclient -c -e "(sa/startup)"
