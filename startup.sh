@@ -6,6 +6,9 @@ gnome-keyring-daemon &
 
 sleep 1
 
+# Speed up the keyboard repeat rate.
+xset r rate 200 50
+
 # Run compton composition manager.
 compton -f &
 
