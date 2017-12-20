@@ -654,8 +654,8 @@ you should place your code here."
 
   ;; a bunch of hooks to disable modeline. Blanked disable doesn't seem to
   ;; be working.
-  (add-hook 'text-mode-hook 'spacemacs/toggle-mode-line-off)
-  (add-hook 'prog-mode-hook 'spacemacs/toggle-mode-line-off)
+  ;; (add-hook 'text-mode-hook 'spacemacs/toggle-mode-line-off)
+  ;; (add-hook 'prog-mode-hook 'spacemacs/toggle-mode-line-off)
   (add-hook 'mu4e-headers-mode 'spacemacs/toggle-mode-line-off)
   (add-hook 'mu4e-main-mode 'spacemacs/toggle-mode-line-off)
 
