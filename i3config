@@ -12,11 +12,11 @@
 set $mod Mod4
 
 # color config
-set $bg-color            #0086b7
-set $bg-color-highlight  #0086b7
-set $inactive-bg-color   #2f343f
-set $text-color          #f3f4f5
-set $inactive-text-color #676E7D
+set $bg-color            #eeeeee
+set $bg-color-highlight  #eeeeee
+set $inactive-bg-color   #000000
+set $text-color          #000000
+set $inactive-text-color #cccccc
 set $urgent-bg-color     #E53935
 
 # window colors
@@ -34,17 +34,22 @@ set $urgent-bg-color     #E53935
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 font pango:DejaVu Sans Mono 8
 
-# Before i3 v4.8, we used to recommend this one as the default:
-# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-# The font above is very space-efficient, that is, it looks good, sharp and
-# clear in small sizes. However, its unicode glyph coverage is limited, the old
-# X core fonts rendering does not support right-to-left and this being a bitmap
-# font, it doesn’t scale on retina/hidpi displays.
+# Leave fullscreen on encountering popups
+popup_during_fullscreen leave_fullscreen
 
-# Function keys to open common apps.
-# search desktop entries
-# bindsym F2 exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -i'
+# No title bars.
+new_window pixel 2
 
+# Setup borders
+hide_edge_borders none
+
+# Set max float size
+floating_maximum_size 1600 x 1400
+
+# NUMERIC SHORTCUTS
+# -----------------
+# TODO: Make snippets a part of copyq
+bindsym $mod+1 exec "$HOME/dotfiles/utils/snippets.py"
 bindsym $mod+2 exec emacsclient -c -e '(mu4e-compose-new)'
 bindsym $mod+3 exec --no-startup-id "~/dotfiles/utils/search_mail.sh"
 bindsym $mod+4 exec --no-startup-id "~/dotfiles/utils/add_journal.sh"
@@ -55,40 +60,32 @@ bindsym $mod+7 exec google-chrome
 bindsym $mod+Shift+7 exec google-chrome --incognito
 bindsym $mod+8 exec emacsclient -c -e '(spacemacs/switch-to-scratch-buffer)' --alternate-editor=""
 
-# Setup borders
-hide_edge_borders both
 
-# change focus: customized to mimic vim movement
+# FOCUS KEYBINDINGS
+# -----------------
 bindsym $mod+j focus right
 bindsym $mod+k focus left
 bindsym $mod+l focus down
 bindsym $mod+h focus up
+# focus the parent container
+bindsym $mod+a focus parent
+# focus the child container
+bindsym $mod+d focus child
+# focus the alerted window
+bindsym $mod+y [urgent=latest] focus
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
 
-# split in horizontal orientation
-bindsym $mod+bar split h; \
-    exec "notify-send 'Split horizontally' --expire-time=2000"
-
-# split in vertical orientation
-bindsym $mod+v split v; \
-    exec "notify-send 'Split vertically' --expire-time=2000"
 
 # Move to the other workspace
 bindsym $mod+o move workspace to output left
-
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
-
 # Make current container a centered, floating column.
 bindsym $mod+c floating enable; resize set 1000 1900; move position center
-
 # List/edit keybindings
 bindsym $mod+slash exec "$HOME/dotfiles/utils/i3_keybindings.sh"
 
-
-# "mod+Shift" Shortcuts
-# ---------------------
-
-# Window Related
 
 # move focused window
 bindsym $mod+Shift+j move right 200 px
@@ -99,120 +96,102 @@ bindsym $mod+Shift+h move up 200 px
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# Modals
 
+# MODALS
+# ------
 # Enter focused mode for current container.
 bindsym $mod+Shift+f exec "$HOME/dotfiles/utils/focus.sh"
-# Type snippet
-bindsym $mod+Shift+t exec "$HOME/dotfiles/utils/snippets.py"
 # Select working mode
 bindsym $mod+Shift+m exec "$HOME/dotfiles/utils/projects.sh"
 # Clipboard manager
 bindsym $mod+Shift+c exec "copyq toggle"
 
-# Misc
 
 # Cycle wallpaper
 bindsym $mod+Shift+w exec "feh --randomize --bg-fill ~/Wallpapers/* &"
 
+
+# CHANGE LAYOUTS
+# --------------
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking; \
     exec "notify-send 'Enabled stacked layout' --expire-time=2000"
-bindsym $mod+w layout tabbed; \
+bindsym $mod+t layout tabbed; \
     exec "notify-send 'Enabled tabbed layout' --expire-time=2000"
 bindsym $mod+e layout toggle split; \
     exec "notify-send 'Enabled split  layout' --expire-time=2000"
-
-# Make this window a tabbed container
-bindsym $mod+t split v; layout tabbed; \
+# Make current window a container  and apply layout.
+bindsym $mod+Shift+s split v; layout stacking; \
+    exec "notify-send 'This is now a stacked container.' --expire-time=2000"
+bindsym $mod+Shift+t split v; layout tabbed; \
     exec "notify-send 'This is now a tabbed container.' --expire-time=2000"
+bindsym $mod+Shift+e split h; \
+    exec "notify-send 'This is now a split container.' --expire-time=2000"
 
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
 
 # shortcut for picture-in-picture
 # Float, resize, reposition and make sticky.
 bindsym $mod+Shift+i floating enable; resize set 900 600; move absolute position 1500 px 900 px; sticky enable
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
 
-# focus the parent container
-bindsym $mod+a focus parent
-
-# sticky window
-bindsym $mod+Shift+s sticky toggle
-
-# focus the child container
-bindsym $mod+d focus child
-
-# focus the alerted window
-bindsym $mod+y [urgent=latest] focus
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
 
 # lock machine
 bindsym $mod+x exec "~/dotfiles/utils/lock.sh"
+# suspend
+bindsym $mod+Shift+x exec i3lock --color 475263 && dbus-send --system \
+   --dest=org.freedesktop.UPower --type=method_call --print-reply \
+   /org/freedesktop/UPower org.freedesktop.UPower.Suspend
 # lock automatically after inactivity
 exec xautolock -time 4 -locker "~/dotfiles/utils/lock.sh" &
-# notify user of auto-lock
-exec "~/dotfiles/utils/idle_notification.py"
 
-# suspend
-bindsym $mod+Shift+x exec i3lock --color 475263 && dbus-send --system --dest=org.freedesktop.UPower --type=method_call --print-reply /org/freedesktop/UPower org.freedesktop.UPower.Suspend
 
-# mouse bindings
+# MOUSE BINDINGS
+# --------------
 # toggle floating with right click
 bindsym button3 floating toggle
 # middle click to kill window
 bindsym button2 kill
 
-# start rofi (a program launcher)
-# switch and kill windows
+# Switch and kill windows
 bindsym $mod+Return exec --no-startup-id "rofi -combi-modi window,drun -show combi -modi combi"
 
-# Shortcut to name a workspace.
-bindsym $mod+n exec i3-input -F 'rename workspace to %s' -P 'New name: '
-
-# Workspace 6 is where windows go to die.
+# Workspace 6 is the window purgatory.
 bindsym $mod+Shift+1 move to workspace 6
-
 # Workspace 8 is special - float everything in that ws.
 for_window [workspace="8"] floating enable
 
+
+# APP-SPECIFIC BEHAVIORS
+# ----------------------
 for_window [class="copyq"] floating enable
 for_window [class="copyq"] resize set 1000 1000
 for_window [class="copyq"] move position center
-
 for_window [title="Signal" class="Google-chrome"] floating enable
-
 for_window [title="Synergy"] floating enable
-
 for_window [class="Gvim"] floating enable
 for_window [class="Gvim"] move position center
 
-# move to scratchpad
-bindsym $mod+Shift+minus move scratchpad
 
-# show scratchpad windows
+# SCRATCHPAD
+# ----------
+bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus [class="Gnome-terminal"] scratchpad show
 bindsym $mod+0 [class="Google-chrome"] scratchpad show
 bindsym $mod+apostrophe scratchpad show
 
-# Set max float size
-floating_maximum_size 1600 x 1400
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "$HOME/dotfiles/utils/power_menu"
+# power menu
+bindsym $mod+Shift+p exec "$HOME/dotfiles/utils/power_menu"
 
 # passthrough mode (pass through i3 keybindings).
 mode "passthrough" {
   bindsym Escape mode "default"
 }
-
 bindsym $mod+p mode "passthrough"
 
 # resize window (you can also use the mouse for that)
@@ -342,12 +321,6 @@ bindsym XF86AudioPlay exec playerctl play
 bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
-
-# Leave fullscreen on encountering popups
-popup_during_fullscreen leave_fullscreen
-
-# No title bars.
-new_window pixel 2
 
 # Run startup programs
 exec --no-startup-id ~/startup.sh
