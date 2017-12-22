@@ -125,7 +125,7 @@ bindsym $mod+Shift+s split v; layout stacking; \
     exec "notify-send 'This is now a stacked container.' --expire-time=2000"
 bindsym $mod+Shift+t split v; layout tabbed; \
     exec "notify-send 'This is now a tabbed container.' --expire-time=2000"
-bindsym $mod+Shift+e split h; \
+bindsym $mod+Shift+e split v; \
     exec "notify-send 'This is now a split container.' --expire-time=2000"
 
 
