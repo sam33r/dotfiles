@@ -25,7 +25,7 @@ emacs --daemon &
 
 sleep 1
 
-run_keybase
+run_keybase && sleep 1 && i3-msg kill
 $HOME/dotfiles/utils/git_sync.sh "$HOME/n" &
 copyq &
 
