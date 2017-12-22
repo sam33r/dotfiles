@@ -184,7 +184,7 @@ values."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(tao-yin tao-yang spacemacs-light dracula zenburn spacemacs-dark ujelly)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
-   dotspacemacs-colorize-cursor-according-to-state t
+   dotspacemacs-colorize-cursor-according-to-state nil
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Input"
@@ -572,6 +572,7 @@ you should place your code here."
   ;; In org-agenda log show completed recurring tasks.
   (setq org-agenda-log-mode-items '(closed clock state))
 
+
   ;; Agenda location
   (setq org-agenda-files (list "~/n"))
   (require 'org-contacts)
@@ -652,7 +653,17 @@ you should place your code here."
   (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
   (add-hook 'org-mode-hook 'sa/write 'append)
 
-  ;; a bunch of hooks to disable modeline. Blanked disable doesn't seem to
+  ;; Spaceline
+  (custom-set-faces
+   '(spaceline-highlight-face ((t (:foreground "dim gray" :background "gainsboro" )))))
+  (setq spaceline-highlight-face-func 'spaceline-highlight-face-default)
+
+  (spaceline-toggle-buffer-size-off)
+  (spaceline-toggle-buffer-encoding-abbrev-off)
+  (spaceline-toggle-buffer-position-off)
+  (spaceline-toggle-hud-off)
+
+  ;; a bunch of hooks to disable mode-line. Blanked disable doesn't seem to
   ;; be working.
   ;; (add-hook 'text-mode-hook 'spacemacs/toggle-mode-line-off)
   ;; (add-hook 'prog-mode-hook 'spacemacs/toggle-mode-line-off)
