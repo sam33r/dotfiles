@@ -42,11 +42,17 @@ Plugin 'SirVer/ultisnips'
 " Snippets list
 Plugin 'honza/vim-snippets'
 
+" Terminal integration
+Plugin 'wincent/terminus'
+
+" Monochrome colorscheme
+Plugin 'fxn/vim-monochrome'
+
 " Surround plugin
 Plugin 'tpope/vim-surround'
 
 " ALL THE THEMES. Remove this after finding a good theme?
-Plugin 'flazz/vim-colorschemes'
+" Plugin 'flazz/vim-colorschemes'
 
 " Golang support
 " https://github.com/fatih/vim-go-tutorial
@@ -77,7 +83,7 @@ Plugin 'tpope/vim-speeddating'
 Plugin 'reedes/vim-pencil'
 
 " Pencil color theme
-Plugin 'reedes/vim-colors-pencil'
+" Plugin 'reedes/vim-colors-pencil'
 
 " Markdown support
 Plugin 'godlygeek/tabular'
@@ -132,7 +138,8 @@ let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
-let g:airline_theme='bubblegum'
+let g:airline_section_y = ''
+let g:airline_theme='monochrome'
 
 " hardtime config:
 let g:hardtime_default_on = 0
@@ -239,8 +246,9 @@ catch
 endtry
 
 " Some other good ones: candycode, torte, slate, primary
-colorscheme 1989
+" let g:monochrome_italic_comments = 1
+colorscheme monochrome
 
 " Override the theme's color for column rulers to a more sane value.
 " highlight color for rulers.
-highlight ColorColumn ctermbg=DarkGrey guibg=#4c4c4c
+highlight ColorColumn ctermbg=Black guibg=#4c4c4c
