@@ -1,5 +1,9 @@
 #!/bin/bash
 
+run_keybase && sleep 1 && i3-msg kill
+
+sleep 1
+
 # This enables gtk settings from gnome, required for gtk themes.
 gnome-settings-daemon &
 gnome-keyring-daemon &
@@ -25,11 +29,10 @@ emacs --daemon &
 
 sleep 1
 
-run_keybase && sleep 1 && i3-msg kill
 $HOME/dotfiles/utils/git_sync.sh "$HOME/n" &
 copyq &
 
-sleep 15
+sleep 10
 
 # get all the prompts out of the way.
 emacsclient -c -e "(sa/startup)"
