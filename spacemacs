@@ -667,8 +667,6 @@ you should place your code here."
   ;; be working.
   ;; (add-hook 'text-mode-hook 'spacemacs/toggle-mode-line-off)
   ;; (add-hook 'prog-mode-hook 'spacemacs/toggle-mode-line-off)
-  (add-hook 'mu4e-headers-mode 'spacemacs/toggle-mode-line-off)
-  (add-hook 'mu4e-main-mode 'spacemacs/toggle-mode-line-off)
 
   ;; Activate writeroom mode for org-mode and markdown-mode
   (add-hook 'org-mode-hook 'writeroom-mode 'append)
@@ -682,96 +680,102 @@ you should place your code here."
   ;; mu4e settings.
   ;;
 
-  ;; References:
-  ;; http://www.djcbsoftware.nl/code/mu/mu4e/Gmail-configuration.html
-  ;; https://gist.github.com/areina/3879626
-  ;; http://spacemacs.org/layers/+email/mu4e/README.html
+  (if (boundp mu4e-view-prefer-html)
 
-  ;; This should be overridden by local config.
-  (setq mu4e-get-mail-command "")
+    (add-hook 'mu4e-headers-mode 'spacemacs/toggle-mode-line-off)
+    (add-hook 'mu4e-main-mode 'spacemacs/toggle-mode-line-off)
 
-  ;; don't save message to Sent Messages, GMail/IMAP will take care of this
-  (setq mu4e-sent-messages-behavior 'delete)
+    ;; References:
+    ;; http://www.djcbsoftware.nl/code/mu/mu4e/Gmail-configuration.html
+    ;; https://gist.github.com/areina/3879626
+    ;; http://spacemacs.org/layers/+email/mu4e/README.html
 
-  ;; prefer html rendering by default.
-  (setq mu4e-view-prefer-html t)
+    ;; This should be overridden by local config.
+    (setq mu4e-get-mail-command "")
 
-  (defun sa/mu4e-prefer-html ()
-    "Prefer html formatting. Note that based on the email content, the
-     actual view might not change."
-    (interactive)
+    ;; don't save message to Sent Messages, GMail/IMAP will take care of this
+    (setq mu4e-sent-messages-behavior 'delete)
+
+    ;; prefer html rendering by default.
     (setq mu4e-view-prefer-html t)
-    (mu4e-view-refresh))
-  (defun sa/mu4e-prefer-text ()
-    "Prefer html formatting. Note that based on the email content, the
+
+    (defun sa/mu4e-prefer-html ()
+      "Prefer html formatting. Note that based on the email content, the
      actual view might not change."
-    (interactive)
-    (setq mu4e-view-prefer-html nil)
-    (mu4e-view-refresh))
+      (interactive)
+      (setq mu4e-view-prefer-html t)
+      (mu4e-view-refresh))
+    (defun sa/mu4e-prefer-text ()
+      "Prefer html formatting. Note that based on the email content, the
+     actual view might not change."
+      (interactive)
+      (setq mu4e-view-prefer-html nil)
+      (mu4e-view-refresh))
 
  ;;; mu4e message view-in-chrome action
-  (defun mu4e-msgv-action-view-in-chrome (msg)
-    "View the body of the message in chrome."
-    (interactive)
-    (let ((html (mu4e-msg-field (mu4e-message-at-point t) :body-html))
-          (tmpfile (format "%s/%d.html" temporary-file-directory (random))))
-      (unless html (error "No html part for this message"))
-      (with-temp-file tmpfile
-        (insert
-         "<html>"
-         "<head><meta http-equiv=\"content-type\""
-         "content=\"text/html;charset=UTF-8\">"
-         html))
-      (browse-url-chrome (concat "file://" tmpfile))))
-  (add-to-list 'mu4e-view-actions
-               '("Chrome - View in Chrome" . mu4e-msgv-action-view-in-chrome) t)
+    (defun mu4e-msgv-action-view-in-chrome (msg)
+      "View the body of the message in chrome."
+      (interactive)
+      (let ((html (mu4e-msg-field (mu4e-message-at-point t) :body-html))
+            (tmpfile (format "%s/%d.html" temporary-file-directory (random))))
+        (unless html (error "No html part for this message"))
+        (with-temp-file tmpfile
+          (insert
+           "<html>"
+           "<head><meta http-equiv=\"content-type\""
+           "content=\"text/html;charset=UTF-8\">"
+           html))
+        (browse-url-chrome (concat "file://" tmpfile))))
+    (add-to-list 'mu4e-view-actions
+                 '("Chrome - View in Chrome" . mu4e-msgv-action-view-in-chrome) t)
 
-  ;; convert html to text.
-  ;; (setq mu4e-html2text-command 'mu4e-shr2text)
-  ;; (setq mu4e-html2text-command "html2markdown --body-width=0 | sed \"s/&nbsp_place_holder;/ /g; /^$/d\"")
-  ;; (setq mu4e-html2text-command "w3m -T text/html")
-  ;; (setq mu4e-html2text-command "html2text -utf8")
-  ;; (setq mu4e-html2text-command "pandoc -f html -t plain --normalize")
+    ;; convert html to text.
+    ;; (setq mu4e-html2text-command 'mu4e-shr2text)
+    ;; (setq mu4e-html2text-command "html2markdown --body-width=0 | sed \"s/&nbsp_place_holder;/ /g; /^$/d\"")
+    ;; (setq mu4e-html2text-command "w3m -T text/html")
+    ;; (setq mu4e-html2text-command "html2text -utf8")
+    ;; (setq mu4e-html2text-command "pandoc -f html -t plain --normalize")
 
-  (defadvice shr-colorize-region (before default-bg-color compile
-                                         activate)
-    "Use the default background color."
-    (setq bg nil))
 
-  ;; Use tab and shift tab to navigate links in email messages.
-  (add-hook 'mu4e-view-mode-hook
-            (lambda()
-              (local-set-key (kbd "<tab>") 'shr-next-link)
-              (local-set-key (kbd "<backtab>") 'shr-previous-link)))
+    ;; Use tab and shift tab to navigate links in email messages.
+    (add-hook 'mu4e-view-mode-hook
+              (lambda()
+                (local-set-key (kbd "<tab>") 'shr-next-link)
+                (local-set-key (kbd "<backtab>") 'shr-previous-link)))
 
-  ;; don't keep message buffers around
-  (setq message-kill-buffer-on-exit t)
+    ;; don't keep message buffers around
+    (setq message-kill-buffer-on-exit t)
 
-  ;; Setup mu4e notifications.
-  (setq mu4e-enable-notifications t)
-  (with-eval-after-load 'mu4e-alert
-    ;; Enable Desktop notifications
-    (mu4e-alert-set-default-style 'notifications) ; For linux
+    ;; Setup mu4e notifications.
+    (setq mu4e-enable-notifications t)
+    (with-eval-after-load 'mu4e-alert
+      ;; Enable Desktop notifications
+      (mu4e-alert-set-default-style 'notifications) ; For linux
+      )
+    (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
+
+    ;; Display images inline.
+    (setq mu4e-view-show-images t)
+    ;; use imagemagick, if available
+    (when (fboundp 'imagemagick-register-types)
+      (imagemagick-register-types))
+
+    ;; Allow reflowing of emails.
+    ;; https://www.djcbsoftware.nl/code/mu/mu4e/Writing-messages.html
+    (setq mu4e-compose-format-flowed t)
+
+    ;; Don't CC myself in sent emails.
+    (setq mu4e-compose-keep-self-cc nil)
     )
-  (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
-
-  ;; Display images inline.
-  (setq mu4e-view-show-images t)
-  ;; use imagemagick, if available
-  (when (fboundp 'imagemagick-register-types)
-    (imagemagick-register-types))
-
-  ;; Allow reflowing of emails.
-  ;; https://www.djcbsoftware.nl/code/mu/mu4e/Writing-messages.html
-  (setq mu4e-compose-format-flowed t)
-
-  ;; Don't CC myself in sent emails.
-  (setq mu4e-compose-keep-self-cc nil)
 
   ;;
   ;; Other spacemacs settings.
   ;;
 
+  (defadvice shr-colorize-region (before default-bg-color compile
+                                         activate)
+    "Use the default background color."
+    (setq bg nil))
   ;; Toggle menu bar on by default.
   ;; ~SPC t m~ to toggle at runtime.
   ;; (spacemacs/toggle-menu-bar-on)
