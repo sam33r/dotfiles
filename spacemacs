@@ -679,7 +679,7 @@ you should place your code here."
   ;; mu4e settings.
   ;;
 
-  (if (boundp mu4e-view-prefer-html)
+  (if (boundp 'mu4e-view-prefer-html)
 
     (add-hook 'mu4e-headers-mode 'spacemacs/toggle-mode-line-off)
     (add-hook 'mu4e-main-mode 'spacemacs/toggle-mode-line-off)
