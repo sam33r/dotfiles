@@ -63,10 +63,10 @@ bindsym $mod+8 exec emacsclient -c -e '(spacemacs/switch-to-scratch-buffer)' --a
 
 # FOCUS KEYBINDINGS
 # -----------------
-bindsym $mod+j focus right
-bindsym $mod+k focus left
-bindsym $mod+l focus down
-bindsym $mod+h focus up
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+h focus left
 # focus the parent container
 bindsym $mod+a focus parent
 # focus the child container
@@ -88,10 +88,10 @@ bindsym $mod+slash exec "$HOME/dotfiles/utils/i3_keybindings.sh"
 
 
 # move focused window
-bindsym $mod+Shift+j move right 200 px
-bindsym $mod+Shift+k move left 200 px
-bindsym $mod+Shift+l move down 200 px
-bindsym $mod+Shift+h move up 200 px
+bindsym $mod+Shift+j move down 200 px
+bindsym $mod+Shift+k move up 200 px
+bindsym $mod+Shift+l move right 200 px
+bindsym $mod+Shift+h move left 200 px
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -199,15 +199,15 @@ mode "resize" {
   # These bindings trigger as soon as you enter the resize mode
 
   # Pressing down will grow the window’s height.
-  bindsym j resize grow width 10 px or 10 ppt
-  bindsym k resize shrink width 10 px or 10 ppt
-  bindsym l resize grow height 10 px or 10 ppt
-  bindsym h resize shrink height 10 px or 10 ppt
+  bindsym j resize grow height 10 px or 10 ppt
+  bindsym k resize shrink height 10 px or 10 ppt
+  bindsym l resize grow width 10 px or 10 ppt
+  bindsym h resize shrink width 10 px or 10 ppt
 
-  bindsym Shift+j resize grow width 150 px or 150 ppt
-  bindsym Shift+k resize shrink width 150 px or 150 ppt
-  bindsym Shift+l resize grow height 150 px or 150 ppt
-  bindsym Shift+h resize shrink height 150 px or 150 ppt
+  bindsym Shift+j resize grow height 150 px or 150 ppt
+  bindsym Shift+k resize shrink height 150 px or 150 ppt
+  bindsym Shift+l resize grow width 150 px or 150 ppt
+  bindsym Shift+h resize shrink width 150 px or 150 ppt
 
   # blow up window (for floating windows)
   bindsym b resize set 1600 1400; move absolute position center
