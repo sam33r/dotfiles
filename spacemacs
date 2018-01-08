@@ -862,7 +862,7 @@ you should place your code here."
   (setq history-delete-duplicates t)
   (setq savehist-save-minibuffer-history 1)
   ;; Smarter frame title
-  (setq-default frame-title-format '("%b (emacs)"))
+  (setq-default frame-title-format '("%b - emacs"))
 
   ;; Have some margins by default.
   (setq-default left-margin-width 1 right-margin-width 1)
