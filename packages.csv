@@ -33,7 +33,6 @@ screen,terminal multiplexing
 scrot,Screenshots
 silversearcher-ag,Faster search
 suckless-tools,for dmenu and other niceties.
-systemd,Managing system power state
 tmux,Terminal multiplexer useful for remoting
 unclutter,Hide mouse cursor when not being used.
 vim-gtk,gvim
