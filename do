@@ -143,6 +143,12 @@ function install_update_z()
   cd $dir
 }
 
+function install_youtube_dl()                                                    # Install global youtube-dl command.
+{
+  sudo curl -L https://yt-dl.org/latest/youtube-dl -o /usr/local/bin/youtube-dl
+  sudo chmod a+rx /usr/local/bin/youtube-dl
+}
+
 function install_update_fzf()                                                    # Install fzf for command searches.
 {
   if type "fzf" > /dev/null; then
