@@ -34,6 +34,9 @@ antigen theme bhilburn/powerlevel9k
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir_writable dir rbenv vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status command_execution_time root_indicator background_jobs battery time)
 
+# Send commands to copyq
+preexec() copyq tab "&zsh" insert 0 $1
+
 # Enable fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # Setup fzf and its util functions
