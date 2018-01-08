@@ -42,6 +42,23 @@ source ~/dotfiles/zsh/fzf.zsh
 # Override environment variables
 export BROWSER="w3m"
 
+# Setup vi text objects for older versions of the shell.
+if [[ $(zsh --version | awk '{print $2}') < 5.0.8 ]]; then
+  echo "Older version of zsh, sourcing opp.sh for vi text objects."
+  pd=`pwd`
+  cd $HOME
+  if [[ ! -e "opp.zsh" ]]; then
+    git clone https://github.com/hchbaw/opp.zsh
+  fi
+  cd opp.zsh
+  git pull origin master
+  source opp.zsh
+  source opp/*.zsh
+  cd $pd
+else
+  echo "Congratulations, your zsh is greater than 5.0.8"
+fi
+
 # Aliases
 alias apps='sudo /usr/bin/software-center'
 alias c=clear
