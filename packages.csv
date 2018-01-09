@@ -6,6 +6,7 @@ fbterm,Framebuffer terminal emulator
 feh,Image viewer useful for setting wallpaper in linux
 gcc,gnu compilers
 gnome-sushi,Preview for nautilus
+gnupg2,Encryption/decryption
 gnupg-agent,Password entry agent
 gnutls-bin,mu4e dependency
 gparted,partition management utility
@@ -32,7 +33,6 @@ screen,terminal multiplexing
 scrot,Screenshots
 silversearcher-ag,Faster search
 suckless-tools,for dmenu and other niceties.
-systemd,Managing system power state
 tmux,Terminal multiplexer useful for remoting
 unclutter,Hide mouse cursor when not being used.
 vim-gtk,gvim

@@ -679,7 +679,7 @@ you should place your code here."
   ;; mu4e settings.
   ;;
 
-  (if (boundp mu4e-view-prefer-html)
+  (if (boundp 'mu4e-view-prefer-html)
 
     (add-hook 'mu4e-headers-mode 'spacemacs/toggle-mode-line-off)
     (add-hook 'mu4e-main-mode 'spacemacs/toggle-mode-line-off)
@@ -862,7 +862,7 @@ you should place your code here."
   (setq history-delete-duplicates t)
   (setq savehist-save-minibuffer-history 1)
   ;; Smarter frame title
-  (setq-default frame-title-format '("%b (emacs)"))
+  (setq-default frame-title-format '("%b - emacs"))
 
   ;; Have some margins by default.
   (setq-default left-margin-width 1 right-margin-width 1)

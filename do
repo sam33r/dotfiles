@@ -143,6 +143,12 @@ function install_update_z()
   cd $dir
 }
 
+function install_youtube_dl()                                                    # Install global youtube-dl command.
+{
+  sudo curl -L https://yt-dl.org/latest/youtube-dl -o /usr/local/bin/youtube-dl
+  sudo chmod a+rx /usr/local/bin/youtube-dl
+}
+
 function install_update_fzf()                                                    # Install fzf for command searches.
 {
   if type "fzf" > /dev/null; then
@@ -369,11 +375,6 @@ function install_update_antigen()
   curl -L git.io/antigen > $HOME/.antigen.zsh
 }
 
-function theme()                                                                 # Change Gnome Terminal theme.
-{
-  wget -O xt  http://git.io/vGz67 && chmod +x xt && ./xt && rm xt
-}
-
 function update_hosts()                                                          # Update the system hosts file (Via StevenBlack/hosts)
 {
   sudo python $HOME/hosts/updateHostsFile.py --extensions fakenews \
@@ -495,26 +496,6 @@ function everystall()                                                           
     $install_fn
     printf "\n\n"
   done
-}
-
-function tiny_install()                                                          # Do a tiny install of command line editing tools for servers etc.
-{
-  # Add support for installing external repositories.
-  sudo apt-get install software-properties-common
-
-  # Add emacs from a pre-built stable release.
-  # NOTE: This can go away when universal has emacs25.
-  sudo add-apt-repository ppa:kelleyk/emacs
-  sudo apt-get update
-  sudo apt-get install emacs25
-
-  sudo apt-get install vim openssl
-  install_update_vim_plugins
-  install_update_liquidprompt
-  install_update_spacemacs
-  install_update_transcrypt
-
-  install_dotfiles
 }
 
 function help()
