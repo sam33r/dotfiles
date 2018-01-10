@@ -167,7 +167,7 @@ for_window [workspace="8"] floating enable
 # APP-SPECIFIC BEHAVIORS
 # ----------------------
 for_window [class="copyq"] floating enable
-for_window [class="copyq"] resize set 1000 1000
+for_window [class="copyq"] resize set 1000 1200
 for_window [class="copyq"] move position center
 for_window [title="Signal" class="Google-chrome"] floating enable
 for_window [title="Synergy"] floating enable
