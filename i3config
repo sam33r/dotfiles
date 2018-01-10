@@ -56,7 +56,7 @@ bindsym $mod+4 exec --no-startup-id "~/dotfiles/utils/add_journal.sh"
 bindsym $mod+5 exec --no-startup-id "~/dotfiles/utils/add_task.sh"
 bindsym $mod+6 exec gnome-terminal
 bindsym $mod+Shift+6 exec gnome-terminal -e "bash"
-bindsym $mod+7 exec google-chrome
+bindsym $mod+7 exec "~/dotfiles/utils/full-chrome.sh"
 bindsym $mod+Shift+7 exec google-chrome --incognito
 bindsym $mod+8 exec emacsclient -c -e '(spacemacs/switch-to-scratch-buffer)' --alternate-editor=""
 
@@ -173,7 +173,6 @@ for_window [title="Signal" class="Google-chrome"] floating enable
 for_window [title="Synergy"] floating enable
 for_window [class="Gvim"] floating enable
 for_window [class="Gvim"] move position center
-for_window [class="Google-chrome"] exec ~/dotfiles/utils/full-chrome.sh
 
 
 # SCRATCHPAD
