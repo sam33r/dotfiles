@@ -94,7 +94,7 @@ values."
      ;; I am also using it to add symbol groups for brackets. See
      ;; https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Bvim/evil-snipe
      (evil-snipe :variables evil-snipe-enable-alternate-f-and-t-behaviors t)
-     (elfeed :variables rmh-elfeed-org-files (list "~/n/feeds.org"))
+     (elfeed :variables rmh-elfeed-org-files (list "~/feeds/feeds.org"))
      twitter
      (shell :variables
             shell-default-shell 'eshell)
