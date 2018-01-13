@@ -887,18 +887,23 @@ you should place your code here."
   (evil-leader/set-key "oe" #'projectile-run-eshell)
   (evil-leader/set-key "or" #'sa/read)
 
-
   ;; Eww browser keybindings
+
+  (evil-leader/set-key "ae" #'eww)
+  (evil-leader/set-key "aE" #'helm-google-suggest)
+
   (evil-define-key 'normal eww-mode-map
-    "V" 'eww-browse-with-external-browser ;; default in eww-mode
+    "o" 'browse-web
+    "O" 'helm-google-suggest
+    "W" 'helm-wikipedia-suggest
+
     "Q" 'sa/switch-to-elfeed
     "q" 'delete-window
-    "a" 'eww-add-bookmark
-    "yy" 'eww-copy-page-url
-    "gu" 'eww-up-url
-    "gt" 'eww-top-url
-    "F" 'eww-lnum-follow
-    ;; "F" 'eww-lnum-universal
+
+    "f" 'ace-link
+    (kbd "C-j") 'shr-next-link
+    (kbd "C-k") 'shr-previous-link
+
     "H" 'eww-back-url
     "L" 'eww-forward-url
     "r" 'eww-reload
@@ -906,12 +911,51 @@ you should place your code here."
     )
 
   (spacemacs/set-leader-keys-for-major-mode 'eww-mode
-    "h"     'eww-history
+    "v"     'eww-browse-with-external-browser
+    "a"     'eww-add-bookmark
+    "U"     'eww-copy-page-url
+    "u"    'eww-up-url
+    "t"    'eww-top-url
+
+    "h"     'eww-list-histories
+    "B"     'eww-list-buffers
     "ba"    'eww-add-bookmark ;; also "a" in normal state
     "bl"    'eww-list-bookmarks
     "o"     'eww
     "s"     'eww-view-source
     "c"     'url-cookie-list)
+
+  (dolist (mode '(eww-history-mode))
+    (spacemacs/set-leader-keys-for-major-mode mode
+      "f" 'eww-history-browse)
+    (evil-define-key 'normal eww-history-mode-map "f" 'eww-history-browse
+      "q" 'quit-window))
+  (dolist (mode '(eww-bookmark-mode))
+    (spacemacs/set-leader-keys-for-major-mode mode
+      "x" 'eww-bookmark-kill
+      "y" 'eww-bookmark-yank
+      "f" 'eww-bookmark-browse)
+    (evil-define-key 'normal eww-bookmark-mode-map
+      "q" 'quit-window
+      "f" 'eww-bookmark-browse
+      "d" 'eww-bookmark-kill
+      "y" 'eww-bookmark-yank))
+  (dolist (mode '(eww-buffers-mode))
+    (spacemacs/set-leader-keys-for-major-mode mode
+      "f" 'eww-buffer-select
+      "d" 'eww-buffer-kill
+      "n" 'eww-buffer-show-next
+      "p" 'eww-buffer-show-previous)
+    (evil-define-key 'normal eww-buffers-mode-map
+      "q" 'quit-window
+      "f" 'eww-buffer-select
+      "d" 'eww-buffer-kill
+      "n" 'eww-buffer-show-next
+      "p" 'eww-buffer-show-previous)
+    )
+
+
+
 
   ;; Experimental: Resume last helm command.
   ;; (spacemacs/set-leader-keys "." 'helm-resume)
