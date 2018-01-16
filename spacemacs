@@ -94,7 +94,7 @@ values."
      ;; I am also using it to add symbol groups for brackets. See
      ;; https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Bvim/evil-snipe
      (evil-snipe :variables evil-snipe-enable-alternate-f-and-t-behaviors t)
-     (elfeed :variables rmh-elfeed-org-files (list "~/n/feeds.org"))
+     (elfeed :variables rmh-elfeed-org-files (list "~/feeds/feeds.org"))
      twitter
      (shell :variables
             shell-default-shell 'eshell)
@@ -350,6 +350,85 @@ values."
 
 ;; Custom functions.
 
+(defun sa/setup-org-mode (orgdir)
+  """Setup org-mode configuration."""
+  ;;
+  ;; org-mode configuration.
+  ;;
+
+  ;; In org-agenda log show completed recurring tasks.
+  (setq org-agenda-log-mode-items '(closed clock state))
+
+
+  ;; Agenda location
+  (setq org-agenda-files (list orgdir))
+  (require 'org-contacts)
+  ;; (setq org-contacts-files '("~/n/people.org.gpg"))
+  ;; Archive in a datetree.
+  (setq org-archive-location (concat orgdir "/shelved/archive.org.gpg::datetree/* Finished Tasks"))
+  ;; Capture mode.
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file+headline (concat orgdir "/projects.org.gpg") "Refile Tasks")
+           "* TODO %?\n  %i\n  %a")
+          ("j" "Journal" entry (file+datetree (concat orgdir "/journal.org.gpg"))
+           "* %?\nEntered on %U\n  %i")
+          ))
+  (define-key global-map "\C-cc" 'org-capture)
+  ;; Publishing notes.
+  (setq org-publish-project-alist
+        `(("notes"
+           :base-directory       orgdir
+           :base-extension       "org"
+           :publishing-directory "~/pub"
+           :recursive            t
+           :publishing-function  org-html-publish-to-html
+           :auto-sitemap         t
+           :sitemap-filename     "index.org"
+           :sitemap-title        "Index"
+           ;; This doesn't seem to work, disabling for now.
+           ;; :sitemap-sort-folders 'last
+           :sitemap-ignore-case  t
+           )))
+
+  ;; custom keybindings
+  ;; (spacemacs/set-leader-keys-for-major-mode 'org-mode
+  ;;   "k" 'org-backward-heading-same-level
+  ;;   "j" 'org-forward-heading-same-level
+  ;;   )
+  (evil-define-key '(normal visual motion) org-mode-map
+    "gh" 'outline-up-heading
+    "gj" 'outline-forward-same-level
+    "gk" 'outline-backward-same-level
+    "gl" 'outline-next-visible-heading
+    "gu" 'outline-previous-visible-heading)
+
+  ;; Appearance
+  (setq org-bullets-bullet-list '("•" "•" "•" "•")
+        org-priority-faces '((65 :inherit org-priority :foreground "red")
+                             (66 :inherit org-priority :foreground "brown")
+                             (67 :inherit org-priority :foreground "blue"))
+        org-ellipsis " ▼")
+  ;; Setup refiling.
+  (setq org-refile-use-outline-path t)
+  (setq org-outline-path-complete-in-steps nil)
+  (setq org-refile-targets
+        '((nil :maxlevel . 3)
+          (org-agenda-files :maxlevel . 2)))
+
+  ;; Task tags
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "ICKY(i)" "NEXT(n!)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
+  (setq org-todo-keyword-faces
+        '(("TODO" . "orange") ("ICKY" . org-warning)
+          ("NEXT" . (:foreground "orange" :weight bold))
+          ("WAIT" .(:foreground "purple" :weight bold))
+          ("CANCELED" . (:foreground "blue" :weight bold))
+          ("DONE" . (:foreground "green" :weight bold))))
+
+  ;; Other misc org-mode settings.
+  (setq org-startup-folded 'show-all)
+  )
+
 (defun sa/local-shell-command (command)
   """Run command in local machine's shell."""
   (let ((default-directory "~"))
@@ -564,81 +643,8 @@ you should place your code here."
   ;; turn on yasnippets(?)
   (spacemacs/toggle-yasnippet-on)
 
-  ;;
-  ;; org-mode configuration.
-  ;;
-
-  ;; In org-agenda log show completed recurring tasks.
-  (setq org-agenda-log-mode-items '(closed clock state))
-
-
-  ;; Agenda location
-  (setq org-agenda-files (list "~/n"))
-  (require 'org-contacts)
-  ;; (setq org-contacts-files '("~/n/people.org.gpg"))
-  ;; Archive in a datetree.
-  (setq org-archive-location "~/n/shelved/archive.org.gpg::datetree/* Finished Tasks")
-  ;; Capture mode.
-  (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/n/projects.org.gpg" "Refile Tasks")
-           "* TODO %?\n  %i\n  %a")
-          ("j" "Journal" entry (file+datetree "~/n/journal.org.gpg")
-           "* %?\nEntered on %U\n  %i")
-          ))
-  (define-key global-map "\C-cc" 'org-capture)
-  ;; Publishing notes.
-  (setq org-publish-project-alist
-        `(("notes"
-           :base-directory       "~/n"
-           :base-extension       "org"
-           :publishing-directory "~/pub"
-           :recursive            t
-           :publishing-function  org-html-publish-to-html
-           :auto-sitemap         t
-           :sitemap-filename     "index.org"
-           :sitemap-title        "Index"
-           ;; This doesn't seem to work, disabling for now.
-           ;; :sitemap-sort-folders 'last
-           :sitemap-ignore-case  t
-           )))
-
-  ;; custom keybindings
-  ;; (spacemacs/set-leader-keys-for-major-mode 'org-mode
-  ;;   "k" 'org-backward-heading-same-level
-  ;;   "j" 'org-forward-heading-same-level
-  ;;   )
-  (evil-define-key '(normal visual motion) org-mode-map
-    "gh" 'outline-up-heading
-    "gj" 'outline-forward-same-level
-    "gk" 'outline-backward-same-level
-    "gl" 'outline-next-visible-heading
-    "gu" 'outline-previous-visible-heading)
-
-  ;; Appearance
-  (setq org-bullets-bullet-list '("•" "•" "•" "•")
-        org-priority-faces '((65 :inherit org-priority :foreground "red")
-                             (66 :inherit org-priority :foreground "brown")
-                             (67 :inherit org-priority :foreground "blue"))
-        org-ellipsis " ▼")
-  ;; Setup refiling.
-  (setq org-refile-use-outline-path t)
-  (setq org-outline-path-complete-in-steps nil)
-  (setq org-refile-targets
-        '((nil :maxlevel . 3)
-          (org-agenda-files :maxlevel . 2)))
-
-  ;; Task tags
-  (setq org-todo-keywords
-        '((sequence "TODO(t)" "ICKY(i)" "NEXT(n!)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
-  (setq org-todo-keyword-faces
-        '(("TODO" . "orange") ("ICKY" . org-warning)
-          ("NEXT" . (:foreground "orange" :weight bold))
-          ("WAIT" .(:foreground "purple" :weight bold))
-          ("CANCELED" . (:foreground "blue" :weight bold))
-          ("DONE" . (:foreground "green" :weight bold))))
-
-  ;; Other misc org-mode settings.
-  (setq org-startup-folded 'show-all)
+  ;; Setup org-mode
+  (sa/setup-org-mode "~/n")
 
   ;;
   ;; Hooks.
