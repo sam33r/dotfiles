@@ -139,8 +139,7 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 let g:airline_section_y = ''
-let g:airline_theme='monochrome'
-
+let g:airline_theme='minimalist'
 " hardtime config:
 let g:hardtime_default_on = 0
 let g:hardtime_showmsg = 1
