@@ -682,11 +682,13 @@ you should place your code here."
   (add-hook 'org-clock-in-hook 'sa/clock-in)
   (add-hook 'org-clock-out-hook 'sa/clock-out)
 
+  ;; Twittering mode - cache auth
+  (setq twittering-use-master-password t)
+
   ;;
   ;; mu4e settings.
   ;;
 
-  (if (boundp 'mu4e-view-prefer-html)
 
     (add-hook 'mu4e-headers-mode 'spacemacs/toggle-mode-line-off)
     (add-hook 'mu4e-main-mode 'spacemacs/toggle-mode-line-off)
@@ -772,7 +774,6 @@ you should place your code here."
 
     ;; Don't CC myself in sent emails.
     (setq mu4e-compose-keep-self-cc nil)
-    )
 
   ;;
   ;; Other spacemacs settings.
@@ -1010,11 +1011,11 @@ you should place your code here."
  '(evil-want-Y-yank-to-eol nil)
  '(global-vi-tilde-fringe-mode nil)
  '(mu4e-compose-dont-reply-to-self t)
- '(mu4e-headers-include-related t)
+ '(mu4e-headers-include-related nil)
  '(mu4e-headers-leave-behavior (quote apply))
  '(mu4e-headers-results-limit 5000)
  '(mu4e-headers-skip-duplicates t)
- '(mu4e-headers-visible-columns 120)
+ '(mu4e-headers-visible-columns 0)
  '(mu4e-split-view (quote vertical))
  '(mu4e-view-show-addresses t)
  '(neo-window-fixed-size t)
@@ -1071,6 +1072,9 @@ you should place your code here."
  '(standard-indent 2)
  '(tab-stop-list (quote (2 4 6 8)))
  '(truncate-lines nil)
+ '(twittering-fill-column 100)
+ '(twittering-show-replied-tweets t)
+ '(twittering-timer-interval 3600)
  '(vc-follow-symlinks t)
  '(web-mode-code-indent-offset 2)
  '(web-mode-css-indent-offset 2)
