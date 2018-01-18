@@ -10,7 +10,6 @@ fi
 . ~/projects.local.sh
 
 function reset() {
-  screen -d persistent
   killall -s TERM chrome &
   sleep 0.2
   killall -s TERM chrome &
@@ -21,9 +20,8 @@ function reset() {
   killall -s TERM nemo &
   i3-msg workspace number 0
   i3-msg workspace number 1
-  (screen -ls | grep Detached | grep -v persistent | grep -v Laptop | cut -d. -f1 | awk '{print $1}' | xargs kill) &
   sleep 0.2
-  gnome-terminal -e "screen -D -R -S persistent" &
+  gnome-terminal -e 'tmux new -A -s "persistent"' &
   sleep 0.3
   i3-msg move scratchpad
   google-chrome &
