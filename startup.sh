@@ -1,8 +1,6 @@
 #!/bin/bash
 
-gnome-terminal -e 'tmux new -A -s "persistent"' &
-sleep 1
-i3-msg move scratchpad
+~/dotfiles/utils/term.sh
 
 sleep 1
 
@@ -22,4 +20,3 @@ feh --randomize --bg-fill ~/Wallpapers/* &
 unclutter &
 emacs --daemon &
 copyq &
-
