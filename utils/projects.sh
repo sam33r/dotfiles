@@ -13,17 +13,12 @@ function reset() {
   killall -s TERM chrome &
   sleep 0.2
   killall -s TERM chrome &
-  killall -s TERM gnome-terminal &
-  (ps -A | grep gnome-terminal | cut -d" " -f2 | awk '{print $1}' | xargs kill) &
   killall -s TERM emacsclient &
   killall -s TERM nautilus &
   killall -s TERM nemo &
   i3-msg workspace number 0
   i3-msg workspace number 1
   sleep 0.2
-  gnome-terminal -e 'tmux new -A -s "persistent"' &
-  sleep 0.3
-  i3-msg move scratchpad
   google-chrome &
   sleep 2
   i3-msg move scratchpad

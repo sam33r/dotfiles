@@ -4,6 +4,10 @@ run_keybase && sleep 1 && i3-msg kill
 
 sleep 1
 
+gnome-terminal -e 'tmux new -A -s "persistent"' &
+sleep 1
+i3-msg move scratchpad
+
 # This enables gtk settings from gnome, required for gtk themes.
 gnome-settings-daemon &
 gnome-keyring-daemon &
@@ -26,13 +30,9 @@ pasystray &
 feh --randomize --bg-fill ~/Wallpapers/* &
 unclutter &
 emacs --daemon &
-
-sleep 1
-
-$HOME/dotfiles/utils/git_sync.sh "$HOME/n" &
 copyq &
 
 sleep 10
 
 # get all the prompts out of the way.
-emacsclient -c -e "(sa/startup)"
+emacsclient -c -e "(sa/startup)" &

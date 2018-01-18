@@ -54,7 +54,7 @@ bindsym $mod+2 exec emacsclient -c -e '(mu4e-compose-new)'
 bindsym $mod+3 exec --no-startup-id "~/dotfiles/utils/search_mail.sh"
 bindsym $mod+4 exec --no-startup-id "~/dotfiles/utils/add_journal.sh"
 bindsym $mod+5 exec --no-startup-id "~/dotfiles/utils/add_task.sh"
-bindsym $mod+6 exec gnome-terminal -e "bash"
+# bindsym $mod+6 exec gnome-terminal -e "bash"
 # bindsym $mod+Shift+6 exec gnome-terminal -e "bash"
 # bindsym $mod+7 exec "~/dotfiles/utils/full-chrome.sh"
 bindsym $mod+7 exec google-chrome
@@ -168,13 +168,15 @@ for_window [workspace="8"] floating enable
 # APP-SPECIFIC BEHAVIORS
 # ----------------------
 for_window [class="copyq"] floating enable
-for_window [class="copyq"] resize set 1400 1000
+for_window [class="copyq"] resize set 1500 1000
 for_window [class="copyq"] move position center
 for_window [title="Signal" class="Google-chrome"] floating enable
 for_window [title="Synergy"] floating enable
 for_window [class="Gvim"] floating enable
 for_window [class="Gvim"] move position center
-
+for_window [class="Gnome-terminal"] floating enable
+for_window [class="Gnome-terminal"] resize set 1600 1000
+for_window [class="Gnome-terminal"] move position center
 
 # SCRATCHPAD
 # ----------
