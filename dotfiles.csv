@@ -30,6 +30,7 @@ $HOME/.profile,profile
 $HOME/.screenrc,screenrc
 $HOME/.spacemacs,spacemacs
 $HOME/startup.sh,startup.sh
+$HOME/.tmux.conf,tmux.conf
 $HOME/.vimrc,vimrc
 $HOME/.Xresources,Xresources
 $HOME/.zshrc,zsh/zshrc
