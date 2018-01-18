@@ -360,6 +360,8 @@ values."
   ;; In org-agenda log show completed recurring tasks.
   (setq org-agenda-log-mode-items '(closed clock state))
 
+  (message (concat "Changing org dir to: " orgdir))
+  (setq org-directory orgdir)
 
   ;; Agenda location
   (setq org-agenda-files (list orgdir))
@@ -369,9 +371,9 @@ values."
   (setq org-archive-location (concat orgdir "/shelved/archive.org.gpg::datetree/* Finished Tasks"))
   ;; Capture mode.
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline (concat orgdir "/projects.org.gpg") "Refile Tasks")
+        '(("t" "Todo" entry (file+headline "projects.org.gpg" "Refile Tasks")
            "* TODO %?\n  %i\n  %a")
-          ("j" "Journal" entry (file+datetree (concat orgdir "/journal.org.gpg"))
+          ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
            "* %?\nEntered on %U\n  %i")
           ))
   (define-key global-map "\C-cc" 'org-capture)
