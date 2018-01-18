@@ -44,7 +44,7 @@ new_window pixel 2
 hide_edge_borders none
 
 # Set max float size
-floating_maximum_size 1600 x 1400
+floating_maximum_size 5000 x 5000
 
 # NUMERIC SHORTCUTS
 # -----------------
