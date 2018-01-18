@@ -12,6 +12,7 @@ gnutls-bin,mu4e dependency
 gparted,partition management utility
 i3blocks,scheduler for i3bar blocks
 i3,tiling windows manager
+libevent-dev,Library, dependency for building tmux
 libtool-bin,Requirement for building nvim
 lm-sensors,sensors information
 meld,Diff tool.
@@ -35,6 +36,7 @@ silversearcher-ag,Faster search
 suckless-tools,for dmenu and other niceties.
 tmux,Terminal multiplexer useful for remoting
 unclutter,Hide mouse cursor when not being used.
+urlview,View urls
 vim-gtk,gvim
 vim,vim!
 w3m,command line based web browser
