@@ -54,9 +54,8 @@ bindsym $mod+2 exec emacsclient -c -e '(mu4e-compose-new)'
 bindsym $mod+3 exec --no-startup-id "~/dotfiles/utils/search_mail.sh"
 bindsym $mod+4 exec --no-startup-id "~/dotfiles/utils/add_journal.sh"
 bindsym $mod+5 exec --no-startup-id "~/dotfiles/utils/add_task.sh"
-# bindsym $mod+6 exec gnome-terminal -e "bash"
+bindsym $mod+6 exec "~/dotfiles/utils/term.sh"
 # bindsym $mod+Shift+6 exec gnome-terminal -e "bash"
-# bindsym $mod+7 exec "~/dotfiles/utils/full-chrome.sh"
 bindsym $mod+7 exec google-chrome
 bindsym $mod+Shift+7 exec google-chrome --incognito
 bindsym $mod+8 exec emacsclient -c -e '(spacemacs/switch-to-scratch-buffer)' --alternate-editor=""
@@ -177,6 +176,7 @@ for_window [class="Gvim"] move position center
 for_window [class="Gnome-terminal"] floating enable
 for_window [class="Gnome-terminal"] resize set 1600 1000
 for_window [class="Gnome-terminal"] move position center
+for_window [class="Gnome-terminal"] move scratchpad
 
 # SCRATCHPAD
 # ----------
