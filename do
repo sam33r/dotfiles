@@ -356,6 +356,8 @@ function install_tmux_from_source()
 
   cd $HOME
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+  cd $dir
 }
 
 function custom_install_i3gaps()
