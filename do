@@ -343,6 +343,21 @@ function install_nvim_from_source()
   cd $dir
 }
 
+function install_tmux_from_source()
+{
+  cd $HOME
+  git clone https://github.com/tmux/tmux.git
+  cd tmux
+  git pull origin master
+  sudo apt-get install libevent-dev
+  sh autogen.sh
+  ./configure && make
+  sudo make install
+
+  cd $HOME
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+}
+
 function custom_install_i3gaps()
 {
   cd $HOME
