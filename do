@@ -124,6 +124,23 @@ function install_copyq()                                             # Install c
   cd $dir
 }
 
+function install_fpp()                                                           # Install FB Path Picker
+{
+  cd $HOME
+  git clone https://github.com/facebook/PathPicker.git
+  cd PathPicker/
+  git pull origin master
+  ln -s "$(pwd)/fpp" $HOME/bin/fpp
+  fpp --help
+  cd $dir
+}
+
+function install_update_spacevim()
+{
+  cd $HOME
+  curl -sLf https://spacevim.org/install.sh | bash
+}
+
 function install_update_liquidprompt()                                           # Install liquidprompt, outstanding bash prompt.
 {
   cd $HOME

@@ -29,6 +29,7 @@ $HOME/.i3blocks.conf,i3blocks.conf
 $HOME/.profile,profile
 $HOME/.screenrc,screenrc
 $HOME/.spacemacs,spacemacs
+$HOME/.SpaceVim.d/init.vim,spacevim.vim
 $HOME/startup.sh,startup.sh
 $HOME/.tmux.conf,tmux.conf
 $HOME/.vimrc,vimrc
