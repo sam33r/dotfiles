@@ -23,6 +23,7 @@ offlineimap,Sync maildirs
 pandoc,convert between different document formats
 pasystray,Pulse audio system tray
 pavucontrol,Pulse audio controls
+pdfgrep,Grep pdf files
 python3-pip,pip for python3
 python-dev,python
 python-pip,pip installer
