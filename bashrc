@@ -121,6 +121,10 @@ fi
 export PATH=/usr/local/cuda/bin:$PATH
 export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 
+# Enable fasd
+eval "$(fasd --init auto)"
+alias v="f -e vim"
+
 # set vi keybindings
 set -o vi
 
@@ -128,8 +132,6 @@ set -o vi
 if [ -f ~/.bashrc.local ]; then
   . ~/.bashrc.local
 fi
-
-. $HOME/z/z.sh
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
