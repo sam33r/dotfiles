@@ -135,6 +135,16 @@ function install_fpp()                                                          
   cd $dir
 }
 
+function install_update_fasd()
+{
+  cd $HOME
+  git clone https://github.com/clvv/fasd
+  cd fasd
+  git pull origin master
+  PREFIX=$HOME make install
+  cd $dir
+}
+
 function install_update_spacevim()
 {
   cd $HOME
@@ -148,15 +158,6 @@ function install_update_liquidprompt()                                          
   cd liquidprompt
   git pull origin master
   source liquidprompt
-  cd $dir
-}
-
-function install_update_z()
-{
-  cd $HOME
-  git clone https://github.com/rupa/z.git
-  cd z/
-  git pull origin master
   cd $dir
 }
 
