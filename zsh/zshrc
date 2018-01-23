@@ -41,6 +41,10 @@ preexec() copyq tab "&zsh" insert 0 $1
 # Setup fzf and its util functions
 source ~/dotfiles/zsh/fzf.zsh
 
+# Enable fasd
+eval "$(fasd --init auto)"
+alias v="f -e vim"
+
 # Override environment variables
 export BROWSER="w3m"
 export EDITOR="vim"
