@@ -104,7 +104,7 @@ bindsym $mod+Shift+f exec "$HOME/dotfiles/utils/focus.sh"
 # Select working mode
 bindsym $mod+Shift+m exec "$HOME/dotfiles/utils/projects.sh"
 # Clipboard manager
-bindsym $mod+Shift+c exec "copyq toggle"
+bindsym $mod+Shift+c exec "copyq show '&clipboard'"
 
 
 # Cycle wallpaper
