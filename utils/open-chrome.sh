@@ -11,7 +11,7 @@ if [ ! -e "$localdb" ] || [ ! -z "`find $localdb -mmin +5`" ] ; then
   cp -f  ~/.config/google-chrome/Default/History ~/tmp/
 fi
 
-title_url=`sqlite3 ~/tmp/History "select title,url from urls order by last_visit_time desc limit 5000" | rofi -dmenu -i`
+title_url=`( cat ~/.bookmarks ; sqlite3 ~/tmp/History "select title,url from urls order by last_visit_time desc limit 5000") | rofi -dmenu -i`
 
 if [ -z "$title_url" ] ; then
   exit 0
