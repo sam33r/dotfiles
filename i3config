@@ -57,7 +57,7 @@ bindsym $mod+5 exec --no-startup-id "~/dotfiles/utils/add_task.sh"
 bindsym $mod+6 exec "~/dotfiles/utils/term.sh"
 # bindsym $mod+Shift+6 exec gnome-terminal -e "bash"
 bindsym $mod+7 exec "~/dotfiles/utils/open-chrome.sh"
-bindsym $mod+Shift+7 exec google-chrome --incognito
+bindsym $mod+Shift+7 exec "~/dotfiles/utils/search-chrome.sh"
 bindsym $mod+8 exec emacsclient -c -e '(spacemacs/switch-to-scratch-buffer)' --alternate-editor=""
 
 
