@@ -843,8 +843,11 @@ you should place your code here."
   (spacemacs/toggle-vi-tilde-fringe-off)
 
   ;; Prefer splitting horizontally.
-  (setq split-height-threshold nil)
-  (setq split-width-threshold 80)
+  (setq split-height-threshold 0)
+  (setq split-width-threshold nil)
+
+  ;; Use golden ratio package by default.
+  (spacemacs/toggle-golden-ratio-on)
 
   ;; Use spaces for indent.
   (setq indent-tabs-mode nil)
