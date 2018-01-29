@@ -7,7 +7,7 @@ Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 
 ! Rofi customization
-rofi.lines: 20
+rofi.lines: 30
 rofi.opacity: 95
 rofi.separator-style: none
 rofi.color-enabled: true
