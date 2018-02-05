@@ -17,7 +17,6 @@ nm-applet &
 feh --randomize --bg-fill ~/Wallpapers/* &
 unclutter &
 copyq &
-( sleep 10; /usr/bin/setxkbmap -option "caps:swapescape" ) &
 google-chrome &
 gnome-terminal -e "tmux new -A -s 'persistent'" &
 emacsclient -c --alternate-editor "" &
