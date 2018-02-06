@@ -18,7 +18,10 @@ feh --randomize --bg-fill ~/Wallpapers/* &
 unclutter &
 copyq &
 google-chrome &
-gnome-terminal -e "tmux new -A -s 'persistent'" &
+google-chrome-beta "https://www.gmail.com" &
+google-chrome-beta "https://chat.google.com" &
+
+st -e tmux new -A -s persistent &
 emacsclient -c --alternate-editor "" &
 redshift &
 start-pulseaudio-x11 &
