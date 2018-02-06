@@ -28,6 +28,6 @@ if [[ -x "./autostart.local.sh" ]]; then
 fi
 
 while true; do
-   xsetroot -name "$( date )"
-   sleep 10
+   xsetroot -name "$( date +'%a %F %R' )"
+   sleep 60
 done &
