@@ -7,7 +7,7 @@ mkdir -p ~/tmp
 
 localdb="$HOME/tmp/History"
 
-if [ ! -e "$localdb" ] || [ ! -z "`find $localdb -mmin +5`" ] ; then
+if [ ! -e "$localdb" ] || [ ! -z "`find $localdb -mtime +30s`" ] ; then
   cp -f  ~/.config/google-chrome/Default/History ~/tmp/
 fi
 
