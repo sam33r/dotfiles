@@ -25,6 +25,9 @@ rupa/z
 vi-mode
 EOBUNDLES
 
+# zsh-autosuggestions config
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=white'
+
 # vi-mode: reduce normal-mode-switch delay.
 export KEYTIMEOUT=1
 
@@ -78,7 +81,9 @@ alias week='~/pyenv/bin/gcalcli agenda --calendar $CALENDAR'
 alias weeknum='date +%V'
 
 # Keybindings
-bindkey '^B' push-line-or-edit
+bindkey '^w' forward-word
+bindkey '^b' backward-word
+# bindkey '^B' push-line-or-edit
 
 # Append googler autocompletions to fpath
 fpath=($HOME/googler/auto-completion/zsh $fpath)
