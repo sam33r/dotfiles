@@ -26,6 +26,10 @@ emacsclient -c --alternate-editor "" &
 redshift &
 start-pulseaudio-x11 &
 
+if [[ -x "$HOME/load_mails.sh" ]]; then
+  $HOME/load_mails.sh &
+fi
+
 if [[ -x "./autostart.local.sh" ]]; then
   ./autostart.local.sh
 fi
