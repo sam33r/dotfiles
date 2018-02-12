@@ -35,6 +35,7 @@ screen,terminal multiplexing
 scrot,Screenshots
 silversearcher-ag,Faster search
 sqlite3,lightweight db
+stalonetray,System tray application
 suckless-tools,for dmenu and other niceties.
 surfraw,Web searches
 tmux,Terminal multiplexer useful for remoting
