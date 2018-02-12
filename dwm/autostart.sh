@@ -34,7 +34,10 @@ if [[ -x "./autostart.local.sh" ]]; then
   ./autostart.local.sh
 fi
 
+# Status bar
 while true; do
-   xsetroot -name "$( date +'%a %F %R' )"
-   sleep 60
+  battery=`acpi -b | cut -f 2- -d ":"`
+  thermal=`acpi -t | cut -f 2- -d ":"`
+  xsetroot -name "$battery | $thermal | $( date +'%a %F %R' )"
+  sleep 60
 done &
