@@ -814,7 +814,11 @@ you should place your code here."
   (keyfreq-mode 1)
   (keyfreq-autosave-mode 1)
   (setq keyfreq-excluded-commands
-        '(self-insert-command))
+        '(self-insert-command
+          evil-next-visual-line
+          evil-previous-visual-line
+          evil-forward-char
+          ))
 
   ;;
   ;; evil-shipe
