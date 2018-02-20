@@ -139,13 +139,13 @@ bindsym $mod+Shift+space floating toggle
 floating_modifier $mod
 
 # lock machine
-bindsym $mod+x exec "~/dotfiles/utils/lock.sh"
+bindsym $mod+x exec "~/dotfiles/utils/screen-lock"
 # suspend
 bindsym $mod+Shift+x exec i3lock --color 475263 && dbus-send --system \
    --dest=org.freedesktop.UPower --type=method_call --print-reply \
    /org/freedesktop/UPower org.freedesktop.UPower.Suspend
 # lock automatically after inactivity
-exec xautolock -time 4 -locker "~/dotfiles/utils/lock.sh" &
+exec xautolock -time 4 -locker "~/dotfiles/utils/screen-lock" &
 
 
 # MOUSE BINDINGS

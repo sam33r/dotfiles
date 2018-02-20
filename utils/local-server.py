@@ -2,8 +2,8 @@
 
 Usage:
   $ cd dir
-  $ python local_server.py 8000          # Serve dir on port 8000.
-  $ python local_server.py 0.0.0.0:8000  # Allow access from other locations.
+  $ python local-server.py 8000          # Serve dir on port 8000.
+  $ python local-server.py 0.0.0.0:8000  # Allow access from other locations.
 """
 
 import sys
