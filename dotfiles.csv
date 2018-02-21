@@ -27,6 +27,7 @@ $HOME/.dwm/autostart.sh,dwm/autostart.sh
 $HOME/.fbtermrc,fbtermrc
 $HOME/.gnupg/gpg-agent.conf,gpg-agent.conf
 $HOME/.i3blocks.conf,i3blocks.conf
+$HOME/.inputrc,inputrc
 $HOME/.profile,profile
 $HOME/.screenrc,screenrc
 $HOME/.spacemacs,spacemacs
