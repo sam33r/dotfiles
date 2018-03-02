@@ -246,7 +246,8 @@ endtry
 
 " Some other good ones: candycode, torte, slate, primary
 " let g:monochrome_italic_comments = 1
-colorscheme monochrome
+" colorscheme monochrome
+colorscheme default
 
 " Override the theme's color for column rulers to a more sane value.
 " highlight color for rulers.
