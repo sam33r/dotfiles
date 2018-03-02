@@ -35,5 +35,6 @@ $HOME/.SpaceVim.d/init.vim,spacevim.vim
 $HOME/startup.sh,startup.sh
 $HOME/.tmux.conf,tmux.conf
 $HOME/.vimrc,vimrc
+$HOME/.xbindkeysrc,xbindkeysrc
 $HOME/.Xresources,Xresources
 $HOME/.zshrc,zsh/zshrc
