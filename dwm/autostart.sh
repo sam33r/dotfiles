@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd $HOME
 sleep 1
 
 # This enables gtk settings from gnome, required for gtk themes.
@@ -22,9 +23,14 @@ google-chrome-beta "https://www.gmail.com" &
 google-chrome-beta "https://chat.google.com" &
 
 st -e tmux new -A -s persistent &
+
 emacsclient -c --alternate-editor "" &
 redshift &
 start-pulseaudio-x11 &
+
+if [[ -e "$HOME/.Xmodmap" ]]; then
+  xmodmap "$HOME/.Xmodmap"
+fi
 
 if [[ -x "$HOME/load_mails.sh" ]]; then
   $HOME/load_mails.sh &
