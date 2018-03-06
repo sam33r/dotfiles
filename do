@@ -124,12 +124,48 @@ function install_copyq()                                             # Install c
   cd $dir
 }
 
+function install_dwm()
+{
+  cd $HOME
+  git clone https://github.com/sam33r/dwm
+  cd dwm
+  sudo apt-get update
+  sudo apt-get install build-essential libx11-dev libxinerama-dev sharutils \
+      libxft-dev
+  make
+  sudo make install
+  cd $dir
+  cat >/tmp/dwm.desktop <<EOL
+[Desktop Entry]
+Name=dwm
+Comment=dynamic window manager
+Exec=dwm
+TryExec=dwm
+Type=Application
+X-LightDM-DesktopName=dwm
+DesktopNames=dwm
+EOL
+  sudo cp -f /tmp/dwm.desktop /usr/share/xsessions/dwm.desktop
+  cat /usr/share/xsessions/dwm.desktop
+}
+
+function install_st()
+{
+  cd $HOME
+  git clone https://github.com/sam33r/st
+  cd st
+  make
+  sudo make install
+  cd $dir
+}
+
 function install_fpp()                                                           # Install FB Path Picker
 {
   cd $HOME
   git clone https://github.com/facebook/PathPicker.git
   cd PathPicker/
   git pull origin master
+  mkdir -p $HOME/bin
   ln -s "$(pwd)/fpp" $HOME/bin/fpp
   fpp --help
   cd $dir
@@ -367,7 +403,7 @@ function install_tmux_from_source()
   git clone https://github.com/tmux/tmux.git
   cd tmux
   git pull origin master
-  sudo apt-get install libevent-dev
+  sudo apt-get install libevent-dev libncurses5-dev libncursesw5-dev
   sh autogen.sh
   ./configure && make
   sudo make install
@@ -407,7 +443,7 @@ function custom_install_i3gaps()
 
 function install_update_antigen()
 {
-  curl -L git.io/antigen > $HOME/.antigen.zsh
+  curl -L git.io/antigen > $HOME/antigen.zsh
 }
 
 function update_hosts()                                                          # Update the system hosts file (Via StevenBlack/hosts)
