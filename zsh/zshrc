@@ -8,9 +8,9 @@ case "$TERM" in
     ;;
 esac
 
-export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
+export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/dotfiles/utils"
 
-source ~/.antigen.zsh
+source ~/antigen.zsh
 
 antigen use oh-my-zsh
 antigen bundles <<EOBUNDLES
@@ -27,16 +27,18 @@ rupa/z
 vi-mode
 EOBUNDLES
 
+# Setup theme.
+antigen theme bhilburn/powerlevel9k
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir_writable dir rbenv vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status command_execution_time root_indicator background_jobs battery time)
+
+antigen apply
+
 # zsh-autosuggestions config
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=white'
 
 # vi-mode: reduce normal-mode-switch delay.
 export KEYTIMEOUT=1
-
-# Setup theme.
-antigen theme bhilburn/powerlevel9k
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir_writable dir rbenv vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status command_execution_time root_indicator background_jobs battery time)
 
 # Send commands to copyq
 preexec() copyq tab "&zsh" insert 0 $1
@@ -102,4 +104,7 @@ bindkey -M menuselect '^l' vi-forward-char
 bindkey -M menuselect '^j' vi-down-line-or-history
 
 # Finally, source any local config.
-source ~/.zshrc.local
+if [[ -x "$HOME/.zshrc.local" ]]
+then
+    source ~/.zshrc.local
+fi
