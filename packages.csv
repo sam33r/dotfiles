@@ -9,6 +9,7 @@ gnome-sushi,Preview for nautilus
 gnupg2,Encryption/decryption
 gnupg-agent,Password entry agent
 gnutls-bin,mu4e dependency
+google-chrome-beta,Chrome beta
 gparted,partition management utility
 i3blocks,scheduler for i3bar blocks
 i3,tiling windows manager
