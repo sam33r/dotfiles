@@ -854,9 +854,6 @@ you should place your code here."
   (setq split-height-threshold 0)
   (setq split-width-threshold nil)
 
-  ;; Use golden ratio package by default.
-  (spacemacs/toggle-golden-ratio-on)
-
   ;; Use spaces for indent.
   (setq indent-tabs-mode nil)
   (setq tab-width 2)
