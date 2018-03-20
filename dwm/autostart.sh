@@ -26,7 +26,6 @@ xbindkeys -f ~/.xbindkeysrc
 st -e tmux new -A -s persistent &
 
 emacsclient -c --alternate-editor "" &
-redshift &
 start-pulseaudio-x11 &
 
 if [[ -e "$HOME/.Xmodmap" ]]; then
