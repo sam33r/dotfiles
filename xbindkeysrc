@@ -50,5 +50,10 @@
     m:0x40 + c:26
     Mod4 + e 
 
+#Show copyq
+"copyq show"
+    m:0x40 + c:54
+    Mod4 + c 
+
 #
 # End of xbindkeys configuration
