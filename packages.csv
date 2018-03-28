@@ -15,6 +15,7 @@ i3blocks,scheduler for i3bar blocks
 i3,tiling windows manager
 libevent-dev,Library, dependency for building tmux
 libtool-bin,Requirement for building nvim
+libxapian-dev,Dependency for mu
 lm-sensors,sensors information
 meld,Diff tool.
 mpv,Media player
