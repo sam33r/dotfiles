@@ -146,6 +146,7 @@ X-LightDM-DesktopName=dwm
 DesktopNames=dwm
 EOL
   sudo cp -f /tmp/dwm.desktop /usr/share/xsessions/dwm.desktop
+  sudo chmod a+r /usr/share/xsessions/dwm.desktop
   cat /usr/share/xsessions/dwm.desktop
 }
 
