@@ -16,6 +16,6 @@ rofi.color-normal: #393939, #ffffff, #393939, #666666, #ffffff
 rofi.color-active: #393939, #666666, #393939, #666666, #205171
 rofi.color-urgent: #393939, #f3843d, #393939, #666666, #ffc39c
 ! Use Ctrl+j/k for up/down instead of accepting.
-rofi.kb-accept-entry:                Return,KP_Enter
-rofi.kb-row-up:                      Up,Control+p,Shift+Tab,Shift+ISO_Left_Tab,Control+k
-rofi.kb-row-down:                    Down,Control+n,Tab,Control+j
+!rofi.kb-accept-entry:                Return,KP_Enter
+!rofi.kb-row-up:                      Up,Control+p,Shift+Tab,Shift+ISO_Left_Tab,Control+k
+!rofi.kb-row-down:                    Down,Control+n,Tab,Control+j
