@@ -1053,7 +1053,11 @@ you should place your code here."
      "----------------"
      (800 1000 1200 1400 1600 1800 2000))))
  '(org-agenda-window-setup (quote current-window))
+ '(org-babel-shell-names
+   (quote
+    ("sh" "bash" "zsh" "run-in-tmux" "tsh" "ksh" "mksh" "posh")))
  '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))
+ '(org-confirm-babel-evaluate nil)
  '(org-cycle-separator-lines 1)
  '(org-habit-completed-glyph 42)
  '(org-habit-graph-column 85)
@@ -1063,6 +1067,23 @@ you should place your code here."
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
+ '(org-src-lang-modes
+   (quote
+    (("ocaml" . tuareg)
+     ("elisp" . emacs-lisp)
+     ("ditaa" . artist)
+     ("asymptote" . asy)
+     ("dot" . fundamental)
+     ("sqlite" . sql)
+     ("calc" . fundamental)
+     ("C" . c)
+     ("cpp" . c++)
+     ("C++" . c++)
+     ("screen" . shell-script)
+     ("shell" . sh)
+     ("bash" . sh)
+     ("zsh" . sh)
+     ("run-in-tmux" . sh))))
  '(org-startup-truncated nil)
  '(org-stuck-projects (quote ("+LEVEL=1/-DONE" ("NEXT") nil "")))
  '(package-selected-packages

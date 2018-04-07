@@ -1,0 +1,13 @@
+#!/bin/zsh
+
+if ! tmux ls
+then
+  echo tmux not running >&2
+  exit 1
+fi
+
+tempfile=`mktemp`
+cat >$tempfile
+chmod +x $tempfile
+tmux new-window $WINDOW_NAME_ARG \
+    "zsh -i $tempfile; echo 'Press return to finish'; read; rm $tempfile"
