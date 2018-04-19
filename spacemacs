@@ -933,6 +933,8 @@ you should place your code here."
   (evil-leader/set-key "oe" #'projectile-run-eshell)
   (evil-leader/set-key "or" #'sa/read)
 
+  (evil-leader/set-key "W" #'make-frame)
+
   ;; Eww browser keybindings
 
   (evil-leader/set-key "ae" #'eww)
