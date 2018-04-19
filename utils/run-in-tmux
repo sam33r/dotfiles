@@ -9,5 +9,5 @@ fi
 tempfile=`mktemp`
 cat >$tempfile
 chmod +x $tempfile
-tmux new-window $WINDOW_NAME_ARG \
+tmux new-window -n "TMP" \
     "zsh -i $tempfile; echo 'Press return to finish'; read; rm $tempfile"
