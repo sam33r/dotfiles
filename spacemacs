@@ -691,6 +691,34 @@ you should place your code here."
   ;; Twittering mode - cache auth
   (setq twittering-use-master-password t)
 
+  ;; Disable emacs window management
+  ;; See http://www.reflexivereflection.com/posts/2018-04-06-disabling-emacs-window-management.html
+  (setq display-buffer-alist
+        '(("shell.*" (display-buffer-same-window) ())
+          (".*" (display-buffer-reuse-window
+                 display-buffer-same-window
+                 display-buffer-pop-up-frame)
+           (reusable-frames . t))))
+  (defun sa/same-window-instead
+      (orig-fun buffer alist)
+    (display-buffer-same-window buffer nil))
+  (advice-add 'display-buffer-pop-up-window :around 'sa/same-window-instead)
+  (defun sa/do-select-frame (orig-fun buffer &rest args)
+    (let* ((old-frame (selected-frame))
+           (window (apply orig-fun buffer args))
+           (frame (window-frame window)))
+      (unless (eq frame old-frame)
+        (select-frame-set-input-focus frame))
+      (select-window window)
+      window))
+  (advice-add 'display-buffer :around 'sa/do-select-frame)
+  (setq frame-auto-hide-function 'delete-frame)
+  (advice-add 'set-window-dedicated-p :around
+              (lambda (orig-fun &rest args) nil))
+  (setq org-agenda-window-setup 'current-window)
+
+
+
   ;;
   ;; mu4e settings.
   ;;
