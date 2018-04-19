@@ -1094,6 +1094,7 @@ you should place your code here."
  '(org-habit-preceding-days 30)
  '(org-habit-show-all-today t)
  '(org-habit-show-habits-only-for-today t)
+ '(org-hierarchical-todo-statistics nil)
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
