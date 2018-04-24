@@ -1050,6 +1050,7 @@ you should place your code here."
  '(epa-file-cache-passphrase-for-symmetric-encryption t)
  '(evil-want-Y-yank-to-eol nil)
  '(global-vi-tilde-fringe-mode nil)
+ '(line-spacing 0.1)
  '(mu4e-compose-dont-reply-to-self t)
  '(mu4e-headers-include-related nil)
  '(mu4e-headers-leave-behavior (quote apply))
