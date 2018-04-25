@@ -835,7 +835,7 @@ you should place your code here."
   (setq powerline-default-separator nil)
 
   ;; Centered cursor minor mode.
-  (spacemacs/toggle-centered-point-globally-on)
+  ;; (spacemacs/toggle-centered-point-globally-on)
 
   ;; j/k go to next visual line.
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
