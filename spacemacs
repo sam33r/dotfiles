@@ -1048,6 +1048,7 @@ you should place your code here."
  '(elfeed-goodies/show-mode-padding 30)
  '(elfeed-search-date-format (quote ("%Y-%m-%d" 10 :right)))
  '(epa-file-cache-passphrase-for-symmetric-encryption t)
+ '(epa-pinentry-mode (quote loopback))
  '(evil-want-Y-yank-to-eol nil)
  '(global-vi-tilde-fringe-mode nil)
  '(line-spacing 0.1)
