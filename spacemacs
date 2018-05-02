@@ -433,8 +433,6 @@ values."
           ("CANCELED" . (:foreground "blue" :weight bold))
           ("DONE" . (:foreground "green" :weight bold))))
 
-  ;; Other misc org-mode settings.
-  (setq org-startup-folded 'show-all)
   )
 
 (defun sa/local-shell-command (command)
@@ -474,8 +472,8 @@ values."
 (defun sa/write ()
   (interactive)
   (turn-off-fci-mode)
-  (spacemacs/toggle-fringe-off)
-  (writeroom-mode t)
+  ;; (spacemacs/toggle-fringe-off)
+  ;; (writeroom-mode t)
   (setq word-wrap t)
   (message "Activating writing mode"))
 
@@ -682,8 +680,8 @@ you should place your code here."
   ;; (add-hook 'prog-mode-hook 'spacemacs/toggle-mode-line-off)
 
   ;; Activate writeroom mode for org-mode and markdown-mode
-  (add-hook 'org-mode-hook 'writeroom-mode 'append)
-  (add-hook 'markdown-mode-hook 'writeroom-mode 'append)
+  ;; (add-hook 'org-mode-hook 'writeroom-mode 'append)
+  ;; (add-hook 'markdown-mode-hook 'writeroom-mode 'append)
 
   ;; Add hooks for clocking-in and out.
   (add-hook 'org-clock-in-hook 'sa/clock-in)
@@ -1091,7 +1089,7 @@ you should place your code here."
     ("sh" "bash" "zsh" "run-in-tmux" "tsh" "ksh" "mksh" "posh")))
  '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))
  '(org-confirm-babel-evaluate nil)
- '(org-cycle-separator-lines 1)
+ '(org-cycle-separator-lines 0)
  '(org-habit-completed-glyph 42)
  '(org-habit-graph-column 85)
  '(org-habit-preceding-days 30)
@@ -1149,7 +1147,7 @@ you should place your code here."
  '(writeroom-global-effects
    (quote
     (writeroom-set-alpha writeroom-set-menu-bar-lines writeroom-set-tool-bar-lines writeroom-set-vertical-scroll-bars writeroom-set-bottom-divider-width)))
- '(writeroom-width 80))
+ '(writeroom-width 100)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
