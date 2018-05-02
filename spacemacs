@@ -414,7 +414,8 @@ values."
         org-priority-faces '((65 :inherit org-priority :foreground "red")
                              (66 :inherit org-priority :foreground "brown")
                              (67 :inherit org-priority :foreground "blue"))
-        org-ellipsis " ▼")
+        ;; Other interesting characters are ▼, ↴, ⬎, ⤷, …, and ⤵.
+        org-ellipsis "⤷")
   ;; Setup refiling.
   (setq org-refile-use-outline-path t)
   (setq org-outline-path-complete-in-steps nil)
