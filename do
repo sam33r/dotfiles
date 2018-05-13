@@ -90,6 +90,8 @@ function install_emacs_from_source()
   ./configure
   make bootstrap
   make
+
+  cd $dir
 }
 
 function install_pips()                                                          # virtual envs for pip, and packages
