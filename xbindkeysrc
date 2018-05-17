@@ -40,6 +40,11 @@
     m:0x40 + c:53
     Mod4 + x 
 
+#Open web page in chrome
+"~/dotfiles/utils/chrome-open"
+    m:0x40 + c:33
+    Mod4 + p 
+
 #Application/Window Menu
 "rofi -show drun"
     m:0x40 + c:38
