@@ -69,6 +69,31 @@ function install_dotfiles()
   done < $dir/$dotfiles_list
 }
 
+function install_emacs_from_source()
+{
+  cd $HOME
+
+  # Install necessary packages.
+  # TODO: This is not the comprehensive list.
+  sudo apt install build-essential libgnutls28-dev
+
+  git clone https://github.com/mirrors/emacs.git
+  cd ~/emacs
+  # discard stuff from last build
+  git reset --hard
+  # delete all of the last build stuff
+  git clean -xdf
+  # get latest update
+  git pull https://github.com/mirrors/emacs.git
+
+  ./autogen.sh
+  ./configure
+  make bootstrap
+  make
+
+  cd $dir
+}
+
 function install_pips()                                                          # virtual envs for pip, and packages
 {
   sudo easy_install pip
