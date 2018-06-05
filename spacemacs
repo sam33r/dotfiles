@@ -649,6 +649,10 @@ you should place your code here."
   ;; turn on yasnippets(?)
   (spacemacs/toggle-yasnippet-on)
 
+  ;; Macros
+  (fset 'sa-new-log-entry
+   [?$ ?a escape ?a tab tab return ?* ?* ?  ?  escape ?, ?! return ?a ?\[ ?\] backspace ?/ ?\] M-return return ?\M-l escape])
+
   ;; Setup org-mode
   (sa/setup-org-mode "~/n")
 
