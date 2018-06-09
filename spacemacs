@@ -921,6 +921,8 @@ you should place your code here."
   ;; (setq shackle-default-rule '(:same t))
   (shackle-mode)
 
+  (spacemacs/toggle-evil-visual-mark-mode-on)
+
   ;; Custom keybindings.
   (spacemacs/declare-prefix "o" "custom-bindings")
   (evil-leader/set-key "ow" #'sa/write)
