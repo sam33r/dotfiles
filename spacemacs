@@ -560,6 +560,13 @@ of change will be 23:59 on that day"
   (org-agenda nil "n")
   (delete-other-windows))
 
+(defun sa/open-last-tmux-run()
+  "Get results from the last run-in-tmux cell execution."
+  (interactive)
+  (find-file (car (last (directory-files "~/.run-tmux-sessions" 'full nil nil))))
+  (delete-trailing-whitespace)
+  )
+
 
 ;; Custom elfeed functions (to show date in headers)
 ;; See https://github.com/algernon/elfeed-goodies/issues/15
@@ -937,6 +944,7 @@ you should place your code here."
   (evil-leader/set-key "ob" #'helm-bookmarks)
   (evil-leader/set-key "oe" #'projectile-run-eshell)
   (evil-leader/set-key "or" #'sa/read)
+  (evil-leader/set-key "ot" #'sa/open-last-tmux-run)
 
   (evil-leader/set-key "W" #'make-frame)
 
