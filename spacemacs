@@ -1044,8 +1044,11 @@ you should place your code here."
   (run-with-timer 0 (* 10 60) 'save-all)
 
   ;; load any local init.
-  (load-file "~/.spacemacs.local")
-  (dotspacemacs-local-init/init)
+  (let ((sa-local-config "~/.spacemacs.local"))
+    (if (file-exists-p sa-local-config)
+        ((load-file sa-local-config)
+         (dotspacemacs-local-init/init))
+      (message "No local config found.")))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
