@@ -70,8 +70,6 @@ if [[ $(zsh --version | awk '{print $2}') < 5.0.8 ]]; then
   source opp.zsh
   source opp/*.zsh
   cd $pd
-else
-  echo "Congratulations, your zsh is greater than 5.0.8"
 fi
 
 # Aliases
