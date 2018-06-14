@@ -95,10 +95,10 @@ values."
      ;; https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Bvim/evil-snipe
      (evil-snipe :variables evil-snipe-enable-alternate-f-and-t-behaviors t)
      (elfeed :variables rmh-elfeed-org-files (list "~/feeds/feeds.org"))
-     twitter
+     ;; twitter
      (shell :variables
             shell-default-shell 'eshell)
-     plantuml
+     ;; plantuml
      themes-megapack
      )
    ;; List of additional packages that will be installed without being
