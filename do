@@ -423,6 +423,15 @@ function install_nvim_from_source()
   cd $dir
 }
 
+function install_tmux_plugins()
+{
+  cd $HOME
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  cd $dir
+  # TODO: Find shell alternative of <Ctrl+a> I to to install
+  # plugins.
+}
+
 function install_tmux_from_source()
 {
   cd $HOME
@@ -434,10 +443,7 @@ function install_tmux_from_source()
   ./configure && make
   sudo make install
 
-  cd $HOME
-  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-  cd $dir
+  install_tmux_plugins
 }
 
 function custom_install_i3gaps()
@@ -571,6 +577,16 @@ function docker_cleanup()
 	images=( $(docker images --filter dangling=true -q 2>/dev/null) )
 	docker rmi "${images[@]}" 2>/dev/null
 }
+
+function setup_termux()
+{
+	pkg install termux-api curl tmux python man vim emacs
+	install_dotfiles
+	install_tmux_plugins
+	install_update_vim_plugins
+	install_update_spacemacs
+}
+
 #--------------------------------------------------------------------------------
 # Common functions (Don't change)
 #--------------------------------------------------------------------------------
