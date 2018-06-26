@@ -585,6 +585,13 @@ function setup_termux()
 	install_tmux_plugins
 	install_update_vim_plugins
 	install_update_spacemacs
+
+  echo "Email for global git: "
+  read git_email
+  echo "Name for global git: "
+  read git_name
+  git config --global user.email $git_email
+  git config --global user.name $git_name
 }
 
 #--------------------------------------------------------------------------------
