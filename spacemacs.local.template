@@ -1,0 +1,26 @@
+;o; -*- mode: emacs-lisp -*-
+;; Template for a custom local initialization of spacemacs.
+
+(defun sa/dotspacemacs/layers ()
+  "Local configuration layers declaration"
+  ;; Add local layers here
+  (let ((local-configuration-layers
+         '(
+            html
+           )
+         ))
+    (dolist (layer local-configuration-layers)
+      (add-to-list 'dotspacemacs-configuration-layers layer)))
+
+  (let ((local-additional-packages '(
+                                     visual-fill-column
+                                     )))
+    (dolist (package local-additional-packages)
+      (add-to-list 'dotspacemacs-additional-packages package))))
+
+(defun sa/dotspacemacs/user-config ()
+  "Initialization function. This is called from .spacemacs after global config."
+  (interactive)
+  ;; Example: mu4e config.
+  (sa/mu4e-config)
+)

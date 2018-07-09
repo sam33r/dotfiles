@@ -2,6 +2,11 @@
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
+(setq sa-local-config "~/.spacemacs.local")
+(if (file-readable-p sa-local-config)
+    (load-file sa-local-config)
+    (message "No local config found."))
+
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
@@ -31,13 +36,8 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     yaml
-     javascript
-     go
      shell-scripts
-     csv
      python
-     c-c++
      html
      markdown
      ;; ----------------------------------------------------------------
@@ -64,11 +64,7 @@ values."
                       version-control-diff-tool 'diff-hl
                       version-control-diff-side 'right)
      ycmd
-     mu4e
      ;; Trial Layers:
-     ;; Colorize variables and nyan cat
-     (colors :variables
-             )
      ;; fast access to dired (-)
      ;; vinegar
      ;; command log, toggle with ~SPC a L~
@@ -95,10 +91,8 @@ values."
      ;; https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Bvim/evil-snipe
      (evil-snipe :variables evil-snipe-enable-alternate-f-and-t-behaviors t)
      (elfeed :variables rmh-elfeed-org-files (list "~/feeds/feeds.org"))
-     ;; twitter
      (shell :variables
             shell-default-shell 'eshell)
-     ;; plantuml
      themes-megapack
      )
    ;; List of additional packages that will be installed without being
@@ -127,7 +121,10 @@ values."
    ;; `used-but-keep-unused' installs only the used packages but won't uninstall
    ;; them if they become unused. `all' installs *all* packages supported by
    ;; Spacemacs and never uninstall them. (default is `used-only')
-   dotspacemacs-install-packages 'used-only))
+   dotspacemacs-install-packages 'used-only)
+  (if (fboundp 'sa/dotspacemacs/layers)
+      (sa/dotspacemacs/layers))
+  )
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -567,6 +564,93 @@ of change will be 23:59 on that day"
   (delete-trailing-whitespace)
   )
 
+(defun sa/mu4e-config()
+  "Configuration for mu4e. Meant to be called by local config."
+  (add-hook 'mu4e-headers-mode 'spacemacs/toggle-mode-line-off)
+  (add-hook 'mu4e-main-mode 'spacemacs/toggle-mode-line-off)
+
+  ;; References:
+  ;; http://www.djcbsoftware.nl/code/mu/mu4e/Gmail-configuration.html
+  ;; https://gist.github.com/areina/3879626
+  ;; http://spacemacs.org/layers/+email/mu4e/README.html
+
+  ;; This should be overridden by local config.
+  (setq mu4e-get-mail-command "")
+
+  ;; don't save message to Sent Messages, GMail/IMAP will take care of this
+  (setq mu4e-sent-messages-behavior 'delete)
+
+  ;; prefer html rendering by default.
+  (setq mu4e-view-prefer-html t)
+
+  (defun sa/mu4e-prefer-html ()
+    "Prefer html formatting. Note that based on the email content, the
+     actual view might not change."
+    (interactive)
+    (setq mu4e-view-prefer-html t)
+    (mu4e-view-refresh))
+  (defun sa/mu4e-prefer-text ()
+    "Prefer html formatting. Note that based on the email content, the
+     actual view might not change."
+    (interactive)
+    (setq mu4e-view-prefer-html nil)
+    (mu4e-view-refresh))
+
+ ;;; mu4e message view-in-chrome action
+  (defun mu4e-msgv-action-view-in-chrome (msg)
+    "View the body of the message in chrome."
+    (interactive)
+    (let ((html (mu4e-msg-field (mu4e-message-at-point t) :body-html))
+          (tmpfile (format "%s/%d.html" temporary-file-directory (random))))
+      (unless html (error "No html part for this message"))
+      (with-temp-file tmpfile
+        (insert
+         "<html>"
+         "<head><meta http-equiv=\"content-type\""
+         "content=\"text/html;charset=UTF-8\">"
+         html))
+      (browse-url-chrome (concat "file://" tmpfile))))
+  (add-to-list 'mu4e-view-actions
+               '("Chrome - View in Chrome" . mu4e-msgv-action-view-in-chrome) t)
+
+  ;; convert html to text.
+  ;; (setq mu4e-html2text-command 'mu4e-shr2text)
+  ;; (setq mu4e-html2text-command "html2markdown --body-width=0 | sed \"s/&nbsp_place_holder;/ /g; /^$/d\"")
+  ;; (setq mu4e-html2text-command "w3m -T text/html")
+  ;; (setq mu4e-html2text-command "html2text -utf8")
+  ;; (setq mu4e-html2text-command "pandoc -f html -t plain --normalize")
+
+  ;; Use tab and shift tab to navigate links in email messages.
+  (add-hook 'mu4e-view-mode-hook
+            (lambda()
+              (local-set-key (kbd "<tab>") 'shr-next-link)
+              (local-set-key (kbd "<backtab>") 'shr-previous-link)))
+
+  ;; don't keep message buffers around
+  (setq message-kill-buffer-on-exit t)
+
+  ;; Setup mu4e notifications.
+  (setq mu4e-enable-notifications t)
+  (with-eval-after-load 'mu4e-alert
+    ;; Enable Desktop notifications
+    (mu4e-alert-set-default-style 'notifications) ; For linux
+    )
+  (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
+
+  ;; Display images inline.
+  (setq mu4e-view-show-images t)
+  ;; use imagemagick, if available
+  (when (fboundp 'imagemagick-register-types)
+    (imagemagick-register-types))
+
+  ;; Allow reflowing of emails.
+  ;; https://www.djcbsoftware.nl/code/mu/mu4e/Writing-messages.html
+  (setq mu4e-compose-format-flowed t)
+
+  ;; Don't CC myself in sent emails.
+  (setq mu4e-compose-keep-self-cc nil)
+  )
+
 
 ;; Custom elfeed functions (to show date in headers)
 ;; See https://github.com/algernon/elfeed-goodies/issues/15
@@ -726,98 +810,6 @@ you should place your code here."
   (advice-add 'set-window-dedicated-p :around
               (lambda (orig-fun &rest args) nil))
   (setq org-agenda-window-setup 'current-window)
-
-
-
-  ;;
-  ;; mu4e settings.
-  ;;
-
-
-    (add-hook 'mu4e-headers-mode 'spacemacs/toggle-mode-line-off)
-    (add-hook 'mu4e-main-mode 'spacemacs/toggle-mode-line-off)
-
-    ;; References:
-    ;; http://www.djcbsoftware.nl/code/mu/mu4e/Gmail-configuration.html
-    ;; https://gist.github.com/areina/3879626
-    ;; http://spacemacs.org/layers/+email/mu4e/README.html
-
-    ;; This should be overridden by local config.
-    (setq mu4e-get-mail-command "")
-
-    ;; don't save message to Sent Messages, GMail/IMAP will take care of this
-    (setq mu4e-sent-messages-behavior 'delete)
-
-    ;; prefer html rendering by default.
-    (setq mu4e-view-prefer-html t)
-
-    (defun sa/mu4e-prefer-html ()
-      "Prefer html formatting. Note that based on the email content, the
-     actual view might not change."
-      (interactive)
-      (setq mu4e-view-prefer-html t)
-      (mu4e-view-refresh))
-    (defun sa/mu4e-prefer-text ()
-      "Prefer html formatting. Note that based on the email content, the
-     actual view might not change."
-      (interactive)
-      (setq mu4e-view-prefer-html nil)
-      (mu4e-view-refresh))
-
- ;;; mu4e message view-in-chrome action
-    (defun mu4e-msgv-action-view-in-chrome (msg)
-      "View the body of the message in chrome."
-      (interactive)
-      (let ((html (mu4e-msg-field (mu4e-message-at-point t) :body-html))
-            (tmpfile (format "%s/%d.html" temporary-file-directory (random))))
-        (unless html (error "No html part for this message"))
-        (with-temp-file tmpfile
-          (insert
-           "<html>"
-           "<head><meta http-equiv=\"content-type\""
-           "content=\"text/html;charset=UTF-8\">"
-           html))
-        (browse-url-chrome (concat "file://" tmpfile))))
-    (add-to-list 'mu4e-view-actions
-                 '("Chrome - View in Chrome" . mu4e-msgv-action-view-in-chrome) t)
-
-    ;; convert html to text.
-    ;; (setq mu4e-html2text-command 'mu4e-shr2text)
-    ;; (setq mu4e-html2text-command "html2markdown --body-width=0 | sed \"s/&nbsp_place_holder;/ /g; /^$/d\"")
-    ;; (setq mu4e-html2text-command "w3m -T text/html")
-    ;; (setq mu4e-html2text-command "html2text -utf8")
-    ;; (setq mu4e-html2text-command "pandoc -f html -t plain --normalize")
-
-
-    ;; Use tab and shift tab to navigate links in email messages.
-    (add-hook 'mu4e-view-mode-hook
-              (lambda()
-                (local-set-key (kbd "<tab>") 'shr-next-link)
-                (local-set-key (kbd "<backtab>") 'shr-previous-link)))
-
-    ;; don't keep message buffers around
-    (setq message-kill-buffer-on-exit t)
-
-    ;; Setup mu4e notifications.
-    (setq mu4e-enable-notifications t)
-    (with-eval-after-load 'mu4e-alert
-      ;; Enable Desktop notifications
-      (mu4e-alert-set-default-style 'notifications) ; For linux
-      )
-    (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
-
-    ;; Display images inline.
-    (setq mu4e-view-show-images t)
-    ;; use imagemagick, if available
-    (when (fboundp 'imagemagick-register-types)
-      (imagemagick-register-types))
-
-    ;; Allow reflowing of emails.
-    ;; https://www.djcbsoftware.nl/code/mu/mu4e/Writing-messages.html
-    (setq mu4e-compose-format-flowed t)
-
-    ;; Don't CC myself in sent emails.
-    (setq mu4e-compose-keep-self-cc nil)
 
   ;;
   ;; Other spacemacs settings.
@@ -1015,9 +1007,6 @@ you should place your code here."
       "p" 'eww-buffer-show-previous)
     )
 
-
-
-
   ;; Experimental: Resume last helm command.
   ;; (spacemacs/set-leader-keys "." 'helm-resume)
 
@@ -1043,12 +1032,9 @@ you should place your code here."
   ;; Also run on a timer, when using emacsclient via command line terminals.
   (run-with-timer 0 (* 10 60) 'save-all)
 
-  ;; load any local init.
-  (let ((sa-local-config "~/.spacemacs.local"))
-    (if (file-exists-p sa-local-config)
-        ((load-file sa-local-config)
-         (dotspacemacs-local-init/init))
-      (message "No local config found.")))
+  ;; load any local user config.
+  (if (fboundp 'sa/dotspacemacs/user-config)
+      (sa/dotspacemacs/user-config))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -1145,8 +1131,8 @@ you should place your code here."
  '(org-stuck-projects (quote ("+LEVEL=1/-DONE" ("NEXT") nil "")))
  '(package-selected-packages
    (quote
-    (plantuml-mode shackle org-category-capture company-emacs-eclim eclim let-alist evil-snipe keyfreq elfeed-web elfeed-org elfeed-goodies ace-jump-mode noflet elfeed solarized-theme madhat2r-theme yaml-mode winum powerline spinner insert-shebang parent-mode fuzzy flx fish-mode anzu evil goto-chg undo-tree diminish pkg-info epl company-shell packed pythonic f dash s avy async popup web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode imenu-list stickyfunc-enhance srefactor rainbow-mode rainbow-identifiers command-log-mode color-identifiers-mode mu4e-maildirs-extension mu4e-alert ht sr-speedbar origami go-guru go-eldoc company-go go-mode sspacemacs-dark-theme flycheck-ycmd company-ycmd ycmd request-deferred deferred company-quickhelp disaster company-c-headers cmake-mode clang-format writegood-mode zonokai-theme zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme pastels-on-dark-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme firebelly-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme visual-fill-column writeroom-mode bind-key iedit smartparens bind-map highlight markdown-mode projectile helm helm-core hydra csv-mode engine-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl ox-twbs gmail-message-mode ham-mode html-to-markdown edit-server xterm-color web-mode tagedit smeargle slim-mode shell-pop scss-mode sass-mode pug-mode orgit org-projectile org-present org org-pomodoro alert log4e gntp org-download multi-term magit-gitflow less-css-mode htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode company-web web-completion-data company-statistics company-anaconda company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc macrostep lorem-ipsum live-py-mode linum-relative link-hint info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word cython-mode column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
- '(py-indent-offset 2)
+    (erlang plantuml-mode shackle org-category-capture company-emacs-eclim eclim let-alist evil-snipe keyfreq elfeed-web elfeed-org elfeed-goodies ace-jump-mode noflet elfeed solarized-theme madhat2r-theme yaml-mode winum powerline spinner insert-shebang parent-mode fuzzy flx fish-mode anzu evil goto-chg undo-tree diminish pkg-info epl company-shell packed pythonic f dash s avy async popup web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode imenu-list stickyfunc-enhance srefactor rainbow-mode rainbow-identifiers command-log-mode color-identifiers-mode mu4e-maildirs-extension mu4e-alert ht sr-speedbar origami go-guru go-eldoc company-go go-mode sspacemacs-dark-theme flycheck-ycmd company-ycmd ycmd request-deferred deferred company-quickhelp disaster company-c-headers cmake-mode clang-format writegood-mode zonokai-theme zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme pastels-on-dark-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme firebelly-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme visual-fill-column writeroom-mode bind-key iedit smartparens bind-map highlight markdown-mode projectile helm helm-core hydra csv-mode engine-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl ox-twbs gmail-message-mode ham-mode html-to-markdown edit-server xterm-color web-mode tagedit smeargle slim-mode shell-pop scss-mode sass-mode pug-mode orgit org-projectile org-present org org-pomodoro alert log4e gntp org-download multi-term magit-gitflow less-css-mode htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode company-web web-completion-data company-statistics company-anaconda company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc macrostep lorem-ipsum live-py-mode linum-relative link-hint info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word cython-mode column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+ '(py-indent-offset 2 t)
  '(python-indent-offset 2)
  '(sh-basic-offset 2)
  '(sh-indentation 2)
@@ -1172,11 +1158,11 @@ you should place your code here."
  '(writeroom-global-effects
    (quote
     (writeroom-set-alpha writeroom-set-menu-bar-lines writeroom-set-tool-bar-lines writeroom-set-vertical-scroll-bars writeroom-set-bottom-divider-width)))
- '(writeroom-width 100)
- )
+ '(writeroom-width 100))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:background nil))))
+ '(spaceline-highlight-face ((t (:foreground "dim gray" :background "gainsboro")))))
