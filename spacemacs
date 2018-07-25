@@ -106,6 +106,7 @@ values."
                                       keyfreq
                                       ox-clip
                                       shackle
+                                      helm-org-rifle
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
