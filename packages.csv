@@ -39,7 +39,6 @@ scrot,Screenshots
 scrot,Screenshots
 silversearcher-ag,Faster search
 sqlite3,lightweight db
-stalonetray,System tray application
 suckless-tools,for dmenu and other niceties.
 surfraw,Web searches
 tmux,Terminal multiplexer useful for remoting
@@ -48,6 +47,7 @@ urlview,View urls
 vim-gtk,gvim
 vim,vim!
 w3m,command line based web browser
+wmctrl,Control window focus.
 xbacklight,Change display brightness
 xbindkeys-config,xbindkeys config
 xbindkeys,x keybindings

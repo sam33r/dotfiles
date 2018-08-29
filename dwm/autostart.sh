@@ -17,7 +17,6 @@ nm-applet &
 # Start feh for wallpaper.
 feh --randomize --bg-fill ~/Wallpapers/* &
 unclutter &
-stalonetray &
 copyq &
 google-chrome &
 google-chrome-beta "https://www.gmail.com" &
