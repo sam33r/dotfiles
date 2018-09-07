@@ -62,7 +62,7 @@ values."
      syntax-checking
      (version-control :variables
                       version-control-diff-tool 'diff-hl
-                      version-control-diff-side 'right)
+                      version-control-diff-side 'left)
      ycmd
      ;; Trial Layers:
      ;; fast access to dired (-)
@@ -1107,6 +1107,7 @@ you should place your code here."
  '(org-habit-preceding-days 30)
  '(org-habit-show-all-today t)
  '(org-habit-show-habits-only-for-today t)
+ '(org-hide-leading-stars t)
  '(org-hierarchical-todo-statistics nil)
  '(org-modules
    (quote
@@ -1142,7 +1143,7 @@ you should place your code here."
  '(shr-max-image-proportion 0.75)
  '(shr-width 80)
  '(spacemacs-theme-org-agenda-height nil)
- '(spacemacs-theme-org-height nil t)
+ '(spacemacs-theme-org-height nil)
  '(spacemacs-theme-org-highlight t)
  '(standard-indent 2)
  '(tab-stop-list (quote (2 4 6 8)))
