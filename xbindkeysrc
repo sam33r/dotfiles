@@ -56,9 +56,24 @@
     Shift+Mod4 + a 
 
 #Emacs Client
-"emacsclient -c --alternate-editor """
+"wmctrl -a emacs || emacsclient -c --alternate-editor """
     m:0x40 + c:26
     Mod4 + e 
+
+#Chrome Beta
+"wmctrl -x -F -a "google-chrome-beta.Google-chrome-beta" || google-chrome-beta"
+    m:0x40 + c:25
+    Mod4 + w 
+
+#Chrome
+"wmctrl -x -F -a "google-chrome.Google-chrome" || google-chrome"
+    m:0x40 + c:27
+    Mod4 + r 
+
+#Tmux
+"wmctrl -x -F -a "st-256color.st-256color" || st"
+    m:0x40 + c:28
+    Mod4 + t 
 
 #Show copyq
 "copyq show"
