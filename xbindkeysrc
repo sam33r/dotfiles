@@ -56,7 +56,7 @@
     Shift+Mod4 + a 
 
 #Emacs Client
-"wmctrl -a emacs || emacsclient -c --alternate-editor """
+"wmctrl -x -a emacs || emacsclient -c --alternate-editor """
     m:0x40 + c:26
     Mod4 + e 
 
