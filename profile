@@ -76,3 +76,6 @@ fi
 # fi
 # export GPG_TTY=`tty`
 # export GPG_AGENT_INFO
+
+# For android studio
+export _JAVA_AWT_WM_NONREPARENTING=1

@@ -62,7 +62,7 @@ values."
      syntax-checking
      (version-control :variables
                       version-control-diff-tool 'diff-hl
-                      version-control-diff-side 'right)
+                      version-control-diff-side 'left)
      ycmd
      ;; Trial Layers:
      ;; fast access to dired (-)
@@ -788,29 +788,29 @@ you should place your code here."
 
   ;; Disable emacs window management
   ;; See http://www.reflexivereflection.com/posts/2018-04-06-disabling-emacs-window-management.html
-  (setq display-buffer-alist
-        '(("shell.*" (display-buffer-same-window) ())
-          (".*" (display-buffer-reuse-window
-                 display-buffer-same-window
-                 display-buffer-pop-up-frame)
-           (reusable-frames . t))))
-  (defun sa/same-window-instead
-      (orig-fun buffer alist)
-    (display-buffer-same-window buffer nil))
-  (advice-add 'display-buffer-pop-up-window :around 'sa/same-window-instead)
-  (defun sa/do-select-frame (orig-fun buffer &rest args)
-    (let* ((old-frame (selected-frame))
-           (window (apply orig-fun buffer args))
-           (frame (window-frame window)))
-      (unless (eq frame old-frame)
-        (select-frame-set-input-focus frame))
-      (select-window window)
-      window))
-  (advice-add 'display-buffer :around 'sa/do-select-frame)
-  (setq frame-auto-hide-function 'delete-frame)
-  (advice-add 'set-window-dedicated-p :around
-              (lambda (orig-fun &rest args) nil))
-  (setq org-agenda-window-setup 'current-window)
+  ;; (setq display-buffer-alist
+  ;;       '(("shell.*" (display-buffer-same-window) ())
+  ;;         (".*" (display-buffer-reuse-window
+  ;;                display-buffer-same-window
+  ;;                display-buffer-pop-up-frame)
+  ;;          (reusable-frames . t))))
+  ;; (defun sa/same-window-instead
+  ;;     (orig-fun buffer alist)
+  ;;   (display-buffer-same-window buffer nil))
+  ;; (advice-add 'display-buffer-pop-up-window :around 'sa/same-window-instead)
+  ;; (defun sa/do-select-frame (orig-fun buffer &rest args)
+  ;;   (let* ((old-frame (selected-frame))
+  ;;          (window (apply orig-fun buffer args))
+  ;;          (frame (window-frame window)))
+  ;;     (unless (eq frame old-frame)
+  ;;       (select-frame-set-input-focus frame))
+  ;;     (select-window window)
+  ;;     window))
+  ;; (advice-add 'display-buffer :around 'sa/do-select-frame)
+  ;; (setq frame-auto-hide-function 'delete-frame)
+  ;; (advice-add 'set-window-dedicated-p :around
+  ;;             (lambda (orig-fun &rest args) nil))
+  ;; (setq org-agenda-window-setup 'current-window)
 
   ;;
   ;; Other spacemacs settings.
@@ -1107,6 +1107,7 @@ you should place your code here."
  '(org-habit-preceding-days 30)
  '(org-habit-show-all-today t)
  '(org-habit-show-habits-only-for-today t)
+ '(org-hide-leading-stars t)
  '(org-hierarchical-todo-statistics nil)
  '(org-modules
    (quote
@@ -1142,7 +1143,7 @@ you should place your code here."
  '(shr-max-image-proportion 0.75)
  '(shr-width 80)
  '(spacemacs-theme-org-agenda-height nil)
- '(spacemacs-theme-org-height nil t)
+ '(spacemacs-theme-org-height nil)
  '(spacemacs-theme-org-highlight t)
  '(standard-indent 2)
  '(tab-stop-list (quote (2 4 6 8)))

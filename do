@@ -94,6 +94,25 @@ function install_emacs_from_source()
   cd $dir
 }
 
+function install_kitty()
+{
+  cd $HOME
+  curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+  cd $dir
+}
+
+function install_alacritty()
+{
+  cd $HOME
+  curl -sSf https://static.rust-lang.org/rustup.sh | sh
+  git clone https://github.com/jwilm/alacritty.git
+  cd alacritty
+  git pull origin master
+  cargo install cargo-deb
+  cargo deb --install
+  cd $dir
+}
+
 function install_pips()                                                          # virtual envs for pip, and packages
 {
   sudo easy_install pip
