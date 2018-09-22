@@ -116,6 +116,7 @@ function install_alacritty()
 function install_pips()                                                          # virtual envs for pip, and packages
 {
   sudo easy_install pip
+  sudo pip install --upgrade pip
   sudo pip install --upgrade virtualenv
 
   if [ ! -d "$HOME/pyenv" ]; then
@@ -125,6 +126,10 @@ function install_pips()                                                         
   if [ ! -d "$HOME/py3env" ]; then
     virtualenv -p python3 $HOME/py3env
   fi
+
+  $HOME/pyenv/bin/pip install --upgrade pip
+  $HOME/py3env/bin/pip3 install --upgrade pip
+
   $HOME/pyenv/bin/pip install urllib3[secure]
   $HOME/pyenv/bin/pip install --upgrade howdoi
 

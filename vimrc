@@ -205,8 +205,8 @@ set t_Co=256
 set ruler
 set autoindent
 set incsearch                       " Enable incremental highlighing of search.
-set relativenumber                  " Show relative number of other lines.
-set number                          " Show number of the current line.
+set norelativenumber                " Show relative number of other lines.
+set nonumber                        " Show no number of the current line.
 set hlsearch                        " Highlight search results (Use * for hl of current word).
 set laststatus=2                    " Always show bottom status bar.
 set showcmd                         " Show command as it is being typed.
