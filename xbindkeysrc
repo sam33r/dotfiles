@@ -55,8 +55,8 @@
     m:0x41 + c:38
     Shift+Mod4 + a 
 
-#Emacs Client
-"wmctrl -x -a emacs || emacsclient -c --alternate-editor """
+#Editor
+"wmctrl -x -a emacs || wmctrl -F -x -a sun-awt-X11-XFramePeer.jetbrains-studio || emacsclient -c --alternate-editor """
     m:0x40 + c:26
     Mod4 + e 
 
