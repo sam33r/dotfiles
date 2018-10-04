@@ -371,6 +371,7 @@ values."
   ;; (setq org-contacts-files '("~/n/people.org.gpg"))
   ;; Archive in a datetree.
   (setq org-archive-location (concat orgdir "/shelved/archive.org.gpg::datetree/* Finished Tasks"))
+  (setq org-protocol-default-template-key "t")
   ;; Capture mode.
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "projects.org.gpg" "Refile Tasks")
@@ -1111,7 +1112,7 @@ you should place your code here."
  '(org-hierarchical-todo-statistics nil)
  '(org-modules
    (quote
-    (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
+    (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-protocol org-rmail org-w3m)))
  '(org-src-lang-modes
    (quote
     (("ocaml" . tuareg)

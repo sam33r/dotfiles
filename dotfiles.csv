@@ -28,6 +28,7 @@ $HOME/.fbtermrc,fbtermrc
 $HOME/.gnupg/gpg-agent.conf,gpg-agent.conf
 $HOME/.i3blocks.conf,i3blocks.conf
 $HOME/.inputrc,inputrc
+$HOME/.local/share/applications/emacs-capture.desktop,shortcuts/emacs-capture.desktop
 $HOME/.profile,profile
 $HOME/.screenrc,screenrc
 $HOME/.spacemacs.local.template,spacemacs.local.template
