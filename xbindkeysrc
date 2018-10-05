@@ -71,7 +71,7 @@
     Mod4 + r 
 
 #Tmux
-"wmctrl -x -F -a "st-256color.st-256color" || st"
+"wmctrl -x -F -a "st-256color.st-256color" || st -e tmux new -A -s persistent"
     m:0x40 + c:28
     Mod4 + t 
 

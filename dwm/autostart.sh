@@ -18,14 +18,8 @@ nm-applet &
 feh --randomize --bg-fill ~/Wallpapers/* &
 unclutter &
 copyq &
-google-chrome &
-google-chrome-beta "https://www.gmail.com" &
-google-chrome-beta "https://chat.google.com" &
 xbindkeys -f ~/.xbindkeysrc
 
-st -e tmux new -A -s persistent &
-
-emacsclient -c --alternate-editor "" &
 start-pulseaudio-x11 &
 
 if [[ -e "$HOME/.Xmodmap" ]]; then
