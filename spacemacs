@@ -1037,6 +1037,13 @@ you should place your code here."
   ;; load any local user config.
   (if (fboundp 'sa/dotspacemacs/user-config)
       (sa/dotspacemacs/user-config))
+
+  ;; Experimental: Use git-complete for git-grep based code completion.
+  (if (file-directory-p "~/git-complete")
+      (progn
+        (load-file "~/git-complete/git-complete.el")
+        (require 'git-complete)
+        (define-key evil-insert-state-map (kbd "C-k") 'git-complete)))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
