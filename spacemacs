@@ -1091,10 +1091,11 @@ you should place your code here."
  '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
  '(org-agenda-prefix-format
    (quote
-    ((agenda . " %i %-12:c%?-12t% s")
+    (
+     (agenda . " %i %-40:(concat \"[\"(org-format-outline-path (org-get-outline-path)) \"]\") ")
      (timeline . "  % s")
-     (todo . " %i %-10:c %(concat \"[ \"(org-format-outline-path (org-get-outline-path)) \" ]\") ")
-     (tags . " %i %-10:c %(concat \"[ \"(org-format-outline-path (org-get-outline-path)) \" ]\") ")
+     (todo . " %i %(concat \"[\"(org-format-outline-path (org-get-outline-path)) \"]\") ")
+     (tags . " %i %(concat \"[\"(org-format-outline-path (org-get-outline-path)) \"]\") ")
      (search . " %i %-12:c"))))
  '(org-agenda-span (quote week))
  '(org-agenda-sticky t)
