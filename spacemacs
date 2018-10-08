@@ -89,7 +89,8 @@ values."
      ;; in the file.
      ;; I am also using it to add symbol groups for brackets. See
      ;; https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Bvim/evil-snipe
-     (evil-snipe :variables evil-snipe-enable-alternate-f-and-t-behaviors t)
+     evil-snipe
+
      (elfeed :variables rmh-elfeed-org-files (list "~/feeds/feeds.org"))
      (shell :variables
             shell-default-shell 'eshell)
