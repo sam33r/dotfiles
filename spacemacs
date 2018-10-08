@@ -858,11 +858,10 @@ you should place your code here."
           ))
 
   ;;
-  ;; evil-shipe
+  ;; evil-snipe
   ;; See https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Bvim/evil-snipe
   ;;
 
-  (setq evil-snipe-scope 'buffer)
   ;; Alias [ and ] to all types of brackets
   (push '(?\[ "[[{(]") evil-snipe-aliases)
   (push '(?\] "[]})]") evil-snipe-aliases)
