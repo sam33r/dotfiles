@@ -26,6 +26,7 @@ $HOME/.config/redshift.conf,redshift.conf
 $HOME/.dwm/autostart.sh,dwm/autostart.sh
 $HOME/.fbtermrc,fbtermrc
 $HOME/.gnupg/gpg-agent.conf,gpg-agent.conf
+$HOME/hosts/blacklist,hosts/blacklist
 $HOME/.i3blocks.conf,i3blocks.conf
 $HOME/.inputrc,inputrc
 $HOME/.local/share/applications/emacs-capture.desktop,shortcuts/emacs-capture.desktop

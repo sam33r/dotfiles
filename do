@@ -142,6 +142,9 @@ function install_pips()                                                         
   $HOME/py3env/bin/pip3 install --upgrade youtube_dl
   $HOME/py3env/bin/pip3 install --upgrade mps-youtube
 
+  # Packages used by ~/hosts
+  $HOME/py3env/bin/pip3 install --upgrade lxml bs4
+
   $HOME/pyenv/bin/pip install --upgrade Pygments
 }
 
@@ -504,8 +507,15 @@ function install_update_antigen()
 
 function update_hosts()                                                          # Update the system hosts file (Via StevenBlack/hosts)
 {
-  sudo python $HOME/hosts/updateHostsFile.py --extensions fakenews \
-      gambling porn
+  cd $HOME
+  git clone https://github.com/StevenBlack/hosts.git
+  cd hosts
+  git pull origin master
+  sudo ~/py3env/bin/python3 updateHostsFile.py \
+    --backup \
+    --flush-dns-cache \
+    --extensions fakenews gambling porn social
+  cd $dir
 }
 
 function set_gnome_preferences()
