@@ -1763,7 +1763,7 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:background nil))))
- '(font-lock-comment-face ((t (:background "white smoke" :foreground "#727280" :box (:line-width 1 :color "gainsboro" :style released-button) :slant italic :height 1.3 :width normal :family "EtBembo"))))
+ '(font-lock-comment-face ((t (:background "linen" :foreground "#727280" :box (:line-width 1 :color "grey75" :style released-button) :slant italic :height 1.2 :width normal :family "EtBembo"))))
  '(header-line ((t (:background nil :inherit nil))))
  '(highlight ((t (:background "#efeae9"))))
  '(magit-header-line ((t (:background nil :foreground "#fbf8ef" :box nil))))
