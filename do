@@ -368,6 +368,13 @@ function install_update_fonts()                                                 
   cd $HOME/.fonts/san-francisco
   git pull origin master
 
+  # Install ET Book.
+  cd $HOME
+  git clone https://github.com/edwardtufte/et-book.git \
+      $HOME/.fonts/et-book
+  cd $HOME/.fonts/et-book
+  git pull origin master
+
   cd $HOME
   git clone https://github.com/powerline/fonts.git plfonts
   cd plfonts

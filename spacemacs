@@ -36,6 +36,8 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     theming
+     csv
      shell-scripts
      python
      html
@@ -185,13 +187,13 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(zenburn solarized-dark solarized-light spacemacs-light tao-yin tao-yang dracula spacemacs-dark ujelly)
+   dotspacemacs-themes '(spacemacs-light zenburn solarized-dark solarized-light spacemacs-light tao-yin tao-yang dracula spacemacs-dark ujelly)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state nil
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Input"
-                               :size 16
+                               :size 20
                                :weight normal
                                :width normal
                                :powerline-scale 1.0)
@@ -410,12 +412,17 @@ values."
     "gu" 'outline-previous-visible-heading)
 
   ;; Appearance
-  (setq org-bullets-bullet-list '("•" "•" "•" "•")
-        org-priority-faces '((65 :inherit org-priority :foreground "red")
-                             (66 :inherit org-priority :foreground "brown")
-                             (67 :inherit org-priority :foreground "blue"))
-        ;; Other interesting characters are ▼, ↴, ⬎, ⤷, …, and ⤵.
-        org-ellipsis "⤷")
+  (setq org-startup-indented t
+        org-bullets-bullet-list '(" ") ;; no bullets, needs org-bullets package
+        org-ellipsis " · " ;; folding symbol
+        org-pretty-entities t
+        org-hide-emphasis-markers t
+        ;; show actually italicized text instead of /italicized text/
+        org-agenda-block-separator ""
+        org-fontify-whole-heading-line t
+        org-fontify-done-headline t
+        org-fontify-quote-and-verse-blocks t)
+
   ;; Setup refiling.
   (setq org-refile-use-outline-path t)
   (setq org-outline-path-complete-in-steps nil)
@@ -425,14 +432,15 @@ values."
 
   ;; Task tags
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "ICKY(i)" "NEXT(n!)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
+        '((sequence "TODO(t)" "ICKY(i)" "NEXT(n!)" "WAIT(w@/!)" "IN-PROGRESS(p!)" "|" "DONE(d!)" "CANCELED(c@)")))
   (setq org-todo-keyword-faces
         '(("TODO" . "orange") ("ICKY" . org-warning)
           ("NEXT" . (:foreground "orange" :weight bold))
           ("WAIT" .(:foreground "purple" :weight bold))
           ("CANCELED" . (:foreground "blue" :weight bold))
+          ("IN-PROGRESS" . (:foreground "yellow" :weight bold))
           ("DONE" . (:foreground "green" :weight bold))))
-
+  (add-hook 'org-mode-hook #'hidden-mode-line-mode)
   )
 
 (defun sa/local-shell-command (command)
@@ -654,6 +662,561 @@ of change will be 23:59 on that day"
   (setq mu4e-compose-keep-self-cc nil)
   )
 
+;; Mostly from:
+;; https://lepisma.github.io/2017/10/28/ricing-org-mode/
+(defun sa/org-theme ()
+  (defmacro set-pair-faces (themes consts faces-alist)
+    "Macro for pair setting of custom faces.
+THEMES name the pair (theme-one theme-two). CONSTS sets the variables like
+  ((sans-font \"Some Sans Font\") ...). FACES-ALIST has the actual faces
+like:
+  ((face1 theme-one-attr theme-two-atrr)
+   (face2 theme-one-attr nil           )
+   (face3 nil            theme-two-attr)
+   ...)"
+    (defmacro get-proper-faces ()
+      `(let* (,@consts)
+         (backquote ,faces-alist)))
+
+    `(setq theming-modifications
+           ',(mapcar (lambda (theme)
+                       `(,theme ,@(cl-remove-if
+                                   (lambda (x) (equal x "NA"))
+                                   (mapcar (lambda (face)
+                                             (let ((face-name (car face))
+                                                   (face-attrs (nth (cl-position theme themes) (cdr face))))
+                                               (if face-attrs
+                                                   `(,face-name ,@face-attrs)
+                                                 "NA"))) (get-proper-faces)))))
+                     themes)))
+
+  (set-pair-faces
+   ;; Themes to cycle in
+   (zenburn spacemacs-light)
+
+   ;; Variables
+   ((bg-white           "#fbf8ef")
+    (bg-light           "#222425")
+    (bg-dark            "#1c1e1f")
+    (bg-darker          "#1c1c1c")
+    (fg-white           "#ffffff")
+    (shade-white        "#efeae9")
+    (fg-light           "#655370")
+    (dark-cyan          "#008b8b")
+    (region-dark        "#2d2e2e")
+    (region             "#39393d")
+    (slate              "#8FA1B3")
+    (keyword            "#f92672")
+    (comment            "#525254")
+    (builtin            "#fd971f")
+    (purple             "#9c91e4")
+    (doc                "#727280")
+    (type               "#66d9ef")
+    (string             "#b6e63e")
+    (gray-dark          "#999")
+    (gray               "#bbb")
+    (sans-font          "Source Sans Pro")
+    (serif-font         "Merriweather")
+    (et-font            "EtBembo")
+    (sans-mono-font     "Souce Code Pro")
+    (serif-mono-font    "Verily Serif Mono"))
+
+   ;; Settings
+   ((variable-pitch
+     (:family ,sans-font)
+     (:family ,et-font
+              :background nil
+              :foreground ,bg-dark
+              :height 1.7))
+    (header-line
+     (:background nil :inherit nil)
+     (:background nil :inherit nil))
+    (eval-sexp-fu-flash
+     (:background ,dark-cyan
+                  :foreground ,fg-white)
+     nil)
+    (eval-sexp-fu-flash-error
+     (:background ,keyword
+                  :foreground ,fg-white)
+     nil)
+    (hackernews-link-face
+     (:foreground ,slate
+                  :inherit variable-pitch
+                  :height 1.2)
+     nil)
+    (hackernews-comment-count-face
+     (:foreground ,string)
+     nil)
+    (company-tooltip
+     (:background ,bg-darker
+                  :foreground ,gray)
+     nil)
+    (company-scrollbar-fg
+     (:background ,comment)
+     nil)
+    (company-scrollbar-bg
+     (:background ,bg-darker)
+     nil)
+    (company-tooltip-common
+     (:foreground ,keyword)
+     nil)
+    (company-tootip-annotation
+     (:foreground ,type)
+     nil)
+    (company-tooltip-selection
+     (:background ,region)
+     nil)
+    (show-paren-match
+     (:background ,keyword
+                  :foreground ,bg-dark)
+     nil)
+    (magit-section-heading
+     (:foreground ,keyword)
+     nil)
+    (magit-header-line
+     (:background nil
+                  :foreground ,bg-dark
+                  :box nil)
+     (:background nil
+                  :foreground ,bg-white
+                  :box nil))
+    (magit-diff-hunk-heading
+     (:background ,comment
+                  :foreground ,gray)
+     nil)
+    (magit-diff-hunk-heading-highlight
+     (:background ,comment
+                  :foreground ,fg-white)
+     nil)
+    (tooltip
+     (:foreground ,gray
+                  :background ,bg-darker)
+     nil)
+    (git-gutter-fr:modified
+     (:foreground ,dark-cyan)
+     nil)
+    (mode-line
+     (:background ,bg-darker)
+     (:background ,bg-white
+                  :box nil))
+    (mode-line-inactive
+     nil
+     (:box nil))
+    (powerline-active1
+     nil
+     (:background ,bg-white))
+    (powerline-active2
+     nil
+     (:background ,bg-white))
+    (powerline-inactive1
+     nil
+     (:background ,bg-white))
+    (powerline-inactive2
+     nil
+     (:background ,bg-white))
+    (highlight
+     (:background ,region
+                  :foreground ,fg-white)
+     (:background ,shade-white))
+    (hl-line
+     (:background ,region-dark)
+     nil)
+    (solaire-hl-line-face
+     (:background ,bg-dark)
+     nil)
+    (org-document-title
+     (:inherit variable-pitch
+               :height 1.3
+               :weight normal
+               :foreground ,gray)
+     (:inherit nil
+               :family ,et-font
+               :height 1.8
+               :foreground ,bg-dark
+               :underline nil))
+    (org-document-info
+     (:foreground ,gray
+                  :slant italic)
+     (:height 1.2
+              :slant italic))
+    (org-level-1
+     (:inherit variable-pitch
+               :height 1.3
+               :weight bold
+               :foreground ,keyword
+               :background ,bg-dark)
+     (:inherit nil
+               :family ,et-font
+               :height 1.6
+               :weight normal
+               :slant normal
+               :foreground ,bg-dark))
+    (org-level-2
+     (:inherit variable-pitch
+               :weight bold
+               :height 1.2
+               :foreground ,gray
+               :background ,bg-dark)
+     (:inherit nil
+               :family ,et-font
+               :weight normal
+               :height 1.3
+               :foreground ,bg-dark))
+    (org-level-3
+     (:inherit variable-pitch
+               :weight bold
+               :height 1.1
+               :foreground ,slate
+               :background ,bg-dark)
+     (:inherit nil
+               :family ,et-font
+               :weight normal
+               :slant italic
+               :height 1.2
+               :foreground ,bg-dark))
+    (org-level-4
+     (:inherit variable-pitch
+               :weight bold
+               :height 1.1
+               :foreground ,slate
+               :background ,bg-dark)
+     (:inherit nil
+               :family ,et-font
+               :weight normal
+               :slant italic
+               :height 1.1
+               :foreground ,bg-dark))
+    (org-level-5
+     (:inherit variable-pitch
+               :weight bold
+               :height 1.1
+               :foreground ,slate
+               :background ,bg-dark)
+     nil)
+    (org-level-6
+     (:inherit variable-pitch
+               :weight bold
+               :height 1.1
+               :foreground ,slate
+               :background ,bg-dark)
+     nil)
+    (org-level-7
+     (:inherit variable-pitch
+               :weight bold
+               :height 1.1
+               :foreground ,slate
+               :background ,bg-dark)
+     nil)
+    (org-level-8
+     (:inherit variable-pitch
+               :weight bold
+               :height 1.1
+               :foreground ,slate
+               :background ,bg-dark)
+     nil)
+    (org-headline-done
+     (:strike-through t)
+     (:family ,et-font
+              :strike-through t))
+    (org-quote
+     (:background ,bg-dark)
+     nil)
+    (org-block
+     (:background ,bg-dark)
+     (:background nil
+                  :foreground ,bg-dark))
+    (org-block-begin-line
+     (:background ,bg-dark)
+     (:background nil
+                  :height 0.8
+                  :family ,sans-mono-font
+                  :foreground ,slate))
+    (org-block-end-line
+     (:background ,bg-dark)
+     (:background nil
+                  :height 0.8
+                  :family ,sans-mono-font
+                  :foreground ,slate))
+    (org-document-info-keyword
+     (:foreground ,comment)
+     (:height 0.8
+              :foreground ,gray))
+    (org-link
+     (:underline nil
+                 :weight normal
+                 :foreground ,slate)
+     (:foreground ,bg-dark))
+    (org-special-keyword
+     (:height 0.9
+              :foreground ,comment)
+     (:family ,sans-mono-font
+              :height 0.8))
+    (org-todo
+     (:foreground ,builtin
+                  :background ,bg-dark)
+     nil)
+    (org-done
+     (:inherit variable-pitch
+               :foreground ,dark-cyan
+               :background ,bg-dark)
+     nil)
+    (org-agenda-current-time
+     (:foreground ,slate)
+     nil)
+    (org-hide
+     nil
+     (:foreground ,bg-white))
+    (org-indent
+     (:inherit org-hide)
+     (:inherit (org-hide fixed-pitch)))
+    (org-time-grid
+     (:foreground ,comment)
+     nil)
+    (org-warning
+     (:foreground ,builtin)
+     nil)
+    (org-date
+     nil
+     (:family ,sans-mono-font
+              :height 0.8))
+    (org-agenda-structure
+     (:height 1.3
+              :foreground ,doc
+              :weight normal
+              :inherit variable-pitch)
+     nil)
+    (org-agenda-date
+     (:foreground ,doc
+                  :inherit variable-pitch)
+     (:inherit variable-pitch
+               :height 1.1))
+    (org-agenda-date-today
+     (:height 1.5
+              :foreground ,keyword
+              :inherit variable-pitch)
+     nil)
+    (org-agenda-date-weekend
+     (:inherit org-agenda-date)
+     nil)
+    (org-scheduled
+     (:foreground ,gray)
+     nil)
+    (org-upcoming-deadline
+     (:foreground ,keyword)
+     nil)
+    (org-scheduled-today
+     (:foreground ,fg-white)
+     nil)
+    (org-scheduled-previously
+     (:foreground ,slate)
+     nil)
+    (org-agenda-done
+     (:inherit nil
+               :strike-through t
+               :foreground ,doc)
+     (:strike-through t
+                      :foreground ,doc))
+    (org-ellipsis
+     (:underline nil
+                 :foreground ,comment)
+     (:underline nil
+                 :foreground ,comment))
+    (org-tag
+     (:foreground ,doc)
+     (:foreground ,doc))
+    (org-table
+     (:background nil)
+     (:family ,serif-mono-font
+              :height 0.9
+              :background ,bg-white))
+    (org-code
+     (:inherit font-lock-builtin-face)
+     (:inherit nil
+               :family ,serif-mono-font
+               :foreground ,comment
+               :height 0.9))
+    (font-latex-sectioning-0-face
+     (:foreground ,type
+                  :height 1.2)
+     nil)
+    (font-latex-sectioning-1-face
+     (:foreground ,type
+                  :height 1.1)
+     nil)
+    (font-latex-sectioning-2-face
+     (:foreground ,type
+                  :height 1.1)
+     nil)
+    (font-latex-sectioning-3-face
+     (:foreground ,type
+                  :height 1.0)
+     nil)
+    (font-latex-sectioning-4-face
+     (:foreground ,type
+                  :height 1.0)
+     nil)
+    (font-latex-sectioning-5-face
+     (:foreground ,type
+                  :height 1.0)
+     nil)
+    (font-latex-verbatim-face
+     (:foreground ,builtin)
+     nil)
+    (spacemacs-normal-face
+     (:background ,bg-dark
+                  :foreground ,fg-white)
+     nil)
+    (spacemacs-evilified-face
+     (:background ,bg-dark
+                  :foreground ,fg-white)
+     nil)
+    (spacemacs-lisp-face
+     (:background ,bg-dark
+                  :foreground ,fg-white)
+     nil)
+    (spacemacs-emacs-face
+     (:background ,bg-dark
+                  :foreground ,fg-white)
+     nil)
+    (spacemacs-motion-face
+     (:background ,bg-dark
+                  :foreground ,fg-white)
+     nil)
+    (spacemacs-visual-face
+     (:background ,bg-dark
+                  :foreground ,fg-white)
+     nil)
+    (spacemacs-hybrid-face
+     (:background ,bg-dark
+                  :foreground ,fg-white)
+     nil)
+    (bm-persistent-face
+     (:background ,dark-cyan
+                  :foreground ,fg-white)
+     nil)
+    (helm-selection
+     (:background ,region)
+     nil)
+    (helm-match
+     (:foreground ,keyword)
+     nil)
+    (cfw:face-title
+     (:height 2.0
+              :inherit variable-pitch
+              :weight bold
+              :foreground ,doc)
+     nil)
+    (cfw:face-holiday
+     (:foreground ,builtin)
+     nil)
+    (cfw:face-saturday
+     (:foreground ,doc
+                  :weight bold)
+     nil)
+    (cfw:face-sunday
+     (:foreground ,doc)
+     nil)
+    (cfw:face-periods
+     (:foreground ,dark-cyan)
+     nil)
+    (cfw:face-annotation
+     (:foreground ,doc)
+     nil)
+    (cfw:face-select
+     (:background ,region)
+     nil)
+    (cfw:face-toolbar-button-off
+     (:foreground ,doc)
+     nil)
+    (cfw:face-toolbar-button-on
+     (:foreground ,type
+                  :weight bold)
+     nil)
+    (cfw:face-day-title
+     (:foreground ,doc)
+     nil)
+    (cfw:face-default-content
+     (:foreground ,dark-cyan)
+     nil)
+    (cfw:face-disable
+     (:foreground ,doc)
+     nil)
+    (cfw:face-today
+     (:background ,region
+                  :weight bold)
+     nil)
+    (cfw:face-toolbar
+     (:inherit default)
+     nil)
+    (cfw:face-today-title
+     (:background ,keyword
+                  :foreground ,fg-white)
+     nil)
+    (cfw:face-grid
+     (:foreground ,comment)
+     nil)
+    (cfw:face-header
+     (:foreground ,keyword
+                  :weight bold)
+     nil)
+    (cfw:face-default-day
+     (:foreground ,fg-white)
+     nil)
+    (dired-subtree-depth-1-face
+     (:background nil)
+     nil)
+    (dired-subtree-depth-2-face
+     (:background nil)
+     nil)
+    (dired-subtree-depth-3-face
+     (:background nil)
+     nil)
+    (dired-subtree-depth-4-face
+     (:background nil)
+     nil)
+    (dired-subtree-depth-5-face
+     (:background nil)
+     nil)
+    (dired-subtree-depth-6-face
+     (:background nil)
+     nil)
+    (nlinum-current-line
+     (:foreground ,builtin)
+     (:foreground ,bg-dark))
+    (vertical-border
+     (:background ,region
+                  :foreground ,region)
+     nil)
+    (which-key-command-description-face
+     (:foreground ,type)
+     nil)
+    (flycheck-error
+     (:background nil)
+     nil)
+    (flycheck-warning
+     (:background nil)
+     nil)
+    (font-lock-string-face
+     (:foreground ,string)
+     nil)
+    (font-lock-comment-face
+     (:foreground ,doc
+                  :slant italic)
+     (:background nil
+                  :foreground ,doc
+                  :slant italic))
+    (helm-ff-symlink
+     (:foreground ,slate)
+     nil)
+    (region
+     (:background ,region)
+     nil)
+    (header-line
+     (:background nil
+                  :inherit nil)
+     (:background nil
+                  :inherit nil)))))
+
 
 ;; Custom elfeed functions (to show date in headers)
 ;; See https://github.com/algernon/elfeed-goodies/issues/15
@@ -772,7 +1335,7 @@ you should place your code here."
   (spaceline-toggle-buffer-position-off)
   (spaceline-toggle-hud-off)
 
-  ;; a bunch of hooks to disable mode-line. Blanked disable doesn't seem to
+  ;; a bunch of hooks to disable mode-line. Blanket disable doesn't seem to
   ;; be working.
   ;; (add-hook 'text-mode-hook 'spacemacs/toggle-mode-line-off)
   ;; (add-hook 'prog-mode-hook 'spacemacs/toggle-mode-line-off)
@@ -879,8 +1442,9 @@ you should place your code here."
   ;; )
   ;; (add-hook 'org-mode-hook 'nolinum)
 
-  ;; Remove the ugly fringe tildes
-  (spacemacs/toggle-vi-tilde-fringe-off)
+  ;; Remove the ugly fringe tildes.
+  (global-vi-tilde-fringe-mode -1)
+
 
   ;; Prefer splitting horizontally.
   (setq split-height-threshold 0)
@@ -1044,6 +1608,7 @@ you should place your code here."
         (load-file "~/git-complete/git-complete.el")
         (require 'git-complete)
         (define-key evil-insert-state-map (kbd "C-k") 'git-complete)))
+  (sa/org-theme)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -1108,7 +1673,7 @@ you should place your code here."
  '(org-babel-shell-names
    (quote
     ("sh" "bash" "zsh" "run-in-tmux" "tsh" "ksh" "mksh" "posh")))
- '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))
+ '(org-blank-before-new-entry (quote ((heading) (plain-list-item))))
  '(org-confirm-babel-evaluate nil)
  '(org-cycle-separator-lines 0)
  '(org-habit-completed-glyph 42)
@@ -1153,13 +1718,35 @@ you should place your code here."
  '(shr-width 80)
  '(spacemacs-theme-org-agenda-height nil)
  '(spacemacs-theme-org-height nil)
- '(spacemacs-theme-org-highlight t)
+ '(spacemacs-theme-org-highlight nil)
  '(standard-indent 2)
  '(tab-stop-list (quote (2 4 6 8)))
  '(truncate-lines nil)
  '(twittering-fill-column 100)
  '(twittering-show-replied-tweets t)
  '(twittering-timer-interval 3600)
+ '(vc-annotate-background "#2B2B2B")
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#BC8383")
+     (40 . "#CC9393")
+     (60 . "#DFAF8F")
+     (80 . "#D0BF8F")
+     (100 . "#E0CF9F")
+     (120 . "#F0DFAF")
+     (140 . "#5F7F5F")
+     (160 . "#7F9F7F")
+     (180 . "#8FB28F")
+     (200 . "#9FC59F")
+     (220 . "#AFD8AF")
+     (240 . "#BFEBBF")
+     (260 . "#93E0E3")
+     (280 . "#6CA0A3")
+     (300 . "#7CB8BB")
+     (320 . "#8CD0D3")
+     (340 . "#94BFF3")
+     (360 . "#DC8CC3"))))
+ '(vc-annotate-very-old-color "#DC8CC3")
  '(vc-follow-symlinks t)
  '(web-mode-code-indent-offset 2)
  '(web-mode-css-indent-offset 2)
@@ -1176,4 +1763,38 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:background nil))))
- '(spaceline-highlight-face ((t (:foreground "dim gray" :background "gainsboro")))))
+ '(font-lock-comment-face ((t (:background "white smoke" :foreground "#727280" :box (:line-width 1 :color "gainsboro" :style released-button) :slant italic :height 1.3 :width normal :family "EtBembo"))))
+ '(header-line ((t (:background nil :inherit nil))))
+ '(highlight ((t (:background "#efeae9"))))
+ '(magit-header-line ((t (:background nil :foreground "#fbf8ef" :box nil))))
+ '(mode-line ((t (:background "#fbf8ef" :box nil))))
+ '(mode-line-inactive ((t (:box nil))))
+ '(nlinum-current-line ((t (:foreground "#1c1e1f"))))
+ '(org-agenda-date ((t (:inherit variable-pitch :height 1.1))))
+ '(org-agenda-done ((t (:strike-through t :foreground "#727280"))))
+ '(org-block ((t (:background nil :foreground "#1c1e1f"))))
+ '(org-block-begin-line ((t (:background nil :height 0.8 :family "Souce Code Pro" :foreground "#8FA1B3"))))
+ '(org-block-end-line ((t (:background nil :height 0.8 :family "Souce Code Pro" :foreground "#8FA1B3"))))
+ '(org-code ((t (:inherit nil :family "Verily Serif Mono" :foreground "#525254" :height 0.9))))
+ '(org-date ((t (:family "Souce Code Pro" :height 0.8))))
+ '(org-document-info ((t (:height 1.2 :slant italic))))
+ '(org-document-info-keyword ((t (:height 0.8 :foreground "#bbb"))))
+ '(org-document-title ((t (:inherit nil :family "EtBembo" :height 1.8 :foreground "#1c1e1f" :underline nil))))
+ '(org-ellipsis ((t (:underline nil))))
+ '(org-headline-done ((t (:family "EtBembo" :strike-through t))))
+ '(org-hide ((t (:foreground "#fbf8ef"))))
+ '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+ '(org-level-1 ((t (:inherit nil :family "EtBembo" :height 1.6 :weight normal :slant normal :foreground "#1c1e1f"))))
+ '(org-level-2 ((t (:inherit nil :family "EtBembo" :weight normal :height 1.3 :foreground "#1c1e1f"))))
+ '(org-level-3 ((t (:inherit nil :family "EtBembo" :weight normal :slant italic :height 1.2 :foreground "#1c1e1f"))))
+ '(org-level-4 ((t (:inherit nil :family "EtBembo" :weight normal :slant italic :height 1.1 :foreground "#1c1e1f"))))
+ '(org-link ((t (:foreground "#1c1e1f"))))
+ '(org-special-keyword ((t (:family "Souce Code Pro" :height 0.8))))
+ '(org-table ((t (:family "Verily Serif Mono" :height 0.9 :background "#fbf8ef"))))
+ '(org-tag ((t (:foreground "#727280"))))
+ '(powerline-active1 ((t (:background "#fbf8ef"))))
+ '(powerline-active2 ((t (:background "#fbf8ef"))))
+ '(powerline-inactive1 ((t (:background "#fbf8ef"))))
+ '(powerline-inactive2 ((t (:background "#fbf8ef"))))
+ '(spaceline-highlight-face ((t (:foreground "dim gray" :background "gainsboro"))))
+ '(variable-pitch ((t (:family "EtBembo" :background nil :foreground "#1c1e1f" :height 1.7)))))
