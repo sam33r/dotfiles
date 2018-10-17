@@ -440,6 +440,9 @@ values."
           ("CANCELED" . (:foreground "blue" :weight bold))
           ("IN-PROGRESS" . (:foreground "yellow" :weight bold))
           ("DONE" . (:foreground "green" :weight bold))))
+
+  (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
+  (add-hook 'org-mode-hook 'sa/write 'append)
   (add-hook 'org-mode-hook #'hidden-mode-line-mode)
   )
 
@@ -1322,8 +1325,6 @@ you should place your code here."
   (add-hook 'prog-mode-hook 'fci-mode)
   (add-hook 'text-mode-hook 'fci-mode)
   (add-hook 'prog-mode-hook 'sa/code)
-  (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
-  (add-hook 'org-mode-hook 'sa/write 'append)
 
   ;; Spaceline
   (custom-set-faces
