@@ -1403,6 +1403,9 @@ you should place your code here."
 
   (setq powerline-default-separator nil)
 
+  ;; Disable line highlight.
+  (global-hl-line-mode -1)
+
   ;; Centered cursor minor mode.
   ;; (spacemacs/toggle-centered-point-globally-on)
 
