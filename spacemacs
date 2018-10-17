@@ -441,6 +441,7 @@ values."
           ("IN-PROGRESS" . (:foreground "yellow" :weight bold))
           ("DONE" . (:foreground "green" :weight bold))))
   (add-hook 'org-mode-hook #'hidden-mode-line-mode)
+  (add-hook 'org-mode-hook (lambda () (variable-pitch-mode t)))
   )
 
 (defun sa/local-shell-command (command)
