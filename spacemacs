@@ -444,6 +444,7 @@ values."
   (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
   (add-hook 'org-mode-hook 'sa/write 'append)
   (add-hook 'org-mode-hook #'hidden-mode-line-mode)
+  (add-hook 'org-mode-hook (lambda () (variable-pitch-mode t)))
   )
 
 (defun sa/local-shell-command (command)
