@@ -193,7 +193,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Input"
-                               :size 16
+                               :size 18
                                :weight normal
                                :width normal
                                :powerline-scale 1.0)
@@ -420,6 +420,7 @@ values."
         org-fontify-whole-heading-line t
         org-fontify-done-headline t
         org-fontify-quote-and-verse-blocks t)
+  (setf org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
 
   ;; Setup refiling.
   (setq org-refile-use-outline-path t)
@@ -723,11 +724,11 @@ like:
     (string             "#b6e63e")
     (gray-dark          "#999")
     (gray               "#bbb")
-    (sans-font          "Source Sans Pro")
-    (serif-font         "Merriweather")
+    (sans-font          "Roboto")
+    (serif-font         "Times New Roman")
     (et-font            "EtBembo")
-    (sans-mono-font     "Souce Code Pro")
-    (serif-mono-font    "Verily Serif Mono"))
+    (sans-mono-font     "Input")
+    (serif-mono-font    "Input"))
 
    ;; Settings
    ((variable-pitch
@@ -932,7 +933,9 @@ like:
     (org-block
      (:background ,bg-dark)
      (:background nil
-                  :foreground ,bg-dark))
+                  :foreground ,bg-dark
+                  :height 0.8
+                  :family "Input"))
     (org-block-begin-line
      (:background ,bg-dark)
      (:background nil
