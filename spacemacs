@@ -875,7 +875,6 @@ like:
      (:inherit nil
                :family ,et-font
                :weight normal
-               :slant italic
                :height 1.2
                :foreground ,bg-dark))
     (org-level-4
@@ -894,6 +893,7 @@ like:
      (:inherit variable-pitch
                :weight bold
                :height 1.1
+               :slant italic
                :foreground ,slate
                :background ,bg-dark)
      nil)
@@ -1203,12 +1203,6 @@ like:
     (font-lock-string-face
      (:foreground ,string)
      nil)
-    (font-lock-comment-face
-     (:foreground ,doc
-                  :slant italic)
-     (:background nil
-                  :foreground ,doc
-                  :slant italic))
     (helm-ff-symlink
      (:foreground ,slate)
      nil)
@@ -1328,10 +1322,7 @@ you should place your code here."
   (add-hook 'prog-mode-hook 'sa/code)
 
   ;; Spaceline
-  (custom-set-faces
-   '(spaceline-highlight-face ((t (:foreground "dim gray" :background "gainsboro" )))))
   (setq spaceline-highlight-face-func 'spaceline-highlight-face-default)
-
   (spaceline-toggle-buffer-size-off)
   (spaceline-toggle-buffer-encoding-abbrev-off)
   (spaceline-toggle-buffer-position-off)
@@ -1437,19 +1428,8 @@ you should place your code here."
   ;; Not sure why, but jump forward doesn't work right in spacemacs.
   (define-key evil-normal-state-map (kbd "C-i") #'evil-jump-forward)
 
-  ;; Turn off line numbers for org-mode. This causes weird slowdowns for large
-  ;; org files.
-  ;; (defun nolinum ()
-  ;;   (interactive)
-  ;;   (message "Deactivated linum mode")
-  ;;   (global-linum-mode 0)
-  ;;   (linum-mode 0)
-  ;; )
-  ;; (add-hook 'org-mode-hook 'nolinum)
-
   ;; Remove the ugly fringe tildes.
   (global-vi-tilde-fringe-mode -1)
-
 
   ;; Prefer splitting horizontally.
   (setq split-height-threshold 0)
@@ -1768,6 +1748,7 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:background nil))))
+ '(spaceline-highlight-face ((t (:foreground "dim gray" :background "gainsboro" ))))
  '(font-lock-comment-face ((t (:background "linen" :foreground "#727280" :box (:line-width 1 :color "grey75" :style released-button) :slant italic :height 1.2 :width normal :family "EtBembo"))))
  '(header-line ((t (:background nil :inherit nil))))
  '(highlight ((t (:background "#efeae9"))))
