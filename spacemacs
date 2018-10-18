@@ -572,6 +572,12 @@ of change will be 23:59 on that day"
   (add-hook 'mu4e-headers-mode 'spacemacs/toggle-mode-line-off)
   (add-hook 'mu4e-main-mode 'spacemacs/toggle-mode-line-off)
 
+  (setq mu4e-headers-fields
+        '( (:human-date    .  12)
+           (:flags         .   6)
+           (:from          .  15)
+           (:thread-subject       .  nil))) ;; alternatively, use :thread-subject
+
   ;; References:
   ;; http://www.djcbsoftware.nl/code/mu/mu4e/Gmail-configuration.html
   ;; https://gist.github.com/areina/3879626
