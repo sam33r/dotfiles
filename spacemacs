@@ -732,7 +732,7 @@ like:
 
    ;; Settings
    ((variable-pitch
-     (:family ,sans-font)
+     (:family ,et-font)
      (:family ,et-font
               :background nil
               :foreground ,bg-dark
@@ -931,8 +931,10 @@ like:
      (:background ,bg-dark)
      nil)
     (org-block
-     (:background ,bg-dark)
-     (:background nil
+     (:background "#000000"
+                  :height 0.8
+                  :family "Input")
+     (:background "#ffffff"
                   :foreground ,bg-dark
                   :height 0.8
                   :family "Input"))
@@ -1210,6 +1212,23 @@ like:
     (font-lock-string-face
      (:foreground ,string)
      nil)
+    (font-lock-comment-face
+     (:background "#494949"
+                  :foreground "#f9f9f9"
+                  :box (:line-width 1 :color "black" :style released-button)
+                  :slant italic
+                  :height 1.2
+                  :width normal
+                  :family "EtBembo")
+     (:background "linen"
+                  :foreground "#727280"
+                  :box (:line-width 1 :color "grey75" :style released-button)
+                  :slant italic
+                  :height 1.2
+                  :width normal
+                  :family "EtBembo")
+     )
+    '(font-lock-comment-face ((t (:background "linen" :foreground "#727280" :box (:line-width 1 :color "grey75" :style released-button) :slant italic :height 1.2 :width normal :family "EtBembo"))))
     (helm-ff-symlink
      (:foreground ,slate)
      nil)
