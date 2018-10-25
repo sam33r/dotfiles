@@ -24,6 +24,7 @@ network-manager-gnome,network management ui
 network-manager,Network management applet
 offlineimap,Sync maildirs
 pandoc,convert between different document formats
+parallel,Run things in parallel
 pasystray,Pulse audio system tray
 pavucontrol,Pulse audio controls
 pdfgrep,Grep pdf files
