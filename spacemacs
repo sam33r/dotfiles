@@ -1650,7 +1650,7 @@ you should place your code here."
  '(mu4e-headers-leave-behavior 'apply)
  '(mu4e-headers-results-limit 5000)
  '(mu4e-headers-skip-duplicates t)
- '(mu4e-headers-visible-columns 0)
+ '(mu4e-headers-visible-columns 80)
  '(mu4e-split-view 'vertical)
  '(mu4e-view-show-addresses t)
  '(neo-window-fixed-size t)
