@@ -1228,7 +1228,6 @@ like:
                   :width normal
                   :family "EtBembo")
      )
-    '(font-lock-comment-face ((t (:background "linen" :foreground "#727280" :box (:line-width 1 :color "grey75" :style released-button) :slant italic :height 1.2 :width normal :family "EtBembo"))))
     (helm-ff-symlink
      (:foreground ,slate)
      nil)
@@ -1514,8 +1513,10 @@ you should place your code here."
   (evil-leader/set-key "oe" #'projectile-run-eshell)
   (evil-leader/set-key "or" #'sa/read)
   (evil-leader/set-key "ot" #'sa/open-last-tmux-run)
+  (evil-leader/set-key "oO" #'helm-org-rifle-current-buffer)
 
   (evil-leader/set-key "W" #'make-frame)
+  (evil-leader/set-key "O" #'helm-org-rifle-agenda-files)
 
   ;; Eww browser keybindings
 
