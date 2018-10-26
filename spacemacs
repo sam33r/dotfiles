@@ -408,18 +408,17 @@ values."
            ;; :sitemap-sort-folders 'last
            :sitemap-ignore-case  t
            )))
-
   ;; custom keybindings
   ;; (spacemacs/set-leader-keys-for-major-mode 'org-mode
   ;;   "k" 'org-backward-heading-same-level
   ;;   "j" 'org-forward-heading-same-level
   ;;   )
   (evil-define-key '(normal visual motion) org-mode-map
-    "gh" 'outline-up-heading
-    "gj" 'outline-forward-same-level
-    "gk" 'outline-backward-same-level
-    "gl" 'outline-next-visible-heading
-    "gu" 'outline-previous-visible-heading)
+    "H" 'outline-up-heading
+    "J" 'outline-forward-same-level
+    "K" 'outline-backward-same-level
+    "L" 'outline-next-visible-heading
+    "U" 'outline-previous-visible-heading)
 
   ;; Appearance
   (setq org-bullets-bullet-list '(" ")
