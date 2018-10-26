@@ -374,6 +374,12 @@ values."
   ;; (setq org-contacts-files '("~/n/people.org.gpg"))
   ;; Archive in a datetree.
   (setq org-archive-location (concat orgdir "/shelved/archive.org.gpg::datetree/* Finished Tasks"))
+  ;; Keep inherited tags when archiving.
+  (defadvice org-archive-subtree
+      (before add-inherited-tags-before-org-archive-subtree activate)
+    "add inherited tags before org-archive-subtree"
+    (org-set-tags-to (org-get-tags-at)))
+
   (setq org-protocol-default-template-key "t")
   ;; Capture mode.
   (setq org-capture-templates
