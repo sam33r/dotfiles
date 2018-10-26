@@ -387,7 +387,11 @@ values."
            "* TODO %?\n  %i\n  %a")
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
            "* %?\nEntered on %U\n  %i")
-          ))
+          ("m" "Meeting Notes" entry (file+olp+datetree "work.org.gpg" "Meeting Notes")
+           "* %^{meeting-title} \n %? \n")
+          ("M" "Meeting with Follow-up" entry (file+olp+datetree "work.org.gpg" "Meeting Notes")
+           "* %^{meeting-title} \n%?\n** TODO %^{meeting-followup} \nDEADLINE:%^{deadline}t\n"))
+        )
   (define-key global-map "\C-cc" 'org-capture)
   ;; Publishing notes.
   (setq org-publish-project-alist
