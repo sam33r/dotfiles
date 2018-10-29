@@ -372,8 +372,18 @@ values."
   (setq org-agenda-files (list orgdir))
   (require 'org-contacts)
   ;; (setq org-contacts-files '("~/n/people.org.gpg"))
+
+  ;; Keep tags far away from headlines.
+  (setq org-tags-column -110)
+
+  ;; Set location for sunrise/sunset.
+  (setq calendar-latitude 37.774929)
+  (setq calendar-longitude -122.419418)
+  (setq calendar-location-name "San Francisco, CA")
+
   ;; Archive in a datetree.
   (setq org-archive-location (concat orgdir "/shelved/archive.org.gpg::datetree/* Finished Tasks"))
+
   ;; Keep inherited tags when archiving.
   (defadvice org-archive-subtree
       (before add-inherited-tags-before-org-archive-subtree activate)
@@ -387,12 +397,39 @@ values."
            "* TODO %?\n  %i\n  %a")
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
            "* %?\nEntered on %U\n  %i")
+          ("d" "Journal: Daily 3" entry (file+olp+datetree "journal.org.gpg")
+           "* Three things for today :daily-three:\n- %^{first}\n- %^{second}\n- %^{third}\n" :immediate-finish t)
+          ("q" "Journal: Quote" entry (file+olp+datetree "journal.org.gpg")
+           "* %^{title|A quote} :quote:\n#+BEGIN_QUOTE\n%x\n#+END_QUOTE\n%?")
           ("m" "Meeting Notes" entry (file+olp+datetree "work.org.gpg" "Meeting Notes")
            "* %^{meeting-title} \n %? \n")
           ("M" "Meeting with Follow-up" entry (file+olp+datetree "work.org.gpg" "Meeting Notes")
            "* %^{meeting-title} \n%?\n** TODO %^{meeting-followup} \nDEADLINE:%^{deadline}t\n"))
         )
   (define-key global-map "\C-cc" 'org-capture)
+
+  ;; Experimental: Open agenda after idle time
+  (defun sa/jump-to-org-agenda ()
+    (interactive)
+    (let ((buf (get-buffer "*Org Agenda*"))
+          wind)
+      (if buf
+          (if (setq wind (get-buffer-window buf))
+              (select-window wind)
+            (if (called-interactively-p)
+                (progn
+                  (select-window (display-buffer buf t t))
+                  (org-fit-window-to-buffer)
+                  (org-agenda-redo)
+                  )
+              (with-selected-window (display-buffer buf)
+                (org-fit-window-to-buffer)
+                (org-agenda-redo)
+                )))
+        (call-interactively 'org-agenda-list)))
+    )
+  (run-with-idle-timer 300 t 'sa/jump-to-org-agenda)
+
   ;; Publishing notes.
   (setq org-publish-project-alist
         `(("notes"
@@ -741,11 +778,10 @@ like:
 
    ;; Settings
    ((variable-pitch
-     (:family ,et-font)
-     (:family ,et-font
+     (:family "Source Sans Pro")
+     (:family "Source Sans Pro"
               :background nil
-              :foreground ,bg-dark
-              :height 1.4))
+              :foreground ,bg-dark))
     (header-line
      (:background nil :inherit nil)
      (:background nil :inherit nil))
@@ -861,8 +897,7 @@ like:
      (:inherit variable-pitch
                :height 1.3
                :weight bold
-               :foreground ,keyword
-               :background ,bg-dark)
+               :foreground ,keyword)
      (:inherit nil
                :family ,et-font
                :height 1.6
@@ -873,8 +908,7 @@ like:
      (:inherit variable-pitch
                :weight bold
                :height 1.2
-               :foreground ,gray
-               :background ,bg-dark)
+               :foreground ,gray)
      (:inherit nil
                :family ,et-font
                :weight normal
@@ -884,8 +918,7 @@ like:
      (:inherit variable-pitch
                :weight bold
                :height 1.1
-               :foreground ,slate
-               :background ,bg-dark)
+               :foreground ,slate)
      (:inherit nil
                :family ,et-font
                :weight normal
@@ -895,8 +928,7 @@ like:
      (:inherit variable-pitch
                :weight bold
                :height 1.1
-               :foreground ,slate
-               :background ,bg-dark)
+               :foreground ,slate)
      (:inherit nil
                :family ,et-font
                :weight normal
@@ -908,29 +940,25 @@ like:
                :weight bold
                :height 1.1
                :slant italic
-               :foreground ,slate
-               :background ,bg-dark)
+               :foreground ,slate)
      nil)
     (org-level-6
      (:inherit variable-pitch
                :weight bold
                :height 1.1
-               :foreground ,slate
-               :background ,bg-dark)
+               :foreground ,slate)
      nil)
     (org-level-7
      (:inherit variable-pitch
                :weight bold
                :height 1.1
-               :foreground ,slate
-               :background ,bg-dark)
+               :foreground ,slate)
      nil)
     (org-level-8
      (:inherit variable-pitch
                :weight bold
                :height 1.1
-               :foreground ,slate
-               :background ,bg-dark)
+               :foreground ,slate)
      nil)
     (org-headline-done
      (:strike-through t)
@@ -1466,8 +1494,8 @@ you should place your code here."
   (global-vi-tilde-fringe-mode -1)
 
   ;; Prefer splitting horizontally.
-  (setq split-height-threshold 0)
-  (setq split-width-threshold nil)
+  (setq split-height-threshold nil)
+  (setq split-width-threshold 80)
 
   ;; Use spaces for indent.
   (setq indent-tabs-mode nil)
@@ -1672,18 +1700,9 @@ you should place your code here."
        (todo "NEXT"))
       nil)))
  '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
- '(org-agenda-prefix-format
-   '((agenda . " %i %-40:(concat \"[\"(org-format-outline-path (org-get-outline-path)) \"]\") ")
-     (timeline . "  % s")
-     (todo . " %i %(concat \"[\"(org-format-outline-path (org-get-outline-path)) \"]\") ")
-     (tags . " %i %(concat \"[\"(org-format-outline-path (org-get-outline-path)) \"]\") ")
-     (search . " %i %-12:c")))
- '(org-agenda-span 'week)
+ '(org-agenda-span 'day)
+ '(org-agenda-start-with-log-mode '(closed clock))
  '(org-agenda-sticky t)
- '(org-agenda-time-grid
-   '((daily weekly today require-timed)
-     "----------------"
-     (800 1000 1200 1400 1600 1800 2000)))
  '(org-agenda-window-setup 'current-window)
  '(org-babel-shell-names
    '("sh" "bash" "zsh" "run-in-tmux" "tsh" "ksh" "mksh" "posh"))
