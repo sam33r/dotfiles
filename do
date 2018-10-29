@@ -391,6 +391,18 @@ function install_update_fonts()                                                 
   sudo cp $HOME/tmp_input/Input_Fonts/Input/*  /usr/share/fonts/truetype/input/
   rm -R tmp_input
 
+  # Install Open Sans, Merriweather and Source Sans Pro
+  cd $HOME
+  git clone https://github.com/google/fonts /tmp/google-fonts --depth 1
+  mkdir -p $HOME/.fonts/open-sans
+  cp /tmp/google-fonts/apache/opensans/* $HOME/.fonts/open-sans
+  mkdir -p $HOME/.fonts/merriweather
+  cp /tmp/google-fonts/ofl/merriweather/* $HOME/.fonts/merriweather
+  mkdir -p $HOME/.fonts/sourcesanspro
+  cp /tmp/google-fonts/ofl/sourcesanspro/* $HOME/.fonts/sourcesanspro
+
+  yes | rm -R /tmp/google-fonts
+
   sudo fc-cache -f -v
   cd $dir
 }
