@@ -24,6 +24,7 @@ $HOME/.config/liquidpromtrc,liquidpromptrc
 $HOME/.config/ranger/rc.conf,ranger.conf
 $HOME/.config/redshift.conf,redshift.conf
 $HOME/.dwm/autostart.sh,dwm/autostart.sh
+$HOME/.dwm/xsetroot.sh,dwm/xsetroot.sh
 $HOME/.fbtermrc,fbtermrc
 $HOME/.gnupg/gpg-agent.conf,gpg-agent.conf
 $HOME/hosts/blacklist,hosts/blacklist

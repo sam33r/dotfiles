@@ -36,8 +36,6 @@ fi
 
 # Status bar
 while true; do
-  battery=`acpi -b | cut -f 2- -d ":"`
-  thermal=`acpi -t | cut -f 2- -d ":"`
-  xsetroot -name "$battery | $thermal | $( date +'%a %F %R' )"
+  bash xsetroot.sh
   sleep 60
 done &
