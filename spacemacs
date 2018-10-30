@@ -778,8 +778,8 @@ like:
 
    ;; Settings
    ((variable-pitch
-     (:family "Source Sans Pro")
-     (:family "Source Sans Pro"
+     (:family "Nunito")
+     (:family "Nunito"
               :background nil
               :foreground ,bg-dark))
     (header-line

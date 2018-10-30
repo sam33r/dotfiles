@@ -400,6 +400,8 @@ function install_update_fonts()                                                 
   cp /tmp/google-fonts/ofl/merriweather/* $HOME/.fonts/merriweather
   mkdir -p $HOME/.fonts/sourcesanspro
   cp /tmp/google-fonts/ofl/sourcesanspro/* $HOME/.fonts/sourcesanspro
+  mkdir -p $HOME/.fonts/nunito
+  cp /tmp/google-fonts/ofl/nunito/* $HOME/.fonts/nunito
 
   yes | rm -R /tmp/google-fonts
 
