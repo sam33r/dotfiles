@@ -110,6 +110,7 @@ values."
                                       ox-clip
                                       shackle
                                       helm-org-rifle
+                                      org-super-agenda
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -370,11 +371,39 @@ values."
 
   ;; Agenda location
   (setq org-agenda-files (list orgdir))
+
+  (setq org-super-agenda-groups
+         '(;; Each group has an implicit boolean OR operator between its selectors.
+           (:name "Today"  ; Optionally specify section name
+                  :time-grid t  ; Items that appear on the time grid
+                  :log closed
+                  :log clocked
+                  :scheduled today
+                  :deadline today)  ; Items that have this TODO keyword
+           (:name "Overdue"
+                  ;; Single arguments given alone
+                  :scheduled past
+                  :deadline past)
+           (:name "Important"
+                  :priority "A"
+                  :priority "B")
+           (:name "Upcoming"
+                  :scheduled future
+                  :deadline future
+                  :not (:habit)
+                  :order 8)
+           (:name "Habits"
+                  :order 9
+                  :habit)
+           ))
+  (org-super-agenda-mode)
+
+
   (require 'org-contacts)
   ;; (setq org-contacts-files '("~/n/people.org.gpg"))
 
-  ;; Keep tags far away from headlines.
-  (setq org-tags-column -110)
+  ;; Give up on aligning tags
+  (setq org-tags-column 0)
 
   ;; Set location for sunrise/sunset.
   (setq calendar-latitude 37.774929)
@@ -420,11 +449,9 @@ values."
                 (progn
                   (select-window (display-buffer buf t t))
                   (org-fit-window-to-buffer)
-                  (org-agenda-redo)
                   )
               (with-selected-window (display-buffer buf)
                 (org-fit-window-to-buffer)
-                (org-agenda-redo)
                 )))
         (call-interactively 'org-agenda-list)))
     )
@@ -1711,10 +1738,13 @@ you should place your code here."
  '(neo-window-width 40 t)
  '(org-M-RET-may-split-line nil)
  '(org-agenda-custom-commands
-   '(("n" "Agenda and next TODOs"
+   (quote
+    (("n" "Comprehensive Agenda"
       ((agenda "" nil)
-       (todo "NEXT"))
-      nil)))
+       (tags-todo "+PRIORITY=\"A\"")
+       (todo "NEXT")
+       (todo "WAIT"))
+      nil))))
  '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
  '(org-agenda-span 'day)
  '(org-agenda-start-with-log-mode '(closed clock))
@@ -1728,7 +1758,7 @@ you should place your code here."
  '(org-habit-completed-glyph 42)
  '(org-habit-graph-column 85)
  '(org-habit-preceding-days 30)
- '(org-habit-show-all-today t)
+ '(org-habit-show-all-today nil)
  '(org-habit-show-habits-only-for-today t)
  '(org-hide-leading-stars t)
  '(org-hierarchical-todo-statistics nil)
