@@ -37,5 +37,5 @@ fi
 # Status bar
 while true; do
   sh $HOME/.dwm/xsetroot.sh
-  sleep 60
+  sleep 30
 done &

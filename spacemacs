@@ -521,6 +521,22 @@ values."
   (org-agenda nil "n")
   (delete-other-windows))
 
+(defun sa/task-clocked-time ()
+  "Return a string with the clocked time and effort, if any"
+  (interactive)
+  (let* ((clocked-time (org-clock-get-clocked-time))
+         (h (floor clocked-time 60))
+         (m (- clocked-time (* 60 h)))
+         (work-done-str (org-minutes-to-clocksum-string m)))
+    (if org-clock-effort
+        (let* ((effort-in-minutes
+                (org-duration-string-to-minutes org-clock-effort))
+               (effort-h (floor effort-in-minutes 60))
+               (effort-m (- effort-in-minutes (* effort-h 60)))
+               (effort-str (org-minutes-to-clocksum-string effort-m)))
+          (format "[%s/%s (%s)" work-done-str effort-str org-clock-heading))
+      (format "[%s : %s]" work-done-str org-clock-heading))))
+
 (defun sa/todos ()
   ;; Pick which TODO type on load.
   (org-agenda nil "T")
@@ -588,11 +604,11 @@ values."
 
 (defun sa/clock-in ()
   (sa/local-shell-command "touch /tmp/org-clock-flag")
-  (sa/notify "ORG CLOCK-IN" "Org-mode clocking in"))
+  (sa/notify "ORG CLOCK-IN" (sa/task-clocked-time)))
 
 (defun sa/clock-out ()
   (sa/local-shell-command "rm -f /tmp/org-clock-flag")
-  (sa/notify "ORG CLOCK-OUT" "Org-mode clocking out"))
+  (sa/notify "ORG CLOCK-OUT" (sa/task-clocked-time)))
 
 (defun sa/switch-to-elfeed ()
   (interactive)
