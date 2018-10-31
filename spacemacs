@@ -821,10 +821,11 @@ like:
 
    ;; Settings
    ((variable-pitch
-     (:family "Nunito")
+     (:family "Nunito" :height 1.2)
      (:family "Nunito"
               :background nil
-              :foreground ,bg-dark))
+              :foreground ,bg-dark
+              :height 1.2))
     (header-line
      (:background nil :inherit nil)
      (:background nil :inherit nil))
