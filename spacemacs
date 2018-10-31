@@ -362,7 +362,7 @@ values."
   ;;
   ;; org-mode configuration.
   ;;
-
+  (require 'org-checklist)
   ;; In org-agenda log show completed recurring tasks.
   (setq org-agenda-log-mode-items '(closed clock state))
 
@@ -426,8 +426,8 @@ values."
            "* TODO %?\n  %i\n  %a")
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
            "* %?\nEntered on %U\n  %i")
-          ("d" "Journal: Daily 3" entry (file+olp+datetree "journal.org.gpg")
-           "* Three things for today :daily-three:\n- %^{first}\n- %^{second}\n- %^{third}\n" :immediate-finish t)
+          ("e" "Journal: End of Day" entry (file+olp+datetree "journal.org.gpg")
+           "* End of Day :end-of-day:\n** Three things about today\n- %^{first}\n- %^{second}\n- %^{third}\n** Rough plan for tomorrow\n%?")
           ("q" "Journal: Quote" entry (file+olp+datetree "journal.org.gpg")
            "* %^{title|A quote} :quote:\n#+BEGIN_QUOTE\n%x\n#+END_QUOTE\n%?")
           ("m" "Meeting Notes" entry (file+olp+datetree "work.org.gpg" "Meeting Notes")
@@ -507,7 +507,7 @@ values."
         '((sequence "TODO(t)" "ICKY(i)" "NEXT(n!)" "WAIT(w@/!)" "IN-PROGRESS(p!)" "|" "DONE(d!)" "CANCELED(c@)")))
   (setq org-todo-keyword-faces
         '(("TODO" . "orange") ("ICKY" . org-warning)
-          ("NEXT" . (:foreground "orange" :weight bold))
+          ("NEXT" . (:foreground "#c942ff" :weight bold))
           ("WAIT" .(:foreground "purple" :weight bold))
           ("CANCELED" . (:foreground "blue" :weight bold))
           ("IN-PROGRESS" . (:foreground "yellow" :weight bold))
