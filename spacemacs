@@ -443,7 +443,9 @@ values."
           ("m" "Meeting Notes" entry (file+olp+datetree "work.org.gpg" "Meeting Notes")
            "* %^{meeting-title} \n %? \n")
           ("M" "Meeting with Follow-up" entry (file+olp+datetree "work.org.gpg" "Meeting Notes")
-           "* %^{meeting-title} \n%?\n** TODO %^{meeting-followup} \nDEADLINE:%^{deadline}t\n"))
+           "* %^{meeting-title} \n%?\n** TODO %^{meeting-followup} \nDEADLINE:%^{deadline}t\n")
+          ("s" "Social Call" entry (file+olp+datetree "projects.org.gpg" "Social Calls")
+           "* %^{title} \n %? \n"))
         )
   (define-key global-map "\C-cc" 'org-capture)
 
