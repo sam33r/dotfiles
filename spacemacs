@@ -434,9 +434,9 @@ values."
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
            "* %?\nEntered on %U\n  %i")
           ("e" "Journal: End of Day" entry (file+olp+datetree "journal.org.gpg")
-           (concat "* End of Day :end-of-day:\n** Three things about today\n"
-                   "- %^{first}\n- %^{second}\n- %^{third}\n"
-                   "** Rough plan for tomorrow\n%^{plan}")
+           "* End of Day :end-of-day:\n** Three things about today\n\"
+            - %^{first}\n- %^{second}\n- %^{third}\n\
+            ** Rough plan for tomorrow\n%^{plan}"
            :immediate-finish t)
           ("q" "Journal: Quote" entry (file+olp+datetree "journal.org.gpg")
            "* %^{title|A quote} :quote:\n#+BEGIN_QUOTE\n%x\n#+END_QUOTE\n%?")
