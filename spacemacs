@@ -374,14 +374,13 @@ values."
 
   (setq org-super-agenda-groups
          '(;; Each group has an implicit boolean OR operator between its selectors.
-           (:name "Today"  ; Optionally specify section name
-                  :time-grid t  ; Items that appear on the time grid
+           (:name "Today"
+                  :time-grid t
                   :log closed
                   :log clocked
                   :scheduled today
-                  :deadline today)  ; Items that have this TODO keyword
+                  :deadline today)
            (:name "Overdue"
-                  ;; Single arguments given alone
                   :scheduled past
                   :deadline past)
            (:name "Important"
@@ -389,15 +388,12 @@ values."
                   :priority "B")
            (:name "Upcoming"
                   :scheduled future
-                  :deadline future
-                  :not (:habit)
-                  :order 8)
+                  :deadline future)
            (:name "Habits"
                   :order 9
                   :habit)
            ))
   (org-super-agenda-mode)
-
 
   (require 'org-contacts)
   ;; (setq org-contacts-files '("~/n/people.org.gpg"))
@@ -440,7 +436,7 @@ values."
   ;; Experimental: Open agenda after idle time
   (defun sa/jump-to-org-agenda ()
     (interactive)
-    (let ((buf (get-buffer "*Org Agenda*"))
+    (let ((buf (get-buffer "*Org Agenda(n)*"))
           wind)
       (if buf
           (if (setq wind (get-buffer-window buf))
