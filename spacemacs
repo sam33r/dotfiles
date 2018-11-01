@@ -111,6 +111,7 @@ values."
                                       shackle
                                       helm-org-rifle
                                       org-super-agenda
+                                      org-web-tools
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -418,16 +419,25 @@ values."
       (before add-inherited-tags-before-org-archive-subtree activate)
     "add inherited tags before org-archive-subtree"
     (org-set-tags-to (org-get-tags-at)))
-
   (setq org-protocol-default-template-key "t")
+  (defun sa/generate-bookmark-template ()
+    (concat "* "
+            (org-web-tools--org-link-for-url)
+            " %^G\n%?\nBookmarked on %U"))
   ;; Capture mode.
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "projects.org.gpg" "Refile Tasks")
            "* TODO %?\n  %i\n  %a")
+          ("b" "Bookmark" entry (file+headline "knowledge.org.gpg" "Bookmarks")
+           (function sa/generate-bookmark-template)
+           )
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
            "* %?\nEntered on %U\n  %i")
           ("e" "Journal: End of Day" entry (file+olp+datetree "journal.org.gpg")
-           "* End of Day :end-of-day:\n** Three things about today\n- %^{first}\n- %^{second}\n- %^{third}\n** Rough plan for tomorrow\n%?")
+           (concat "* End of Day :end-of-day:\n** Three things about today\n"
+                   "- %^{first}\n- %^{second}\n- %^{third}\n"
+                   "** Rough plan for tomorrow\n%^{plan}")
+           :immediate-finish t)
           ("q" "Journal: Quote" entry (file+olp+datetree "journal.org.gpg")
            "* %^{title|A quote} :quote:\n#+BEGIN_QUOTE\n%x\n#+END_QUOTE\n%?")
           ("m" "Meeting Notes" entry (file+olp+datetree "work.org.gpg" "Meeting Notes")
@@ -516,6 +526,7 @@ values."
   (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
   (add-hook 'org-mode-hook 'sa/write 'append)
   (add-hook 'org-mode-hook #'hidden-mode-line-mode)
+  (add-hook 'org-mode-hook (lambda () (auto-revert-mode 1)))
   (add-hook 'org-mode-hook (lambda () (variable-pitch-mode t)))
   )
 
@@ -1724,6 +1735,7 @@ you should place your code here."
  '(elfeed-search-date-format '("%Y-%m-%d" 10 :right))
  '(epa-file-cache-passphrase-for-symmetric-encryption t)
  '(epa-pinentry-mode 'loopback)
+ '(epg-pinentry-mode 'loopback)
  '(evil-want-Y-yank-to-eol nil)
  '(global-vi-tilde-fringe-mode nil)
  '(line-spacing 0.1)
@@ -1739,13 +1751,12 @@ you should place your code here."
  '(neo-window-width 40 t)
  '(org-M-RET-may-split-line nil)
  '(org-agenda-custom-commands
-   (quote
-    (("n" "Comprehensive Agenda"
+   '(("n" "Comprehensive Agenda"
       ((agenda "" nil)
        (tags-todo "+PRIORITY=\"A\"")
        (todo "NEXT")
        (todo "WAIT"))
-      nil))))
+      nil)))
  '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
  '(org-agenda-span 'day)
  '(org-agenda-start-with-log-mode '(closed clock))
@@ -1784,7 +1795,7 @@ you should place your code here."
  '(org-startup-truncated nil)
  '(org-stuck-projects '("+LEVEL=1/-DONE" ("NEXT") nil ""))
  '(package-selected-packages
-   '(erlang plantuml-mode shackle org-category-capture company-emacs-eclim eclim let-alist evil-snipe keyfreq elfeed-web elfeed-org elfeed-goodies ace-jump-mode noflet elfeed solarized-theme madhat2r-theme yaml-mode winum powerline spinner insert-shebang parent-mode fuzzy flx fish-mode anzu evil goto-chg undo-tree diminish pkg-info epl company-shell packed pythonic f dash s avy async popup web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode imenu-list stickyfunc-enhance srefactor rainbow-mode rainbow-identifiers command-log-mode color-identifiers-mode mu4e-maildirs-extension mu4e-alert ht sr-speedbar origami go-guru go-eldoc company-go go-mode sspacemacs-dark-theme flycheck-ycmd company-ycmd ycmd request-deferred deferred company-quickhelp disaster company-c-headers cmake-mode clang-format writegood-mode zonokai-theme zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme pastels-on-dark-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme firebelly-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme visual-fill-column writeroom-mode bind-key iedit smartparens bind-map highlight markdown-mode projectile helm helm-core hydra csv-mode engine-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl ox-twbs gmail-message-mode ham-mode html-to-markdown edit-server xterm-color web-mode tagedit smeargle slim-mode shell-pop scss-mode sass-mode pug-mode orgit org-projectile org-present org org-pomodoro alert log4e gntp org-download multi-term magit-gitflow less-css-mode htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode company-web web-completion-data company-statistics company-anaconda company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc macrostep lorem-ipsum live-py-mode linum-relative link-hint info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word cython-mode column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))
+   '(org-web-tools esxml white-sand-theme rebecca-theme ox-clip org-super-agenda org-mime helm-org-rifle exotica-theme ghub treepy graphql erlang plantuml-mode shackle org-category-capture company-emacs-eclim eclim let-alist evil-snipe keyfreq elfeed-web elfeed-org elfeed-goodies ace-jump-mode noflet elfeed solarized-theme madhat2r-theme yaml-mode winum powerline spinner insert-shebang parent-mode fuzzy flx fish-mode anzu evil goto-chg undo-tree diminish pkg-info epl company-shell packed pythonic f dash s avy async popup web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode imenu-list stickyfunc-enhance srefactor rainbow-mode rainbow-identifiers command-log-mode color-identifiers-mode mu4e-maildirs-extension mu4e-alert ht sr-speedbar origami go-guru go-eldoc company-go go-mode sspacemacs-dark-theme flycheck-ycmd company-ycmd ycmd request-deferred deferred company-quickhelp disaster company-c-headers cmake-mode clang-format writegood-mode zonokai-theme zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme pastels-on-dark-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme firebelly-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme visual-fill-column writeroom-mode bind-key iedit smartparens bind-map highlight markdown-mode projectile helm helm-core hydra csv-mode engine-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl ox-twbs gmail-message-mode ham-mode html-to-markdown edit-server xterm-color web-mode tagedit smeargle slim-mode shell-pop scss-mode sass-mode pug-mode orgit org-projectile org-present org org-pomodoro alert log4e gntp org-download multi-term magit-gitflow less-css-mode htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode company-web web-completion-data company-statistics company-anaconda company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc macrostep lorem-ipsum live-py-mode linum-relative link-hint info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word cython-mode column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))
  '(py-indent-offset 2 t)
  '(python-indent-offset 2)
  '(sh-basic-offset 2)
@@ -1838,7 +1849,6 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:background nil))))
- ;; TODO: Migrate this to the theme-pair approach.
  '(font-lock-comment-face ((t (:background "linen" :foreground "#727280" :box (:line-width 1 :color "grey75" :style released-button) :slant italic :height 1.2 :width normal :family "EtBembo"))))
  '(header-line ((t (:background nil :inherit nil))))
  '(highlight ((t (:background "#efeae9"))))
