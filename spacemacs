@@ -445,26 +445,6 @@ values."
         )
   (define-key global-map "\C-cc" 'org-capture)
 
-  ;; Experimental: Open agenda after idle time
-  (defun sa/jump-to-org-agenda ()
-    (interactive)
-    (let ((buf (get-buffer "*Org Agenda(n)*"))
-          wind)
-      (if buf
-          (if (setq wind (get-buffer-window buf))
-              (select-window wind)
-            (if (called-interactively-p)
-                (progn
-                  (select-window (display-buffer buf t t))
-                  (org-fit-window-to-buffer)
-                  )
-              (with-selected-window (display-buffer buf)
-                (org-fit-window-to-buffer)
-                )))
-        (call-interactively 'org-agenda-list)))
-    )
-  (run-with-idle-timer 300 t 'sa/jump-to-org-agenda)
-
   ;; Publishing notes.
   (setq org-publish-project-alist
         `(("notes"
@@ -1020,6 +1000,12 @@ like:
     (org-quote
      (:background ,bg-dark)
      nil)
+    ;; TODO: Use a better font.
+    (org-verse
+     (:height 1.2
+              :family "Merriweather")
+     (:height 1.2
+      :family "Merriweather"))
     (org-block
      (:background "#000000"
                   :height 0.8
