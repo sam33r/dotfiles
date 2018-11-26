@@ -112,6 +112,7 @@ values."
                                       helm-org-rifle
                                       org-super-agenda
                                       org-web-tools
+                                      fontify-face
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -240,7 +241,7 @@ values."
    dotspacemacs-display-default-layout nil
    ;; If non nil then the last auto saved layouts are resume automatically upon
    ;; start. (default nil)
-   dotspacemacs-auto-resume-layouts nil
+   dotspacemacs-auto-resume-layouts t
    ;; Size (in MB) above which spacemacs will prompt to open the large file
    ;; literally to avoid performance issues. Opening a file literally means that
    ;; no major mode or minor modes are active. (default is 1)
@@ -364,6 +365,8 @@ values."
   ;; org-mode configuration.
   ;;
   (require 'org-checklist)
+  (require 'org-web-tools)
+
   ;; In org-agenda log show completed recurring tasks.
   (setq org-agenda-log-mode-items '(closed clock state))
 
@@ -396,6 +399,9 @@ values."
            ))
   (org-super-agenda-mode)
 
+  ;; Allow creating new nodes when refiling.
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
+
   (require 'org-contacts)
   ;; (setq org-contacts-files '("~/n/people.org.gpg"))
 
@@ -420,10 +426,17 @@ values."
     (concat "* "
             (org-web-tools--org-link-for-url)
             " %^G\n%?\nBookmarked on %U"))
+  (defun sa/generate-todo-link-template ()
+    (concat "* TODO %? %^G\n"
+            (org-web-tools--org-link-for-url)))
   ;; Capture mode.
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "projects.org.gpg" "Refile Tasks")
            "* TODO %?\n  %i\n  %a")
+          ("T" "Todo from email" entry (file+headline "projects.org.gpg" "Refile Tasks")
+           "* TODO %:subject\n%?\n %i\n %a\n")
+          ("l" "Todo from link" entry (file+headline "projects.org.gpg" "Refile Tasks")
+           (function sa/generate-todo-link-template))
           ("b" "Bookmark" entry (file+headline "knowledge.org.gpg" "Bookmarks")
            (function sa/generate-bookmark-template)
            )
@@ -1421,6 +1434,9 @@ you should place your code here."
   (add-hook 'prog-mode-hook 'fci-mode)
   (add-hook 'text-mode-hook 'fci-mode)
   (add-hook 'prog-mode-hook 'sa/code)
+
+  ;; Fontify face definitions in elisp.
+  (add-hook 'emacs-lisp-mode-hook 'fontify-face-mode)
 
   ;; Spaceline
   (setq spaceline-highlight-face-func 'spaceline-highlight-face-default)
