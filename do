@@ -69,6 +69,36 @@ function install_dotfiles()
   done < $dir/$dotfiles_list
 }
 
+function install_indicator_kdeconnect_from_source()
+{
+  cd $HOME
+  # A recent fork that fixes the issue with kdeconnect icon not showing in system tray.
+  git clone https://github.com/Bajoja/indicator-kdeconnect
+  cd indicator-kdeconnect
+  git pull origin master
+  sudo apt install libgtk-3-dev
+  sudo apt install libappindicator3-dev
+  sudo apt install cmake
+  sudo apt install valac
+  sudo apt install libgee-0.8-dev
+  sudo apt install libjson-glib-dev
+  sudo apt install python3-requests-oauthlib
+  sudo apt install kde-cli-tools
+  sudo apt install python-nautilus
+	mkdir build
+	cd build
+	meson .. --prefix=/usr/  --libdir=/usr/lib/
+	meson configure -Dextensions=python
+	ninja
+	ninja install
+  cd $dir
+}
+
+function install_rclone()
+{
+  curl https://rclone.org/install.sh | sudo bash
+}
+
 function install_emacs_from_source()
 {
   cd $HOME
@@ -91,6 +121,33 @@ function install_emacs_from_source()
   make bootstrap
   make
 
+  cd $dir
+}
+
+function install_scrcpy_from_source()
+{
+  cd $HOME
+
+  # runtime dependencies
+  sudo apt install ffmpeg libsdl2-2.0.0
+
+  # client build dependencies
+  sudo apt install make gcc pkg-config meson \
+       libavcodec-dev libavformat-dev libavutil-dev \
+       libsdl2-dev
+
+  # server build dependencies
+  sudo apt install openjdk-8-jdk
+
+  git clone https://github.com/Genymobile/scrcpy
+  cd scrcpy
+  git pull origin master
+
+  # This only works if $ANDROID_HOME is set.
+  meson x --buildtype release --strip -Db_lto=true
+  cd x
+  ninja
+  sudo ninja install
   cd $dir
 }
 
