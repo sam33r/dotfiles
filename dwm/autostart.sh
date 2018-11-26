@@ -13,21 +13,18 @@ compton -f &
 # Start the network management applet.
 nm-applet &
 # Start pulse volume control system tray applet.
-# pasystray &
+pasystray &
 # Start feh for wallpaper.
 feh --randomize --bg-fill ~/Wallpapers/* &
 unclutter &
 copyq &
+redshift-gtk &
 xbindkeys -f ~/.xbindkeysrc
 
 start-pulseaudio-x11 &
 
 if [[ -e "$HOME/.Xmodmap" ]]; then
   xmodmap "$HOME/.Xmodmap"
-fi
-
-if [[ -x "$HOME/load_mails.sh" ]]; then
-  $HOME/load_mails.sh &
 fi
 
 if [[ -x "./autostart.local.sh" ]]; then

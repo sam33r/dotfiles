@@ -11,6 +11,7 @@ gnupg-agent,Password entry agent
 gnutls-bin,mu4e dependency
 google-chrome-beta,Chrome beta
 gparted,partition management utility
+gscan2pdf,Scan to PDF
 i3blocks,scheduler for i3bar blocks
 i3,tiling windows manager
 libevent-dev,Library, dependency for building tmux
@@ -42,11 +43,14 @@ silversearcher-ag,Faster search
 sqlite3,lightweight db
 suckless-tools,for dmenu and other niceties.
 surfraw,Web searches
+tesseract-ocr,OCR for scans
 tmux,Terminal multiplexer useful for remoting
 unclutter,Hide mouse cursor when not being used.
 urlview,View urls
 vim-gtk,gvim
 vim,vim!
+vlc,Media player
+vrms,List non-free packages.
 w3m,command line based web browser
 wmctrl,Control window focus.
 xbacklight,Change display brightness

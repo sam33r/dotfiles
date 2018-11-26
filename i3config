@@ -331,9 +331,6 @@ exec --no-startup-id ~/startup.sh
 # Machine specific commands
 exec --no-startup-id ~/startup.local.sh
 
-# load emails.
-exec --no-startup-id ~/load_mails.sh &
-
 # Run small i3 customizations.
 exec_always --no-startup-id ~/py3env/bin/python3 ~/dotfiles/utils/i3utils.py
 
