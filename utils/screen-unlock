@@ -1,0 +1,5 @@
+#!/bin/bash
+# Script that runs when screen is unlocked.
+# This is called on idle timeout from i3config.
+purpose=$(echo "" | rofi -dmenu -p "Enter Purpose > " -fullscreen -padding 200)
+echo "`date "+%Y-%m-%d %H:%M"` $purpose" | tr '[:lower:]' '[:upper:]' >> ~/purpose-log.txt
