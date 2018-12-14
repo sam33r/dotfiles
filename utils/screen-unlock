@@ -1,4 +1,16 @@
 #!/bin/bash
 # Script that runs when screen is unlocked.
+
+# If a previous unlock had set a timer, remove it.
+if [ -e /tmp/screen-lock-pid ]; then
+  kill -9 `cat /tmp/screen-lock-pid`
+  rm /tmp/screen-lock-pid
+fi
+
 purpose=$(echo "" | rofi -dmenu -p "Enter Purpose > " -fullscreen -padding 200)
-echo "`date "+%Y-%m-%d %H:%M"` $purpose" | tr '[:lower:]' '[:upper:]' >> ~/purpose-log.txt
+duration=$(echo "" | rofi -dmenu -p "Enter Duration (seconds) > " -fullscreen -padding 200)
+nowtime=`date "+%Y-%m-%d %H:%M"`
+endtime=`date "+%H:%M" -d "+ $duration seconds"`
+nohup sh -c "sleep $duration && notify-send 'Locking screen in 30 seconds.' && sleep 30 && ~/dotfiles/utils/screen-lock" &
+echo $! > /tmp/screen-lock-pid
+echo "$nowtime 🢂 $endtime : $purpose" | tr '[:lower:]' '[:upper:]' >> ~/purpose-log.txt
