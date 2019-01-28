@@ -104,8 +104,11 @@ function install_emacs_from_source()
   cd $HOME
 
   # Install necessary packages.
-  # TODO: This is not the comprehensive list.
-  sudo apt install build-essential libgnutls28-dev
+  sudo apt install autoconf automake libtool texinfo build-essential \
+    xorg-dev libgtk2.0-dev libjpeg-dev libncurses5-dev libdbus-1-dev \
+    libgif-dev libtiff-dev libm17n-dev libpng-dev librsvg2-dev \
+    libotf-dev libgnutls28-dev libxml2-dev
+
 
   git clone https://github.com/mirrors/emacs.git
   cd ~/emacs
@@ -113,8 +116,11 @@ function install_emacs_from_source()
   git reset --hard
   # delete all of the last build stuff
   git clean -xdf
-  # get latest update
-  git pull https://github.com/mirrors/emacs.git
+
+  git fetch --all
+  git pull origin master
+  tag=$(git tag | rofi -dmenu -p "Which Tag? " -padding 100 -only-match)
+  git checkout tags/$tag
 
   ./autogen.sh
   ./configure
