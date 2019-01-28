@@ -26,3 +26,5 @@ date +%s > /tmp/purpose-start-time
 
 echo "$nowtime 🢂 $endtime : $purpose" | \
   tr '[:lower:]' '[:upper:]' >> ~/purpose-log.txt
+
+~/.dwm/xsetroot.sh &
