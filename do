@@ -445,16 +445,16 @@ function install_update_fonts()                                                 
   cd $HOME
   yes | rm -R plfonts
 
+  # Install Input
   cd $HOME
   mkdir tmp_input
-  # Download and put the font in a local dir.
   wget "http://input.fontbureau.com/build/?fontSelection=fourStyleFamily&regular=InputMono-Regular&italic=InputMono-Italic&bold=InputMono-Bold&boldItalic=InputMono-BoldItalic&a=0&g=ss&i=serif&l=serifs_round&zero=slash&asterisk=height&braces=straight&preset=dejavu&line-height=1.3&accept=I+do&email=" -O tmp_input/font.zip
-  unzip tmp_input/font.zip -d $HOME/tmp_input
+  yes | unzip tmp_input/font.zip -d $HOME/tmp_input
   sudo mkdir -p /usr/share/fonts/truetype/input
   sudo cp $HOME/tmp_input/Input_Fonts/Input/*  /usr/share/fonts/truetype/input/
   rm -R tmp_input
 
-  # Install Open Sans, Merriweather and Source Sans Pro
+  # Install Open Sans, Merriweather, Source Sans Pro and Libre Baskerville
   cd $HOME
   git clone https://github.com/google/fonts /tmp/google-fonts --depth 1
   mkdir -p $HOME/.fonts/open-sans
@@ -465,6 +465,8 @@ function install_update_fonts()                                                 
   cp /tmp/google-fonts/ofl/sourcesanspro/* $HOME/.fonts/sourcesanspro
   mkdir -p $HOME/.fonts/nunito
   cp /tmp/google-fonts/ofl/nunito/* $HOME/.fonts/nunito
+  mkdir -p $HOME/.fonts/librebaskerville
+  cp /tmp/google-fonts/ofl/librebaskerville/* $HOME/.fonts/librebaskerville
 
   yes | rm -R /tmp/google-fonts
 

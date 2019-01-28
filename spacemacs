@@ -822,12 +822,19 @@ like:
     (serif-mono-font    "Input"))
 
    ;; Settings
-   ((variable-pitch
-     (:family "Nunito" :height 1.2)
-     (:family "Nunito"
+   (
+    (variable-pitch
+     (:family "Libre Baskerville" :height 1.2)
+     (:family "Libre Baskerville"
               :background nil
               :foreground ,bg-dark
               :height 1.2))
+    ;; (variable-pitch
+    ;;  (:family "Nunito" :height 1.2)
+    ;;  (:family "Nunito"
+    ;;           :background nil
+    ;;           :foreground ,bg-dark
+    ;;           :height 1.2))
     (header-line
      (:background nil :inherit nil)
      (:background nil :inherit nil))
