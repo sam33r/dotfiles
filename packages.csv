@@ -14,7 +14,7 @@ gparted,partition management utility
 gscan2pdf,Scan to PDF
 i3blocks,scheduler for i3bar blocks
 i3,tiling windows manager
-libevent-dev,Library, dependency for building tmux
+libevent-dev,Library dependency for building tmux
 libtool-bin,Requirement for building nvim
 libxapian-dev,Dependency for mu
 libxml2-dev,Required for eww
