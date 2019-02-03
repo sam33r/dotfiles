@@ -24,11 +24,13 @@ mpv,Media player
 network-manager-gnome,network management ui
 network-manager,Network management applet
 offlineimap,Sync maildirs
+okular,PDF and epub reader.
 pandoc,convert between different document formats
 parallel,Run things in parallel
 pasystray,Pulse audio system tray
 pavucontrol,Pulse audio controls
 pdfgrep,Grep pdf files
+pdftk,PDF Password Protection
 python3-pip,pip for python3
 python-dev,python
 python-pip,pip installer
@@ -40,6 +42,7 @@ screen,terminal multiplexing
 scrot,Screenshots
 scrot,Screenshots
 silversearcher-ag,Faster search
+smbclient,Client for SMB shares.
 sqlite3,lightweight db
 suckless-tools,for dmenu and other niceties.
 surfraw,Web searches
