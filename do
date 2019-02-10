@@ -38,7 +38,7 @@ function install_update_packages()
   while IFS=, read package description
   do
     printf "\n\n\n$package : $description\n\n"
-    yes | sudo apt-get install $package
+    sudo apt-get install $package
   done < $dir/$packages_list
 }
 
