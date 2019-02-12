@@ -27,8 +27,8 @@ if [[ -e "$HOME/.Xmodmap" ]]; then
   xmodmap "$HOME/.Xmodmap"
 fi
 
-if [[ -x "./autostart.local.sh" ]]; then
-  ./autostart.local.sh
+if [[ -x "$HOME/.dwm/autostart.local.sh" ]]; then
+  $HOME/.dwm/autostart.local.sh
 fi
 
 # Status bar
