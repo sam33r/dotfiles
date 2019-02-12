@@ -19,6 +19,7 @@ feh --randomize --bg-fill ~/Wallpapers/* &
 unclutter &
 copyq &
 redshift-gtk &
+run_keybase &
 xbindkeys -f ~/.xbindkeysrc
 
 start-pulseaudio-x11 &
@@ -36,3 +37,6 @@ while true; do
   sh $HOME/.dwm/xsetroot.sh
   sleep 30
 done &
+
+# Open the screen unlock dialogs
+~/dotfiles/utils/screen-unlock &
