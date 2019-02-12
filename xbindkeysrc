@@ -95,5 +95,10 @@
     m:0x40 + c:54
     Mod4 + c 
 
+#recoll file
+"~/zzzfoo/zzzfoo -o gnome-open -n 200 -r ' -fullscreen'"
+    m:0x41 + c:41
+    Shift+Mod4 + f 
+
 #
 # End of xbindkeys configuration
