@@ -1,7 +1,4 @@
 #!/bin/bash
 
-if [[ $# -ne 1 ]]; then
-  echo "Usage: b <percentage>"
-  exit 1
-fi
-xbacklight -set $1
+val=`printf "1\n10\n20\n30\n40\n50\n60\n70\n80\n90\n100" | rofi -dmenu`
+xbacklight -set $val

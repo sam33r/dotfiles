@@ -45,10 +45,25 @@
     m:0x40 + c:33
     Mod4 + p 
 
-#Application/Window Menu
+#Change volume
+"~/dotfiles/utils/vol"
+    m:0x40 + c:55
+    Mod4 + v 
+
+#Change brightness
+"~/dotfiles/utils/b"
+    m:0x40 + c:56
+    Mod4 + b 
+
+#Open Application
 "rofi -show drun"
     m:0x40 + c:38
     Mod4 + a 
+
+#Open Application as Administrator
+"rofi -show drun -run-command 'gksudo {cmd}' "
+    m:0x44 + c:38
+    Control+Mod4 + a 
 
 #Application/Window Menu-Copy
 "rofi -show run"
@@ -79,6 +94,11 @@
 "copyq show"
     m:0x40 + c:54
     Mod4 + c 
+
+#recoll file
+"~/zzzfoo/zzzfoo -o gnome-open -n 200 -r ' -fullscreen'"
+    m:0x41 + c:41
+    Shift+Mod4 + f 
 
 #
 # End of xbindkeys configuration
