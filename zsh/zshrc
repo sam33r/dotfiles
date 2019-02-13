@@ -107,6 +107,7 @@ fi
 # Aliases
 alias apps='sudo /usr/bin/software-center'
 alias c=clear
+alias l='ls -alrt'
 alias d='$HOME/dotfiles/do'
 alias g=googler
 alias h='$HOME/pyenv/bin/howdoi -n 3 -c'
