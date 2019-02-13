@@ -3,6 +3,7 @@ autoconf-archive,For manual make
 compton,Simple standalone composite manager (For use with xmonad)
 docker-engine,docker
 fbterm,Framebuffer terminal emulator
+fdupes,Find duplicates
 feh,Image viewer useful for setting wallpaper in linux
 gcc,gnu compilers
 gnome-sushi,Preview for nautilus
@@ -14,6 +15,8 @@ gparted,partition management utility
 gscan2pdf,Scan to PDF
 i3blocks,scheduler for i3bar blocks
 i3,tiling windows manager
+inxi,System information
+iotop,disk IO
 libevent-dev,Library dependency for building tmux
 libtool-bin,Requirement for building nvim
 libxapian-dev,Dependency for mu
@@ -29,6 +32,7 @@ pandoc,convert between different document formats
 parallel,Run things in parallel
 pasystray,Pulse audio system tray
 pavucontrol,Pulse audio controls
+pcmanfm,PCMan File Manager
 pdfgrep,Grep pdf files
 pdftk,PDF Password Protection
 python3-pip,pip for python3
