@@ -45,6 +45,16 @@
     m:0x40 + c:33
     Mod4 + p 
 
+#Open bookmarks in Chrome
+"~/dotfiles/utils/chrome-bookmarks"
+    m:0x41 + c:33
+    Shift+Mod4 + p 
+
+#Search in Chrome
+"~/dotfiles/utils/chrome-search"
+    m:0x40 + c:39
+    Mod4 + s 
+
 #Change volume
 "~/dotfiles/utils/vol"
     m:0x40 + c:55
@@ -92,8 +102,8 @@
 
 #Show copyq
 "copyq show"
-    m:0x40 + c:54
-    Mod4 + c 
+    m:0x41 + c:54
+    Shift+Mod4 + c 
 
 #recoll file
 "~/zzzfoo/zzzfoo -o gnome-open -n 200 -r ' -fullscreen'"

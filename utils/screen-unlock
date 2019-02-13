@@ -6,6 +6,10 @@ if [ -e /tmp/screen-lock-pid ]; then
   kill -9 `cat /tmp/screen-lock-pid`
   rm /tmp/screen-lock-pid
 fi
+
+# Clean the desktop
+~/dotfiles/utils/close-windows
+
 grep -aoh ": ..*$" ~/purpose-log.txt | cut -c 2- | tac | sed 's/^ *//' > /tmp/purpose-options
 purpose=$(cat /tmp/purpose-options | \
             rofi -i -l 100 -dmenu -p "Enter Purpose > " -fullscreen -padding 200)
