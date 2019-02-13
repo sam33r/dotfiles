@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Utility script to open a set of bookmarks in Google Chrome
+# Expects a directory ~/.bookmarks with a set of plaintext files.
+# Each file's name is the name of the bookmark group, and each line
+# in the file represents a URL.
+
+BOOKMARKS_DIR="$HOME/.bookmarks"
+
+set=`ls -1 $BOOKMARKS_DIR | rofi -dmenu`
+bookmarks=`cat ~/.bookmarks/$set| tr '\n' ' '`
+google-chrome $bookmarks

@@ -574,8 +574,8 @@ values."
 (defun sa/write ()
   (interactive)
   (turn-off-fci-mode)
-  ;; (spacemacs/toggle-fringe-off)
-  ;; (writeroom-mode t)
+  (spacemacs/toggle-fringe-off)
+  (writeroom-mode t)
   (setq word-wrap t)
   (message "Activating writing mode"))
 
@@ -823,18 +823,18 @@ like:
 
    ;; Settings
    (
-    (variable-pitch
-     (:family "Libre Baskerville" :height 1.2)
-     (:family "Libre Baskerville"
-              :background nil
-              :foreground ,bg-dark
-              :height 1.2))
     ;; (variable-pitch
-    ;;  (:family "Nunito" :height 1.2)
-    ;;  (:family "Nunito"
+    ;;  (:family "Libre Baskerville" :height 1.2)
+    ;;  (:family "Libre Baskerville"
     ;;           :background nil
     ;;           :foreground ,bg-dark
     ;;           :height 1.2))
+    (variable-pitch
+     (:family "Nunito" :height 1.2)
+     (:family "Nunito"
+              :background nil
+              :foreground ,bg-dark
+              :height 1.2))
     (header-line
      (:background nil :inherit nil)
      (:background nil :inherit nil))
@@ -1556,8 +1556,8 @@ you should place your code here."
   (global-vi-tilde-fringe-mode -1)
 
   ;; Prefer splitting horizontally.
-  (setq split-height-threshold nil)
-  (setq split-width-threshold 80)
+  ;; (setq split-height-threshold nil)
+  ;; (setq split-width-threshold 80)
 
   ;; Use spaces for indent.
   (setq indent-tabs-mode nil)
