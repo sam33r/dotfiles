@@ -176,6 +176,13 @@ function install_alacritty()
   cd $dir
 }
 
+function install_git_gnome_support() {
+  sudo apt-get install libsecret-1-0 libsecret-1-dev
+  cd /usr/share/doc/git/contrib/credential/libsecret
+  sudo make
+  git config --global credential.helper /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
+}
+
 function install_pips()                                                          # virtual envs for pip, and packages
 {
   sudo easy_install pip
