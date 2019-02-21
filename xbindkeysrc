@@ -35,27 +35,32 @@
 
 
 
-#Do Screen Lock
+#View Keybindings
+"~/dotfiles/utils/view-keybindings"
+    m:0x40 + c:61
+    Mod4 + slash 
+
+#Screen Lock
 "~/dotfiles/utils/screen-lock"
     m:0x40 + c:53
     Mod4 + x 
 
-#Do Org Capture
+#Org Capture
 "emacsclient -c -e '(sa/make-capture-frame)'"
     m:0x44 + c:54
     Control+Mod4 + c 
 
-#Do chrome with selected URL
+#Open chrome with selected URL
 "~/dotfiles/utils/chrome-open google-chrome"
     m:0x40 + c:33
     Mod4 + p 
 
-#Do chrome with selected bookmarks
+#Open chrome with selected bookmarks
 "~/dotfiles/utils/chrome-bookmarks"
     m:0x41 + c:33
     Shift+Mod4 + p 
 
-#Do search in chrome
+#Search in chrome
 "~/dotfiles/utils/chrome-search"
     m:0x40 + c:39
     Mod4 + s 
