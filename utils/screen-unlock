@@ -8,7 +8,12 @@ if [ -e /tmp/screen-lock-pid ]; then
 fi
 
 # Clean the desktop
-~/dotfiles/utils/close-windows
+clean=$(echo "YES|NO" | \
+             rofi -dmenu -p "Clean Desktop? " \
+                  -fullscreen -padding 200 -sep '|' -only-match)
+if [ "$clean" = "YES" ]; then
+  ~/dotfiles/utils/close-windows
+fi
 
 grep -aoh ": ..*$" ~/purpose-log.txt | cut -c 2- | tac | sed 's/^ *//' > /tmp/purpose-options
 purpose=$(cat /tmp/purpose-options | \
