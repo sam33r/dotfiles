@@ -1,17 +1,28 @@
 #!/bin/bash
 
-# Utility script to select a URL from Chrome history (via rofi), and then open
-# a new Chrome window with that URL.
+# Utility script to select a URL from Chrome and Chrome Beta history (via rofi),
+# and then open a new browser window with that URL. The browser is passed as the
+# first argument to the script.
+
+if [ -z "$1" ]; then
+  echo "Pass the browser command as the only argument."
+  exit 1
+fi
+
 
 mkdir -p ~/tmp
 
-localdb="$HOME/tmp/History"
-
 #if [ ! -e "$localdb" ] || [ ! -z "`find $localdb -mtime +30s`" ] ; then
-  cp -f  ~/.config/google-chrome/Default/History ~/tmp/
+  cp -f  ~/.config/google-chrome/Default/History ~/tmp/ChromeHistory
+  cp -f  ~/.config/google-chrome-beta/Default/History ~/tmp/ChromeBetaHistory
 #fi
 
-title_url=`(sqlite3 ~/tmp/History "select title,url from urls order by last_visit_time desc limit 50000") | rofi -dmenu -i`
+sqlite3 ~/tmp/ChromeHistory \
+  "select title,url from urls order by last_visit_time desc limit 50000" > /tmp/c.h
+sqlite3 ~/tmp/ChromeBetaHistory \
+  "select title,url from urls order by last_visit_time desc limit 50000" > /tmp/c.b.h
+
+title_url=`(cat /tmp/c.h /tmp/c.b.h | uniq) | rofi -dmenu -i`
 
 if [ -z "$title_url" ] ; then
   exit 0
@@ -23,4 +34,4 @@ else
   url="http://google.com/search?q=$title_url"
 fi
 
-google-chrome "$url"
+$1 "$url"
