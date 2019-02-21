@@ -403,7 +403,7 @@ values."
   (setq org-refile-allow-creating-parent-nodes 'confirm)
 
   (require 'org-contacts)
-  ;; (setq org-contacts-files '("~/n/people.org.gpg"))
+  ;; (setq org-contacts-files '("~/notes/people.org.gpg"))
 
   ;; Give up on aligning tags
   (setq org-tags-column 0)
@@ -1430,7 +1430,7 @@ you should place your code here."
    [?$ ?a escape ?a tab tab return ?* ?* ?  ?  escape ?, ?! return ?a ?\[ ?\] backspace ?/ ?\] M-return return ?\M-l escape])
 
   ;; Setup org-mode
-  (sa/setup-org-mode "~/n")
+  (sa/setup-org-mode "~/notes")
 
   ;;
   ;; Hooks.

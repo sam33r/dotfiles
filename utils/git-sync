@@ -22,7 +22,7 @@ fi
 while true; do
   git pull origin master
   num_changes=`git status --porcelain | wc -l`
-  les
+  echo "Found $num_changes changes."
   if (( $num_changes > 0)); then
     dt=`date`
     host=`hostname`
