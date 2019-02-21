@@ -359,6 +359,35 @@ values."
 
 ;; Custom functions.
 
+(defadvice org-capture-finalize
+    (after delete-capture-frame activate)
+  "Advise capture-finalize to close the frame"
+  (if (equal "capture" (frame-parameter nil 'name))
+      (delete-frame)))
+
+(defadvice org-capture-destroy
+    (after delete-capture-frame activate)
+  "Advise capture-destroy to close the frame"
+  (if (equal "capture" (frame-parameter nil 'name))
+      (delete-frame)))
+
+;; make the frame contain a single window. by default org-capture
+;; splits the window.
+(add-hook 'org-capture-mode-hook
+          'delete-other-windows)
+
+(defun sa/make-capture-frame ()
+  "Create a new frame and run org-capture."
+  (interactive)
+  (make-frame '((name . "capture")
+                (width . 120)
+                (height . 15)))
+  (select-frame-by-name "capture")
+  (setq word-wrap 1)
+  (setq truncate-lines nil)
+  (org-capture))
+
+
 (defun sa/setup-org-mode (orgdir)
   """Setup org-mode configuration."""
   ;;
@@ -442,6 +471,8 @@ values."
            )
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
            "* %?\nEntered on %U\n  %i")
+          ("w" "Work Journal" entry (file+olp+datetree "work-journal.org.gpg")
+           "* %?")
           ("e" "Journal: End of Day" entry (file+olp+datetree "journal.org.gpg")
            "* End of Day :end-of-day:\n** Three things about today\n\"
             - %^{first}\n- %^{second}\n- %^{third}\n\

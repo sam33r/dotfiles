@@ -40,6 +40,11 @@
     m:0x40 + c:53
     Mod4 + x 
 
+#Capture
+"emacsclient -e '(sa/make-capture-frame)'"
+    m:0x44 + c:54
+    Control+Mod4 + c 
+
 #Open web page in chrome
 "~/dotfiles/utils/chrome-open google-chrome"
     m:0x40 + c:33
