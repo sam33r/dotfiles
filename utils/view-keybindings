@@ -1,0 +1,5 @@
+#!/bin/bash
+( ( cat ~/dwm/config.h | ag "{ MODKEY.*XK_" ) ; \
+  ( cat ~/.xbindkeysrc | ag "#Do|#Change|#Open|Mod4" ) ) | \
+  cat | sed -e 's/^[ 	]*//' > /tmp/keybindings && \
+  gvim -M /tmp/keybindings

@@ -35,27 +35,27 @@
 
 
 
-#Screen Lock
+#Do Screen Lock
 "~/dotfiles/utils/screen-lock"
     m:0x40 + c:53
     Mod4 + x 
 
-#Capture
+#Do Org Capture
 "emacsclient -c -e '(sa/make-capture-frame)'"
     m:0x44 + c:54
     Control+Mod4 + c 
 
-#Open web page in chrome
+#Do chrome with selected URL
 "~/dotfiles/utils/chrome-open google-chrome"
     m:0x40 + c:33
     Mod4 + p 
 
-#Open bookmarks in Chrome
+#Do chrome with selected bookmarks
 "~/dotfiles/utils/chrome-bookmarks"
     m:0x41 + c:33
     Shift+Mod4 + p 
 
-#Search in Chrome
+#Do search in chrome
 "~/dotfiles/utils/chrome-search"
     m:0x40 + c:39
     Mod4 + s 
@@ -70,7 +70,7 @@
     m:0x40 + c:56
     Mod4 + b 
 
-#Open Application
+#Open Application from Launcher Shortcut
 "rofi -show drun"
     m:0x40 + c:38
     Mod4 + a 
@@ -80,37 +80,37 @@
     m:0x44 + c:38
     Control+Mod4 + a 
 
-#Application/Window Menu-Copy
+#Open Application
 "rofi -show run"
     m:0x41 + c:38
     Shift+Mod4 + a 
 
-#Editor
+#Open Editor
 "wmctrl -x -a emacs || wmctrl -F -x -a sun-awt-X11-XFramePeer.jetbrains-studio || emacsclient -c --alternate-editor """
     m:0x40 + c:26
     Mod4 + e 
 
-#Chrome Beta
+#Open Chrome Beta
 "wmctrl -x -F -a "google-chrome-beta.Google-chrome-beta" || google-chrome-beta"
     m:0x40 + c:25
     Mod4 + w 
 
-#Chrome
+#Open Chrome
 "wmctrl -x -F -a "google-chrome.Google-chrome" || google-chrome"
     m:0x40 + c:27
     Mod4 + r 
 
-#Tmux
+#Open Tmux
 "wmctrl -x -F -a "st-256color.st-256color" || st -e tmux new -A -s persistent"
     m:0x40 + c:28
     Mod4 + t 
 
-#Show copyq
+#Open copyq
 "copyq show"
     m:0x41 + c:54
     Shift+Mod4 + c 
 
-#recoll file
+#Open recoll search
 "~/zzzfoo/zzzfoo -o gnome-open -n 200 -r ' -fullscreen'"
     m:0x41 + c:41
     Shift+Mod4 + f 
