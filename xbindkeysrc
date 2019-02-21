@@ -41,7 +41,7 @@
     Mod4 + x 
 
 #Open web page in chrome
-"~/dotfiles/utils/chrome-open"
+"~/dotfiles/utils/chrome-open google-chrome"
     m:0x40 + c:33
     Mod4 + p 
 
