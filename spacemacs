@@ -382,6 +382,7 @@ values."
   (make-frame '((name . "capture")
                 (width . 120)
                 (height . 15)))
+  (delete-frame)
   (select-frame-by-name "capture")
   (setq word-wrap 1)
   (setq truncate-lines nil)
@@ -478,7 +479,7 @@ values."
             - %^{first}\n- %^{second}\n- %^{third}\n\
             ** Rough plan for tomorrow\n%^{plan}"
            :immediate-finish t)
-          ("q" "Journal: Quote" entry (file+olp+datetree "journal.org.gpg")
+          ("Q" "Journal: Quote" entry (file+olp+datetree "journal.org.gpg")
            "* %^{title|A quote} :quote:\n#+BEGIN_QUOTE\n%x\n#+END_QUOTE\n%?")
           ("m" "Meeting Notes" entry (file+olp+datetree "work.org.gpg" "Meeting Notes")
            "* %^{meeting-title} \n %? \n")

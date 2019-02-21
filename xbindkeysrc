@@ -41,7 +41,7 @@
     Mod4 + x 
 
 #Capture
-"emacsclient -e '(sa/make-capture-frame)'"
+"emacsclient -c -e '(sa/make-capture-frame)'"
     m:0x44 + c:54
     Control+Mod4 + c 
 
