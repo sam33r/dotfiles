@@ -55,8 +55,8 @@
     m:0x40 + c:33
     Mod4 + p 
 
-#Open chrome with selected bookmarks
-"~/dotfiles/utils/chrome-bookmarks"
+#Run macro
+"~/dotfiles/utils/run-macro"
     m:0x41 + c:33
     Shift+Mod4 + p 
 
