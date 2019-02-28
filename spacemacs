@@ -93,6 +93,8 @@ values."
      ;; https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Bvim/evil-snipe
      evil-snipe
 
+     pdf-tools
+
      (elfeed :variables rmh-elfeed-org-files (list "~/feeds/feeds.org"))
      (shell :variables
             shell-default-shell 'eshell)
