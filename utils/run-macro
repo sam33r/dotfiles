@@ -1,0 +1,8 @@
+#!/bin/bash
+
+MACROS_DIR="$HOME/.macros"
+
+ls -1 $MACROS_DIR > /tmp/macros
+
+macro=`ls -1 $MACROS_DIR | rofi -dmenu -markup-rows`
+bash "$MACROS_DIR/$macro"
