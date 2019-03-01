@@ -114,7 +114,7 @@ alias h='$HOME/pyenv/bin/howdoi -n 3 -c'
 alias today='~/pyenv/bin/gcalcli agenda now 11:59pm --calendar $CALENDAR --detail_location --detail_description'
 alias week='~/pyenv/bin/gcalcli agenda --calendar $CALENDAR'
 alias weeknum='date +%V'
-alias i='inxi -v 7'
+alias i='sudo inxi -v 7'
 alias dupes='fdupes -r -n -A -d'
 
 # Keybindings
