@@ -57,8 +57,8 @@
 
 #Run macro
 "~/dotfiles/utils/run-macro"
-    m:0x41 + c:33
-    Shift+Mod4 + p 
+    m:0x40 + c:25
+    Mod4 + w 
 
 #Search in chrome
 "~/dotfiles/utils/chrome-search"
@@ -94,11 +94,6 @@
 "wmctrl -x -a emacs || wmctrl -F -x -a sun-awt-X11-XFramePeer.jetbrains-studio || emacsclient -c --alternate-editor """
     m:0x40 + c:26
     Mod4 + e 
-
-#Open Chrome Beta
-"wmctrl -x -F -a "google-chrome-beta.Google-chrome-beta" || google-chrome-beta"
-    m:0x40 + c:25
-    Mod4 + w 
 
 #Open Chrome
 "wmctrl -x -F -a "google-chrome.Google-chrome" || google-chrome"

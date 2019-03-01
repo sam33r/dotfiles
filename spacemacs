@@ -475,7 +475,7 @@ values."
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
            "* %?\nEntered on %U\n  %i")
           ("w" "Work Journal" entry (file+olp+datetree "work-journal.org.gpg")
-           "* %?")
+           "* %T %?")
           ("e" "Journal: End of Day" entry (file+olp+datetree "journal.org.gpg")
            "* End of Day :end-of-day:\n** Three things about today\n\"
             - %^{first}\n- %^{second}\n- %^{third}\n\
