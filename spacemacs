@@ -192,7 +192,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-light zenburn solarized-dark solarized-light spacemacs-light tao-yin tao-yang dracula spacemacs-dark ujelly)
+   dotspacemacs-themes '(tao-yang spacemacs-light zenburn solarized-dark solarized-light spacemacs-light tao-yin dracula spacemacs-dark ujelly)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state nil
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -549,7 +549,6 @@ values."
           ("DONE" . (:foreground "green" :weight bold))))
 
   (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
-  (add-hook 'org-mode-hook 'sa/write 'append)
   (add-hook 'org-mode-hook #'hidden-mode-line-mode)
   (add-hook 'org-mode-hook (lambda () (auto-revert-mode 1)))
   (add-hook 'org-mode-hook (lambda () (variable-pitch-mode t)))
@@ -609,7 +608,7 @@ values."
   (interactive)
   (turn-off-fci-mode)
   (spacemacs/toggle-fringe-off)
-  (writeroom-mode t)
+  ;; (writeroom-mode t)
   (setq word-wrap t)
   (message "Activating writing mode"))
 
@@ -976,10 +975,8 @@ like:
                :foreground ,bg-dark
                :underline nil))
     (org-document-info
-     (:foreground ,gray
-                  :slant italic)
-     (:height 1.2
-              :slant italic))
+     (:foreground ,gray)
+     (:height 1.2))
     (org-level-1
      (:inherit variable-pitch
                :height 1.3
@@ -989,7 +986,6 @@ like:
                :family ,et-font
                :height 1.6
                :weight normal
-               :slant normal
                :foreground ,bg-dark))
     (org-level-2
      (:inherit variable-pitch
@@ -1019,14 +1015,12 @@ like:
      (:inherit nil
                :family ,et-font
                :weight normal
-               :slant italic
                :height 1.1
                :foreground ,bg-dark))
     (org-level-5
      (:inherit variable-pitch
                :weight bold
                :height 1.1
-               :slant italic
                :foreground ,slate)
      nil)
     (org-level-6
@@ -1342,22 +1336,6 @@ like:
     (font-lock-string-face
      (:foreground ,string)
      nil)
-    (font-lock-comment-face
-     (:background "#494949"
-                  :foreground "#f9f9f9"
-                  :box (:line-width 1 :color "black" :style released-button)
-                  :slant italic
-                  :height 1.2
-                  :width normal
-                  :family "EtBembo")
-     (:background "linen"
-                  :foreground "#727280"
-                  :box (:line-width 1 :color "grey75" :style released-button)
-                  :slant italic
-                  :height 1.2
-                  :width normal
-                  :family "EtBembo")
-     )
     (helm-ff-symlink
      (:foreground ,slate)
      nil)
@@ -1873,16 +1851,20 @@ you should place your code here."
      (300 . "#7CB8BB")
      (320 . "#8CD0D3")
      (340 . "#94BFF3")
-     (360 . "#DC8CC3")))
+     (360 . "#DC8CC3"))))
  '(vc-annotate-very-old-color "#DC8CC3")
  '(vc-follow-symlinks t)
  '(web-mode-code-indent-offset 2)
  '(web-mode-css-indent-offset 2)
  '(web-mode-markup-indent-offset 2)
  '(writeroom-border-width 20)
- '(writeroom-fullscreen-effect 'maximized)
+ '(writeroom-fullscreen-effect (quote maximized))
  '(writeroom-global-effects
-   '(writeroom-set-alpha writeroom-set-menu-bar-lines writeroom-set-tool-bar-lines writeroom-set-vertical-scroll-bars writeroom-set-bottom-divider-width))
+   (quote
+    (writeroom-set-alpha writeroom-set-menu-bar-lines writeroom-set-tool-bar-lines writeroom-set-vertical-scroll-bars writeroom-set-bottom-divider-width)))
+ '(writeroom-major-modes (quote (org-mode text-mode)))
+ '(writeroom-maximize-window nil)
+ '(writeroom-restore-window-config t)
  '(writeroom-width 100))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -1890,38 +1872,5 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:background nil))))
- '(font-lock-comment-face ((t (:background "linen" :foreground "#727280" :box (:line-width 1 :color "grey75" :style released-button) :slant italic :height 1.2 :width normal :family "EtBembo"))))
- '(header-line ((t (:background nil :inherit nil))))
- '(highlight ((t (:background "#efeae9"))))
- '(magit-header-line ((t (:background nil :foreground "#fbf8ef" :box nil))))
- '(mode-line ((t (:background "#fbf8ef" :box nil))))
- '(mode-line-inactive ((t (:box nil))))
- '(nlinum-current-line ((t (:foreground "#1c1e1f"))))
- '(org-agenda-date ((t (:inherit variable-pitch :height 1.1))))
- '(org-agenda-done ((t (:strike-through t :foreground "#727280"))))
- '(org-block ((t (:foreground "#1c1e1f" :height 0.8 :family "Input"))))
- '(org-block-begin-line ((t (:background nil :height 0.8 :family "Souce Code Pro" :foreground "#8FA1B3"))))
- '(org-block-end-line ((t (:background nil :height 0.8 :family "Souce Code Pro" :foreground "#8FA1B3"))))
- '(org-code ((t (:inherit nil :family "Verily Serif Mono" :foreground "#525254" :height 0.9))))
- '(org-date ((t (:family "Souce Code Pro" :height 0.8))))
- '(org-document-info ((t (:height 1.2 :slant italic))))
- '(org-document-info-keyword ((t (:height 0.8 :foreground "#bbb"))))
- '(org-document-title ((t (:inherit nil :family "EtBembo" :height 1.8 :foreground "#1c1e1f" :underline nil))))
- '(org-ellipsis ((t (:underline nil))))
- '(org-headline-done ((t (:family "EtBembo" :strike-through t))))
- '(org-hide ((t (:foreground "#fbf8ef"))))
- '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
- '(org-level-1 ((t (:inherit nil :family "EtBembo" :height 1.6 :weight normal :slant normal :foreground "#1c1e1f"))))
- '(org-level-2 ((t (:inherit nil :family "EtBembo" :weight normal :height 1.3 :foreground "#1c1e1f"))))
- '(org-level-3 ((t (:inherit nil :family "EtBembo" :weight normal :slant italic :height 1.2 :foreground "#1c1e1f"))))
- '(org-level-4 ((t (:inherit nil :family "EtBembo" :weight normal :slant italic :height 1.1 :foreground "#1c1e1f"))))
- '(org-link ((t (:foreground "#1c1e1f"))))
- '(org-meta-line ((t (:foreground "#da8b55" :height 0.8 :family "Input"))))
- '(org-special-keyword ((t (:family "Souce Code Pro" :height 0.8))))
- '(org-table ((t (:family "Verily Serif Mono" :height 0.9 :background "#fbf8ef"))))
- '(org-tag ((t (:foreground "#727280"))))
- '(powerline-active1 ((t (:background "#fbf8ef"))))
- '(powerline-active2 ((t (:background "#fbf8ef"))))
- '(powerline-inactive1 ((t (:background "#fbf8ef"))))
- '(powerline-inactive2 ((t (:background "#fbf8ef"))))
- '(spaceline-highlight-face ((t (:foreground "dim gray" :background "gainsboro")))))
+ '(font-lock-comment-face ((t (:height 1.2 :width normal :family "EtBembo" :width ultra-expanded))))
+ '(spaceline-highlight-face ((t (:foreground "dim gray" :background "white")))))
