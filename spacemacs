@@ -473,7 +473,7 @@ values."
            (function sa/generate-bookmark-template)
            )
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
-           "* %?\nEntered on %U\n  %i")
+           "* %?\n%T\n  %i")
           ("w" "Work Journal" entry (file+olp+datetree "work-journal.org.gpg")
            "* %T %?")
           ("e" "Journal: End of Day" entry (file+olp+datetree "journal.org.gpg")
