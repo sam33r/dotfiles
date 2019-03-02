@@ -134,7 +134,7 @@ values."
    dotspacemacs-install-packages 'used-only)
   (if (fboundp 'sa/dotspacemacs/layers)
       (sa/dotspacemacs/layers))
-  )
+)
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -331,7 +331,7 @@ values."
    dotspacemacs-folding-method 'evil
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
-   dotspacemacs-smartparens-strict-mode nil
+   dotspacemacs-smartparens-strict-mode t
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
    ;; over any automatically added closing parenthesis, bracket, quote, etc…
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
@@ -1852,7 +1852,7 @@ you should place your code here."
      (300 . "#7CB8BB")
      (320 . "#8CD0D3")
      (340 . "#94BFF3")
-     (360 . "#DC8CC3"))))
+     (360 . "#DC8CC3")))
  '(vc-annotate-very-old-color "#DC8CC3")
  '(vc-follow-symlinks t)
  '(web-mode-code-indent-offset 2)
