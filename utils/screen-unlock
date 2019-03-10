@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 # Script that runs when screen is unlocked.
 
 # If a previous unlock had set a timer, remove it.
@@ -15,10 +15,10 @@ if [ "$clean" = "YES" ]; then
   ~/dotfiles/utils/close-windows
 fi
 
-grep -ah " | " ~/purpose-log.txt | tac | column -s'|' -t  > /tmp/purpose-options
+grep -ah " | " ~/purpose-log.txt | tac > /tmp/purpose-options
 purpose_rec=$(cat /tmp/purpose-options | \
             rofi -i -l 100 -dmenu -p "Enter Purpose > " -fullscreen -padding 200)
-purpose=$(echo $purpose_rec | grep -ao "   .*" | sed -e 's/^[ \t]*//')
+purpose=$(echo $purpose_rec | cut -d "|" -f2 | sed -e 's/^[ \t]*//')
 echo $purpose
 duration=$(echo "60|300|600|1500|3300" | \
              rofi -dmenu -p "Enter Duration (seconds) > " \
