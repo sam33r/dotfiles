@@ -82,3 +82,5 @@ fi
 
 # For android studio
 export _JAVA_AWT_WM_NONREPARENTING=1
+
+export PATH="$HOME/.cargo/bin:$PATH"
