@@ -69,6 +69,14 @@ function install_dotfiles()
   done < $dir/$dotfiles_list
 }
 
+function install_fbterm()
+{
+  sudo apt-get install fbterm fbset
+  # Add current user to the video group.
+  sudo gpasswd -a $USER video
+  sudo chmod u+s /usr/bin/fbterm
+}
+
 function install_indicator_kdeconnect_from_source()
 {
   cd $HOME
@@ -157,8 +165,24 @@ function install_scrcpy_from_source()
   cd $dir
 }
 
+function install_update_cargo_rust()
+{
+  if (which rustup); then
+    rustup update
+  else
+    curl https://sh.rustup.rs -sSf | sh
+  fi
+}
+
+function install_fd()
+{
+  install_update_cargo_rust
+  cargo install fd-find
+}
+
 function install_kitty()
 {
+  install_update_cargo_rust
   cd $HOME
   curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
   cd $dir
@@ -167,7 +191,6 @@ function install_kitty()
 function install_alacritty()
 {
   cd $HOME
-  curl -sSf https://static.rust-lang.org/rustup.sh | sh
   git clone https://github.com/jwilm/alacritty.git
   cd alacritty
   git pull origin master
