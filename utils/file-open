@@ -1,0 +1,21 @@
+#!/bin/bash
+#!/usr/bin/env bash
+
+if [ x"$@" = x"Quit" ]
+then
+  exit;
+fi
+
+if [ "$@" ] && ! [ "$@" = "Restart" ]; then
+  if [[ -d "$@" ]] || [[ -f "$@" ]]; then
+    coproc ( gnome-open "$@"  > /dev/null 2>&1 )
+    exec 1>&-
+    exit;
+  else
+    fd -L -p -j 20 "$@"
+    echo "Restart"
+    echo "Quit"
+  fi
+else
+  echo "Enter Query"
+fi

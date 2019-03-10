@@ -40,6 +40,11 @@
     m:0x40 + c:61
     Mod4 + slash 
 
+#Open file
+"rofi -show find -modi find:~/dotfiles/utils/file-open -markup-rows"
+    m:0x40 + c:41
+    Mod4 + f 
+
 #Screen Lock
 "~/dotfiles/utils/screen-lock"
     m:0x40 + c:53
