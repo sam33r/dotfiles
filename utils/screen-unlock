@@ -15,14 +15,14 @@ if [ "$clean" = "YES" ]; then
   ~/dotfiles/utils/close-windows
 fi
 
-grep -aoh ": ..*$" ~/purpose-log.txt | cut -c 2- | tac | sed 's/^ *//' > /tmp/purpose-options
-purpose=$(cat /tmp/purpose-options | \
+grep -ah " | " ~/purpose-log.txt | tac > /tmp/purpose-options
+purpose_rec=$(cat /tmp/purpose-options | \
             rofi -i -l 100 -dmenu -p "Enter Purpose > " -fullscreen -padding 200)
-
+purpose=$(echo $purpose_rec | cut -d "|" -f2 | sed -e 's/^[ \t]*//')
+echo $purpose
 duration=$(echo "60|300|600|1500|3300" | \
              rofi -dmenu -p "Enter Duration (seconds) > " \
                   -fullscreen -padding 200 -sep '|' -only-match)
-
 nowtime=`date "+%Y-%m-%d %H:%M"`
 endtime=`date "+%H:%M" -d "+ $duration seconds"`
 nohup sh -c "sleep $duration && notify-send 'Locking screen in 30 seconds.' && sleep 30 && ~/dotfiles/utils/screen-lock" &
@@ -33,7 +33,7 @@ echo $purpose > /tmp/purpose
 echo $duration > /tmp/purpose-expected-duration
 date +%s > /tmp/purpose-start-time
 
-echo "$nowtime 🢂 $endtime : $purpose" | \
+echo "$nowtime 🢂 $endtime | $purpose" | \
   tr '[:lower:]' '[:upper:]' >> ~/purpose-log.txt
 
 ~/.dwm/xsetroot.sh &
