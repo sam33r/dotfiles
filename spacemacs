@@ -374,6 +374,12 @@ values."
   (if (equal "capture" (frame-parameter nil 'name))
       (delete-frame)))
 
+(defadvice org-agenda-quit
+    (after close-agenda-quickview)
+  (if (equal "agenda" (frame-parameter nil 'name))
+      (delete-frame)))
+(ad-activate 'org-agenda-quit)
+
 ;; make the frame contain a single window. by default org-capture
 ;; splits the window.
 (add-hook 'org-capture-mode-hook
@@ -580,9 +586,15 @@ values."
   (delete-other-windows))
 
 (defun sa/agenda ()
-  ;; Org Agenda
+  (make-frame '((name . "agenda")
+                (width . 120)
+                (height . 100)))
+  (delete-frame)
+  (select-frame-by-name "agenda")
   (org-agenda nil "n")
-  (delete-other-windows))
+  (delete-other-windows)
+  (org-agenda-redo)
+  )
 
 (defun sa/task-clocked-time ()
   "Return a string with the clocked time and effort, if any"
@@ -1824,7 +1836,7 @@ you should place your code here."
  '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
  '(org-agenda-span (quote day))
  '(org-agenda-start-with-log-mode (quote (closed clock)))
- '(org-agenda-sticky t)
+ '(org-agenda-sticky nil)
  '(org-agenda-window-setup (quote current-window))
  '(org-babel-shell-names
    (quote
