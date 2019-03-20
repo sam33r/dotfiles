@@ -137,5 +137,6 @@ fi
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PATH="$HOME/.cargo/bin:$PATH"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
