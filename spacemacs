@@ -1035,6 +1035,9 @@ you should place your code here."
   ;; Disable line highlight.
   (global-hl-line-mode -1)
 
+  ;; Enable global auto-revert.
+  (global-auto-revert-mode 1)
+
   ;; Centered cursor minor mode.
   ;; (spacemacs/toggle-centered-point-globally-on)
 
