@@ -6,14 +6,18 @@ then
   exit;
 fi
 
+tool="xdg-open"
+if hash gnome-open 2>/dev/null; then
+  tool="gnome-open"
+fi
+
 if [ "$@" ] && ! [ "$@" = "Restart" ]; then
   if [[ -d "$@" ]] || [[ -f "$@" ]]; then
-    coproc ( gnome-open "$@"  > /dev/null 2>&1 )
+    coproc ( $tool "$@"  > /dev/null 2>&1 )
     exec 1>&-
     exit;
   else
-    cd $HOME
-    fd -L -p -j 20 "$@"
+    $HOME/.cargo/bin/fd -L -p -j 20 "$@" $HOME
     echo "Restart"
     echo "Quit"
   fi

@@ -39,4 +39,4 @@ while true; do
 done &
 
 # Open the screen unlock dialogs
-~/dotfiles/utils/screen-unlock &
+(sleep 60 && ~/dotfiles/utils/screen-unlock) &

@@ -116,6 +116,7 @@ values."
                                       org-web-tools
                                       fontify-face
                                       yasnippet-snippets
+                                      focus
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -374,6 +375,12 @@ values."
   (if (equal "capture" (frame-parameter nil 'name))
       (delete-frame)))
 
+(defadvice org-agenda-quit
+    (after close-agenda-quickview)
+  (if (equal "agenda" (frame-parameter nil 'name))
+      (delete-frame)))
+(ad-activate 'org-agenda-quit)
+
 ;; make the frame contain a single window. by default org-capture
 ;; splits the window.
 (add-hook 'org-capture-mode-hook
@@ -549,8 +556,45 @@ values."
           ("IN-PROGRESS" . (:foreground "yellow" :weight bold))
           ("DONE" . (:foreground "green" :weight bold))))
 
+  ;; Font faces
+  (custom-theme-set-faces
+   'user
+   '(variable-pitch ((t (:family "Sans Serif"))))
+   '(fixed-pitch ((t ( :family "Input" :slant normal :weight normal :height 1.0 :width normal)))))
+  (let* ((variable-tuple
+          (cond ((x-family-fonts "EtBembo") '(:family "EtBembo"))
+                ((x-family-fonts "Serif")    '(:family "Serif"))
+                (nil (warn "Cannot find a Serif Font."))))
+        (base-font-color     (face-foreground 'default nil 'default))
+        (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+
+    (custom-theme-set-faces
+    'user
+    `(org-level-8 ((t (,@headline ,@variable-tuple :height 1.1))))
+    `(org-level-7 ((t (,@headline ,@variable-tuple :height 1.1))))
+    `(org-level-6 ((t (,@headline ,@variable-tuple :height 1.1))))
+    `(org-level-5 ((t (,@headline ,@variable-tuple :height 1.2))))
+    `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.25))))
+    `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.3))))
+    `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.6))))
+    `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.75))))
+    `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))))
+  (custom-theme-set-faces
+   'user
+   '(org-block                 ((t (:inherit fixed-pitch))))
+   '(org-link                  ((t (:foreground "royal blue" :underline t))))
+   '(org-meta-line             ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+   '(org-property-value        ((t (:inherit fixed-pitch))) t)
+   '(org-special-keyword       ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+   '(org-tag                   ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+   '(org-verbatim              ((t (:inherit (shadow fixed-pitch)))))
+   '(org-indent                ((t (:inherit (org-hide fixed-pitch))))))
+
   (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
   (add-hook 'org-mode-hook #'hidden-mode-line-mode)
+  (add-hook 'org-mode-hook #'(lambda ()
+                               (visual-line-mode)
+                               (org-indent-mode)))
   (add-hook 'org-mode-hook (lambda () (auto-revert-mode 1)))
   (add-hook 'org-mode-hook (lambda () (variable-pitch-mode t)))
   )
@@ -579,10 +623,16 @@ values."
   (org-agenda)
   (delete-other-windows))
 
-(defun sa/agenda ()
-  ;; Org Agenda
-  (org-agenda nil "n")
-  (delete-other-windows))
+(defun sa/agenda (key)
+  (make-frame '((name . "agenda")
+                (width . 120)
+                (height . 100)))
+  (delete-frame)
+  (select-frame-by-name "agenda")
+  (org-agenda nil key)
+  (delete-other-windows)
+  (org-agenda-redo)
+  )
 
 (defun sa/task-clocked-time ()
   "Return a string with the clocked time and effort, if any"
@@ -796,558 +846,6 @@ of change will be 23:59 on that day"
   (setq mu4e-compose-keep-self-cc nil)
   )
 
-;; Mostly from:
-;; https://lepisma.github.io/2017/10/28/ricing-org-mode/
-(defun sa/org-theme ()
-  (defmacro set-pair-faces (themes consts faces-alist)
-    "Macro for pair setting of custom faces.
-THEMES name the pair (theme-one theme-two). CONSTS sets the variables like
-  ((sans-font \"Some Sans Font\") ...). FACES-ALIST has the actual faces
-like:
-  ((face1 theme-one-attr theme-two-atrr)
-   (face2 theme-one-attr nil           )
-   (face3 nil            theme-two-attr)
-   ...)"
-    (defmacro get-proper-faces ()
-      `(let* (,@consts)
-         (backquote ,faces-alist)))
-
-    `(setq theming-modifications
-           ',(mapcar (lambda (theme)
-                       `(,theme ,@(cl-remove-if
-                                   (lambda (x) (equal x "NA"))
-                                   (mapcar (lambda (face)
-                                             (let ((face-name (car face))
-                                                   (face-attrs (nth (cl-position theme themes) (cdr face))))
-                                               (if face-attrs
-                                                   `(,face-name ,@face-attrs)
-                                                 "NA"))) (get-proper-faces)))))
-                     themes)))
-
-  (set-pair-faces
-   ;; Themes to cycle in
-   (zenburn spacemacs-light)
-
-   ;; Variables
-   ((bg-white           "#fbf8ef")
-    (bg-light           "#222425")
-    (bg-dark            "#1c1e1f")
-    (bg-darker          "#1c1c1c")
-    (fg-white           "#ffffff")
-    (shade-white        "#efeae9")
-    (fg-light           "#655370")
-    (dark-cyan          "#008b8b")
-    (region-dark        "#2d2e2e")
-    (region             "#39393d")
-    (slate              "#8FA1B3")
-    (keyword            "#f92672")
-    (comment            "#525254")
-    (builtin            "#fd971f")
-    (purple             "#9c91e4")
-    (doc                "#727280")
-    (type               "#66d9ef")
-    (string             "#b6e63e")
-    (gray-dark          "#999")
-    (gray               "#bbb")
-    (sans-font          "Roboto")
-    (serif-font         "Times New Roman")
-    (et-font            "EtBembo")
-    (sans-mono-font     "Input")
-    (serif-mono-font    "Input"))
-
-   ;; Settings
-   (
-    ;; (variable-pitch
-    ;;  (:family "Libre Baskerville" :height 1.2)
-    ;;  (:family "Libre Baskerville"
-    ;;           :background nil
-    ;;           :foreground ,bg-dark
-    ;;           :height 1.2))
-    (variable-pitch
-     (:family "Nunito" :height 1.2)
-     (:family "Nunito"
-              :background nil
-              :foreground ,bg-dark
-              :height 1.2))
-    (header-line
-     (:background nil :inherit nil)
-     (:background nil :inherit nil))
-    (eval-sexp-fu-flash
-     (:background ,dark-cyan
-                  :foreground ,fg-white)
-     nil)
-    (eval-sexp-fu-flash-error
-     (:background ,keyword
-                  :foreground ,fg-white)
-     nil)
-    (hackernews-link-face
-     (:foreground ,slate
-                  :inherit variable-pitch
-                  :height 1.2)
-     nil)
-    (hackernews-comment-count-face
-     (:foreground ,string)
-     nil)
-    (company-tooltip
-     (:background ,bg-darker
-                  :foreground ,gray)
-     nil)
-    (company-scrollbar-fg
-     (:background ,comment)
-     nil)
-    (company-scrollbar-bg
-     (:background ,bg-darker)
-     nil)
-    (company-tooltip-common
-     (:foreground ,keyword)
-     nil)
-    (company-tootip-annotation
-     (:foreground ,type)
-     nil)
-    (company-tooltip-selection
-     (:background ,region)
-     nil)
-    (show-paren-match
-     (:background ,keyword
-                  :foreground ,bg-dark)
-     nil)
-    (magit-section-heading
-     (:foreground ,keyword)
-     nil)
-    (magit-header-line
-     (:background nil
-                  :foreground ,bg-dark
-                  :box nil)
-     (:background nil
-                  :foreground ,bg-white
-                  :box nil))
-    (magit-diff-hunk-heading
-     (:background ,comment
-                  :foreground ,gray)
-     nil)
-    (magit-diff-hunk-heading-highlight
-     (:background ,comment
-                  :foreground ,fg-white)
-     nil)
-    (tooltip
-     (:foreground ,gray
-                  :background ,bg-darker)
-     nil)
-    (git-gutter-fr:modified
-     (:foreground ,dark-cyan)
-     nil)
-    (mode-line
-     (:background ,bg-darker)
-     (:background ,bg-white
-                  :box nil))
-    (mode-line-inactive
-     nil
-     (:box nil))
-    (powerline-active1
-     nil
-     (:background ,bg-white))
-    (powerline-active2
-     nil
-     (:background ,bg-white))
-    (powerline-inactive1
-     nil
-     (:background ,bg-white))
-    (powerline-inactive2
-     nil
-     (:background ,bg-white))
-    (highlight
-     (:background ,region
-                  :foreground ,fg-white)
-     (:background ,shade-white))
-    (hl-line
-     (:background ,region-dark)
-     nil)
-    (solaire-hl-line-face
-     (:background ,bg-dark)
-     nil)
-    (org-document-title
-     (:inherit variable-pitch
-               :height 1.3
-               :weight normal
-               :foreground ,gray)
-     (:inherit nil
-               :family ,et-font
-               :height 1.8
-               :foreground ,bg-dark
-               :underline nil))
-    (org-document-info
-     (:foreground ,gray)
-     (:height 1.2))
-    (org-level-1
-     (:inherit variable-pitch
-               :height 1.3
-               :weight bold
-               :foreground ,keyword)
-     (:inherit nil
-               :family ,et-font
-               :height 1.6
-               :weight normal
-               :foreground ,bg-dark))
-    (org-level-2
-     (:inherit variable-pitch
-               :weight bold
-               :height 1.2
-               :foreground ,gray)
-     (:inherit nil
-               :family ,et-font
-               :weight normal
-               :height 1.3
-               :foreground ,bg-dark))
-    (org-level-3
-     (:inherit variable-pitch
-               :weight bold
-               :height 1.1
-               :foreground ,slate)
-     (:inherit nil
-               :family ,et-font
-               :weight normal
-               :height 1.2
-               :foreground ,bg-dark))
-    (org-level-4
-     (:inherit variable-pitch
-               :weight bold
-               :height 1.1
-               :foreground ,slate)
-     (:inherit nil
-               :family ,et-font
-               :weight normal
-               :height 1.1
-               :foreground ,bg-dark))
-    (org-level-5
-     (:inherit variable-pitch
-               :weight bold
-               :height 1.1
-               :foreground ,slate)
-     nil)
-    (org-level-6
-     (:inherit variable-pitch
-               :weight bold
-               :height 1.1
-               :foreground ,slate)
-     nil)
-    (org-level-7
-     (:inherit variable-pitch
-               :weight bold
-               :height 1.1
-               :foreground ,slate)
-     nil)
-    (org-level-8
-     (:inherit variable-pitch
-               :weight bold
-               :height 1.1
-               :foreground ,slate)
-     nil)
-    (org-headline-done
-     (:strike-through t)
-     (:family ,et-font
-              :strike-through t))
-    (org-quote
-     (:background ,bg-dark)
-     nil)
-    ;; TODO: Use a better font.
-    (org-verse
-     (:height 1.2
-              :family "Merriweather")
-     (:height 1.2
-      :family "Merriweather"))
-    (org-block
-     (:background "#000000"
-                  :height 0.8
-                  :family "Input")
-     (:background "#ffffff"
-                  :foreground ,bg-dark
-                  :height 0.8
-                  :family "Input"))
-    (org-block-begin-line
-     (:background ,bg-dark)
-     (:background nil
-                  :height 0.8
-                  :family ,sans-mono-font
-                  :foreground ,slate))
-    (org-block-end-line
-     (:background ,bg-dark)
-     (:background nil
-                  :height 0.8
-                  :family ,sans-mono-font
-                  :foreground ,slate))
-    (org-document-info-keyword
-     (:foreground ,comment)
-     (:height 0.8
-              :foreground ,gray))
-    (org-link
-     (:underline nil
-                 :weight normal
-                 :foreground ,slate)
-     (:foreground ,bg-dark))
-    (org-special-keyword
-     (:height 0.9
-              :foreground ,comment)
-     (:family ,sans-mono-font
-              :height 0.8))
-    (org-todo
-     (:foreground ,builtin
-                  :background ,bg-dark)
-     nil)
-    (org-done
-     (:inherit variable-pitch
-               :foreground ,dark-cyan
-               :background ,bg-dark)
-     nil)
-    (org-agenda-current-time
-     (:foreground ,slate)
-     nil)
-    (org-hide
-     nil
-     (:foreground ,bg-white))
-    (org-indent
-     (:inherit org-hide)
-     (:inherit (org-hide fixed-pitch)))
-    (org-time-grid
-     (:foreground ,comment)
-     nil)
-    (org-warning
-     (:foreground ,builtin)
-     nil)
-    (org-date
-     nil
-     (:family ,sans-mono-font
-              :height 0.8))
-    (org-agenda-structure
-     (:height 1.3
-              :foreground ,doc
-              :weight normal
-              :inherit variable-pitch)
-     nil)
-    (org-agenda-date
-     (:foreground ,doc
-                  :inherit variable-pitch)
-     (:inherit variable-pitch
-               :height 1.1))
-    (org-agenda-date-today
-     (:height 1.5
-              :foreground ,keyword
-              :inherit variable-pitch)
-     nil)
-    (org-agenda-date-weekend
-     (:inherit org-agenda-date)
-     nil)
-    (org-scheduled
-     (:foreground ,gray)
-     nil)
-    (org-upcoming-deadline
-     (:foreground ,keyword)
-     nil)
-    (org-scheduled-today
-     (:foreground ,fg-white)
-     nil)
-    (org-scheduled-previously
-     (:foreground ,slate)
-     nil)
-    (org-agenda-done
-     (:inherit nil
-               :strike-through t
-               :foreground ,doc)
-     (:strike-through t
-                      :foreground ,doc))
-    (org-ellipsis
-     (:underline nil
-                 :foreground ,comment)
-     (:underline nil
-                 :foreground ,comment))
-    (org-tag
-     (:foreground ,doc)
-     (:foreground ,doc))
-    (org-table
-     (:background nil)
-     (:family ,serif-mono-font
-              :height 0.9
-              :background ,bg-white))
-    (org-code
-     (:inherit font-lock-builtin-face)
-     (:inherit nil
-               :family ,serif-mono-font
-               :foreground ,comment
-               :height 0.9))
-    (font-latex-sectioning-0-face
-     (:foreground ,type
-                  :height 1.2)
-     nil)
-    (font-latex-sectioning-1-face
-     (:foreground ,type
-                  :height 1.1)
-     nil)
-    (font-latex-sectioning-2-face
-     (:foreground ,type
-                  :height 1.1)
-     nil)
-    (font-latex-sectioning-3-face
-     (:foreground ,type
-                  :height 1.0)
-     nil)
-    (font-latex-sectioning-4-face
-     (:foreground ,type
-                  :height 1.0)
-     nil)
-    (font-latex-sectioning-5-face
-     (:foreground ,type
-                  :height 1.0)
-     nil)
-    (font-latex-verbatim-face
-     (:foreground ,builtin)
-     nil)
-    (spacemacs-normal-face
-     (:background ,bg-dark
-                  :foreground ,fg-white)
-     nil)
-    (spacemacs-evilified-face
-     (:background ,bg-dark
-                  :foreground ,fg-white)
-     nil)
-    (spacemacs-lisp-face
-     (:background ,bg-dark
-                  :foreground ,fg-white)
-     nil)
-    (spacemacs-emacs-face
-     (:background ,bg-dark
-                  :foreground ,fg-white)
-     nil)
-    (spacemacs-motion-face
-     (:background ,bg-dark
-                  :foreground ,fg-white)
-     nil)
-    (spacemacs-visual-face
-     (:background ,bg-dark
-                  :foreground ,fg-white)
-     nil)
-    (spacemacs-hybrid-face
-     (:background ,bg-dark
-                  :foreground ,fg-white)
-     nil)
-    (bm-persistent-face
-     (:background ,dark-cyan
-                  :foreground ,fg-white)
-     nil)
-    (helm-selection
-     (:background ,region)
-     nil)
-    (helm-match
-     (:foreground ,keyword)
-     nil)
-    (cfw:face-title
-     (:height 2.0
-              :inherit variable-pitch
-              :weight bold
-              :foreground ,doc)
-     nil)
-    (cfw:face-holiday
-     (:foreground ,builtin)
-     nil)
-    (cfw:face-saturday
-     (:foreground ,doc
-                  :weight bold)
-     nil)
-    (cfw:face-sunday
-     (:foreground ,doc)
-     nil)
-    (cfw:face-periods
-     (:foreground ,dark-cyan)
-     nil)
-    (cfw:face-annotation
-     (:foreground ,doc)
-     nil)
-    (cfw:face-select
-     (:background ,region)
-     nil)
-    (cfw:face-toolbar-button-off
-     (:foreground ,doc)
-     nil)
-    (cfw:face-toolbar-button-on
-     (:foreground ,type
-                  :weight bold)
-     nil)
-    (cfw:face-day-title
-     (:foreground ,doc)
-     nil)
-    (cfw:face-default-content
-     (:foreground ,dark-cyan)
-     nil)
-    (cfw:face-disable
-     (:foreground ,doc)
-     nil)
-    (cfw:face-today
-     (:background ,region
-                  :weight bold)
-     nil)
-    (cfw:face-toolbar
-     (:inherit default)
-     nil)
-    (cfw:face-today-title
-     (:background ,keyword
-                  :foreground ,fg-white)
-     nil)
-    (cfw:face-grid
-     (:foreground ,comment)
-     nil)
-    (cfw:face-header
-     (:foreground ,keyword
-                  :weight bold)
-     nil)
-    (cfw:face-default-day
-     (:foreground ,fg-white)
-     nil)
-    (dired-subtree-depth-1-face
-     (:background nil)
-     nil)
-    (dired-subtree-depth-2-face
-     (:background nil)
-     nil)
-    (dired-subtree-depth-3-face
-     (:background nil)
-     nil)
-    (dired-subtree-depth-4-face
-     (:background nil)
-     nil)
-    (dired-subtree-depth-5-face
-     (:background nil)
-     nil)
-    (dired-subtree-depth-6-face
-     (:background nil)
-     nil)
-    (nlinum-current-line
-     (:foreground ,builtin)
-     (:foreground ,bg-dark))
-    (vertical-border
-     (:background ,region
-                  :foreground ,region)
-     nil)
-    (which-key-command-description-face
-     (:foreground ,type)
-     nil)
-    (flycheck-error
-     (:background nil)
-     nil)
-    (flycheck-warning
-     (:background nil)
-     nil)
-    (font-lock-string-face
-     (:foreground ,string)
-     nil)
-    (helm-ff-symlink
-     (:foreground ,slate)
-     nil)
-    (region
-     (:background ,region)
-     nil)
-    (header-line
-     (:background nil
-                  :inherit nil)
-     (:background nil
-                  :inherit nil)))))
 
 
 ;; Custom elfeed functions (to show date in headers)
@@ -1453,6 +951,8 @@ you should place your code here."
   ;; Activate column indicator in prog-mode and text-mode, except for org-mode
   (add-hook 'prog-mode-hook 'fci-mode)
   (add-hook 'text-mode-hook 'fci-mode)
+  (add-hook 'prog-mode-hook 'focus-mode)
+  (add-hook 'text-mode-hook 'focus-mode)
   (add-hook 'prog-mode-hook 'sa/code)
 
   ;; Fontify face definitions in elisp.
@@ -1534,6 +1034,9 @@ you should place your code here."
 
   ;; Disable line highlight.
   (global-hl-line-mode -1)
+
+  ;; Enable global auto-revert.
+  (global-auto-revert-mode 1)
 
   ;; Centered cursor minor mode.
   ;; (spacemacs/toggle-centered-point-globally-on)
@@ -1732,7 +1235,47 @@ you should place your code here."
         (load-file "~/git-complete/git-complete.el")
         (require 'git-complete)
         (define-key evil-insert-state-map (kbd "C-k") 'git-complete)))
-  (sa/org-theme)
+
+  ;; It is required to disable `fci-mode' when `htmlize-buffer' is called;
+  ;; otherwise the invisible fci characters show up as funky looking
+  ;; visible characters in the source code blocks in the html file.
+  ;; http://lists.gnu.org/archive/html/emacs-orgmode/2014-09/msg00777.html
+  (with-eval-after-load 'fill-column-indicator
+    (defvar modi/htmlize-initial-fci-state nil
+      "Variable to store the state of `fci-mode' when `htmlize-buffer' is called.")
+
+    (defun modi/htmlize-before-hook-fci-disable ()
+      (setq modi/htmlize-initial-fci-state fci-mode)
+      (when fci-mode
+        (fci-mode -1)))
+
+    (defun modi/htmlize-after-hook-fci-enable-maybe ()
+      (when modi/htmlize-initial-fci-state
+        (fci-mode 1)))
+
+    (add-hook 'htmlize-before-hook #'modi/htmlize-before-hook-fci-disable)
+    (add-hook 'htmlize-after-hook #'modi/htmlize-after-hook-fci-enable-maybe))
+
+  ;; `flyspell-mode' also has to be disabled because depending on the
+  ;; theme, the squiggly underlines can either show up in the html file
+  ;; or cause elisp errors like:
+  ;; (wrong-type-argument number-or-marker-p (nil . 100))
+  (with-eval-after-load 'flyspell
+    (defvar modi/htmlize-initial-flyspell-state nil
+      "Variable to store the state of `flyspell-mode' when `htmlize-buffer' is called.")
+
+    (defun modi/htmlize-before-hook-flyspell-disable ()
+      (setq modi/htmlize-initial-flyspell-state flyspell-mode)
+      (when flyspell-mode
+        (flyspell-mode -1)))
+
+    (defun modi/htmlize-after-hook-flyspell-enable-maybe ()
+      (when modi/htmlize-initial-flyspell-state
+        (flyspell-mode 1)))
+
+    (add-hook 'htmlize-before-hook #'modi/htmlize-before-hook-flyspell-disable)
+    (add-hook 'htmlize-after-hook #'modi/htmlize-after-hook-flyspell-enable-maybe))
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -1783,7 +1326,7 @@ you should place your code here."
  '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
  '(org-agenda-span (quote day))
  '(org-agenda-start-with-log-mode (quote (closed clock)))
- '(org-agenda-sticky t)
+ '(org-agenda-sticky nil)
  '(org-agenda-window-setup (quote current-window))
  '(org-babel-shell-names
    (quote

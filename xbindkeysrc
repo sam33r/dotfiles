@@ -55,6 +55,21 @@
     m:0x44 + c:54
     Control+Mod4 + c 
 
+#Org Agenda
+"emacsclient -c -e '(sa/agenda "n")'"
+    m:0x40 + c:57
+    Mod4 + n 
+
+#Org Agenda Tags
+"emacsclient -c -e '(sa/agenda "M")'"
+    m:0x44 + c:57
+    Control+Mod4 + n 
+
+#Org Agenda Search
+"emacsclient -c -e '(sa/agenda "s")'"
+    m:0x41 + c:57
+    Shift+Mod4 + n 
+
 #Open chrome with selected URL
 "~/dotfiles/utils/chrome-open google-chrome"
     m:0x40 + c:33
