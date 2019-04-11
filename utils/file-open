@@ -12,6 +12,7 @@ if [ "$@" ] && ! [ "$@" = "Restart" ]; then
     exec 1>&-
     exit;
   else
+    cd $HOME
     fd -L -p -j 20 "$@"
     echo "Restart"
     echo "Quit"
