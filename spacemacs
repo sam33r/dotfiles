@@ -481,22 +481,22 @@ values."
            (function sa/generate-bookmark-template)
            )
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
-           "* %?\n%T\n  %i")
+           "* %^{title}\n%T\n%i\n%?")
           ("w" "Work Journal" entry (file+olp+datetree "work-journal.org.gpg")
-           "* %T %?")
+           "* %^{title}\n%T\n%?")
           ("e" "Journal: End of Day" entry (file+olp+datetree "journal.org.gpg")
-           "* End of Day :end-of-day:\n** Three things about today\n\"
+           "* End of Day :end-of-day:\n%T\n** Three things about today\n\"
             - %^{first}\n- %^{second}\n- %^{third}\n\
             ** Rough plan for tomorrow\n%^{plan}"
            :immediate-finish t)
           ("Q" "Journal: Quote" entry (file+olp+datetree "journal.org.gpg")
-           "* %^{title|A quote} :quote:\n#+BEGIN_QUOTE\n%x\n#+END_QUOTE\n%?")
-          ("m" "Meeting Notes" entry (file+olp+datetree "work.org.gpg" "Meeting Notes")
-           "* %^{meeting-title} \n %? \n")
-          ("M" "Meeting with Follow-up" entry (file+olp+datetree "work.org.gpg" "Meeting Notes")
-           "* %^{meeting-title} \n%?\n** TODO %^{meeting-followup} \nDEADLINE:%^{deadline}t\n")
-          ("s" "Social Call" entry (file+olp+datetree "projects.org.gpg" "Social Calls")
-           "* %^{title} \n %? \n"))
+           "* %^{title|A quote} :quote:\n%T\n#+BEGIN_QUOTE\n%x\n#+END_QUOTE\n%?\n")
+          ("m" "Meeting Notes" entry (file+olp+datetree "work-journal.org.gpg")
+           "* %^{meeting-title} :meeting:\n%T\n%?")
+          ("M" "Meeting with Follow-up" entry (file+olp+datetree "work-journal.org.gpg")
+           "* %^{meeting-title} :meeting:\n%T\n%?\n** TODO %^{meeting-followup} \nDEADLINE:%^{deadline}")
+          ("s" "Social Call" entry (file+olp+datetree "journal.org.gpg")
+           "* %^{title} :social:\n%T\n%?"))
         )
   (define-key global-map "\C-cc" 'org-capture)
 
