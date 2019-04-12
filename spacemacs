@@ -481,7 +481,7 @@ values."
            (function sa/generate-bookmark-template)
            )
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
-           "* %^{title}\n%T\n%i\n%?")
+           "* %?\n%T\n%i\n")
           ("w" "Work Journal" entry (file+olp+datetree "work-journal.org.gpg")
            "* %^{title}\n%T\n%?")
           ("e" "Journal: End of Day" entry (file+olp+datetree "journal.org.gpg")
@@ -559,7 +559,7 @@ values."
   ;; Font faces
   (custom-theme-set-faces
    'user
-   '(variable-pitch ((t (:family "Sans Serif"))))
+   '(variable-pitch ((t (:family "DejaVu Sans"))))
    '(fixed-pitch ((t ( :family "Input" :slant normal :weight normal :height 1.0 :width normal)))))
   (let* ((variable-tuple
           (cond ((x-family-fonts "EtBembo") '(:family "EtBembo"))
@@ -573,12 +573,12 @@ values."
     `(org-level-8 ((t (,@headline ,@variable-tuple :height 1.1))))
     `(org-level-7 ((t (,@headline ,@variable-tuple :height 1.1))))
     `(org-level-6 ((t (,@headline ,@variable-tuple :height 1.1))))
-    `(org-level-5 ((t (,@headline ,@variable-tuple :height 1.2))))
-    `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.25))))
-    `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.3))))
-    `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.6))))
-    `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.75))))
-    `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))))
+    `(org-level-5 ((t (,@headline ,@variable-tuple :height 1.1))))
+    `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
+    `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.1))))
+    `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.2))))
+    `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.3))))
+    `(org-document-title ((t (,@headline ,@variable-tuple :height 1.4 :underline nil))))))
   (custom-theme-set-faces
    'user
    '(org-block                 ((t (:inherit fixed-pitch))))
@@ -594,7 +594,7 @@ values."
   (add-hook 'org-mode-hook #'hidden-mode-line-mode)
   (add-hook 'org-mode-hook #'(lambda ()
                                (visual-line-mode)
-                               (org-indent-mode)))
+                               ))
   (add-hook 'org-mode-hook (lambda () (auto-revert-mode 1)))
   (add-hook 'org-mode-hook (lambda () (variable-pitch-mode t)))
   )

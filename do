@@ -170,7 +170,9 @@ function install_update_cargo_rust()
   if (which rustup); then
     rustup update
   else
+    sudo /usr/local/lib/rustlib/uninstall.sh
     curl https://sh.rustup.rs -sSf | sh
+    source $HOME/.cargo/env
   fi
 }
 

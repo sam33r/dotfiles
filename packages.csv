@@ -5,6 +5,7 @@ docker-engine,docker
 fbterm,Framebuffer terminal emulator
 fdupes,Find duplicates
 feh,Image viewer useful for setting wallpaper in linux
+font-manager,Manage fonts
 gcc,gnu compilers
 gnome-sushi,Preview for nautilus
 gnupg2,Encryption/decryption
