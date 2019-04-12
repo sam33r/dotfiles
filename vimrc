@@ -212,6 +212,8 @@ set laststatus=2                    " Always show bottom status bar.
 set showcmd                         " Show command as it is being typed.
 set colorcolumn=80,100              " Set rulers at column 80 and 100.
 set nofoldenable                    " Folds begone.
+set ignorecase                      " Required for smart-case.
+set smartcase                       " Smart-case search
 " Set indent.
 set tabstop=2                       " Width of \t
 set shiftwidth=2                    " Indents width
