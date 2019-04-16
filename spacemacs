@@ -561,24 +561,19 @@ values."
    'user
    '(variable-pitch ((t (:family "DejaVu Sans"))))
    '(fixed-pitch ((t ( :family "Input" :slant normal :weight normal :height 1.0 :width normal)))))
-  (let* ((variable-tuple
-          (cond ((x-family-fonts "EtBembo") '(:family "EtBembo"))
-                ((x-family-fonts "Serif")    '(:family "Serif"))
-                (nil (warn "Cannot find a Serif Font."))))
-        (base-font-color     (face-foreground 'default nil 'default))
-        (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+  (let* ((headline `(:inherit default :weight bold :family "EtBembo" :line-spacing 1.0)))
 
     (custom-theme-set-faces
     'user
-    `(org-level-8 ((t (,@headline ,@variable-tuple :height 1.1))))
-    `(org-level-7 ((t (,@headline ,@variable-tuple :height 1.1))))
-    `(org-level-6 ((t (,@headline ,@variable-tuple :height 1.1))))
-    `(org-level-5 ((t (,@headline ,@variable-tuple :height 1.1))))
-    `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
-    `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.1))))
-    `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.2))))
-    `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.3))))
-    `(org-document-title ((t (,@headline ,@variable-tuple :height 1.4 :underline nil))))))
+    `(org-level-8 ((t (,@headline :height 1.1))))
+    `(org-level-7 ((t (,@headline :height 1.1))))
+    `(org-level-6 ((t (,@headline :height 1.1))))
+    `(org-level-5 ((t (,@headline :height 1.1))))
+    `(org-level-4 ((t (,@headline :height 1.2))))
+    `(org-level-3 ((t (,@headline :height 1.3))))
+    `(org-level-2 ((t (,@headline :height 1.4))))
+    `(org-level-1 ((t (,@headline :height 1.5))))
+    `(org-document-title ((t (,@headline :height 1.8 :underline nil))))))
   (custom-theme-set-faces
    'user
    '(org-block                 ((t (:inherit fixed-pitch))))
