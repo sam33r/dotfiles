@@ -525,21 +525,21 @@ function install_mu4e_from_tarball()                                            
     fi
   fi
 
-  echo "Installing version 1.0. Check https://github.com/djcb/mu/releases"
+  echo "Installing version 1.2. Check https://github.com/djcb/mu/releases"
   echo "for newer versions."
 
-  sudo apt-get install libgmime-2.6-dev
+  sudo apt-get install libgmime-3.0-dev
 
   wget -O "$HOME/Downloads/mu.tar.xz" \
-      "https://github.com/djcb/mu/releases/download/v1.0/mu-1.0.tar.xz"
+      "https://github.com/djcb/mu/releases/download/1.2/mu-1.2.0.tar.xz"
   cd $HOME/Downloads
   tar -xf mu.tar.xz
-  cd "mu-1.0"
+  cd "mu-1.2.0"
   ./configure && make
   sudo make install
 
   cd ..
-  rm -Rf "mu-1.0"
+  rm -Rf "mu-1.2.0"
   rm -f mu.tar.xz
   cd $dir
 }
