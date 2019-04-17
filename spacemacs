@@ -561,7 +561,7 @@ values."
    'user
    '(variable-pitch ((t (:family "DejaVu Sans"))))
    '(fixed-pitch ((t ( :family "Input" :slant normal :weight normal :height 1.0 :width normal)))))
-  (let* ((headline `(:inherit default :weight bold :family "EtBembo" :line-spacing 1.0)))
+  (let* ((headline `(:inherit default :weight bold :family "EtBembo")))
 
     (custom-theme-set-faces
     'user
@@ -589,6 +589,7 @@ values."
   (add-hook 'org-mode-hook #'hidden-mode-line-mode)
   (add-hook 'org-mode-hook #'(lambda ()
                                (visual-line-mode)
+                               (setq line-spacing 0.6)
                                ))
   (add-hook 'org-mode-hook (lambda () (auto-revert-mode 1)))
   (add-hook 'org-mode-hook (lambda () (variable-pitch-mode t)))
@@ -1298,7 +1299,7 @@ you should place your code here."
  '(epg-pinentry-mode (quote loopback))
  '(evil-want-Y-yank-to-eol nil)
  '(global-vi-tilde-fringe-mode nil)
- '(line-spacing 0.1)
+ '(line-spacing 0.2)
  '(mu4e-compose-dont-reply-to-self t)
  '(mu4e-headers-include-related nil)
  '(mu4e-headers-leave-behavior (quote apply))
@@ -1370,7 +1371,7 @@ you should place your code here."
  '(shr-max-image-proportion 0.75)
  '(shr-width 80)
  '(spacemacs-theme-org-agenda-height nil)
- '(spacemacs-theme-org-height nil t)
+ '(spacemacs-theme-org-height nil)
  '(spacemacs-theme-org-highlight nil)
  '(standard-indent 2)
  '(tab-stop-list (quote (2 4 6 8)))
