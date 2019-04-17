@@ -467,12 +467,12 @@ values."
             (org-web-tools--org-link-for-url)
             " %^G\n%?\nBookmarked on %U"))
   (defun sa/generate-todo-link-template ()
-    (concat "* TODO %? %^G\n"
+    (concat "* TODO %? %^G\nSCHEDULED:%^{scheduled}t\n"
             (org-web-tools--org-link-for-url)))
   ;; Capture mode.
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "projects.org.gpg" "Refile Tasks")
-           "* TODO %?\n  %i\n  %a")
+           "* TODO %? %^G\nSCHEDULED:%^{scheduled}t\n%i\n%a\n")
           ("T" "Todo from email" entry (file+headline "projects.org.gpg" "Refile Tasks")
            "* TODO %:subject\n%?\n %i\n %a\n")
           ("l" "Todo from link" entry (file+headline "projects.org.gpg" "Refile Tasks")
@@ -492,11 +492,11 @@ values."
           ("Q" "Journal: Quote" entry (file+olp+datetree "journal.org.gpg")
            "* %^{title|A quote} :quote:\n%T\n#+BEGIN_QUOTE\n%x\n#+END_QUOTE\n%?\n")
           ("m" "Meeting Notes" entry (file+olp+datetree "work-journal.org.gpg")
-           "* %^{meeting-title} :meeting:\n%T\n%?")
+           "* %^{meeting-title} :meeting:\n%T\n%?\n")
           ("M" "Meeting with Follow-up" entry (file+olp+datetree "work-journal.org.gpg")
-           "* %^{meeting-title} :meeting:\n%T\n%?\n** TODO %^{meeting-followup} \nDEADLINE:%^{deadline}")
+           "* %^{meeting-title} :meeting:\n%T\n%?\n** TODO %^{meeting-followup} \nDEADLINE:%^{deadline}t\n")
           ("s" "Social Call" entry (file+olp+datetree "journal.org.gpg")
-           "* %^{title} :social:\n%T\n%?"))
+           "* %^{title} :social:\n%T\n%?\n"))
         )
   (define-key global-map "\C-cc" 'org-capture)
 
