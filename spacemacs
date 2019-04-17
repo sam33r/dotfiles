@@ -948,7 +948,6 @@ you should place your code here."
   (add-hook 'prog-mode-hook 'fci-mode)
   (add-hook 'text-mode-hook 'fci-mode)
   (add-hook 'prog-mode-hook 'focus-mode)
-  (add-hook 'text-mode-hook 'focus-mode)
   (add-hook 'prog-mode-hook 'sa/code)
 
   ;; Fontify face definitions in elisp.
