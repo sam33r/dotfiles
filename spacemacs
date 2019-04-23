@@ -549,7 +549,8 @@ values."
   (setq org-todo-keywords
         '((sequence "TODO(t)" "ICKY(i)" "NEXT(n!)" "WAIT(w@/!)" "IN-PROGRESS(p!)" "|" "DONE(d!)" "CANCELED(c@)")))
   (setq org-todo-keyword-faces
-        '(("TODO" . "orange") ("ICKY" . org-warning)
+        '(("TODO" . (:foreground "orange" :weight bold))
+          ("ICKY" . org-warning)
           ("NEXT" . (:foreground "#c942ff" :weight bold))
           ("WAIT" .(:foreground "purple" :weight bold))
           ("CANCELED" . (:foreground "blue" :weight bold))
