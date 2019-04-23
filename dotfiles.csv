@@ -31,6 +31,8 @@ $HOME/hosts/blacklist,hosts/blacklist
 $HOME/.i3blocks.conf,i3blocks.conf
 $HOME/.inputrc,inputrc
 $HOME/.local/share/applications/emacs-capture.desktop,shortcuts/emacs-capture.desktop
+$HOME/.macros/current-date-and-time,utils/current-date-and-time
+$HOME/.macros/current-date,utils/current-date
 $HOME/.profile,profile
 $HOME/.screenrc,screenrc
 $HOME/.spacemacs.local.template,spacemacs.local.template
