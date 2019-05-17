@@ -1,0 +1,13 @@
+#!/bin/bash
+# Center and resize the active window.
+
+width=$(xdpyinfo | grep dimensions | awk '{print $2}' | awk -Fx '{print $1}')
+height=$(xdpyinfo | grep dimensions | awk '{print $2}' | awk -Fx '{print $2}')
+
+left=$(( $width / 4 ))
+down=$(( $height / 4 ))
+winwidth=$(( $width / 2 ))
+winheight=$(( $height / 2 ))
+
+params="0,$left,$down,$winwidth,$winheight"
+wmctrl -r :ACTIVE: -e $params
