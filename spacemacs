@@ -471,20 +471,26 @@ values."
             (org-web-tools--org-link-for-url)))
   ;; Capture mode.
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "projects.org.gpg" "Refile Tasks")
+        '(("t" "Todo" entry (file+headline "projects.org.gpg" "Unfiled Tasks")
            "* TODO %? %^G\nSCHEDULED:%^{scheduled}t\n%i\n%a\n")
-          ("T" "Todo from email" entry (file+headline "projects.org.gpg" "Refile Tasks")
-           "* TODO %:subject\n%?\n %i\n %a\n")
-          ("l" "Todo from link" entry (file+headline "projects.org.gpg" "Refile Tasks")
+          ("e" "Todo from email" entry (file+headline "projects.org.gpg" "Unfiled Tasks")
+           "* TODO %:subject %^G\n%?\n %i\n %a\n")
+          ("l" "Todo from link" entry (file+headline "projects.org.gpg" "Unfiled Tasks")
            (function sa/generate-todo-link-template))
-          ("b" "Bookmark" entry (file+headline "knowledge.org.gpg" "Bookmarks")
+          ("T" "Work Todo" entry (file+headline "work.org.gpg" "Unfiled Tasks")
+           "* TODO %? %^G\nSCHEDULED:%^{scheduled}t\n%i\n%a\n")
+          ("E" "Work Todo from email" entry (file+headline "work.org.gpg" "Unfiled Tasks")
+           "* TODO %:subject %^G\n%?\n %i\n %a\n")
+          ("L" "Work Todo from link" entry (file+headline "work.org.gpg" "Unfiled Tasks")
+           (function sa/generate-todo-link-template))
+("b" "Bookmark" entry (file+headline "knowledge.org.gpg" "Bookmarks")
            (function sa/generate-bookmark-template)
            )
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
            "* %?\n%T\n%i\n")
           ("w" "Work Journal" entry (file+olp+datetree "work-journal.org.gpg")
-           "* %^{title}\n%T\n%?")
-          ("e" "Journal: End of Day" entry (file+olp+datetree "journal.org.gpg")
+           "* %^{title} %^G\n%T\n%?")
+          ("d" "Journal: End of Day" entry (file+olp+datetree "journal.org.gpg")
            "* End of Day :end-of-day:\n%T\n** Three things about today\n\"
             - %^{first}\n- %^{second}\n- %^{third}\n\
             ** Rough plan for tomorrow\n%^{plan}"
@@ -543,7 +549,7 @@ values."
   (setq org-outline-path-complete-in-steps nil)
   (setq org-refile-targets
         '((nil :maxlevel . 3)
-          (org-agenda-files :maxlevel . 2)))
+          (org-agenda-files :maxlevel . 3)))
 
   ;; Task tags
   (setq org-todo-keywords
