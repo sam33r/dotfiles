@@ -40,6 +40,7 @@ python3-pip,pip for python3
 python-dev,python
 python-pip,pip installer
 ranger,ls on steroids
+rclone,Sync google-drive
 redshift-gtk,reduce blue light at night
 redshift,reduce blue light at night
 rofi,app switcher
