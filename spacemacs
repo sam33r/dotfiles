@@ -1329,6 +1329,14 @@ you should place your code here."
  '(org-agenda-start-with-log-mode (quote (closed clock)))
  '(org-agenda-sticky nil)
  '(org-agenda-window-setup (quote current-window))
+ '(org-babel-load-languages
+   (quote
+    ((emacs-lisp . t)
+     (shell . t)
+     (python . t)
+     (C . t)
+     (sqlite . t)
+     (js . t))))
  '(org-babel-shell-names
    (quote
     ("sh" "bash" "zsh" "run-in-tmux" "tsh" "ksh" "mksh" "posh")))
