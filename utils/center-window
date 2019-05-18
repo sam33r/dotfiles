@@ -15,16 +15,14 @@ then
 else
     right=(${screen1[@]});
     left=(${screen2[@]});
-
 fi
 
-## Get window position
-pos=$(xwininfo -id $(xdotool getactivewindow) | grep "Absolute upper-left X" |
-      awk '{print $NF}')
+# Get window position
+pos=$(xwininfo -id $(xdotool getactivewindow) | grep "Absolute upper-left X" | awk '{print $NF}')
 
-## Which screen is this window displayed in? If $pos
-## is greater than the offset of the rightmost screen,
-## then the window is on the right hand one
+# Which screen is this window displayed in? If $pos
+# is greater than the offset of the rightmost screen,
+# then the window is on the right hand one
 if [ "$pos" -gt "${right[2]}" ]
 then
     res=${right[1]}
