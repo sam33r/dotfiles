@@ -105,18 +105,19 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-                                      writeroom-mode
-                                      writegood-mode
-                                      smtpmail
-                                      keyfreq
-                                      ox-clip
-                                      shackle
+                                      focus
+                                      fontify-face
                                       helm-org-rifle
+                                      keyfreq
                                       org-super-agenda
                                       org-web-tools
-                                      fontify-face
+                                      ox-clip
+                                      pdf-view-restore
+                                      shackle
+                                      smtpmail
+                                      writegood-mode
+                                      writeroom-mode
                                       yasnippet-snippets
-                                      focus
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -958,6 +959,9 @@ you should place your code here."
 
   ;; Fontify face definitions in elisp.
   (add-hook 'emacs-lisp-mode-hook 'fontify-face-mode)
+
+  ;; Enable PDF position restore.
+  (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode)
 
   ;; Spaceline
   (setq spaceline-highlight-face-func 'spaceline-highlight-face-default)
