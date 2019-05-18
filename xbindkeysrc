@@ -51,7 +51,7 @@
     Mod4 + x 
 
 #Org Capture
-"(emacsclient -c -e "(sa/make-capture-frame)" &) ; (sleep 0.2 &&  ~/dotfiles/utils/center-window)"
+"(emacsclient -c -e "(sa/make-capture-frame)" &) ; (sleep 0.5 &&  ~/dotfiles/utils/center-window)"
     m:0x44 + c:54
     Control+Mod4 + c 
 
