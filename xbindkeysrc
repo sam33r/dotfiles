@@ -66,9 +66,14 @@
     Control+Mod4 + n 
 
 #Org Agenda Search
-"(emacsclient -c -e '(sa/agenda "s)' &) ; (sleep 1 &&  ~/dotfiles/utils/center-window)"
+"(emacsclient -c -e '(sa/agenda "s")' &) ; (sleep 1 &&  ~/dotfiles/utils/center-window)"
     m:0x41 + c:57
     Shift+Mod4 + n 
+
+#Org Currently Clocked Item
+"(emacsclient -c -e '(sa/current)' &) ; (sleep 1 &&  ~/dotfiles/utils/center-window)"
+    m:0x40 + c:31
+    Mod4 + i 
 
 #Open chrome with selected URL
 "~/dotfiles/utils/chrome-open google-chrome"
