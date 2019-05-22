@@ -69,6 +69,29 @@ function install_dotfiles()
   done < $dir/$dotfiles_list
 }
 
+function install_some_dotfiles()
+{
+  while IFS=, read config_path dotfile_path
+  do
+    printf "\n\n"
+    # Expand any env variables in the config.
+    cpath=$(eval echo $config_path)
+    dpath=$(eval echo $dotfile_path)
+
+    echo "${dir}/${dpath} ⇒ ${cpath}"
+    read -p "Do this? (y/n)" answer </dev/tty
+    if echo "$answer" | grep -iq "^n" ;then
+      echo "Skipped."
+      continue
+    fi
+
+    mv "${cpath}" "${backup_dir}"/"${dpath}" 2>/dev/null
+    mkdir -p `dirname ${cpath}`
+    ln -fs "${dir}"/"${dpath}" "${cpath}"
+    echo "Moved."
+  done < $dir/$dotfiles_list
+}
+
 function install_fbterm()
 {
   sudo apt-get install fbterm fbset
