@@ -564,7 +564,7 @@ values."
           ("ICKY" . org-warning)
           ("NEXT" . (:foreground "#c942ff" :weight bold))
           ("WAIT" .(:foreground "purple" :weight bold))
-          ("CANCELED" . (:foreground "blue" :weight bold))
+          ("CANCELED" . (:foreground "gray" :weight bold))
           ("IN-PROGRESS" . (:foreground "yellow" :weight bold))
           ("DONE" . (:foreground "green" :weight bold))))
 
@@ -589,7 +589,7 @@ values."
   (custom-theme-set-faces
    'user
    '(org-block                 ((t (:inherit fixed-pitch))))
-   '(org-link                  ((t (:foreground "royal blue" :underline t))))
+   '(org-link                  ((t (:underline t))))
    '(org-meta-line             ((t (:inherit (font-lock-comment-face fixed-pitch)))))
    '(org-property-value        ((t (:inherit fixed-pitch))) t)
    '(org-special-keyword       ((t (:inherit (font-lock-comment-face fixed-pitch)))))
