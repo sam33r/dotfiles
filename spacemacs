@@ -514,8 +514,8 @@ values."
   ;; Publishing notes.
   (setq org-publish-project-alist
         `(("notes"
-           :base-directory       orgdir
-           :base-extension       "org"
+           :base-directory       ,orgdir
+           :base-extension       any
            :publishing-directory "~/pub"
            :recursive            t
            :publishing-function  org-html-publish-to-html
@@ -525,6 +525,8 @@ values."
            ;; This doesn't seem to work, disabling for now.
            ;; :sitemap-sort-folders 'last
            :sitemap-ignore-case  t
+           :preserve-breaks t
+           :section-numbers nil
            )))
   ;; custom keybindings
   ;; (spacemacs/set-leader-keys-for-major-mode 'org-mode
