@@ -61,7 +61,7 @@
     Mod4 + n 
 
 #Org Agenda Tags
-"(emacsclient -c -e '(sa/agenda "M")' &) ; (sleep 1 &&  ~/dotfiles/utils/center-window)"
+"(emacsclient -c -e '(sa/agenda "m")' &) ; (sleep 1 &&  ~/dotfiles/utils/center-window)"
     m:0x44 + c:57
     Control+Mod4 + n 
 
