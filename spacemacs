@@ -1367,6 +1367,8 @@ you should place your code here."
    (quote
     ("sh" "bash" "zsh" "run-in-tmux" "tsh" "ksh" "mksh" "posh")))
  '(org-blank-before-new-entry (quote ((heading) (plain-list-item))))
+ '(org-clock-idle-time 15)
+ '(org-clock-out-remove-zero-time-clocks t)
  '(org-confirm-babel-evaluate nil)
  '(org-cycle-separator-lines 0)
  '(org-habit-completed-glyph 42)
