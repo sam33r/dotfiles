@@ -455,7 +455,7 @@ values."
   (setq calendar-location-name "San Francisco, CA")
 
   ;; Archive in a datetree.
-  (setq org-archive-location (concat orgdir "/shelved/archive.org.gpg::datetree/* Finished Tasks"))
+  (setq org-archive-location (concat orgdir "/journal.org.gpg::datetree/* Finished Tasks"))
 
   ;; Keep inherited tags when archiving.
   (defadvice org-archive-subtree
