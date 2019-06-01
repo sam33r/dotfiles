@@ -111,6 +111,7 @@ values."
                                       keyfreq
                                       org-super-agenda
                                       org-web-tools
+                                      org-noter
                                       ox-clip
                                       pdf-view-restore
                                       shackle
