@@ -1186,6 +1186,8 @@ you should place your code here."
     "R" 'eww-readable
     )
 
+  (evil-global-set-key 'normal "-" 'helm-bookmarks)
+
   (spacemacs/set-leader-keys-for-major-mode 'eww-mode
     "v"     'eww-browse-with-external-browser
     "a"     'eww-add-bookmark
