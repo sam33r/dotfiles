@@ -545,7 +545,7 @@ values."
         org-hide-emphasis-markers t
         org-agenda-block-separator ""
         org-fontify-whole-heading-line t
-        org-fontify-done-headline t
+        org-fontify-done-headline nil
         org-fontify-quote-and-verse-blocks t)
   (setf org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
 
@@ -577,6 +577,7 @@ values."
 
     (custom-theme-set-faces
     'user
+    `(org-headline-done ((t (,@headline))))
     `(org-level-8 ((t (,@headline :height 1.1))))
     `(org-level-7 ((t (,@headline :height 1.1))))
     `(org-level-6 ((t (,@headline :height 1.1))))
@@ -595,6 +596,7 @@ values."
    '(org-special-keyword       ((t (:inherit (font-lock-comment-face fixed-pitch)))))
    '(org-tag                   ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
    '(org-verbatim              ((t (:inherit (shadow fixed-pitch)))))
+   '(org-table                 ((t (:inherit (shadow fixed-pitch)))))
    '(org-indent                ((t (:inherit (org-hide fixed-pitch))))))
 
   (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
