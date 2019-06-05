@@ -111,6 +111,7 @@ values."
                                       keyfreq
                                       org-super-agenda
                                       org-web-tools
+                                      org-noter
                                       ox-clip
                                       pdf-view-restore
                                       shackle
@@ -455,7 +456,7 @@ values."
   (setq calendar-location-name "San Francisco, CA")
 
   ;; Archive in a datetree.
-  (setq org-archive-location (concat orgdir "/shelved/archive.org.gpg::datetree/* Finished Tasks"))
+  (setq org-archive-location (concat orgdir "/journal.org.gpg::datetree/* Finished Tasks"))
 
   ;; Keep inherited tags when archiving.
   (defadvice org-archive-subtree
@@ -514,8 +515,8 @@ values."
   ;; Publishing notes.
   (setq org-publish-project-alist
         `(("notes"
-           :base-directory       orgdir
-           :base-extension       "org"
+           :base-directory       ,orgdir
+           :base-extension       any
            :publishing-directory "~/pub"
            :recursive            t
            :publishing-function  org-html-publish-to-html
@@ -525,6 +526,8 @@ values."
            ;; This doesn't seem to work, disabling for now.
            ;; :sitemap-sort-folders 'last
            :sitemap-ignore-case  t
+           :preserve-breaks t
+           :section-numbers nil
            )))
   ;; custom keybindings
   ;; (spacemacs/set-leader-keys-for-major-mode 'org-mode
@@ -564,7 +567,7 @@ values."
           ("ICKY" . org-warning)
           ("NEXT" . (:foreground "#c942ff" :weight bold))
           ("WAIT" .(:foreground "purple" :weight bold))
-          ("CANCELED" . (:foreground "blue" :weight bold))
+          ("CANCELED" . (:foreground "gray" :weight bold))
           ("IN-PROGRESS" . (:foreground "yellow" :weight bold))
           ("DONE" . (:foreground "green" :weight bold))))
 
@@ -590,7 +593,7 @@ values."
   (custom-theme-set-faces
    'user
    '(org-block                 ((t (:inherit fixed-pitch))))
-   '(org-link                  ((t (:foreground "royal blue" :underline t))))
+   '(org-link                  ((t (:underline t))))
    '(org-meta-line             ((t (:inherit (font-lock-comment-face fixed-pitch)))))
    '(org-property-value        ((t (:inherit fixed-pitch))) t)
    '(org-special-keyword       ((t (:inherit (font-lock-comment-face fixed-pitch)))))
@@ -645,12 +648,14 @@ values."
   )
 
 (defun sa/current ()
-  (make-frame '((name . "current")
-                (width . 120)
-                (height . 100)))
-  (delete-frame)
-  (select-frame-by-name "current")
-  (delete-other-windows)
+  (interactive)
+  (when (display-graphic-p)
+    (make-frame '((name . "current")
+                  (width . 120)
+                  (height . 100)))
+    (delete-frame)
+    (select-frame-by-name "current")
+    (delete-other-windows))
   (org-clock-goto)
   (org-narrow-to-subtree)
   (end-of-buffer)
@@ -962,6 +967,8 @@ you should place your code here."
   ;; turn on yasnippets(?)
   (spacemacs/toggle-yasnippet-on)
 
+  (setq bookmark-default-file "~/.emacs-bookmarks")
+
   ;; Macros
   (fset 'sa/new-log-entry
    [?$ ?a escape ?a tab tab return ?* ?* ?  ?  escape ?, ?! return ?a ?\[ ?\] backspace ?/ ?\] M-return return ?\M-l escape])
@@ -1183,6 +1190,8 @@ you should place your code here."
     "R" 'eww-readable
     )
 
+  (evil-global-set-key 'normal "-" 'helm-bookmarks)
+
   (spacemacs/set-leader-keys-for-major-mode 'eww-mode
     "v"     'eww-browse-with-external-browser
     "a"     'eww-add-bookmark
@@ -1367,6 +1376,7 @@ you should place your code here."
    (quote
     ("sh" "bash" "zsh" "run-in-tmux" "tsh" "ksh" "mksh" "posh")))
  '(org-blank-before-new-entry (quote ((heading) (plain-list-item))))
+ '(org-clock-out-remove-zero-time-clocks t)
  '(org-confirm-babel-evaluate nil)
  '(org-cycle-separator-lines 0)
  '(org-habit-completed-glyph 42)
