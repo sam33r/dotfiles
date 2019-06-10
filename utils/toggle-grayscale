@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ ! -f /tmp/grayscale-enabled ]; then
+  touch /tmp/grayscale-enabled
+  killall compton
+  nohup compton -f --backend glx --glx-fshader-win "$(cat ~/dotfiles/utils/GSLS)" &
+else
+  rm -f /tmp/grayscale-enabled
+  killall compton
+  nohup compton -f &
+fi
