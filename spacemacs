@@ -1421,7 +1421,7 @@ you should place your code here."
  '(shr-max-image-proportion 0.75)
  '(shr-width 80)
  '(spacemacs-theme-org-agenda-height nil)
- '(spacemacs-theme-org-height nil)
+ '(spacemacs-theme-org-height nil t)
  '(spacemacs-theme-org-highlight nil)
  '(standard-indent 2)
  '(tab-stop-list (quote (2 4 6 8)))
