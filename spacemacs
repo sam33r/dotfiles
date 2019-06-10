@@ -509,7 +509,16 @@ values."
           ("M" "Meeting with Follow-up" entry (file+olp+datetree "work-journal.org.gpg")
            "* %^{meeting-title} :meeting:\n%T\n%?\n** TODO %^{meeting-followup} \nDEADLINE:%^{deadline}t\n")
           ("s" "Social Call" entry (file+olp+datetree "journal.org.gpg")
-           "* %^{title} :social:\n%T\n%?\n"))
+           "* %^{title} :social:\n%T\n%?\n")
+          ("F" "Code Reference to Current Task"
+           plain (clock)
+           "%(sa/org-capture-code-snippet \"%F\")"
+           :empty-lines 1 :immediate-finish t)
+          ("f" "Code Reference with Comments to Current Task"
+           plain (clock)
+           "%(sa/org-capture-code-snippet \"%F\")\n\n   %?"
+           :empty-lines 1)
+          )
         )
   (define-key global-map "\C-cc" 'org-capture)
 
@@ -739,6 +748,52 @@ values."
   (dotspacemacs/user-config)
   (mu4e))
 
+;; Sending stuff to the currently clocked item.
+;; http://www.howardism.org/Technical/Emacs/capturing-content.html
+(defun sa/org-capture-code-snippet (f)
+  "Given a file, F, this captures the currently selected text
+within an Org SRC block with a language based on the current mode
+and a backlink to the function and the file."
+  (with-current-buffer (find-buffer-visiting f)
+    (let ((org-src-mode (replace-regexp-in-string "-mode" "" (format "%s" major-mode)))
+          (func-name (which-function)))
+      (sa/org-capture-fileref-snippet f "SRC" org-src-mode func-name))))
+
+(defun sa/org-capture-clip-snippet (f)
+  "Given a file, F, this captures the currently selected text
+within an Org EXAMPLE block and a backlink to the file."
+  (with-current-buffer (find-buffer-visiting f)
+    (sa/org-capture-fileref-snippet f "EXAMPLE" "" nil)))
+
+(defun sa/org-capture-fileref-snippet (f type headers func-name)
+  (let* ((code-snippet
+          (buffer-substring-no-properties (mark) (- (point) 1)))
+         (file-name   (buffer-file-name))
+         (file-base   (file-name-nondirectory file-name))
+         (line-number (line-number-at-pos (region-beginning)))
+         (initial-txt (if (null func-name)
+                          (format "From [[file:%s::%s][%s]]:"
+                                  file-name line-number file-base)
+                        (format "From ~%s~ (in [[file:%s::%s][%s]]):"
+                                func-name file-name line-number
+                                file-base))))
+    (format "
+   %s
+
+   #+BEGIN_%s %s
+%s
+   #+END_%s" initial-txt type headers code-snippet type)))
+
+(defun sa/code-to-clock (&optional start end)
+  "Send the currently selected code to the currently clocked-in org-mode task."
+  (interactive)
+  (org-capture nil "F"))
+
+(defun sa/code-comment-to-clock (&optional start end)
+  "Send the currently selected code (with comments) to the
+currently clocked-in org-mode task."
+  (interactive)
+  (org-capture nil "f"))
 
 ;; Format C++ files on save.
 (defun sa/formatcpponsave ()
