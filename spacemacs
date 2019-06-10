@@ -119,6 +119,7 @@ values."
                                       writegood-mode
                                       writeroom-mode
                                       yasnippet-snippets
+                                      company-tabnine
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -963,6 +964,16 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  ;; Turn on TabNine
+  ;; Install binary with:
+  ;; M-x company-tabnine-install-binary
+  (add-to-list 'company-backends #'company-tabnine)
+  ;; Trigger completion immediately.
+  (setq company-idle-delay 0)
+
+  ;; Number the candidates (use M-1, M-2 etc to select completions).
+  (setq company-show-numbers t)
 
   ;; turn on yasnippets(?)
   (spacemacs/toggle-yasnippet-on)

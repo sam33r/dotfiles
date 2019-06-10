@@ -74,6 +74,9 @@ Plugin 'jceb/vim-orgmode'
 " Deps
 Plugin 'tpope/vim-speeddating'
 
+" TabNine
+Plugin 'zxqfl/tabnine-vim'
+
 " Plugins for markdown editing.
 
 " Vim pencil plugin, utility functions for text editing.
