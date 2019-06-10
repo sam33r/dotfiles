@@ -105,13 +105,15 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      company-tabnine
                                       focus
                                       fontify-face
                                       helm-org-rifle
                                       keyfreq
+                                      nov
+                                      org-noter
                                       org-super-agenda
                                       org-web-tools
-                                      org-noter
                                       ox-clip
                                       pdf-view-restore
                                       shackle
@@ -119,7 +121,6 @@ values."
                                       writegood-mode
                                       writeroom-mode
                                       yasnippet-snippets
-                                      company-tabnine
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -1486,7 +1487,7 @@ you should place your code here."
  '(shr-max-image-proportion 0.75)
  '(shr-width 80)
  '(spacemacs-theme-org-agenda-height nil)
- '(spacemacs-theme-org-height nil)
+ '(spacemacs-theme-org-height nil t)
  '(spacemacs-theme-org-highlight nil)
  '(standard-indent 2)
  '(tab-stop-list (quote (2 4 6 8)))

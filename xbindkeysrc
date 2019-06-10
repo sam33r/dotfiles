@@ -140,5 +140,10 @@
     m:0x41 + c:41
     Shift+Mod4 + f 
 
+#Toggle Grayscale
+"~/dotfiles/utils/toggle-grayscale"
+    m:0x41 + c:42
+    Shift+Mod4 + g 
+
 #
 # End of xbindkeys configuration
