@@ -1139,7 +1139,7 @@ you should place your code here."
   (setq powerline-default-separator nil)
 
   ;; Disable line highlight.
-  (global-hl-line-mode -1)
+  ;; (global-hl-line-mode -1)
 
   ;; Enable global auto-revert.
   (global-auto-revert-mode 1)
