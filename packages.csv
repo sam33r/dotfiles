@@ -50,6 +50,7 @@ scrot,Screenshots
 silversearcher-ag,Faster search
 smbclient,Client for SMB shares.
 sqlite3,lightweight db
+stow,Manage local dotfiles.
 suckless-tools,for dmenu and other niceties.
 surfraw,Web searches
 tesseract-ocr,OCR for scans
