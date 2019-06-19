@@ -423,25 +423,29 @@ values."
 
   (setq org-super-agenda-groups
          '(;; Each group has an implicit boolean OR operator between its selectors.
+           (:name "Important and Urgent"
+                  :and (:scheduled past :priority ("A" "B"))
+                  :and (:scheduled today :priority ("A" "B"))
+                  :and (:deadline past :priority ("A" "B"))
+                  :and (:deadline today :priority ("A" "B")))
+           (:name "Important"
+                  :priority "A"
+                  :priority "B")
+           (:name "Urgent"
+                  :scheduled past
+                  :deadline past)
            (:name "Today"
                   :time-grid t
                   :log closed
                   :log clocked
                   :scheduled today
                   :deadline today)
-           (:name "Overdue"
-                  :scheduled past
-                  :deadline past)
-           (:name "Important"
-                  :priority "A"
-                  :priority "B")
            (:name "Upcoming"
                   :scheduled future
                   :deadline future)
            (:name "Habits"
                   :order 9
-                  :habit)
-           ))
+                  :habit)))
   (org-super-agenda-mode)
 
   ;; Allow creating new nodes when refiling.
@@ -1423,9 +1427,37 @@ you should place your code here."
    (quote
     (("n" "Comprehensive Agenda"
       ((agenda "" nil)
-       (tags-todo "+PRIORITY=\"A\"")
-       (todo "NEXT")
-       (todo "WAIT"))
+       (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\"" (
+                                                    (org-agenda-overriding-header "\nImportant")
+                                                    (org-super-agenda-groups nil)
+                                                    ))
+       (todo "NEXT" (
+                     (org-agenda-overriding-header "\nUnscheduled next items")
+                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
+                     (org-super-agenda-groups nil)
+                     ))
+       (todo "WAIT" (
+                     (org-agenda-overriding-header "\nWaiting on others")
+                     (org-super-agenda-groups nil)
+                     ))
+       (todo "ICKY" (
+                     (org-agenda-overriding-header "\nItems to Breakdown")
+                     (org-super-agenda-groups nil)
+                     ))
+       (tags-todo "+refile" (
+                             (org-agenda-overriding-header "\nItems to Refile")
+                             (org-super-agenda-groups nil)
+                             ))
+       (tags-todo "+work" (
+                           (org-super-agenda-groups nil)
+                           (org-agenda-overriding-header "\nUnscheduled Work TODOs")
+                           (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
+                           ))
+       (tags-todo "-work-someday" (
+                     (org-super-agenda-groups nil)
+                     (org-agenda-overriding-header "\nUnscheduled Non-Work TODOs")
+                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
+                     )))
       nil))))
  '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
  '(org-agenda-span (quote day))
@@ -1447,6 +1479,7 @@ you should place your code here."
  '(org-clock-out-remove-zero-time-clocks t)
  '(org-confirm-babel-evaluate nil)
  '(org-cycle-separator-lines 0)
+ '(org-default-priority 67)
  '(org-habit-completed-glyph 42)
  '(org-habit-graph-column 85)
  '(org-habit-preceding-days 30)
