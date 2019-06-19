@@ -1427,6 +1427,7 @@ you should place your code here."
        (todo "WAIT"))
       nil))))
  '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
+ '(org-agenda-skip-scheduled-if-done t)
  '(org-agenda-span (quote day))
  '(org-agenda-start-with-log-mode (quote (closed clock)))
  '(org-agenda-sticky nil)
