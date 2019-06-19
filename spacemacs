@@ -36,6 +36,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     javascript
      theming
      csv
      shell-scripts
@@ -336,7 +337,7 @@ values."
    dotspacemacs-folding-method 'evil
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
-   dotspacemacs-smartparens-strict-mode t
+   dotspacemacs-smartparens-strict-mode nil
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
    ;; over any automatically added closing parenthesis, bracket, quote, etc…
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
@@ -422,25 +423,29 @@ values."
 
   (setq org-super-agenda-groups
          '(;; Each group has an implicit boolean OR operator between its selectors.
+           (:name "Important and Urgent"
+                  :and (:scheduled past :priority ("A" "B"))
+                  :and (:scheduled today :priority ("A" "B"))
+                  :and (:deadline past :priority ("A" "B"))
+                  :and (:deadline today :priority ("A" "B")))
+           (:name "Important"
+                  :priority "A"
+                  :priority "B")
+           (:name "Urgent"
+                  :scheduled past
+                  :deadline past)
            (:name "Today"
                   :time-grid t
                   :log closed
                   :log clocked
                   :scheduled today
                   :deadline today)
-           (:name "Overdue"
-                  :scheduled past
-                  :deadline past)
-           (:name "Important"
-                  :priority "A"
-                  :priority "B")
            (:name "Upcoming"
                   :scheduled future
                   :deadline future)
            (:name "Habits"
                   :order 9
-                  :habit)
-           ))
+                  :habit)))
   (org-super-agenda-mode)
 
   ;; Allow creating new nodes when refiling.
@@ -477,14 +482,14 @@ values."
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "projects.org.gpg" "Unfiled Tasks")
            "* TODO %? %^G\nSCHEDULED:%^{scheduled}t\n%i\n%a\n")
+          ("T" "Work Todo" entry (file+headline "work.org.gpg" "Unfiled Tasks")
+           "* TODO %? %^G\nSCHEDULED:%^{scheduled}t\n%i\n%a\n")
           ("e" "Todo from email" entry (file+headline "projects.org.gpg" "Unfiled Tasks")
+           "* TODO %:subject %^G\n%?\n %i\n %a\n")
+          ("E" "Work Todo from email" entry (file+headline "work.org.gpg" "Unfiled Tasks")
            "* TODO %:subject %^G\n%?\n %i\n %a\n")
           ("l" "Todo from link" entry (file+headline "projects.org.gpg" "Unfiled Tasks")
            (function sa/generate-todo-link-template))
-          ("T" "Work Todo" entry (file+headline "work.org.gpg" "Unfiled Tasks")
-           "* TODO %? %^G\nSCHEDULED:%^{scheduled}t\n%i\n%a\n")
-          ("E" "Work Todo from email" entry (file+headline "work.org.gpg" "Unfiled Tasks")
-           "* TODO %:subject %^G\n%?\n %i\n %a\n")
           ("L" "Work Todo from link" entry (file+headline "work.org.gpg" "Unfiled Tasks")
            (function sa/generate-todo-link-template))
 ("b" "Bookmark" entry (file+headline "knowledge.org.gpg" "Bookmarks")
@@ -492,12 +497,12 @@ values."
            )
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
            "* %?\n%T\n%i\n")
+          ("J" "Work Journal" entry (file+olp+datetree "work-journal.org.gpg")
+           "* %^{title} %^G\n%T\n%?")
           ("c" "Current Item" entry (file+olp+datetree "journal.org.gpg")
            "* %? %^G\n%i\n" :clock-in t :clock-keep t)
           ("C" "Current Work Item" entry (file+olp+datetree "work-journal.org.gpg")
            "* %? %^G\n%i\n" :clock-in t :clock-keep t)
-          ("w" "Work Journal" entry (file+olp+datetree "work-journal.org.gpg")
-           "* %^{title} %^G\n%T\n%?")
           ("d" "Journal: End of Day" entry (file+olp+datetree "journal.org.gpg")
            "* End of Day :end-of-day:\n%T\n** Three things about today\n\"
             - %^{first}\n- %^{second}\n- %^{third}\n\
@@ -1134,7 +1139,7 @@ you should place your code here."
   (setq powerline-default-separator nil)
 
   ;; Disable line highlight.
-  (global-hl-line-mode -1)
+  ;; (global-hl-line-mode -1)
 
   ;; Enable global auto-revert.
   (global-auto-revert-mode 1)
@@ -1422,9 +1427,37 @@ you should place your code here."
    (quote
     (("n" "Comprehensive Agenda"
       ((agenda "" nil)
-       (tags-todo "+PRIORITY=\"A\"")
-       (todo "NEXT")
-       (todo "WAIT"))
+       (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\"" (
+                                                    (org-agenda-overriding-header "\nImportant")
+                                                    (org-super-agenda-groups nil)
+                                                    ))
+       (todo "NEXT" (
+                     (org-agenda-overriding-header "\nUnscheduled next items")
+                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
+                     (org-super-agenda-groups nil)
+                     ))
+       (todo "WAIT" (
+                     (org-agenda-overriding-header "\nWaiting on others")
+                     (org-super-agenda-groups nil)
+                     ))
+       (todo "ICKY" (
+                     (org-agenda-overriding-header "\nItems to Breakdown")
+                     (org-super-agenda-groups nil)
+                     ))
+       (tags-todo "+refile" (
+                             (org-agenda-overriding-header "\nItems to Refile")
+                             (org-super-agenda-groups nil)
+                             ))
+       (tags-todo "+work" (
+                           (org-super-agenda-groups nil)
+                           (org-agenda-overriding-header "\nUnscheduled Work TODOs")
+                           (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
+                           ))
+       (tags-todo "-work-someday" (
+                     (org-super-agenda-groups nil)
+                     (org-agenda-overriding-header "\nUnscheduled Non-Work TODOs")
+                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
+                     )))
       nil))))
  '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
  '(org-agenda-skip-scheduled-if-done t)
@@ -1447,6 +1480,7 @@ you should place your code here."
  '(org-clock-out-remove-zero-time-clocks t)
  '(org-confirm-babel-evaluate nil)
  '(org-cycle-separator-lines 0)
+ '(org-default-priority 67)
  '(org-habit-completed-glyph 42)
  '(org-habit-graph-column 85)
  '(org-habit-preceding-days 30)
