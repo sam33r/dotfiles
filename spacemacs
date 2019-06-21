@@ -403,6 +403,9 @@ values."
   (setq truncate-lines nil)
   (org-capture))
 
+(defun sa/org-random-cmp (a b)
+  "Return -1,0 or 1 randomly"
+  (- (mod (random) 3) 1))
 
 (defun sa/setup-org-mode (orgdir)
   """Setup org-mode configuration."""
@@ -939,8 +942,6 @@ of change will be 23:59 on that day"
   (setq mu4e-compose-keep-self-cc nil)
   )
 
-
-
 ;; Custom elfeed functions (to show date in headers)
 ;; See https://github.com/algernon/elfeed-goodies/issues/15
 
@@ -1444,20 +1445,47 @@ you should place your code here."
                      (org-agenda-overriding-header "\nItems to Breakdown")
                      (org-super-agenda-groups nil)
                      ))
-       (tags-todo "+refile" (
-                             (org-agenda-overriding-header "\nItems to Refile")
+       (tags-todo "+email+work" (
+                             (org-agenda-overriding-header "\nWork Email Tasks")
                              (org-super-agenda-groups nil)
                              ))
+       (tags-todo "+email-work" (
+                                 (org-agenda-overriding-header "\nPersonal Email Tasks")
+                                 (org-super-agenda-groups nil)
+                                 ))
+       (tags-todo "+people|+social" (
+                                 (org-agenda-overriding-header "\nPeople")
+                                 (org-super-agenda-groups nil)
+                                 ))
        (tags-todo "+work" (
                            (org-super-agenda-groups nil)
                            (org-agenda-overriding-header "\nUnscheduled Work TODOs")
                            (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
                            ))
+       (tags-todo "+refile" (
+                             (org-agenda-overriding-header "\nItems to Refile")
+                             (org-super-agenda-groups nil)
+                             ))
        (tags-todo "-work-someday" (
                      (org-super-agenda-groups nil)
                      (org-agenda-overriding-header "\nUnscheduled Non-Work TODOs")
                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
-                     )))
+                     ))
+       (tags-todo "+fun" (
+                              (org-super-agenda-groups nil)
+                              (org-agenda-max-entries 3)
+                              (org-agenda-cmp-user-defined 'sa/org-random-cmp)
+                              (org-agenda-sorting-strategy '(user-defined-up))
+                              (org-agenda-overriding-header "\nRandom fun items")
+                              (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))))
+       (tags-todo "+someday" (
+                              (org-super-agenda-groups nil)
+                              (org-agenda-max-entries 3)
+                              (org-agenda-cmp-user-defined 'sa/org-random-cmp)
+                              (org-agenda-sorting-strategy '(user-defined-up))
+                              (org-agenda-overriding-header "\nRandom someday items")
+                              (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))))
+       )
       nil))))
  '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
  '(org-agenda-skip-scheduled-if-done t)
