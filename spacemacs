@@ -610,7 +610,7 @@ values."
    'user
    '(org-block                 ((t (:inherit fixed-pitch))))
    '(org-link                  ((t (:underline t))))
-   '(org-meta-line             ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+   '(org-meta-line             ((t (:inherit (shadow fixed-pitch)))))
    '(org-property-value        ((t (:inherit fixed-pitch))) t)
    '(org-special-keyword       ((t (:inherit (font-lock-comment-face fixed-pitch)))))
    '(org-tag                   ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
