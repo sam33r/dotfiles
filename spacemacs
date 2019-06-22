@@ -200,7 +200,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(tao-yang tao-yin spacemacs-light zenburn solarized-dark solarized-light spacemacs-light dracula spacemacs-dark ujelly)
+   dotspacemacs-themes '(sanityinc-tomorrow-day sanityinc-tomorrow-night spacemacs-light zenburn solarized-dark solarized-light spacemacs-light dracula spacemacs-dark ujelly)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state nil
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -589,8 +589,32 @@ values."
           ("NEXT" . (:foreground "#c942ff" :weight bold))
           ("WAIT" .(:foreground "purple" :weight bold))
           ("CANCELED" . (:foreground "gray" :weight bold))
-          ("IN-PROGRESS" . (:foreground "yellow" :weight bold))
+          ("IN-PROGRESS" . (:foreground "blue" :weight bold))
           ("DONE" . (:foreground "green" :weight bold))))
+
+  (font-lock-add-keywords
+   'org-mode `(("^\\*+ \\(TODO\\) "
+                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⚪")
+                          nil)))
+               ("^\\*+ \\(ICKY\\) "
+                (1 (progn (compose-region (match-beginning 1) (match-end 1) "☕")
+                          nil)))
+               ("^\\*+ \\(NEXT\\) "
+                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⏩")
+                          nil)))
+               ("^\\*+ \\(WAIT\\) "
+                (1 (progn (compose-region (match-beginning 1) (match-end 1) "🤚")
+                          nil)))
+               ("^\\*+ \\(IN-PROGRESS\\) "
+                (1 (progn (compose-region (match-beginning 1) (match-end 1) "‣")
+                          nil)))
+               ("^\\*+ \\(CANCELED\\) "
+                (1 (progn (compose-region (match-beginning 1) (match-end 1) "✘")
+                          nil)))
+               ("^\\*+ \\(DONE\\) "
+                (1 (progn (compose-region (match-beginning 1) (match-end 1) "✔")
+                          nil)))
+               ))
 
   ;; Font faces
   (custom-theme-set-faces
@@ -614,23 +638,27 @@ values."
   (custom-theme-set-faces
    'user
    '(org-block                 ((t (:inherit fixed-pitch))))
-   '(org-link                  ((t (:underline t))))
+   '(org-link                  ((t (:underline nil :weight bold))))
    '(org-meta-line             ((t (:inherit (shadow fixed-pitch)))))
    '(org-property-value        ((t (:inherit fixed-pitch))) t)
-   '(org-special-keyword       ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+   '(org-special-keyword       ((t (:inherit fixed-pitch))))
+   '(org-code                  ((t (:inherit fixed-pitch))))
+   '(org-date                  ((t (:inherit (shadow fixed-pitch) :underline nil :height 0.8))))
    '(org-tag                   ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
    '(org-verbatim              ((t (:inherit (shadow fixed-pitch)))))
    '(org-table                 ((t (:inherit (shadow fixed-pitch)))))
    '(org-indent                ((t (:inherit (org-hide fixed-pitch))))))
 
-  (add-hook 'org-mode-hook 'turn-off-fci-mode 'append)
-  (add-hook 'org-mode-hook #'hidden-mode-line-mode)
   (add-hook 'org-mode-hook #'(lambda ()
-                               (visual-line-mode)
+                               (adaptive-wrap-prefix-mode 1)
+                               (auto-revert-mode 1)
+                               (hidden-mode-line-mode)
                                (setq line-spacing 0.6)
+                               (spacemacs/toggle-visual-line-navigation-on)
+                               (turn-off-fci-mode)
+                               (variable-pitch-mode t)
+                               (visual-line-mode 1)
                                ))
-  (add-hook 'org-mode-hook (lambda () (auto-revert-mode 1)))
-  (add-hook 'org-mode-hook (lambda () (variable-pitch-mode t)))
   )
 
 (defun sa/local-shell-command (command)
