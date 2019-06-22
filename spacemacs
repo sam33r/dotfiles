@@ -1524,6 +1524,7 @@ you should place your code here."
  '(epg-pinentry-mode (quote loopback))
  '(evil-want-Y-yank-to-eol nil)
  '(global-vi-tilde-fringe-mode nil)
+ '(helm-org-rifle-test-against-path t)
  '(line-spacing 0.2)
  '(mu4e-compose-dont-reply-to-self t)
  '(mu4e-headers-include-related nil)
