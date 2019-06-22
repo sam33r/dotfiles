@@ -115,6 +115,7 @@ values."
                                       org-noter
                                       org-super-agenda
                                       org-web-tools
+                                      org-inlinetask
                                       ox-clip
                                       pdf-view-restore
                                       shackle
@@ -558,8 +559,8 @@ values."
     "H" 'outline-up-heading
     "J" 'outline-forward-same-level
     "K" 'outline-backward-same-level
-    "L" 'outline-next-visible-heading
-    "U" 'outline-previous-visible-heading)
+    "L" 'org-down-element)
+  (define-key org-mode-map (kbd "RET")  #'sa/org-return)
 
   ;; Appearance
   (setq org-bullets-bullet-list '(" ")
@@ -849,6 +850,88 @@ of change will be 23:59 on that day"
   (find-file (car (last (directory-files "~/.run-tmux-sessions" 'full nil nil))))
   (delete-trailing-whitespace)
   )
+
+(defun org-line-element-context ()
+  "Return the symbol of the current block element, e.g. paragraph or list-item."
+  (let ((context (org-element-context)))
+    (while (member (car context) '(verbatim code bold italic underline))
+      (setq context (org-element-property :parent context)))
+    context))
+
+(defun org-really-in-item-p ()
+  "Similar to `org-in-item-p', however, this works around an
+issue where the point could actually be in some =code= words, but
+still be on an item element."
+  (save-excursion
+    (let ((location (org-element-property :contents-begin
+                                          (org-line-element-context))))
+      (when location
+        (goto-char location))
+      (org-in-item-p))))
+
+(defun sa/org-return ()
+  "If at the end of a line, do something special based on the
+information about the line by calling `sa/org-special-return',
+otherwise, just call `org-return' as usual."
+  (interactive)
+  (if (eolp)
+      (sa/org-special-return)
+    (org-return)))
+
+;; From https://gitlab.com/howardabrams/spacemacs.d/
+(defun sa/org-special-return (&optional ignore)
+  "Add new list item, heading or table row with RET.
+A double return on an empty element deletes it.
+Use a prefix arg to get regular RET. "
+  (interactive "P")
+  (if ignore
+      (org-return)
+    (cond
+     ;; Open links like usual
+     ((eq 'link (car (org-element-context)))
+      (org-return))
+
+     ;; lists end with two blank lines, so we need to make sure
+     ;; we are also not at the beginning of a line to avoid a
+     ;; loop where a new entry gets created with only one blank
+     ;; line.
+     ((and (org-really-in-item-p) (not (bolp)))
+      (if (org-element-property :contents-begin (org-line-element-context))
+          (progn
+            (end-of-line)
+            (org-insert-item))
+        (delete-region (line-beginning-position) (line-end-position))
+        ))
+
+     ((org-at-heading-p)
+      (if (string= "" (org-element-property :title (org-element-context)))
+          (delete-region (line-beginning-position) (line-end-position))
+        (org-insert-heading-after-current)))
+
+     ((org-at-table-p)
+      (if (-any?
+           (lambda (x) (not (string= "" x)))
+           (nth
+            (- (org-table-current-dline) 1)
+            (org-table-to-lisp)))
+          (org-return)
+        ;; empty row
+        (beginning-of-line)
+        (setf (buffer-substring
+               (line-beginning-position) (line-end-position)) "")
+        (org-return)))
+
+     (t
+      (org-return)))))
+
+(defun sa/org-for-word-processing ()
+  "These projects set up word processing style in org files."
+  (interactive)
+  (define-key org-mode-map (kbd "RET")  #'sa/org-return)
+
+  (visual-line-mode 1)
+  (spacemacs/toggle-visual-line-navigation-on)
+  (adaptive-wrap-prefix-mode 1))
 
 (defun sa/mu4e-config()
   "Configuration for mu4e. Meant to be called by local config."
