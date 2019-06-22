@@ -96,7 +96,7 @@ values."
 
      pdf-tools
 
-     (elfeed :variables rmh-elfeed-org-files (list "~/feeds/feeds.org"))
+     elfeed
      (shell :variables
             shell-default-shell 'eshell)
      themes-megapack
@@ -423,6 +423,7 @@ values."
 
   ;; Agenda location
   (setq org-agenda-files (list orgdir))
+  (setq rmh-elfeed-org-files (list (concat orgdir "/feeds.org")))
 
   (setq org-super-agenda-groups
          '(;; Each group has an implicit boolean OR operator between its selectors.
