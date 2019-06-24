@@ -115,7 +115,6 @@ values."
                                       org-noter
                                       org-super-agenda
                                       org-web-tools
-                                      org-inlinetask
                                       ox-clip
                                       pdf-view-restore
                                       shackle
@@ -415,6 +414,7 @@ values."
   ;;
   (require 'org-checklist)
   (require 'org-web-tools)
+  (require 'org-inlinetask)
 
   ;; In org-agenda log show completed recurring tasks.
   (setq org-agenda-log-mode-items '(closed clock state))
@@ -1630,7 +1630,7 @@ you should place your code here."
  '(org-hierarchical-todo-statistics nil)
  '(org-modules
    (quote
-    (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-protocol org-rmail org-w3m)))
+    (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-inlinetask org-irc org-mhe org-protocol org-rmail org-w3m)))
  '(org-src-lang-modes
    (quote
     (("ocaml" . tuareg)
