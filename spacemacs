@@ -427,7 +427,11 @@ values."
   (setq rmh-elfeed-org-files (list (concat orgdir "/feeds.org")))
 
   (setq org-super-agenda-groups
-         '(;; Each group has an implicit boolean OR operator between its selectors.
+        '(;; Each group has an implicit boolean OR operator between its selectors.
+          (:name "Log"
+           :time-grid t
+           :log closed
+           :log clocked)
            (:name "Important and Urgent"
                   :and (:scheduled past :priority ("A" "B"))
                   :and (:scheduled today :priority ("A" "B"))
@@ -438,21 +442,20 @@ values."
                   :priority "B")
            (:name "Urgent"
                   :scheduled past
-                  :deadline past)
-           (:name "Today"
-                  :time-grid t
-                  :log closed
-                  :log clocked
+                  :deadline past
                   :scheduled today
                   :deadline today)
            (:name "Upcoming"
                   :scheduled future
                   :deadline future)
            (:name "Habits"
-                  :order 9
                   :habit)))
   (org-super-agenda-mode)
 
+  ;; Narrow to item when following.
+  (advice-add 'org-agenda-goto :after
+              (lambda (&rest args)
+                (org-narrow-to-subtree)))
   ;; Allow creating new nodes when refiling.
   (setq org-refile-allow-creating-parent-nodes 'confirm)
 
@@ -481,18 +484,18 @@ values."
             (org-web-tools--org-link-for-url)
             " %^G\n%?\nBookmarked on %U"))
   (defun sa/generate-todo-link-template ()
-    (concat "* TODO %? %^G\nSCHEDULED:%^{scheduled}t\n"
+    (concat "* TRIAGE %? %^G\n"
             (org-web-tools--org-link-for-url)))
   ;; Capture mode.
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "projects.org.gpg" "Unfiled Tasks")
-           "* TODO %? %^G\nSCHEDULED:%^{scheduled}t\n%i\n%a\n")
+           "* TRIAGE %? %^G\n%i\n%x\n")
           ("T" "Work Todo" entry (file+headline "work.org.gpg" "Unfiled Tasks")
-           "* TODO %? %^G\nSCHEDULED:%^{scheduled}t\n%i\n%a\n")
+           "* TRIAGE %? %^G\n%i\n%x\n")
           ("e" "Todo from email" entry (file+headline "projects.org.gpg" "Unfiled Tasks")
-           "* TODO %:subject %^G\n%?\n %i\n %a\n")
+           "* TRIAGE %:subject %^G\n%?\n %i\n %a\n")
           ("E" "Work Todo from email" entry (file+headline "work.org.gpg" "Unfiled Tasks")
-           "* TODO %:subject %^G\n%?\n %i\n %a\n")
+           "* TRIAGE %:subject %^G\n%?\n %i\n %a\n")
           ("l" "Todo from link" entry (file+headline "projects.org.gpg" "Unfiled Tasks")
            (function sa/generate-todo-link-template))
           ("L" "Work Todo from link" entry (file+headline "work.org.gpg" "Unfiled Tasks")
@@ -517,8 +520,6 @@ values."
            "* %^{title|A quote} :quote:\n%T\n#+BEGIN_QUOTE\n%x\n#+END_QUOTE\n%?\n")
           ("m" "Meeting Notes" entry (file+olp+datetree "work-journal.org.gpg")
            "* %^{meeting-title} :meeting:\n%T\n%?\n")
-          ("M" "Meeting with Follow-up" entry (file+olp+datetree "work-journal.org.gpg")
-           "* %^{meeting-title} :meeting:\n%T\n%?\n** TODO %^{meeting-followup} \nDEADLINE:%^{deadline}t\n")
           ("s" "Social Call" entry (file+olp+datetree "journal.org.gpg")
            "* %^{title} :social:\n%T\n%?\n")
           ("F" "Code Reference to Current Task"
@@ -582,9 +583,10 @@ values."
 
   ;; Task tags
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "ICKY(i)" "NEXT(n!)" "WAIT(w@/!)" "IN-PROGRESS(p!)" "|" "DONE(d!)" "CANCELED(c@)")))
+        '((sequence "TRIAGE(a)" "TODO(t)" "ICKY(i)" "NEXT(n!)" "WAIT(w@/!)" "IN-PROGRESS(p!)" "|" "DONE(d!)" "CANCELED(c@)")))
   (setq org-todo-keyword-faces
-        '(("TODO" . (:foreground "orange" :weight bold))
+        '(("TRIAGE" . org-warning)
+          ("TODO" . (:foreground "orange" :weight bold))
           ("ICKY" . org-warning)
           ("NEXT" . (:foreground "#c942ff" :weight bold))
           ("WAIT" .(:foreground "purple" :weight bold))
@@ -596,6 +598,9 @@ values."
    'org-mode `(("^\\*+ \\(TODO\\) "
                 (1 (progn (compose-region (match-beginning 1) (match-end 1) "⚪")
                           nil)))
+               ("^\\*+ \\(TRIAGE\\) "
+                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⬛")
+                          nil)))
                ("^\\*+ \\(ICKY\\) "
                 (1 (progn (compose-region (match-beginning 1) (match-end 1) "☕")
                           nil)))
@@ -606,7 +611,7 @@ values."
                 (1 (progn (compose-region (match-beginning 1) (match-end 1) "🤚")
                           nil)))
                ("^\\*+ \\(IN-PROGRESS\\) "
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "‣")
+                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⯈")
                           nil)))
                ("^\\*+ \\(CANCELED\\) "
                 (1 (progn (compose-region (match-beginning 1) (match-end 1) "✘")
@@ -1549,31 +1554,40 @@ you should place your code here."
                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
                      (org-super-agenda-groups nil)
                      ))
-       (todo "WAIT" (
-                     (org-agenda-overriding-header "\nWaiting on others")
+       (todo "TRIAGE" (
+                     (org-agenda-overriding-header "\nItems to Triage")
                      (org-super-agenda-groups nil)
                      ))
        (todo "ICKY" (
                      (org-agenda-overriding-header "\nItems to Breakdown")
                      (org-super-agenda-groups nil)
+                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
+                     ))
+       (todo "WAIT" (
+                     (org-agenda-overriding-header "\nWaiting on others")
+                     (org-super-agenda-groups nil)
+                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
                      ))
        (tags-todo "+email+work" (
                              (org-agenda-overriding-header "\nWork Email Tasks")
                              (org-super-agenda-groups nil)
+                             (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
                              ))
-       (tags-todo "+email-work" (
-                                 (org-agenda-overriding-header "\nPersonal Email Tasks")
-                                 (org-super-agenda-groups nil)
-                                 ))
-       (tags-todo "+people|+social" (
-                                 (org-agenda-overriding-header "\nPeople")
-                                 (org-super-agenda-groups nil)
-                                 ))
        (tags-todo "+work" (
                            (org-super-agenda-groups nil)
                            (org-agenda-overriding-header "\nUnscheduled Work TODOs")
                            (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
                            ))
+       (tags-todo "+people|+social" (
+                                     (org-agenda-overriding-header "\nPeople")
+                                     (org-super-agenda-groups nil)
+                                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
+                                     ))
+       (tags-todo "+email-work" (
+                                 (org-agenda-overriding-header "\nPersonal Email Tasks")
+                                 (org-super-agenda-groups nil)
+                                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
+                                 ))
        (tags-todo "+refile" (
                              (org-agenda-overriding-header "\nItems to Refile")
                              (org-super-agenda-groups nil)
