@@ -592,7 +592,6 @@ values."
           ("NEXT" . (:foreground "#c942ff" :weight bold))
           ("WAIT" .(:foreground "purple" :weight bold))
           ("CANCELED" . (:foreground "gray" :weight bold))
-          ("IN-PROGRESS" . (:foreground "blue" :weight bold))
           ("DONE" . (:foreground "green" :weight bold))))
 
   (font-lock-add-keywords
