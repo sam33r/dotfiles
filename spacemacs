@@ -1632,7 +1632,7 @@ you should place your code here."
  '(org-hierarchical-todo-statistics nil)
  '(org-modules
    (quote
-    (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-protocol org-rmail org-w3m)))
+    (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-inlinetask org-irc org-mhe org-mouse org-protocol org-rmail org-w3m org-checklist org-notify org-wikinodes)))
  '(org-src-lang-modes
    (quote
     (("ocaml" . tuareg)
