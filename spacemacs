@@ -1337,6 +1337,10 @@ you should place your code here."
 
   (spacemacs/toggle-evil-visual-mark-mode-on)
 
+  ;; Use SPC+TAB for switching windows instead of buffers.
+  (evil-leader/set-key "TAB" #'spacemacs/alternate-window)
+  (evil-leader/set-key "b TAB" #'spacemacs/alternate-buffer)
+
   ;; Custom keybindings.
   (spacemacs/declare-prefix "o" "custom-bindings")
   (evil-leader/set-key "ow" #'sa/write)
