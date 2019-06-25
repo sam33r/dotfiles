@@ -1296,8 +1296,8 @@ you should place your code here."
   (global-vi-tilde-fringe-mode -1)
 
   ;; Prefer splitting horizontally.
-  ;; (setq split-height-threshold nil)
-  ;; (setq split-width-threshold 80)
+  (setq split-height-threshold nil)
+  (setq split-width-threshold 120)
 
   ;; Use spaces for indent.
   (setq indent-tabs-mode nil)
