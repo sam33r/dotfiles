@@ -1578,21 +1578,21 @@ you should place your code here."
                              (org-super-agenda-groups nil)
                              (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
                              ))
-       (tags-todo "+work" (
-                           (org-super-agenda-groups nil)
-                           (org-agenda-overriding-header "\nUnscheduled Work TODOs")
-                           (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
-                           ))
-       (tags-todo "+people|+social" (
-                                     (org-agenda-overriding-header "\nPeople")
-                                     (org-super-agenda-groups nil)
-                                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
-                                     ))
        (tags-todo "+email-work" (
                                  (org-agenda-overriding-header "\nPersonal Email Tasks")
                                  (org-super-agenda-groups nil)
                                  (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
                                  ))
+       (tags-todo "+people|+social" (
+                                     (org-agenda-overriding-header "\nPeople")
+                                     (org-super-agenda-groups nil)
+                                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
+                                     ))
+       (tags-todo "+work" (
+                           (org-super-agenda-groups nil)
+                           (org-agenda-overriding-header "\nUnscheduled Work TODOs")
+                           (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
+                           ))
        (tags-todo "+refile" (
                              (org-agenda-overriding-header "\nItems to Refile")
                              (org-super-agenda-groups nil)
