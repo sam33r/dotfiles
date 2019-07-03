@@ -562,7 +562,9 @@ values."
     "H" 'outline-up-heading
     "J" 'outline-forward-same-level
     "K" 'outline-backward-same-level
-    "L" 'org-down-element)
+    "L" 'org-down-element
+    "Y" 'ox-clip-formatted-copy
+    "P" 'sa/paste-formatted-text-as-org)
   (define-key org-mode-map (kbd "RET")  #'sa/org-return)
 
   ;; Appearance
@@ -830,6 +832,13 @@ within an Org EXAMPLE block and a backlink to the file."
    #+BEGIN_%s %s
 %s
    #+END_%s" initial-txt type headers code-snippet type)))
+
+;; See https://emacs.stackexchange.com/questions/12121/org-mode-parsing-rich-html-directly-when-pasting/12124
+(defun sa/paste-formatted-text-as-org ()
+  "Convert clipboard contents from HTML to Org and then paste (yank)."
+  (interactive)
+  (kill-new (shell-command-to-string "xclip -o -t TARGETS | grep -q text/html && (xclip -o -t text/html | pandoc -f html -t json | pandoc -f json -t org) || xclip -o"))
+  (yank))
 
 (defun sa/code-to-clock (&optional start end)
   "Send the currently selected code to the currently clocked-in org-mode task."
