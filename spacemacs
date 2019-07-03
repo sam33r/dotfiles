@@ -1459,13 +1459,11 @@ you should place your code here."
   ;; Set default browser to eww.
   (setq browse-url-browser-function 'eww-browse-url)
 
-  ;; Save all buffers anytime a buffer loses focus
+  ;; Save all buffers anytime a frame loses focus
   (defun save-all ()
     (interactive)
     (save-some-buffers t))
   (add-hook 'focus-out-hook 'save-all)
-  ;; Also run on a timer, when using emacsclient via command line terminals.
-  (run-with-timer 0 (* 10 60) 'save-all)
 
   ;; load any local user config.
   (if (fboundp 'sa/dotspacemacs/user-config)
