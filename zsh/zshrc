@@ -67,12 +67,15 @@ POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
 POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=""
 POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=""
 
+# TODO: Setup appropriate syntax highlight styles for light background.
+# See https://github.com/zsh-users/zsh-syntax-highlighting
+
 DEFAULT_USER=`whoami`
 
 antigen apply
 
 # zsh-autosuggestions config
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=white'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=246'
 
 # vi-mode: reduce normal-mode-switch delay.
 export KEYTIMEOUT=1
