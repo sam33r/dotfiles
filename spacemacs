@@ -99,7 +99,8 @@ values."
 
      elfeed
      (shell :variables
-            shell-default-shell 'eshell)
+            shell-default-term-shell "/bin/zsh"
+            shell-default-shell 'term)
      themes-megapack
      )
    ;; List of additional packages that will be installed without being
@@ -561,7 +562,9 @@ values."
     "H" 'outline-up-heading
     "J" 'outline-forward-same-level
     "K" 'outline-backward-same-level
-    "L" 'org-down-element)
+    "L" 'org-down-element
+    "Y" 'ox-clip-formatted-copy
+    "P" 'sa/paste-formatted-text-as-org)
   (define-key org-mode-map (kbd "RET")  #'sa/org-return)
 
   ;; Appearance
@@ -642,6 +645,8 @@ values."
     `(org-document-title ((t (,@headline :height 1.8 :underline nil))))))
   (custom-theme-set-faces
    'user
+   '(avy-lead-face ((t(:weight bold))))
+   '(avy-lead-face-0 ((t(:weight bold))))
    '(org-block                 ((t (:inherit fixed-pitch))))
    '(org-link                  ((t (:underline nil :weight bold))))
    '(org-meta-line             ((t (:inherit (shadow fixed-pitch)))))
@@ -827,6 +832,13 @@ within an Org EXAMPLE block and a backlink to the file."
    #+BEGIN_%s %s
 %s
    #+END_%s" initial-txt type headers code-snippet type)))
+
+;; See https://emacs.stackexchange.com/questions/12121/org-mode-parsing-rich-html-directly-when-pasting/12124
+(defun sa/paste-formatted-text-as-org ()
+  "Convert clipboard contents from HTML to Org and then paste (yank)."
+  (interactive)
+  (kill-new (shell-command-to-string "xclip -o -t TARGETS | grep -q text/html && (xclip -o -t text/html | pandoc -f html -t json | pandoc -f json -t org) || xclip -o"))
+  (yank))
 
 (defun sa/code-to-clock (&optional start end)
   "Send the currently selected code to the currently clocked-in org-mode task."
@@ -1447,13 +1459,11 @@ you should place your code here."
   ;; Set default browser to eww.
   (setq browse-url-browser-function 'eww-browse-url)
 
-  ;; Save all buffers anytime a buffer loses focus
+  ;; Save all buffers anytime a frame loses focus
   (defun save-all ()
     (interactive)
     (save-some-buffers t))
   (add-hook 'focus-out-hook 'save-all)
-  ;; Also run on a timer, when using emacsclient via command line terminals.
-  (run-with-timer 0 (* 10 60) 'save-all)
 
   ;; load any local user config.
   (if (fboundp 'sa/dotspacemacs/user-config)
