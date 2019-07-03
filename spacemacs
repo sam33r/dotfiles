@@ -99,7 +99,8 @@ values."
 
      elfeed
      (shell :variables
-            shell-default-shell 'eshell)
+            shell-default-term-shell "/bin/zsh"
+            shell-default-shell 'term)
      themes-megapack
      )
    ;; List of additional packages that will be installed without being
