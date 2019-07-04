@@ -26,9 +26,9 @@ djui/alias-tips
 
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-completions
-zsh-users/zsh-syntax-highlighting
 rupa/z
 vi-mode
+zdharma/fast-syntax-highlighting
 EOBUNDLES
 
 # Setup theme.
@@ -68,7 +68,7 @@ POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=""
 POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=""
 
 # TODO: Setup appropriate syntax highlight styles for light background.
-# See https://github.com/zsh-users/zsh-syntax-highlighting
+# https://github.com/zdharma/fast-syntax-highlighting/issues/49
 
 DEFAULT_USER=`whoami`
 
