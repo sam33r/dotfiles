@@ -468,6 +468,9 @@ values."
   ;; Give up on aligning tags
   (setq org-tags-column 0)
 
+  ;; Max width for inline images
+  (setq org-image-actual-width 800)
+
   ;; Set location for sunrise/sunset.
   (setq calendar-latitude 37.774929)
   (setq calendar-longitude -122.419418)
@@ -507,7 +510,7 @@ values."
            (function sa/generate-bookmark-template)
            )
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
-           "* %?\n%T\n%i\n")
+           "* %? :journal:\n%T\n%i\n")
           ("J" "Work Journal" entry (file+olp+datetree "work-journal.org.gpg")
            "* %^{title} %^G\n%T\n%?")
           ("c" "Current Item" entry (file+olp+datetree "journal.org.gpg")
@@ -1561,73 +1564,97 @@ you should place your code here."
    (quote
     (("n" "Comprehensive Agenda"
       ((agenda "" nil)
-       (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\"" (
-                                                    (org-agenda-overriding-header "\nImportant")
-                                                    (org-super-agenda-groups nil)
-                                                    ))
-       (todo "NEXT" (
-                     (org-agenda-overriding-header "\nUnscheduled next items")
-                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
-                     (org-super-agenda-groups nil)
-                     ))
-       (todo "TRIAGE" (
-                     (org-agenda-overriding-header "\nItems to Triage")
-                     (org-super-agenda-groups nil)
-                     ))
-       (todo "ICKY" (
-                     (org-agenda-overriding-header "\nItems to Breakdown")
-                     (org-super-agenda-groups nil)
-                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
-                     ))
-       (todo "WAIT" (
-                     (org-agenda-overriding-header "\nWaiting on others")
-                     (org-super-agenda-groups nil)
-                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
-                     ))
-       (tags-todo "+email+work" (
-                             (org-agenda-overriding-header "\nWork Email Tasks")
-                             (org-super-agenda-groups nil)
-                             (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
-                             ))
-       (tags-todo "+email-work" (
-                                 (org-agenda-overriding-header "\nPersonal Email Tasks")
-                                 (org-super-agenda-groups nil)
-                                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
-                                 ))
-       (tags-todo "+people|+social" (
-                                     (org-agenda-overriding-header "\nPeople")
-                                     (org-super-agenda-groups nil)
-                                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
-                                     ))
-       (tags-todo "+work" (
-                           (org-super-agenda-groups nil)
-                           (org-agenda-overriding-header "\nUnscheduled Work TODOs")
-                           (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
-                           ))
-       (tags-todo "+refile" (
-                             (org-agenda-overriding-header "\nItems to Refile")
-                             (org-super-agenda-groups nil)
-                             ))
-       (tags-todo "-work-someday" (
-                     (org-super-agenda-groups nil)
-                     (org-agenda-overriding-header "\nUnscheduled Non-Work TODOs")
-                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
-                     ))
-       (tags-todo "+fun" (
-                              (org-super-agenda-groups nil)
-                              (org-agenda-max-entries 3)
-                              (org-agenda-cmp-user-defined 'sa/org-random-cmp)
-                              (org-agenda-sorting-strategy '(user-defined-up))
-                              (org-agenda-overriding-header "\nRandom fun items")
-                              (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))))
-       (tags-todo "+someday" (
-                              (org-super-agenda-groups nil)
-                              (org-agenda-max-entries 3)
-                              (org-agenda-cmp-user-defined 'sa/org-random-cmp)
-                              (org-agenda-sorting-strategy '(user-defined-up))
-                              (org-agenda-overriding-header "\nRandom someday items")
-                              (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))))
-       )
+       (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
+                  ((org-agenda-overriding-header "\nImportant")
+                   (org-super-agenda-groups nil)))
+       (todo "NEXT"
+             ((org-agenda-overriding-header "\nUnscheduled next items")
+              (org-agenda-skip-function
+               (quote
+                (org-agenda-skip-entry-if
+                 (quote scheduled))))
+              (org-super-agenda-groups nil)))
+       (todo "TRIAGE"
+             ((org-agenda-overriding-header "\nItems to Triage")
+              (org-super-agenda-groups nil)))
+       (todo "ICKY"
+             ((org-agenda-overriding-header "\nItems to Breakdown")
+              (org-super-agenda-groups nil)
+              (org-agenda-skip-function
+               (quote
+                (org-agenda-skip-entry-if
+                 (quote scheduled))))))
+       (todo "WAIT"
+             ((org-agenda-overriding-header "\nWaiting on others")
+              (org-super-agenda-groups nil)
+              (org-agenda-skip-function
+               (quote
+                (org-agenda-skip-entry-if
+                 (quote scheduled))))))
+       (tags-todo "+email+work"
+                  ((org-agenda-overriding-header "\nWork Email Tasks")
+                   (org-super-agenda-groups nil)
+                   (org-agenda-skip-function
+                    (quote
+                     (org-agenda-skip-entry-if
+                      (quote scheduled))))))
+       (tags-todo "+email-work"
+                  ((org-agenda-overriding-header "\nPersonal Email Tasks")
+                   (org-super-agenda-groups nil)
+                   (org-agenda-skip-function
+                    (quote
+                     (org-agenda-skip-entry-if
+                      (quote scheduled))))))
+       (tags-todo "+people|+social"
+                  ((org-agenda-overriding-header "\nPeople")
+                   (org-super-agenda-groups nil)
+                   (org-agenda-skip-function
+                    (quote
+                     (org-agenda-skip-entry-if
+                      (quote scheduled))))))
+       (tags-todo "+work"
+                  ((org-super-agenda-groups nil)
+                   (org-agenda-overriding-header "\nUnscheduled Work TODOs")
+                   (org-agenda-skip-function
+                    (quote
+                     (org-agenda-skip-entry-if
+                      (quote scheduled))))))
+       (tags-todo "+refile"
+                  ((org-agenda-overriding-header "\nItems to Refile")
+                   (org-super-agenda-groups nil)))
+       (tags-todo "-work-someday"
+                  ((org-super-agenda-groups nil)
+                   (org-agenda-overriding-header "\nUnscheduled Non-Work TODOs")
+                   (org-agenda-skip-function
+                    (quote
+                     (org-agenda-skip-entry-if
+                      (quote scheduled))))))
+       (tags-todo "+fun"
+                  ((org-super-agenda-groups nil)
+                   (org-agenda-max-entries 3)
+                   (org-agenda-cmp-user-defined
+                    (quote sa/org-random-cmp))
+                   (org-agenda-sorting-strategy
+                    (quote
+                     (user-defined-up)))
+                   (org-agenda-overriding-header "\nRandom fun items")
+                   (org-agenda-skip-function
+                    (quote
+                     (org-agenda-skip-entry-if
+                      (quote scheduled))))))
+       (tags-todo "+someday"
+                  ((org-super-agenda-groups nil)
+                   (org-agenda-max-entries 3)
+                   (org-agenda-cmp-user-defined
+                    (quote sa/org-random-cmp))
+                   (org-agenda-sorting-strategy
+                    (quote
+                     (user-defined-up)))
+                   (org-agenda-overriding-header "\nRandom someday items")
+                   (org-agenda-skip-function
+                    (quote
+                     (org-agenda-skip-entry-if
+                      (quote scheduled)))))))
       nil))))
  '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
  '(org-agenda-skip-scheduled-if-done t)
