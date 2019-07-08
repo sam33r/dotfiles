@@ -118,6 +118,7 @@ values."
                                       org-super-agenda
                                       org-web-tools
                                       ox-clip
+                                      org-attach-screenshot
                                       pdf-view-restore
                                       shackle
                                       smtpmail
