@@ -509,7 +509,7 @@ values."
            (function sa/generate-bookmark-template)
            )
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
-           "* %?\n%T\n%i\n")
+           "* %? :journal:\n%T\n%i\n")
           ("J" "Work Journal" entry (file+olp+datetree "work-journal.org.gpg")
            "* %^{title} %^G\n%T\n%?")
           ("c" "Current Item" entry (file+olp+datetree "journal.org.gpg")
