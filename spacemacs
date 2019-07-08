@@ -467,6 +467,9 @@ values."
   ;; Give up on aligning tags
   (setq org-tags-column 0)
 
+  ;; Max width for inline images
+  (setq org-image-actual-width 800)
+
   ;; Set location for sunrise/sunset.
   (setq calendar-latitude 37.774929)
   (setq calendar-longitude -122.419418)
