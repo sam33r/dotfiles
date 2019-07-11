@@ -52,6 +52,7 @@ values."
      helm
      (auto-completion :variables
                       auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-sort-by-usage t
                       auto-completion-complete-with-key-sequence-delay 0.07
                       auto-completion-enable-help-tooltip t
                       )
@@ -125,6 +126,8 @@ values."
                                       writegood-mode
                                       writeroom-mode
                                       yasnippet-snippets
+                                      memento-mori
+                                      org-cliplink
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -202,7 +205,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(sanityinc-tomorrow-day sanityinc-tomorrow-night spacemacs-light zenburn solarized-dark solarized-light spacemacs-light dracula spacemacs-dark ujelly)
+   dotspacemacs-themes '(solarized-light sanityinc-tomorrow-day sanityinc-tomorrow-night spacemacs-light zenburn solarized-dark spacemacs-light dracula spacemacs-dark ujelly)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state nil
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -506,8 +509,11 @@ values."
            (function sa/generate-todo-link-template))
           ("L" "Work Todo from link" entry (file+headline "work.org.gpg" "Unfiled Tasks")
            (function sa/generate-todo-link-template))
-("b" "Bookmark" entry (file+headline "knowledge.org.gpg" "Bookmarks")
+          ("b" "Bookmark" entry (file+headline "knowledge.org.gpg" "Bookmarks")
            (function sa/generate-bookmark-template)
+           )
+          ("B" "Manual Bookmark" entry (file+headline "knowledge.org.gpg" "Bookmarks")
+           "* %? %^G\nBookmarked on %U"
            )
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
            "* %? :journal:\n%T\n%i\n")
@@ -844,6 +850,15 @@ within an Org EXAMPLE block and a backlink to the file."
   (kill-new (shell-command-to-string "xclip -o -t TARGETS | grep -q text/html && (xclip -o -t text/html | pandoc -f html -t json | pandoc -f json -t org) || xclip -o"))
   (yank))
 
+(defun sa/unfill-region (start end)
+  "Replace newline chars in region by single spaces.
+This command does the inverse of `fill-region'.
+From: http://ergoemacs.org/emacs/emacs_unfill-paragraph.html"
+  (interactive "r")
+  (let ((fill-column most-positive-fixnum))
+    (fill-region start end)))
+
+
 (defun sa/code-to-clock (&optional start end)
   "Send the currently selected code to the currently clocked-in org-mode task."
   (interactive)
@@ -888,10 +903,11 @@ of change will be 23:59 on that day"
         (org-agenda-todo arg)
       (org-todo arg))))
 
-(defun sa/startup()
+(defun sa/reset()
+  (interactive)
   (dotspacemacs/sync-configuration-layers)
-  (org-agenda nil "n")
-  (delete-other-windows))
+  (dotspacemacs/user-config)
+  (mapc 'kill-buffer (buffer-list)))
 
 (defun sa/open-last-tmux-run()
   "Get results from the last run-in-tmux cell execution."
@@ -1172,6 +1188,13 @@ you should place your code here."
 
   ;; turn on yasnippets(?)
   (spacemacs/toggle-yasnippet-on)
+  (setq yas-snippet-dirs '(
+                           "/usr/local/google/home/samahuja/.emacs.d/private/snippets/"
+                           "/usr/local/google/home/samahuja/.emacs.d/layers/+completion/auto-completion/local/snippets"
+                           yasnippet-snippets-dir
+                           ))
+  (yasnippet-snippets-initialize)
+  (yas-reload-all)
 
   (setq bookmark-default-file "~/.emacs-bookmarks")
 
@@ -1284,6 +1307,10 @@ you should place your code here."
   ;; j/k go to next visual line.
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+
+  ;; Switch buffers instead of tabs.
+  (define-key evil-normal-state-map (kbd "g t") 'next-buffer)
+  (define-key evil-normal-state-map (kbd "g T") 'previous-buffer)
 
   ;; keyfreq
   ;; http://blog.binchen.org/posts/how-to-be-extremely-efficient-in-emacs.html
@@ -1678,6 +1705,8 @@ you should place your code here."
  '(org-confirm-babel-evaluate nil)
  '(org-cycle-separator-lines 0)
  '(org-default-priority 67)
+ '(org-export-with-section-numbers nil)
+ '(org-export-with-toc nil)
  '(org-habit-completed-glyph 42)
  '(org-habit-graph-column 85)
  '(org-habit-preceding-days 30)
@@ -1754,6 +1783,7 @@ you should place your code here."
  '(web-mode-code-indent-offset 2)
  '(web-mode-css-indent-offset 2)
  '(web-mode-markup-indent-offset 2)
+ '(window-divider-mode nil)
  '(writeroom-border-width 20)
  '(writeroom-fullscreen-effect (quote maximized))
  '(writeroom-global-effects
