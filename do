@@ -628,7 +628,7 @@ function update_hosts()                                                         
   sudo ~/py3env/bin/python3 updateHostsFile.py \
     --backup \
     --flush-dns-cache \
-    --extensions fakenews gambling porn social
+    --extensions fakenews gambling porn
   cd $dir
 }
 
