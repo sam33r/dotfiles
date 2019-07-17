@@ -1189,8 +1189,8 @@ you should place your code here."
   ;; turn on yasnippets(?)
   (spacemacs/toggle-yasnippet-on)
   (setq yas-snippet-dirs '(
-                           "/usr/local/google/home/samahuja/.emacs.d/private/snippets/"
-                           "/usr/local/google/home/samahuja/.emacs.d/layers/+completion/auto-completion/local/snippets"
+                           "~/.emacs.d/private/snippets/"
+                           "~/.emacs.d/layers/+completion/auto-completion/local/snippets"
                            yasnippet-snippets-dir
                            ))
   (yasnippet-snippets-initialize)
