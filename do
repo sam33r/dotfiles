@@ -51,12 +51,12 @@ function custom_install_esoteric_packages()                                     
   sudo apt-get install nvidia-370
 }
 
+# TODO: Just use stow.
 function install_dotfiles()
 {
   while IFS=, read config_path dotfile_path
   do
     printf "\n\n"
-    # Expand any env variables in the config.
     cpath=$(eval echo $config_path)
     dpath=$(eval echo $dotfile_path)
 
@@ -69,6 +69,7 @@ function install_dotfiles()
   done < $dir/$dotfiles_list
 }
 
+# TODO: Just use stow.
 function install_some_dotfiles()
 {
   while IFS=, read config_path dotfile_path
@@ -779,6 +780,7 @@ function help()
 if [ "_$1" = "_" ]; then
   help
 else
+  mkdir -p ${backup_dir}
   cd $dir
   "$@"
 fi
