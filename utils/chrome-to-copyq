@@ -1,9 +1,12 @@
 #!/bin/bash
-# TODO: We can instantiate with a better timestamp to avoid duplicates.
-ts="0"
-inotifywait -q -m "$HOME/.config/google-chrome/Default/History"  |
+histfile="$HOME/.config/google-chrome/Default/History"
+
+cp -f $histfile ~/tmp/CH.sqlite
+ts=`sqlite3 ~/tmp/CH.sqlite "select last_visit_time from urls order by last_visit_time desc limit 1"`
+
+inotifywait -q -m $histfile |
   while read -r filename event; do
-    cp -f  ~/.config/google-chrome/Default/History ~/tmp/CH.sqlite
+    cp -f $histfile ~/tmp/CH.sqlite
     tsn=`sqlite3 ~/tmp/CH.sqlite "select last_visit_time from urls order by last_visit_time desc limit 1"`
 
     # Only do this if there have been new items.

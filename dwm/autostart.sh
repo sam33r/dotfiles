@@ -21,6 +21,7 @@ copyq &
 redshift-gtk &
 run_keybase &
 xbindkeys -f ~/.xbindkeysrc
+~/dotfiles/utils/chrome-to-copyq &
 
 start-pulseaudio-x11 &
 
