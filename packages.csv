@@ -16,6 +16,7 @@ gparted,partition management utility
 gscan2pdf,Scan to PDF
 i3blocks,scheduler for i3bar blocks
 i3,tiling windows manager
+inotify-tools,Wait on file changes.
 inxi,System information
 iotop,disk IO
 libevent-dev,Library dependency for building tmux

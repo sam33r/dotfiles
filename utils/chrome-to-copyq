@@ -1,0 +1,26 @@
+#!/bin/bash
+# TODO: We can instantiate with a better timestamp to avoid duplicates.
+ts="0"
+inotifywait -q -m "$HOME/.config/google-chrome/Default/History"  |
+  while read -r filename event; do
+    cp -f  ~/.config/google-chrome/Default/History ~/tmp/CH.sqlite
+    tsn=`sqlite3 ~/tmp/CH.sqlite "select last_visit_time from urls order by last_visit_time desc limit 1"`
+
+    # Only do this if there have been new items.
+    if [ "$tsn" -gt "$ts" ]; then
+      sqlite3 ~/tmp/CH.sqlite \
+        "select title,url from urls where last_visit_time > $ts order by last_visit_time desc limit 1000" > /tmp/CH.txt
+      tac /tmp/CH.txt > /tmp/CHR.txt
+      while read -r line; do
+        title=$(cut -d'|' -f1 <<<"$line")
+        url=$(cut -d'|' -f2 <<<"$line")
+        #copyq tab "&history" write text/html "<a href='http://google.com'>blah</a>" text/plain "http://google.com"
+        copyq tab "&history" write text/plain "$url" text/html "<a href='$url'>$title</a>"
+      done < "/tmp/CHR.txt"
+
+      # Update the timestamp.
+      ts=$tsn
+    fi
+
+    sleep 1
+  done
