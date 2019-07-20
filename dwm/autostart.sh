@@ -18,7 +18,6 @@ pasystray &
 feh --randomize --bg-fill ~/Wallpapers/* &
 unclutter &
 copyq &
-redshift-gtk &
 run_keybase &
 xbindkeys -f ~/.xbindkeysrc
 ~/dotfiles/utils/chrome-to-copyq &
