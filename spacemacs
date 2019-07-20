@@ -1594,6 +1594,9 @@ you should place your code here."
        (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
                   ((org-agenda-overriding-header "\nImportant")
                    (org-super-agenda-groups nil)))
+       (todo "IN-PROGRESS"
+             ((org-agenda-overriding-header "\nIn-Progress Items")
+              (org-super-agenda-groups nil)))
        (todo "NEXT"
              ((org-agenda-overriding-header "\nUnscheduled next items")
               (org-agenda-skip-function
