@@ -37,8 +37,7 @@ echo "$nowtime 🢂 $endtime | $purpose" | \
   tr '[:lower:]' '[:upper:]' >> ~/purpose-log.txt
 
 # Reset to grayscale.
-touch /tmp/grayscale-enabled
 killall compton
-nohup compton -f --backend glx --glx-fshader-win "$(cat ~/dotfiles/utils/GSLS)" &
+nohup compton -f --backend glx --glx-fshader-win "$(cat ~/dotfiles/utils/gsls.c | sed -e "s/{Mode}/4/g")" &
 
 ~/.dwm/xsetroot.sh &

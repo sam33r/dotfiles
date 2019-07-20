@@ -3,4 +3,3 @@
 colormode=$(cat ~/dotfiles/utils/gsls.c | grep "case .:" | rofi -dmenu | grep -o "[0-9]:" | cut -d':' -f1)
 killall compton
 nohup compton -f --backend glx --glx-fshader-win "$(cat ~/dotfiles/utils/gsls.c | sed -e "s/{Mode}/$colormode/g")" &
-echo $colormode > /tmp/color-mode
