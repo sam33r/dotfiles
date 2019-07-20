@@ -1,6 +1,7 @@
 acpi,used to display battery status
 autoconf-archive,For manual make
 compton,Simple standalone composite manager (For use with xmonad)
+cryfs,Encryption.
 docker-engine,docker
 fbterm,Framebuffer terminal emulator
 fdupes,Find duplicates
