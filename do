@@ -34,12 +34,16 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function install_update_packages()
 {
-  sudo apt-get update && time sudo apt-get dist-upgrade
+  sudo apt-get update
+  sudo apt-get dist-upgrade
   while IFS=, read package description
   do
     printf "\n\n\n$package : $description\n\n"
-    sudo apt-get install $package
+    yes | sudo apt-get install $package
   done < $dir/$packages_list
+  sudo apt-get autoremove
+  sudo apt-get autoclean
+  sudo apt-get clean
 }
 
 function custom_install_esoteric_packages()                                      # Packages and crap only needed for custom hardware
