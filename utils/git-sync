@@ -30,5 +30,5 @@ while true; do
     git add -A; git commit -m "$commit"; git push origin master
     echo $commit
   fi
-  sleep 120
+  sleep 300
 done
