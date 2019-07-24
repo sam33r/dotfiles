@@ -7,6 +7,12 @@ if [ -e /tmp/screen-lock-pid ]; then
   rm /tmp/screen-lock-pid
 fi
 
+rm -f /tmp/screen-locked
+
+# Setup xautolock.
+killall xautolock
+nohup sh -c 'xautolock -time 5 -notify 30 -locker "$HOME/dotfiles/utils/screen-lock"' &
+
 # Clean the desktop
 clean=$(echo "YES|NO" | \
              rofi -dmenu -p "Clean Desktop? " \
