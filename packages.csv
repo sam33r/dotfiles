@@ -65,6 +65,7 @@ vlc,Media player
 vrms,List non-free packages.
 w3m,command line based web browser
 wmctrl,Control window focus.
+xautolock,Lock screen.
 xbacklight,Change display brightness
 xbindkeys-config,xbindkeys config
 xbindkeys,x keybindings
