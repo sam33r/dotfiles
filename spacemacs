@@ -595,12 +595,11 @@ values."
   (setq org-refile-use-outline-path t)
   (setq org-outline-path-complete-in-steps nil)
   (setq org-refile-targets
-        '((nil :maxlevel . 3)
-          (org-agenda-files :maxlevel . 3)))
+        '((org-agenda-files :todo . "PROJECT")))
 
   ;; Task tags
   (setq org-todo-keywords
-        '((sequence "TRIAGE(a)" "TODO(t)" "ICKY(i)" "NEXT(n!)" "WAIT(w@/!)" "IN-PROGRESS(p!)" "|" "DONE(d!)" "CANCELED(c@)")))
+        '((sequence "TRIAGE(a)" "PROJECT" "TODO(t)" "ICKY(i)" "NEXT(n!)" "WAIT(w@/!)" "IN-PROGRESS(p!)" "|" "DONE(d!)" "CANCELED(c@)")))
   (setq org-todo-keyword-faces
         '(("TRIAGE" . org-warning)
           ("TODO" . (:foreground "orange" :weight bold))
@@ -608,6 +607,7 @@ values."
           ("NEXT" . (:foreground "#c942ff" :weight bold))
           ("WAIT" .(:foreground "purple" :weight bold))
           ("CANCELED" . (:foreground "gray" :weight bold))
+          ("PROJECT" . (:weight bold))
           ("DONE" . (:foreground "green" :weight bold))))
 
   (font-lock-add-keywords
