@@ -1569,7 +1569,8 @@ you should place your code here."
    (quote
     ("63dd8ce36f352b92dbf4f80e912ac68216c1d7cf6ae98195e287fd7c7f7cb189" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
  '(elfeed-goodies/entry-pane-position (quote right))
- '(elfeed-goodies/entry-pane-size 0.75)
+ '(elfeed-goodies/entry-pane-size 0.5)
+ '(elfeed-goodies/powerline-default-separator (quote box))
  '(elfeed-goodies/show-mode-padding 30)
  '(elfeed-search-date-format (quote ("%Y-%m-%d" 10 :right)))
  '(epa-file-cache-passphrase-for-symmetric-encryption t)
