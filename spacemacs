@@ -433,6 +433,7 @@ values."
   ;; Agenda location
   (setq org-agenda-files (list orgdir))
   (setq rmh-elfeed-org-files (list (concat orgdir "/feeds.org")))
+  (elfeed-org)
 
   (setq org-super-agenda-groups
         '(;; Each group has an implicit boolean OR operator between its selectors.
