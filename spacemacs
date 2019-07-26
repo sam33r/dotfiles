@@ -98,6 +98,8 @@ values."
 
      pdf-tools
 
+     twitter
+
      elfeed
      (shell :variables
             shell-default-term-shell "/bin/zsh"
