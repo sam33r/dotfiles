@@ -56,7 +56,7 @@
     Control+Mod4 + c 
 
 #Org Agenda
-"(emacsclient -c -e '(sa/agenda "n")' &) ; (sleep 1 &&  ~/dotfiles/utils/center-window)"
+"(emacsclient -c -e '(sa/agenda "n")' &) ; (sleep 0.2 &&  ~/dotfiles/utils/center-window)"
     m:0x40 + c:57
     Mod4 + n 
 
@@ -66,7 +66,7 @@
     Control+Mod4 + n 
 
 #Org Agenda Search
-"(emacsclient -c -e '(sa/agenda "s")' &) ; (sleep 1 &&  ~/dotfiles/utils/center-window)"
+"(emacsclient -c -e '(sa/agenda "N")' &) ; (sleep 0.2 &&  ~/dotfiles/utils/center-window)"
     m:0x41 + c:57
     Shift+Mod4 + n 
 
