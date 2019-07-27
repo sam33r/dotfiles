@@ -1595,54 +1595,71 @@ you should place your code here."
  '(org-M-RET-may-split-line nil)
  '(org-agenda-custom-commands
    (quote
-    (("n" "Comprehensive Agenda"
+    (("n" "Small Agenda"
       ((agenda "" nil)
        (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
-                  ((org-agenda-overriding-header "\nImportant")
+                  ((org-agenda-overriding-header "
+Important")
+                   (org-super-agenda-groups nil)))
+       )
+      nil)
+("N" "Comprehensive Agenda"
+      ((agenda "" nil)
+       (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
+                  ((org-agenda-overriding-header "
+Important")
                    (org-super-agenda-groups nil)))
        (todo "IN-PROGRESS"
-             ((org-agenda-overriding-header "\nIn-Progress Items")
+             ((org-agenda-overriding-header "
+In-Progress Items")
               (org-super-agenda-groups nil)))
        (todo "NEXT"
-             ((org-agenda-overriding-header "\nUnscheduled next items")
+             ((org-agenda-overriding-header "
+Unscheduled next items")
               (org-agenda-skip-function
                (quote
                 (org-agenda-skip-entry-if
                  (quote scheduled))))
               (org-super-agenda-groups nil)))
        (todo "TRIAGE"
-             ((org-agenda-overriding-header "\nItems to Triage")
+             ((org-agenda-overriding-header "
+Items to Triage")
               (org-super-agenda-groups nil)))
        (todo "ICKY"
-             ((org-agenda-overriding-header "\nItems to Breakdown")
+             ((org-agenda-overriding-header "
+Items to Breakdown")
               (org-super-agenda-groups nil)
               (org-agenda-skip-function
                (quote
                 (org-agenda-skip-entry-if
                  (quote scheduled))))))
        (todo "WAIT"
-             ((org-agenda-overriding-header "\nWaiting on others")
+             ((org-agenda-overriding-header "
+Waiting on others")
               (org-super-agenda-groups nil)
               (org-agenda-skip-function
                (quote
                 (org-agenda-skip-entry-if
                  (quote scheduled))))))
        (tags-todo "+email+work"
-                  ((org-agenda-overriding-header "\nWork Email Tasks")
+                  ((org-agenda-overriding-header "
+Work Email Tasks")
                    (org-super-agenda-groups nil)
                    (org-agenda-skip-function
                     (quote
                      (org-agenda-skip-entry-if
                       (quote scheduled))))))
        (tags-todo "+email-work"
-                  ((org-agenda-overriding-header "\nPersonal Email Tasks")
+                  ((org-agenda-overriding-header "
+Personal Email Tasks")
                    (org-super-agenda-groups nil)
                    (org-agenda-skip-function
                     (quote
                      (org-agenda-skip-entry-if
                       (quote scheduled))))))
        (tags-todo "+people|+social"
-                  ((org-agenda-overriding-header "\nPeople")
+                  ((org-agenda-overriding-header "
+People")
                    (org-super-agenda-groups nil)
                    (org-agenda-skip-function
                     (quote
@@ -1650,17 +1667,20 @@ you should place your code here."
                       (quote scheduled))))))
        (tags-todo "+work"
                   ((org-super-agenda-groups nil)
-                   (org-agenda-overriding-header "\nUnscheduled Work TODOs")
+                   (org-agenda-overriding-header "
+Unscheduled Work TODOs")
                    (org-agenda-skip-function
                     (quote
                      (org-agenda-skip-entry-if
                       (quote scheduled))))))
        (tags-todo "+refile"
-                  ((org-agenda-overriding-header "\nItems to Refile")
+                  ((org-agenda-overriding-header "
+Items to Refile")
                    (org-super-agenda-groups nil)))
        (tags-todo "-work-someday"
                   ((org-super-agenda-groups nil)
-                   (org-agenda-overriding-header "\nUnscheduled Non-Work TODOs")
+                   (org-agenda-overriding-header "
+Unscheduled Non-Work TODOs")
                    (org-agenda-skip-function
                     (quote
                      (org-agenda-skip-entry-if
@@ -1673,7 +1693,8 @@ you should place your code here."
                    (org-agenda-sorting-strategy
                     (quote
                      (user-defined-up)))
-                   (org-agenda-overriding-header "\nRandom fun items")
+                   (org-agenda-overriding-header "
+Random fun items")
                    (org-agenda-skip-function
                     (quote
                      (org-agenda-skip-entry-if
@@ -1686,12 +1707,13 @@ you should place your code here."
                    (org-agenda-sorting-strategy
                     (quote
                      (user-defined-up)))
-                   (org-agenda-overriding-header "\nRandom someday items")
+                   (org-agenda-overriding-header "
+Random someday items")
                    (org-agenda-skip-function
                     (quote
                      (org-agenda-skip-entry-if
                       (quote scheduled)))))))
-      nil))))
+     ))))
  '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
  '(org-agenda-skip-scheduled-if-done t)
  '(org-agenda-span (quote day))
