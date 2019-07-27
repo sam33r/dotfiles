@@ -432,6 +432,9 @@ values."
 
   ;; Agenda location
   (setq org-agenda-files (list orgdir))
+  (if (file-exists-p "~/mobile-notes/inbox.org")
+    (add-to-list 'org-agenda-files "~/mobile-notes/inbox.org"))
+
   (setq rmh-elfeed-org-files (list (concat orgdir "/feeds.org")))
   (elfeed-org)
 
