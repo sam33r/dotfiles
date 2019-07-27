@@ -716,7 +716,6 @@ values."
   (select-frame-by-name "agenda")
   (org-agenda nil key)
   (delete-other-windows)
-  (org-agenda-redo)
   )
 
 (defun sa/current ()
