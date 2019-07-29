@@ -36,6 +36,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     yaml
      go
      javascript
      theming
@@ -474,6 +475,13 @@ values."
   (require 'org-contacts)
   ;; (setq org-contacts-files '("~/notes/people.org.gpg"))
 
+  ;; Best-effort log CREATED timestamp.
+  (require 'org-expiry)
+  ;; Call (org-expiry-insert-created) to manually insert timestamps.
+  (setq
+   org-expiry-inactive-timestamps t
+   org-expiry-created-property-name "CREATED")
+
   ;; Give up on aligning tags
   (setq org-tags-column 0)
 
@@ -733,10 +741,20 @@ values."
   (org-clock-goto)
   (org-narrow-to-subtree)
   (end-of-buffer)
-  (newline)
-  (org-time-stamp-inactive '(16))
-  (insert " ")
-  (evil-insert nil)
+  )
+
+(defun sa/current-add-note ()
+  (interactive)
+  (when (display-graphic-p)
+    (make-frame '((name . "current")
+                  (width . 120)
+                  (height . 100)))
+    (delete-frame)
+    (select-frame-by-name "current")
+    (delete-other-windows))
+  (org-clock-goto)
+  (org-narrow-to-subtree)
+  (org-add-note)
   )
 
 (defun sa/task-clocked-time ()
