@@ -646,7 +646,16 @@ values."
                ("^\\*+ \\(DONE\\) "
                 (1 (progn (compose-region (match-beginning 1) (match-end 1) "✔")
                           nil)))
+               ("^ *\\([-]\\) "
+                (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))
                ))
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (push '("[ ]" .  "🞎") prettify-symbols-alist)
+              (push '("[X]" . "🗹" ) prettify-symbols-alist)
+              (push '("[-]" . "◫" ) prettify-symbols-alist)
+              (prettify-symbols-mode)
+              ))
 
   ;; Font faces
   (custom-theme-set-faces
@@ -669,8 +678,6 @@ values."
     `(org-document-title ((t (,@headline :height 1.8 :underline nil))))))
   (custom-theme-set-faces
    'user
-   '(avy-lead-face ((t(:weight bold))))
-   '(avy-lead-face-0 ((t(:weight bold))))
    '(org-block                 ((t (:inherit fixed-pitch))))
    '(org-link                  ((t (:underline nil :weight bold))))
    '(org-meta-line             ((t (:inherit (shadow fixed-pitch)))))
@@ -740,7 +747,6 @@ values."
     (delete-other-windows))
   (org-clock-goto)
   (org-narrow-to-subtree)
-  (end-of-buffer)
   )
 
 (defun sa/current-add-note ()
