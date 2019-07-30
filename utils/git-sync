@@ -5,10 +5,16 @@
 # is assumed to be running as a daemon on all my machines.
 # TODO: Send a mail or something when things break.
 
-if [ "$#" -ne 1 ]
+if [ "$#" -lt 1 ]
 then
-  echo "Usage: git-sync.sh <dir>"
+  echo "Usage: git-sync.sh <dir> <polling freq>"
   exit 1
+fi
+
+polltime="300"
+if [ "$#" -ge 2 ]
+then
+  polltime=$2
 fi
 
 cd $1
@@ -16,7 +22,6 @@ git rev-parse
 
 if [ "$?" -ne "0" ]; then
    echo "Not in a git repository!";
-
 fi
 
 while true; do
@@ -30,5 +35,6 @@ while true; do
     git add -A; git commit -m "$commit"; git push origin master
     echo $commit
   fi
-  sleep 300
+  echo "Sleeping for $polltime seconds."
+  sleep $polltime
 done
