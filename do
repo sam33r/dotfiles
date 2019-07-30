@@ -193,6 +193,15 @@ function install_scrcpy_from_source()
   cd $dir
 }
 
+function install_tmux_persist()
+{
+  cd $HOME
+  git clone https://github.com/sam33r/tmux-persist
+  cd tmux-persist
+  git pull origin master
+  cd $dir
+}
+
 function install_update_cargo_rust()
 {
   if (which rustup); then
