@@ -432,9 +432,12 @@ values."
   (setq org-directory orgdir)
 
   ;; Agenda location
-  (setq org-agenda-files (list orgdir))
-  (if (file-exists-p "~/mobile-notes/inbox.org")
-    (add-to-list 'org-agenda-files "~/mobile-notes/inbox.org"))
+  (setq sa/extra-org-files
+        (split-string
+         (shell-command-to-string
+          "find ~/work-notes ~/mobile-notes -name '*.org' -o -name '*.org.gpg'"
+          )))
+  (setq org-agenda-files (append (list orgdir) sa/extra-org-files))
 
   (setq rmh-elfeed-org-files (list (concat orgdir "/feeds.org")))
   (elfeed-org)
