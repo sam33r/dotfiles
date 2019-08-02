@@ -62,6 +62,8 @@ urlview,View urls
 vim-gtk,gvim
 vim,vim!
 vlc,Media player
+vnstati,Visual traffic monitor
+vnstat,Network traffic monitor
 vrms,List non-free packages.
 w3m,command line based web browser
 wmctrl,Control window focus.
