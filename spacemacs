@@ -1781,6 +1781,7 @@ Random someday items")
  '(org-habit-show-habits-only-for-today t)
  '(org-hide-leading-stars t)
  '(org-hierarchical-todo-statistics nil)
+ '(org-log-into-drawer t)
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-inlinetask org-irc org-mhe org-mouse org-protocol org-rmail org-w3m org-checklist org-notify)))
