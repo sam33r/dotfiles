@@ -1,12 +1,6 @@
 #!/bin/bash
 # Script that runs when screen is unlocked.
 
-# If a previous unlock had set a timer, remove it.
-if [ -e /tmp/screen-lock-pid ]; then
-  kill -9 `cat /tmp/screen-lock-pid`
-  rm /tmp/screen-lock-pid
-fi
-
 rm -f /tmp/screen-locked
 
 # Setup xautolock.
@@ -15,38 +9,9 @@ nohup sh -c \
     'xautolock -time 10 -notify 30 -locker "$HOME/dotfiles/utils/screen-lock"' &
 
 # Clean the desktop
-clean=$(echo "YES|NO" | \
+clean=$(echo "no|yes" | \
              rofi -dmenu -p "Clean Desktop? " \
                   -fullscreen -padding 200 -sep '|' -only-match)
-if [ "$clean" = "YES" ]; then
+if [ "$clean" = "yes" ]; then
   ~/dotfiles/utils/close-windows
 fi
-
-# Show randomly sorted past entries.
-grep -ah " | " ~/purpose-log.txt | tac > /tmp/purpose-options
-purpose_rec=$(cat /tmp/purpose-options | \
-                cut -d "|" -f2 | \
-                sed -e 's/^[ \t]*//' | \
-                sort -R -u |
-                rofi -i -l 100 -dmenu -p "Enter Purpose > " \
-                     -fullscreen -padding 200)
-purpose=$(echo $purpose_rec)
-echo $purpose
-duration=$(echo "60|300|600|1500|3300" | \
-             rofi -dmenu -p "Enter Duration (seconds) > " \
-                  -fullscreen -padding 200 -sep '|' -only-match)
-nowtime=`date "+%Y-%m-%d %H:%M"`
-endtime=`date "+%H:%M" -d "+ $duration seconds"`
-nohup sh -c "sleep $duration && notify-send 'Locking screen in 30 seconds.\
-' && sleep 30 && ~/dotfiles/utils/screen-lock" &
-echo $! > /tmp/screen-lock-pid
-
-# TODO: Use these in the lock script for better logging of sessions.
-echo $purpose > /tmp/purpose
-echo $duration > /tmp/purpose-expected-duration
-date +%s > /tmp/purpose-start-time
-
-echo "$nowtime 🢂 $endtime | $purpose" | \
-  tr '[:lower:]' '[:upper:]' >> ~/purpose-log.txt
-
-~/.dwm/xsetroot.sh &

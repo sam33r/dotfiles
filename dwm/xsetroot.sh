@@ -5,7 +5,6 @@ BATTERYSTATE=$( acpi -b | awk '{ split($5,a,":"); print substr($3,0,2), $4, "["a
 MEMORY=`$HOME/dotfiles/i3blocks/memory | head -2 | tail -1`
 CPU=`$HOME/dotfiles/i3blocks/cpu_usage | head -2 | tail -1`
 TMP=`$HOME/dotfiles/i3blocks/temperature | head -2 | tail -1`
-PURPOSE=`cat $HOME/purpose-log.txt | tail -1`
 TITLE=`playerctl metadata title`
 
 ORGCLOCK=""
@@ -17,5 +16,5 @@ fi
 if [ ! -z "$ORGCLOCK" ]; then
   xsetroot -name " ${ORGCLOCK} | ${DATETIME}"
 else
-  xsetroot -name "${TITLE} | ${PURPOSE} | ${BATTERYSTATE} | CPU $CPU | MEM $MEMORY | VOL ${VOLUME} | TEMP ${TMP} | Up ${UPTIME}h | ${DATETIME}"
+  xsetroot -name "${TITLE} | ${BATTERYSTATE} | CPU $CPU | MEM $MEMORY | VOL ${VOLUME} | TEMP ${TMP} | Up ${UPTIME}h | ${DATETIME}"
 fi
