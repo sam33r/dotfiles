@@ -15,13 +15,13 @@ then
 fi
 
 cd $1
-git rev-parse
 
 if [ "$?" -ne "0" ]; then
    echo "Not in a git repository!";
 fi
 
 while true; do
+  git remote update
   UPSTREAM='@{u}'
   LOCAL=$(git rev-parse @)
   REMOTE=$(git rev-parse "$UPSTREAM")
@@ -30,7 +30,7 @@ while true; do
   if [ $LOCAL = $REMOTE ]; then
     echo "Up-to-date"
   elif [ $LOCAL = $BASE ]; then
-    notify-send "$1 is out of date, need to pull!" --u critical
+    notify-send "$1 is out of date, need to pull" -u critical
   elif [ $REMOTE = $BASE ]; then
     echo "Need to push"
   else
