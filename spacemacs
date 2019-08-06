@@ -112,6 +112,8 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      bm
+                                      helm-bm
                                       company-tabnine
                                       focus
                                       fontify-face
@@ -676,20 +678,22 @@ values."
    '(fixed-pitch ((t ( :family "Input" :slant normal :weight normal :height 1.0 :width normal)))))
   (let* ((headline `(:inherit default :weight bold :family "EtBembo")))
 
-    (custom-theme-set-faces
-    'user
-    `(org-headline-done ((t (,@headline))))
-    `(org-level-8 ((t (,@headline :height 1.1))))
-    `(org-level-7 ((t (,@headline :height 1.1))))
-    `(org-level-6 ((t (,@headline :height 1.1))))
-    `(org-level-5 ((t (,@headline :height 1.1))))
-    `(org-level-4 ((t (,@headline :height 1.2))))
-    `(org-level-3 ((t (,@headline :height 1.3))))
-    `(org-level-2 ((t (,@headline :height 1.4))))
-    `(org-level-1 ((t (,@headline :height 1.5))))
-    `(org-document-title ((t (,@headline :height 1.8 :underline nil))))))
+  (custom-theme-set-faces
+     'user
+     `(org-headline-done ((t (,@headline))))
+     `(org-level-8 ((t (,@headline :height 1.1))))
+     `(org-level-7 ((t (,@headline :height 1.1))))
+     `(org-level-6 ((t (,@headline :height 1.1))))
+     `(org-level-5 ((t (,@headline :height 1.1))))
+     `(org-level-4 ((t (,@headline :height 1.2))))
+     `(org-level-3 ((t (,@headline :height 1.3))))
+     `(org-level-2 ((t (,@headline :height 1.4))))
+     `(org-level-1 ((t (,@headline :height 1.5))))
+     `(org-document-title ((t (,@headline :height 1.8 :underline nil))))))
   (custom-theme-set-faces
    'user
+   '(bm-face                   ((t (:overline nil :background "khaki1"))))
+   '(bm-persistent-face        ((t (:overline nil :background "khaki1"))))
    '(org-block                 ((t (:inherit fixed-pitch))))
    '(org-link                  ((t (:underline nil :weight bold))))
    '(org-meta-line             ((t (:inherit (shadow fixed-pitch)))))
@@ -1207,7 +1211,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 
   (setq-default git-magit-status-fullscreen t)
-  )
+  (setq bm-repository-file "~/.bm-repository")
+  (setq-default bm-buffer-persistence t)
+)
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -1237,7 +1243,28 @@ you should place your code here."
   (yasnippet-snippets-initialize)
   (yas-reload-all)
 
+  ;; Setup bookmarks and bm
+  (require 'bm)
   (setq bookmark-default-file "~/.emacs-bookmarks")
+  (define-key evil-normal-state-map (kbd "I") 'bm-next)
+  (define-key evil-normal-state-map (kbd "O") 'bm-previous)
+  (define-key evil-normal-state-map (kbd "B") 'bm-toggle)
+  (bm-repository-load)
+  ;; Saving bookmarks
+  (add-hook 'kill-buffer-hook #'bm-buffer-save)
+  ;; Saving the repository to file when on exit.
+  ;; kill-buffer-hook is not called when Emacs is killed, so we
+  ;; must save all bookmarks first.
+  (add-hook 'kill-emacs-hook #'(lambda nil
+                                 (bm-buffer-save-all)
+                                 (bm-repository-save)))
+  ;; The `after-save-hook' is not necessary to use to achieve persistence,
+  ;; but it makes the bookmark data in repository more in sync with the file
+  ;; state.
+  (add-hook 'after-save-hook #'bm-buffer-save)
+  ;; Restoring bookmarks
+  (add-hook 'find-file-hook   #'bm-buffer-restore)
+  (add-hook 'after-revert-hook #'bm-buffer-restore)
 
   ;; Macros
   (fset 'sa/new-log-entry
@@ -1468,7 +1495,7 @@ you should place your code here."
     "R" 'eww-readable
     )
 
-  (evil-global-set-key 'normal "-" 'helm-bookmarks)
+  (evil-global-set-key 'normal "-" 'helm-bm)
 
   (spacemacs/set-leader-keys-for-major-mode 'eww-mode
     "v"     'eww-browse-with-external-browser
@@ -1599,6 +1626,7 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+ '(bm-highlight-style (quote bm-highlight-line-and-fringe))
  '(compilation-error-regexp-alist
    (quote
     (google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google-blaze-error google-log-error google-log-warning google-log-info google-log-fatal-message google-forge-python gunit-stack-trace absoft ada aix ant bash borland python-tracebacks-and-caml comma cucumber msft edg-1 edg-2 epc ftnchek iar ibm irix java jikes-file maven jikes-line clang-include gcc-include ruby-Test::Unit gnu lcc makepp mips-1 mips-2 msft omake oracle perl php rxp sparc-pascal-file sparc-pascal-line sparc-pascal-example sun sun-ada watcom 4bsd gcov-file gcov-header gcov-nomark gcov-called-line gcov-never-called perl--Pod::Checker perl--Test perl--Test2 perl--Test::Harness weblint guile-file guile-line)))
