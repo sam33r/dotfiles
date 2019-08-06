@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Alert if a git repository is out of date from remote.
+
+if [ "$#" -lt 1 ]
+then
+  echo "Usage: git-sync.sh <dir> <polling freq>"
+  exit 1
+fi
+
+polltime="600"
+if [ "$#" -ge 2 ]
+then
+  polltime=$2
+fi
+
+cd $1
+git rev-parse
+
+if [ "$?" -ne "0" ]; then
+   echo "Not in a git repository!";
+fi
+
+while true; do
+  UPSTREAM='@{u}'
+  LOCAL=$(git rev-parse @)
+  REMOTE=$(git rev-parse "$UPSTREAM")
+  BASE=$(git merge-base @ "$UPSTREAM")
+
+  if [ $LOCAL = $REMOTE ]; then
+    echo "Up-to-date"
+  elif [ $LOCAL = $BASE ]; then
+    notify-send "$1 is out of date, need to pull!" --u critical
+  elif [ $REMOTE = $BASE ]; then
+    echo "Need to push"
+  else
+    echo "Diverged"
+  fi
+  sleep $polltime
+done
