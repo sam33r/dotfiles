@@ -948,11 +948,19 @@ of change will be 23:59 on that day"
         (org-agenda-todo arg)
       (org-todo arg))))
 
+(defun sa/kill-org-buffers ()
+  (interactive)
+  (mapc (lambda (buffer)
+          (when (eq 'org-mode (buffer-local-value 'major-mode buffer))
+            (kill-buffer buffer)))
+        (buffer-list)))
+
 (defun sa/reset()
   (interactive)
   (dotspacemacs/sync-configuration-layers)
   (dotspacemacs/user-config)
-  (mapc 'kill-buffer (buffer-list)))
+  (sa/kill-org-buffers)
+  )
 
 (defun sa/open-last-tmux-run()
   "Get results from the last run-in-tmux cell execution."
@@ -1250,6 +1258,7 @@ you should place your code here."
   (define-key evil-normal-state-map (kbd "O") 'bm-previous)
   (define-key evil-normal-state-map (kbd "B") 'bm-toggle)
   (bm-repository-load)
+  (bm-load-and-restore)
   ;; Saving bookmarks
   (add-hook 'kill-buffer-hook #'bm-buffer-save)
   ;; Saving the repository to file when on exit.
@@ -1561,7 +1570,10 @@ you should place your code here."
   ;; Save all buffers anytime a frame loses focus
   (defun save-all ()
     (interactive)
-    (save-some-buffers t))
+    (save-some-buffers t)
+    (bm-buffer-save-all)
+    (bm-save)
+    )
   (add-hook 'focus-out-hook 'save-all)
 
   ;; load any local user config.
