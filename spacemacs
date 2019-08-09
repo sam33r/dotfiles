@@ -692,8 +692,9 @@ values."
      `(org-document-title ((t (,@headline :height 1.8 :underline nil))))))
   (custom-theme-set-faces
    'user
-   '(bm-face                   ((t (:overline nil :background "khaki1"))))
-   '(bm-persistent-face        ((t (:overline nil :background "khaki1"))))
+   '(avy-background-face       ((t (:inherit nil :foreground "gray"))))
+   '(bm-face                   ((t (:overline nil :background "#e5ffcc"))))
+   '(bm-persistent-face        ((t (:overline nil :background "#e5ffcc"))))
    '(org-block                 ((t (:inherit fixed-pitch))))
    '(org-link                  ((t (:underline nil :weight bold))))
    '(org-meta-line             ((t (:inherit (shadow fixed-pitch)))))
@@ -1219,8 +1220,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 
   (setq-default git-magit-status-fullscreen t)
-  (setq bm-repository-file "~/.bm-repository")
+  (setq bm-repository-file "~/.emacs-bm-repository")
   (setq-default bm-buffer-persistence t)
+
+  (setq save-place-file "~/.emacs-saved-places")
+  (setq-default save-place t)
+  (require 'saveplace)
 )
 
 (defun dotspacemacs/user-config ()
@@ -1821,6 +1826,7 @@ Random someday items")
  '(org-habit-show-habits-only-for-today t)
  '(org-hide-leading-stars t)
  '(org-hierarchical-todo-statistics nil)
+ '(org-list-allow-alphabetical t)
  '(org-log-into-drawer t)
  '(org-modules
    (quote
