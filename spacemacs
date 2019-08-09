@@ -441,7 +441,7 @@ values."
           )))
   (setq org-agenda-files (append (list orgdir) sa/extra-org-files))
 
-  (setq rmh-elfeed-org-files (list (concat orgdir "/feeds.org")))
+  (setq rmh-elfeed-org-files (list ("~/mobile-notes/feeds.org")))
   (elfeed-org)
 
   (setq org-super-agenda-groups
@@ -565,6 +565,8 @@ values."
            "* %^{meeting-title} :meeting:\n%T\n%?\n")
 
           ("m" "Mobile")
+          ("mi" "Inbox" entry (file "~/mobile-notes/inbox.org")
+           "* TRIAGE %? %^G\n%i\n%x\n")
           ("me" "Errand" entry (file+headline "~/mobile-notes/mobile.org" "Errands")
            "* TODO %? %^G\n")
           ("mp" "Phone Call" entry (file+headline "~/mobile-notes/mobile.org" "Phone Calls")
