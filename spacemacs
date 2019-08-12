@@ -1057,6 +1057,81 @@ Use a prefix arg to get regular RET. "
   (spacemacs/toggle-visual-line-navigation-on)
   (adaptive-wrap-prefix-mode 1))
 
+;; Utility functions for resolving syncthing conflicts.
+;; Taken from:
+;; https://www.reddit.com/r/emacs/comments/bqqqra/quickly_find_syncthing_conflicts_and_resolve_them/
+
+(defun sa/resolve-mobile-notes ()
+  (interactive)
+  (sa/syncthing-show-conflicts-dired "~/mobile-notes"))
+
+(defun sa/syncthing-resolve-conflicts (directory)
+  "Resolve all conflicts under given DIRECTORY."
+  (interactive "D")
+  (let ((all (sa/syncthing--get-sync-conflicts directory))
+        (chosen (sa/syncthing--pick-a-conflict all)))
+    (sa/syncthing-resolve-conflict chosen)))
+
+(defun sa/syncthing-show-conflicts-dired (directory)
+  "Open dired buffer at DIRECTORY showing all syncthing conflicts."
+  (interactive "D")
+  (find-name-dired directory "*.sync-conflict-*"))
+
+(defun sa/syncthing-resolve-conflict-dired (&optional arg)
+  "Resolve conflict of first marked file in dired or close to point with ARG."
+  (interactive "P")
+  (let ((chosen (car (dired-get-marked-files nil arg))))
+    (sa/syncthing-resolve-conflict chosen)))
+
+(defun sa/syncthing-resolve-conflict (conflict)
+  "Resolve CONFLICT file using ediff."
+  (let* ((normal (sa/syncthing--get-normal-filename conflict)))
+    (sa/ediff-files
+     (list conflict normal)
+     `(lambda ()
+       (when (y-or-n-p "Delete conflict file? ")
+         (kill-buffer (get-file-buffer ,conflict))
+         (delete-file ,conflict))))))
+
+(defun sa/syncthing--get-sync-conflicts (directory)
+  "Return a list of all sync conflict files in a DIRECTORY."
+  (directory-files-recursively directory "\\.sync-conflict-"))
+
+
+(defvar sa/syncthing--conflict-history
+  "Completion conflict history")
+
+(defun sa/syncthing--pick-a-conflict (conflicts)
+  "Let user choose the next conflict from CONFLICTS to investigate."
+  (completing-read "Choose the conflict to investigate: " conflicts
+                   nil t nil sa/syncthing--conflict-history))
+
+(defun sa/syncthing--get-normal-filename (conflict)
+  "Get non-conflict filename matching the given CONFLICT."
+  (replace-regexp-in-string "\\.sync-conflict-.*\\(\\..*\\)$" "\\1" conflict))
+
+(defun sa/ediff-files (&optional files quit-hook)
+  (interactive)
+  (lexical-let ((files (or files (dired-get-marked-files)))
+                (quit-hook quit-hook)
+                (wnd (current-window-configuration)))
+    (if (<= (length files) 2)
+        (let ((file1 (car files))
+              (file2 (if (cdr files)
+                         (cadr files)
+                       (read-file-name
+                        "file: "
+                        (dired-dwim-target-directory)))))
+          (if (file-newer-than-file-p file1 file2)
+              (ediff-files file2 file1)
+            (ediff-files file1 file2))
+          (add-hook 'ediff-after-quit-hook-internal
+                    (lambda ()
+                      (setq ediff-after-quit-hook-internal nil)
+                      (when quit-hook (funcall quit-hook))
+                      (set-window-configuration wnd))))
+      (error "no more than 2 files should be marked"))))
+
 (defun sa/mu4e-config()
   "Configuration for mu4e. Meant to be called by local config."
   (add-hook 'mu4e-headers-mode 'spacemacs/toggle-mode-line-off)
