@@ -1686,10 +1686,9 @@ you should place your code here."
        (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
                   ((org-agenda-overriding-header "
 Important")
-                   (org-super-agenda-groups nil)))
-       )
+                   (org-super-agenda-groups nil))))
       nil)
-("N" "Comprehensive Agenda"
+     ("N" "Comprehensive Agenda"
       ((agenda "" nil)
        (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
                   ((org-agenda-overriding-header "
@@ -1798,8 +1797,7 @@ Random someday items")
                    (org-agenda-skip-function
                     (quote
                      (org-agenda-skip-entry-if
-                      (quote scheduled)))))))
-     ))))
+                      (quote scheduled)))))))))))
  '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
  '(org-agenda-skip-scheduled-if-done t)
  '(org-agenda-span (quote day))
