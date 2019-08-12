@@ -444,7 +444,7 @@ values."
           )))
   (setq org-agenda-files (append (list orgdir) sa/extra-org-files))
 
-  (setq rmh-elfeed-org-files (list ("~/mobile-notes/feeds.org")))
+  (setq rmh-elfeed-org-files (list "~/mobile-notes/feeds.org"))
   (elfeed-org)
 
   (setq org-super-agenda-groups
