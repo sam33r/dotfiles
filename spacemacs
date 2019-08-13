@@ -969,6 +969,20 @@ of change will be 23:59 on that day"
             (kill-buffer buffer)))
         (buffer-list)))
 
+(defun sa/search-org-agenda-headings ()
+  "Widen and search through all org-mode agenda buffers."
+  (interactive)
+  ;; This has the side-effect of widening all org-mode buffers.
+  ;; The way I use org-mode, that is not an issue.
+  (mapc (lambda (buffer)
+          (when (eq 'org-mode (buffer-local-value 'major-mode buffer))
+            (save-excursion
+              (set-buffer buffer)
+              (widen))))
+            ;; (widen-buffer buffer))
+        (buffer-list))
+  (helm-org-agenda-files-headings))
+
 (defun sa/reset()
   (interactive)
   (dotspacemacs/sync-configuration-layers)
@@ -1324,12 +1338,8 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  ;; Turn on TabNine
-  ;; Install binary with:
-  ;; M-x company-tabnine-install-binary
-  (add-to-list 'company-backends #'company-tabnine)
   ;; Trigger completion immediately.
-  (setq company-idle-delay 0)
+  (setq company-idle-delay 0.2)
 
   ;; Number the candidates (use M-1, M-2 etc to select completions).
   (setq company-show-numbers t)
@@ -1351,7 +1361,6 @@ you should place your code here."
   (define-key evil-normal-state-map (kbd "O") 'bm-previous)
   (define-key evil-normal-state-map (kbd "B") 'bm-toggle)
   (bm-repository-load)
-  (bm-load-and-restore)
   ;; Saving bookmarks
   (add-hook 'kill-buffer-hook #'bm-buffer-save)
   ;; Saving the repository to file when on exit.
@@ -1455,7 +1464,7 @@ you should place your code here."
   ;; Set up modeline.
   (spacemacs/toggle-mode-line-minor-modes-off)
   (spacemacs/toggle-mode-line-major-mode-off)
-  (spacemacs/toggle-mode-line-org-clock-off)
+  (spacemacs/toggle-mode-line-org-clock-on)
   (spacemacs/toggle-mode-line-point-position-off)
   (spacemacs/toggle-display-time-off)
 
@@ -1472,7 +1481,7 @@ you should place your code here."
   (global-auto-revert-mode 1)
 
   ;; Centered cursor minor mode.
-  ;; (spacemacs/toggle-centered-point-globally-on)
+  (spacemacs/toggle-centered-point-globally-on)
 
   ;; j/k go to next visual line.
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -1572,7 +1581,7 @@ you should place your code here."
   (evil-leader/set-key "oO" #'helm-org-rifle-current-buffer)
 
   (evil-leader/set-key "W" #'make-frame)
-  (evil-leader/set-key "O" #'helm-org-rifle-agenda-files)
+  (evil-leader/set-key "O" #'sa/search-org-agenda-headings)
 
   ;; Eww browser keybindings
 
@@ -1665,8 +1674,7 @@ you should place your code here."
     (interactive)
     (save-some-buffers t)
     (bm-buffer-save-all)
-    (bm-save)
-    )
+    (bm-repository-save))
   (add-hook 'focus-out-hook 'save-all)
 
   ;; load any local user config.
