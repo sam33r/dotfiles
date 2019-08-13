@@ -25,6 +25,7 @@ if [ "$?" -ne "0" ]; then
 fi
 
 while true; do
+  date
   git pull origin master
   num_changes=`git status --porcelain | wc -l`
   echo "Found $num_changes changes."
