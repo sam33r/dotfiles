@@ -676,6 +676,13 @@ values."
               (prettify-symbols-mode)
               ))
 
+  (defun sa/follow-tag-link (tag)
+    "Display a list of TODO headlines with tag TAG.
+With prefix argument, also display headlines without a TODO keyword."
+    (org-tags-view (null current-prefix-arg) tag))
+
+  (org-add-link-type "tag" 'sa/follow-tag-link)
+
   ;; Font faces
   (custom-theme-set-faces
    'user
@@ -712,6 +719,7 @@ values."
    '(org-table                 ((t (:inherit (shadow fixed-pitch)))))
    '(org-indent                ((t (:inherit (org-hide fixed-pitch))))))
 
+  ;; Hooks
   (add-hook 'org-mode-hook #'(lambda ()
                                (adaptive-wrap-prefix-mode 1)
                                (auto-revert-mode 1)
