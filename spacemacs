@@ -159,6 +159,9 @@ This function is called at the very startup of Spacemacs initialization
 before layers configuration.
 You should not put any user code in there besides modifying the variable
 values."
+  (if (version= emacs-version "26.2")
+      ;; See https://www.reddit.com/r/emacs/comments/cdei4p/failed_to_download_gnu_archive_bad_request/
+      (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
@@ -441,7 +444,7 @@ values."
           )))
   (setq org-agenda-files (append (list orgdir) sa/extra-org-files))
 
-  (setq rmh-elfeed-org-files (list ("~/mobile-notes/feeds.org")))
+  (setq rmh-elfeed-org-files (list "~/mobile-notes/feeds.org"))
   (elfeed-org)
 
   (setq org-super-agenda-groups
@@ -1068,6 +1071,81 @@ Use a prefix arg to get regular RET. "
   (spacemacs/toggle-visual-line-navigation-on)
   (adaptive-wrap-prefix-mode 1))
 
+;; Utility functions for resolving syncthing conflicts.
+;; Taken from:
+;; https://www.reddit.com/r/emacs/comments/bqqqra/quickly_find_syncthing_conflicts_and_resolve_them/
+
+(defun sa/resolve-mobile-notes ()
+  (interactive)
+  (sa/syncthing-show-conflicts-dired "~/mobile-notes"))
+
+(defun sa/syncthing-resolve-conflicts (directory)
+  "Resolve all conflicts under given DIRECTORY."
+  (interactive "D")
+  (let ((all (sa/syncthing--get-sync-conflicts directory))
+        (chosen (sa/syncthing--pick-a-conflict all)))
+    (sa/syncthing-resolve-conflict chosen)))
+
+(defun sa/syncthing-show-conflicts-dired (directory)
+  "Open dired buffer at DIRECTORY showing all syncthing conflicts."
+  (interactive "D")
+  (find-name-dired directory "*.sync-conflict-*"))
+
+(defun sa/syncthing-resolve-conflict-dired (&optional arg)
+  "Resolve conflict of first marked file in dired or close to point with ARG."
+  (interactive "P")
+  (let ((chosen (car (dired-get-marked-files nil arg))))
+    (sa/syncthing-resolve-conflict chosen)))
+
+(defun sa/syncthing-resolve-conflict (conflict)
+  "Resolve CONFLICT file using ediff."
+  (let* ((normal (sa/syncthing--get-normal-filename conflict)))
+    (sa/ediff-files
+     (list conflict normal)
+     `(lambda ()
+       (when (y-or-n-p "Delete conflict file? ")
+         (kill-buffer (get-file-buffer ,conflict))
+         (delete-file ,conflict))))))
+
+(defun sa/syncthing--get-sync-conflicts (directory)
+  "Return a list of all sync conflict files in a DIRECTORY."
+  (directory-files-recursively directory "\\.sync-conflict-"))
+
+
+(defvar sa/syncthing--conflict-history
+  "Completion conflict history")
+
+(defun sa/syncthing--pick-a-conflict (conflicts)
+  "Let user choose the next conflict from CONFLICTS to investigate."
+  (completing-read "Choose the conflict to investigate: " conflicts
+                   nil t nil sa/syncthing--conflict-history))
+
+(defun sa/syncthing--get-normal-filename (conflict)
+  "Get non-conflict filename matching the given CONFLICT."
+  (replace-regexp-in-string "\\.sync-conflict-.*\\(\\..*\\)$" "\\1" conflict))
+
+(defun sa/ediff-files (&optional files quit-hook)
+  (interactive)
+  (lexical-let ((files (or files (dired-get-marked-files)))
+                (quit-hook quit-hook)
+                (wnd (current-window-configuration)))
+    (if (<= (length files) 2)
+        (let ((file1 (car files))
+              (file2 (if (cdr files)
+                         (cadr files)
+                       (read-file-name
+                        "file: "
+                        (dired-dwim-target-directory)))))
+          (if (file-newer-than-file-p file1 file2)
+              (ediff-files file2 file1)
+            (ediff-files file1 file2))
+          (add-hook 'ediff-after-quit-hook-internal
+                    (lambda ()
+                      (setq ediff-after-quit-hook-internal nil)
+                      (when quit-hook (funcall quit-hook))
+                      (set-window-configuration wnd))))
+      (error "no more than 2 files should be marked"))))
+
 (defun sa/mu4e-config()
   "Configuration for mu4e. Meant to be called by local config."
   (add-hook 'mu4e-headers-mode 'spacemacs/toggle-mode-line-off)
@@ -1691,10 +1769,9 @@ you should place your code here."
        (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
                   ((org-agenda-overriding-header "
 Important")
-                   (org-super-agenda-groups nil)))
-       )
+                   (org-super-agenda-groups nil))))
       nil)
-("N" "Comprehensive Agenda"
+     ("N" "Comprehensive Agenda"
       ((agenda "" nil)
        (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
                   ((org-agenda-overriding-header "
@@ -1803,8 +1880,7 @@ Random someday items")
                    (org-agenda-skip-function
                     (quote
                      (org-agenda-skip-entry-if
-                      (quote scheduled)))))))
-     ))))
+                      (quote scheduled)))))))))))
  '(org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
  '(org-agenda-skip-scheduled-if-done t)
  '(org-agenda-span (quote day))
