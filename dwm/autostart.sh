@@ -20,7 +20,8 @@ unclutter &
 copyq &
 run_keybase &
 xbindkeys -f ~/.xbindkeysrc
-~/dotfiles/utils/chrome-to-copyq &
+~/dotfiles/utils/chrome-to-copyq ~/.config/google-chrome/Default/History &
+~/dotfiles/utils/chrome-to-copyq ~/.config/google-chrome-beta/Default/History &
 
 start-pulseaudio-x11 &
 

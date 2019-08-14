@@ -1,25 +1,35 @@
 #!/bin/bash
-histfile="$HOME/.config/google-chrome/Default/History"
 
-cp -f $histfile ~/tmp/CH.sqlite
-ts=`sqlite3 ~/tmp/CH.sqlite "select last_visit_time from urls order by last_visit_time desc limit 1"`
+if [ "$#" -ne 1 ]
+then
+  echo "Usage: chrome-to-copyq <hist-file>"
+  exit 1
+fi
+# histfile="$HOME/.config/google-chrome/Default/History"
+histfile=$1
+localhist=`mktemp`
+localtxt=`mktemp`
+localtxtr=`mktemp`
+
+cp -f $histfile $localhist
+ts=`sqlite3 $localhist "select last_visit_time from urls order by last_visit_time desc limit 1"`
 
 inotifywait -q -m $histfile |
   while read -r filename event; do
-    cp -f $histfile ~/tmp/CH.sqlite
-    tsn=`sqlite3 ~/tmp/CH.sqlite "select last_visit_time from urls order by last_visit_time desc limit 1"`
+    cp -f $histfile $localhist
+    tsn=`sqlite3 $localhist "select last_visit_time from urls order by last_visit_time desc limit 1"`
 
     # Only do this if there have been new items.
     if [ "$tsn" -gt "$ts" ]; then
-      sqlite3 ~/tmp/CH.sqlite \
-        "select title,url from urls where last_visit_time > $ts order by last_visit_time desc limit 1000" > /tmp/CH.txt
-      tac /tmp/CH.txt > /tmp/CHR.txt
+      sqlite3 $localhist \
+        "select title,url from urls where last_visit_time > $ts order by last_visit_time desc limit 1000" > $localtxt
+      tac $localtxt > $localtxtr
       while read -r line; do
         title=$(cut -d'|' -f1 <<<"$line")
         url=$(cut -d'|' -f2 <<<"$line")
         #copyq tab "&history" write text/html "<a href='http://google.com'>blah</a>" text/plain "http://google.com"
         copyq tab "&history" write text/plain "$url" text/html "<a href='$url'>$title</a>"
-      done < "/tmp/CHR.txt"
+      done < "$localtxtr"
 
       # Update the timestamp.
       ts=$tsn
