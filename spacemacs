@@ -1481,6 +1481,7 @@ you should place your code here."
   (global-auto-revert-mode 1)
 
   ;; Centered cursor minor mode.
+  ;; C-M-- and C-M-= to change the vertical position (ccm-vpos-*).
   (spacemacs/toggle-centered-point-globally-on)
 
   ;; j/k go to next visual line.
@@ -1607,6 +1608,11 @@ you should place your code here."
     )
 
   (evil-global-set-key 'normal "-" 'helm-bm)
+
+  ;; Tab for persistent action, Shift-Tab to select action.
+  (define-key helm-map (kbd "<backtab>") 'helm-select-action)
+
+  (setq helm-M-x-fuzzy-match t)
 
   (spacemacs/set-leader-keys-for-major-mode 'eww-mode
     "v"     'eww-browse-with-external-browser
