@@ -38,7 +38,6 @@ values."
    '(
      yaml
      go
-     javascript
      theming
      csv
      shell-scripts
@@ -105,7 +104,6 @@ values."
      (shell :variables
             shell-default-term-shell "/bin/zsh"
             shell-default-shell 'term)
-     themes-megapack
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -114,6 +112,7 @@ values."
    dotspacemacs-additional-packages '(
                                       bm
                                       helm-bm
+                                      helm-org
                                       company-tabnine
                                       focus
                                       fontify-face
@@ -121,7 +120,6 @@ values."
                                       keyfreq
                                       nov
                                       org-noter
-                                      org-super-agenda
                                       org-web-tools
                                       ox-clip
                                       org-attach-screenshot
@@ -447,32 +445,6 @@ values."
   (setq rmh-elfeed-org-files (list "~/mobile-notes/feeds.org"))
   (elfeed-org)
 
-  (setq org-super-agenda-groups
-        '(;; Each group has an implicit boolean OR operator between its selectors.
-          (:name "Log"
-           :time-grid t
-           :log closed
-           :log clocked)
-           (:name "Important and Urgent"
-                  :and (:scheduled past :priority ("A" "B"))
-                  :and (:scheduled today :priority ("A" "B"))
-                  :and (:deadline past :priority ("A" "B"))
-                  :and (:deadline today :priority ("A" "B")))
-           (:name "Important"
-                  :priority "A"
-                  :priority "B")
-           (:name "Urgent"
-                  :scheduled past
-                  :deadline past
-                  :scheduled today
-                  :deadline today)
-           (:name "Upcoming"
-                  :scheduled future
-                  :deadline future)
-           (:name "Habits"
-                  :habit)))
-  (org-super-agenda-mode)
-
   ;; Narrow to item when following.
   (advice-add 'org-agenda-goto :after
               (lambda (&rest args)
@@ -776,6 +748,8 @@ With prefix argument, also display headlines without a TODO keyword."
     (select-frame-by-name "current")
     (delete-other-windows))
   (org-clock-goto)
+  (org-tree-to-indirect-buffer)
+  (delete-window)
   (org-narrow-to-subtree)
   )
 
@@ -1564,6 +1538,7 @@ you should place your code here."
   (evil-leader/set-key "TAB" #'spacemacs/alternate-window)
   (evil-leader/set-key "b TAB" #'spacemacs/alternate-buffer)
 
+
   ;; Custom keybindings.
   (spacemacs/declare-prefix "o" "custom-bindings")
   (evil-leader/set-key "ow" #'sa/write)
@@ -1609,6 +1584,10 @@ you should place your code here."
 
   (evil-global-set-key 'normal "-" 'helm-bm)
 
+
+  ;; TODO: I do not understand why I'm needing to require these.
+  (require 'helm-org)
+  (require 'helm-config)
   ;; Tab for persistent action, Shift-Tab to select action.
   (define-key helm-map (kbd "<backtab>") 'helm-select-action)
 
@@ -1782,35 +1761,29 @@ you should place your code here."
       ((agenda "" nil)
        (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
                   ((org-agenda-overriding-header "
-Important")
-                   (org-super-agenda-groups nil))))
+Important"))))
       nil)
      ("N" "Comprehensive Agenda"
       ((agenda "" nil)
        (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
                   ((org-agenda-overriding-header "
-Important")
-                   (org-super-agenda-groups nil)))
+Important")))
        (todo "IN-PROGRESS"
              ((org-agenda-overriding-header "
-In-Progress Items")
-              (org-super-agenda-groups nil)))
+In-Progress Items")))
        (todo "NEXT"
              ((org-agenda-overriding-header "
 Unscheduled next items")
               (org-agenda-skip-function
                (quote
                 (org-agenda-skip-entry-if
-                 (quote scheduled))))
-              (org-super-agenda-groups nil)))
+                 (quote scheduled))))))
        (todo "TRIAGE"
              ((org-agenda-overriding-header "
-Items to Triage")
-              (org-super-agenda-groups nil)))
+Items to Triage")))
        (todo "ICKY"
              ((org-agenda-overriding-header "
 Items to Breakdown")
-              (org-super-agenda-groups nil)
               (org-agenda-skip-function
                (quote
                 (org-agenda-skip-entry-if
@@ -1818,7 +1791,6 @@ Items to Breakdown")
        (todo "WAIT"
              ((org-agenda-overriding-header "
 Waiting on others")
-              (org-super-agenda-groups nil)
               (org-agenda-skip-function
                (quote
                 (org-agenda-skip-entry-if
@@ -1826,7 +1798,6 @@ Waiting on others")
        (tags-todo "+email+work"
                   ((org-agenda-overriding-header "
 Work Email Tasks")
-                   (org-super-agenda-groups nil)
                    (org-agenda-skip-function
                     (quote
                      (org-agenda-skip-entry-if
@@ -1834,7 +1805,6 @@ Work Email Tasks")
        (tags-todo "+email-work"
                   ((org-agenda-overriding-header "
 Personal Email Tasks")
-                   (org-super-agenda-groups nil)
                    (org-agenda-skip-function
                     (quote
                      (org-agenda-skip-entry-if
@@ -1842,14 +1812,12 @@ Personal Email Tasks")
        (tags-todo "+people|+social"
                   ((org-agenda-overriding-header "
 People")
-                   (org-super-agenda-groups nil)
                    (org-agenda-skip-function
                     (quote
                      (org-agenda-skip-entry-if
                       (quote scheduled))))))
        (tags-todo "+work"
-                  ((org-super-agenda-groups nil)
-                   (org-agenda-overriding-header "
+                  ((org-agenda-overriding-header "
 Unscheduled Work TODOs")
                    (org-agenda-skip-function
                     (quote
@@ -1857,19 +1825,16 @@ Unscheduled Work TODOs")
                       (quote scheduled))))))
        (tags-todo "+refile"
                   ((org-agenda-overriding-header "
-Items to Refile")
-                   (org-super-agenda-groups nil)))
+Items to Refile")))
        (tags-todo "-work-someday"
-                  ((org-super-agenda-groups nil)
-                   (org-agenda-overriding-header "
+                  ((org-agenda-overriding-header "
 Unscheduled Non-Work TODOs")
                    (org-agenda-skip-function
                     (quote
                      (org-agenda-skip-entry-if
                       (quote scheduled))))))
        (tags-todo "+fun"
-                  ((org-super-agenda-groups nil)
-                   (org-agenda-max-entries 3)
+                  ((org-agenda-max-entries 3)
                    (org-agenda-cmp-user-defined
                     (quote sa/org-random-cmp))
                    (org-agenda-sorting-strategy
@@ -1882,8 +1847,7 @@ Random fun items")
                      (org-agenda-skip-entry-if
                       (quote scheduled))))))
        (tags-todo "+someday"
-                  ((org-super-agenda-groups nil)
-                   (org-agenda-max-entries 3)
+                  ((org-agenda-max-entries 3)
                    (org-agenda-cmp-user-defined
                     (quote sa/org-random-cmp))
                    (org-agenda-sorting-strategy
