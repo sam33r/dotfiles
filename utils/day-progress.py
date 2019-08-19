@@ -6,66 +6,111 @@ from __future__ import print_function
 
 import calendar
 import datetime
+import json
 
 _START_HOUR = 8
 _END_HOUR = 17
 _START_WEEKDAY = 0
-_END_WEEKDAY = 5
+_END_WEEKDAY = 4
+
+now = datetime.datetime.now()
 
 
 def progress_bar(percent):
-  out = u''
-  for i in range(1, 10):
-    if percent >= i * 10:
-      out += u'█'
-    else:
-      out += u'•'
-  return out
+    out = u""
+    for i in range(1, 10):
+        if percent >= i * 10:
+            out += u"█"
+        elif percent >= (((i - 1) * 10) + 5):
+            out += u"▌"
+        else:
+            out += u"•"
+    return out
 
 
-out = ''
-now = datetime.datetime.now()
-today_hours = now.hour - _START_HOUR
-if now.hour > _END_HOUR:
-  today_hours = _END_HOUR - _START_HOUR
-if now.weekday() > _END_WEEKDAY:
-  today_hours = 0
+def get_date_hash(month, day):
+    return datetime.date(now.year, month, day).timetuple().tm_yday
 
-day_percent = (((now.hour - _START_HOUR) * 60 + now.minute) /
-               ((_END_HOUR - _START_HOUR) * 60)) * 100
-if day_percent > 100:
-  day_percent = 100
 
+def gen_all_days_list():
+    all_days = [0]
+    valid_days = 0
+    last_valid_day = 0
+    for month in range(1, 13):
+        month_days = calendar.monthrange(now.year, month)[1]
+        for day in range(1, month_days + 1):
+            thisdate = datetime.date(now.year, month, day)
+            ydate = get_date_hash(month, day)
+            if (
+                thisdate.weekday() >= _START_WEEKDAY
+                and thisdate.weekday() <= _END_WEEKDAY
+            ):
+                last_valid_day = ydate
+                valid_days += 1
+            all_days.append((last_valid_day, valid_days))
+    return all_days
+
+
+all_days = gen_all_days_list()
+
+out = ""
+
+today_minutes = 0
 minutes_in_day = (_END_HOUR - _START_HOUR) * 60
-days_in_week = _END_WEEKDAY - _START_WEEKDAY
-minutes_in_week = minutes_in_day * days_in_week
-now_minutes_in_week = (((now.weekday() - _START_WEEKDAY) * (minutes_in_day)) +
-                       (today_hours * 60))
-week_percent = (now_minutes_in_week / minutes_in_week) * 100
-if week_percent > 100:
-  week_percent = 100
+is_today_valid = all_days[get_date_hash(now.month, now.day)][0] == get_date_hash(
+    now.month, now.day
+)
+if is_today_valid:
+    if now.hour >= _END_HOUR:
+        today_minutes = minutes_in_day
+    elif now.hour >= _START_HOUR:
+        today_minutes = (now.hour - _START_HOUR) * 60 + now.minute
 
-# TODO: This is inaccurate as it's not accounting for weekends.
+day_percent = 0
+if is_today_valid:
+    day_percent = (today_minutes / minutes_in_day) * 100.00
+
+# # -- re-worked till here --
+
+today_index = get_date_hash(now.month, now.day)
+week_start_index = today_index - now.weekday()
+week_end_index = today_index + (6 - now.weekday())
+
+valid_days_in_week = all_days[week_end_index][1] - all_days[week_start_index - 1][1]
+valid_days_in_week_till_yesterday = (
+    all_days[today_index - 1][1] - all_days[week_start_index - 1][1]
+)
+week_percent = (
+    ((valid_days_in_week_till_yesterday * minutes_in_day) + today_minutes)
+    / (valid_days_in_week * minutes_in_day)
+) * 100.00
+
+month_start_index = today_index - now.day + 1
 days_in_month = calendar.monthrange(now.year, now.month)[1]
-minutes_in_month = minutes_in_day * days_in_month
-now_minutes_in_month = (((now.day - 1) * minutes_in_day) + (today_hours * 60))
-month_percent = ((now_minutes_in_month / minutes_in_month) * 100)
-if month_percent > 100:
-  month_percent = 100
+month_end_index = today_index + (days_in_month - now.day)
+valid_days_in_month = all_days[month_end_index][1] - all_days[month_start_index - 1][1]
+valid_days_in_month_till_yesterday = (
+    all_days[today_index - 1][1] - all_days[month_start_index - 1][1]
+)
+month_percent = (
+    (valid_days_in_month_till_yesterday * minutes_in_day + today_minutes)
+    / (valid_days_in_month * minutes_in_day)
+) * 100.00
 
-# TODO: This is inaccurate as it's not accounting for weekends.
-day_of_year = now.timetuple().tm_yday
-year_percent = (day_of_year / 365) * 100
-if year_percent > 100:
-  year_percent = 100
+valid_days_in_year = all_days[-1][1]
+valid_days_in_year_till_yesterday = all_days[today_index - 1][1]
+year_percent = (
+    ((valid_days_in_year_till_yesterday * minutes_in_day) + today_minutes)
+    / (valid_days_in_year * minutes_in_day)
+) * 100.00
 
-out = (u'Day %d%% ' % day_percent)
+out = u"Day %03.2f%% " % day_percent
 out += progress_bar(day_percent)
-out += (u'  Week %d%% ' % week_percent)
+out += u"  Week %03.2f%% " % week_percent
 out += progress_bar(week_percent)
-out += (u'  Month %d%% ' % month_percent)
+out += u"  Month %03.2f%% " % month_percent
 out += progress_bar(month_percent)
-out += (u'  Year %d%% ' % year_percent)
+out += u"  Year %03.2f%% " % year_percent
 out += progress_bar(year_percent)
 
-print(out.encode('utf-8'), end=u'')
+print(out.encode("utf-8"), end=u"")
