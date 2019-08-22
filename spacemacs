@@ -879,6 +879,18 @@ within an Org EXAMPLE block and a backlink to the file."
 %s
    #+END_%s" initial-txt type headers code-snippet type)))
 
+(defun sa/revert-all-buffers ()
+  "Revert all non-modified buffers associated with a file.
+This is to update existing buffers after a Git pull of their underlying files."
+  (interactive)
+  (save-current-buffer
+    (mapc (lambda (b)
+            (set-buffer b)
+            (unless (or (null (buffer-file-name)) (buffer-modified-p))
+              (revert-buffer t t)
+              (message "Reverted %s\n" (buffer-file-name))))
+          (buffer-list))))
+
 ;; See https://emacs.stackexchange.com/questions/12121/org-mode-parsing-rich-html-directly-when-pasting/12124
 (defun sa/paste-formatted-text-as-org ()
   "Convert clipboard contents from HTML to Org and then paste (yank)."
