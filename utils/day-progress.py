@@ -7,6 +7,7 @@ from __future__ import print_function
 import calendar
 import datetime
 import json
+import os
 
 _START_HOUR = 8
 _END_HOUR = 17
@@ -32,10 +33,48 @@ def get_date_hash(month, day):
     return datetime.date(now.year, month, day).timetuple().tm_yday
 
 
+def get_date_hash_from_string(datestr):
+    tokens = datestr.split('/')
+    if len(tokens) != 2:
+        return None
+    month = int(tokens[0])
+    day = int(tokens[1])
+    return get_date_hash(month, day)
+
+
+def get_date_hashes_from_line(line):
+    line = ''.join(line.split())
+    dates = line.split('-')
+    if len(dates) > 2 or len(dates) == 0:
+        return []
+    start = get_date_hash_from_string(dates[0])
+    if not start:
+        return []
+    if len(dates) == 1:
+        return [start]
+    end = get_date_hash_from_string(dates[1])
+    if not end:
+        return []
+    if end <= start:
+        raise ValueError
+    return list(range(start, end + 1))
+
+
+def get_vacation_list():
+    filepath = os.path.expanduser('~/.vacations')
+    vacations = []
+    with open(filepath) as fp:
+        content = fp.readlines()
+        for line in content:
+            vacations.extend(get_date_hashes_from_line(line))
+    return vacations
+
+
 def gen_all_days_list():
     all_days = [0]
     valid_days = 0
     last_valid_day = 0
+    vacations = get_vacation_list()
     for month in range(1, 13):
         month_days = calendar.monthrange(now.year, month)[1]
         for day in range(1, month_days + 1):
@@ -44,7 +83,7 @@ def gen_all_days_list():
             if (
                 thisdate.weekday() >= _START_WEEKDAY
                 and thisdate.weekday() <= _END_WEEKDAY
-            ):
+            ) and ydate not in vacations:
                 last_valid_day = ydate
                 valid_days += 1
             all_days.append((last_valid_day, valid_days))
