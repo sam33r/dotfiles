@@ -439,7 +439,9 @@ values."
         (split-string
          (shell-command-to-string
           "find ~/work-notes ~/mobile-notes -not -path '*/.*' -name '*.org' -o -name '*.org.gpg' 2> /dev/null"
-          )))
+          )
+         "[\n]+"
+         ))
   (setq org-agenda-files (append (list orgdir) sa/extra-org-files))
 
   (setq rmh-elfeed-org-files (list "~/mobile-notes/feeds.org"))
