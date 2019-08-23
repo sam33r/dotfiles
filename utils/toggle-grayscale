@@ -1,5 +1,21 @@
 #!/bin/bash
 
-colormode=$(cat ~/dotfiles/utils/gsls.c | grep "case .:" | rofi -dmenu | grep -o "[0-9]:" | cut -d':' -f1)
-killall compton
-nohup compton -f --backend glx --glx-fshader-win "$(cat ~/dotfiles/utils/gsls.c | sed -e "s/{Mode}/$colormode/g")" &
+colormode=""
+if [ "$#" -lt 1 ]
+then
+  colormode=$(cat ~/dotfiles/utils/gsls.c | grep "case .:" | rofi -dmenu | grep -o "[0-9]:" | cut -d':' -f1)
+else
+  colormode=$1
+fi
+
+if [ -f "/tmp/colormode" ]; then
+  currentmode=$(cat /tmp/colormode)
+else
+  currentmode="0"
+fi
+
+if [ "$currentmode" -ne "$colormode" ]; then
+  killall compton
+  nohup compton -f --backend glx --glx-fshader-win "$(cat ~/dotfiles/utils/gsls.c | sed -e "s/{Mode}/$colormode/g")" &
+  echo $colormode > /tmp/colormode
+fi
