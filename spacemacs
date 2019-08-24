@@ -36,6 +36,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     javascript
      yaml
      go
      theming
@@ -439,7 +440,9 @@ values."
         (split-string
          (shell-command-to-string
           "find ~/work-notes ~/mobile-notes -not -path '*/.*' -name '*.org' -o -name '*.org.gpg' 2> /dev/null"
-          )))
+          )
+         "[\n]+"
+         ))
   (setq org-agenda-files (append (list orgdir) sa/extra-org-files))
 
   (setq rmh-elfeed-org-files (list "~/mobile-notes/feeds.org"))
@@ -658,7 +661,7 @@ With prefix argument, also display headlines without a TODO keyword."
   ;; Font faces
   (custom-theme-set-faces
    'user
-   '(variable-pitch ((t (:family "DejaVu Sans"))))
+   '(variable-pitch ((t (:family "Lexend Deca"))))
    '(fixed-pitch ((t ( :family "Input" :slant normal :weight normal :height 1.0 :width normal)))))
   (let* ((headline `(:inherit default :weight bold :family "EtBembo")))
 
@@ -875,6 +878,18 @@ within an Org EXAMPLE block and a backlink to the file."
    #+BEGIN_%s %s
 %s
    #+END_%s" initial-txt type headers code-snippet type)))
+
+(defun sa/revert-all-buffers ()
+  "Revert all non-modified buffers associated with a file.
+This is to update existing buffers after a Git pull of their underlying files."
+  (interactive)
+  (save-current-buffer
+    (mapc (lambda (b)
+            (set-buffer b)
+            (unless (or (null (buffer-file-name)) (buffer-modified-p))
+              (revert-buffer t t)
+              (message "Reverted %s\n" (buffer-file-name))))
+          (buffer-list))))
 
 ;; See https://emacs.stackexchange.com/questions/12121/org-mode-parsing-rich-html-directly-when-pasting/12124
 (defun sa/paste-formatted-text-as-org ()

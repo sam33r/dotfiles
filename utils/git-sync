@@ -7,17 +7,19 @@
 
 if [ "$#" -lt 1 ]
 then
-  echo "Usage: git-sync.sh <dir> <polling freq>"
+  echo "Usage: git-sync.sh <dir> <polling freq> <optional command to run on pulls>"
   exit 1
 fi
 
+dir=$1
 polltime="300"
 if [ "$#" -ge 2 ]
 then
   polltime=$2
 fi
+cmd=${@:3}
 
-cd $1
+cd $dir
 git rev-parse
 
 if [ "$?" -ne "0" ]; then
@@ -26,7 +28,13 @@ fi
 
 while true; do
   date
+  git fetch origin
+  git status | grep behind
+  status=$?
   git pull origin master
+  if [ "$status" -eq "0" ]; then
+    $cmd
+  fi
   num_changes=`git status --porcelain | wc -l`
   echo "Found $num_changes changes."
   if (( $num_changes > 0)); then

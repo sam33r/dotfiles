@@ -23,6 +23,10 @@ inotifywait -q -m $histfile |
     if [ "$tsn" -gt "$ts" ]; then
       sqlite3 $localhist \
         "select title,url from urls where last_visit_time > $ts order by last_visit_time desc limit 1000" > $localtxt
+      cat $localtxt | grep "theverge\|reddit.com\|hckrnews\|lobste.rs\|news.ycombinator\|espncricinfo"
+      if [ $? -eq 0 ]; then
+        ~/dotfiles/utils/toggle-grayscale 5
+      fi
       tac $localtxt > $localtxtr
       while read -r line; do
         title=$(cut -d'|' -f1 <<<"$line")
