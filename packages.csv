@@ -9,6 +9,7 @@ feh,Image viewer useful for setting wallpaper in linux
 font-manager,Manage fonts
 gcc,gnu compilers
 gnome-sushi,Preview for nautilus
+gnome-tweak-tool,UI Tweaks
 gnupg2,Encryption/decryption
 gnupg-agent,Password entry agent
 gnutls-bin,mu4e dependency
