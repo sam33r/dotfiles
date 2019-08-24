@@ -250,6 +250,9 @@ function install_pips()                                                         
   sudo easy_install pip
   sudo pip install --upgrade pip
   sudo pip install --upgrade virtualenv
+  sudo pip install --upgrade pyformat
+  sudo pip install --upgrade python-flake8
+  sudo pip install --upgrade functools32
 
   if [ ! -d "$HOME/pyenv" ]; then
     virtualenv $HOME/pyenv
