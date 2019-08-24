@@ -536,6 +536,8 @@ function install_update_fonts()                                                 
   cp /tmp/google-fonts/ofl/nunito/* $HOME/.fonts/nunito
   mkdir -p $HOME/.fonts/librebaskerville
   cp /tmp/google-fonts/ofl/librebaskerville/* $HOME/.fonts/librebaskerville
+  mkdir -p $HOME/.fonts/lexenddeca
+  cp /tmp/google-fonts/ofl/lexenddeca/* $HOME/.fonts/lexenddeca
 
   yes | rm -R /tmp/google-fonts
 
