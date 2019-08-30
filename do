@@ -254,33 +254,18 @@ function install_pips()                                                         
   sudo pip install --upgrade python-flake8
   sudo pip install --upgrade functools32
 
-  if [ ! -d "$HOME/pyenv" ]; then
-    virtualenv $HOME/pyenv
-  fi
-
   if [ ! -d "$HOME/py3env" ]; then
     virtualenv -p python3 $HOME/py3env
   fi
 
-  $HOME/pyenv/bin/pip install --upgrade pip
   $HOME/py3env/bin/pip3 install --upgrade pip
 
-  $HOME/pyenv/bin/pip install urllib3[secure]
-  $HOME/pyenv/bin/pip install --upgrade howdoi
-
-  $HOME/pyenv/bin/pip install --upgrade i3ipc
-  $HOME/py3env/bin/pip3 install --upgrade i3ipc
-
-  $HOME/pyenv/bin/pip install --upgrade vobject parsedatetime
-  $HOME/pyenv/bin/pip install --upgrade gcalcli
-
+  $HOME/py3env/bin/pip3 install urllib3[secure]
+  $HOME/py3env/bin/pip3 install --upgrade howdoi
   $HOME/py3env/bin/pip3 install --upgrade youtube_dl
   $HOME/py3env/bin/pip3 install --upgrade mps-youtube
-
   # Packages used by ~/hosts
   $HOME/py3env/bin/pip3 install --upgrade lxml bs4
-
-  $HOME/pyenv/bin/pip install --upgrade Pygments
 }
 
 function install_update_vim_plugins()

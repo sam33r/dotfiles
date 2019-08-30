@@ -660,7 +660,7 @@ With prefix argument, also display headlines without a TODO keyword."
   ;; Font faces
   (custom-theme-set-faces
    'user
-   '(variable-pitch ((t (:family "Lexend Deca"))))
+   '(variable-pitch ((t (:family "Lexend Deca" :height 1.2))))
    '(fixed-pitch ((t ( :family "Input" :slant normal :weight normal :height 1.0 :width normal)))))
   (let* ((headline `(:inherit default :weight bold :family "EtBembo")))
 
@@ -1365,6 +1365,10 @@ you should place your code here."
   (add-hook 'find-file-hook   #'bm-buffer-restore)
   (add-hook 'after-revert-hook #'bm-buffer-restore)
 
+  ;; Projectile
+  ;; this is incorrect as it requires the parent directory. It will work for work machine though.
+  (setq projectile-known-projects-file "~/.emacs-projects")
+
   ;; Macros
   (fset 'sa/new-log-entry
    [?$ ?a escape ?a tab tab return ?* ?* ?  ?  escape ?, ?! return ?a ?\[ ?\] backspace ?/ ?\] M-return return ?\M-l escape])
@@ -1739,6 +1743,7 @@ you should place your code here."
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
  '(bm-highlight-style (quote bm-highlight-line-and-fringe))
+ '(ccm-vpos-inverted -1)
  '(compilation-error-regexp-alist
    (quote
     (google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google-blaze-error google-log-error google-log-warning google-log-info google-log-fatal-message google-forge-python gunit-stack-trace absoft ada aix ant bash borland python-tracebacks-and-caml comma cucumber msft edg-1 edg-2 epc ftnchek iar ibm irix java jikes-file maven jikes-line clang-include gcc-include ruby-Test::Unit gnu lcc makepp mips-1 mips-2 msft omake oracle perl php rxp sparc-pascal-file sparc-pascal-line sparc-pascal-example sun sun-ada watcom 4bsd gcov-file gcov-header gcov-nomark gcov-called-line gcov-never-called perl--Pod::Checker perl--Test perl--Test2 perl--Test::Harness weblint guile-file guile-line)))
