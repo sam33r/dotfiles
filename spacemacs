@@ -494,16 +494,17 @@ values."
             (org-web-tools--org-link-for-url)))
   ;; Capture mode.
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "projects.org.gpg" "Unfiled Tasks")
+        '(
+          ("t" "Todo" entry (file "~/mobile-notes/inbox.org")
            "* TRIAGE %? %^G\n%i\n%x\n")
-          ("e" "Todo from email" entry (file+headline "projects.org.gpg" "Unfiled Tasks")
+          ("e" "Todo from email" entry (file "~/mobile-notes/inbox.org")
            "* TRIAGE %:subject %^G\n%?\n %i\n %a\n")
-          ("l" "Todo from link" entry (file+headline "projects.org.gpg" "Unfiled Tasks")
+          ("l" "Todo from link" entry (file "~/mobile-notes/inbox.org")
            (function sa/generate-todo-link-template))
-          ("b" "Bookmark" entry (file+headline "knowledge.org.gpg" "Bookmarks")
+          ("b" "Bookmark" entry (file+headline "~/mobile-notes/mobile.org" "Bookmarks")
            (function sa/generate-bookmark-template)
            )
-          ("B" "Manual Bookmark" entry (file+headline "knowledge.org.gpg" "Bookmarks")
+          ("B" "Manual Bookmark" entry (file+headline "~/mobile-notes/mobile.org" "Bookmarks")
            "* %? %^G\nBookmarked on %U"
            )
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
@@ -543,8 +544,6 @@ values."
            "* %^{meeting-title} :meeting:\n%T\n%?\n")
 
           ("m" "Mobile")
-          ("mi" "Inbox" entry (file "~/mobile-notes/inbox.org")
-           "* TRIAGE %? %^G\n%i\n%x\n")
           ("me" "Errand" entry (file+headline "~/mobile-notes/mobile.org" "Errands")
            "* TODO %? %^G\n")
           ("mp" "Phone Call" entry (file+headline "~/mobile-notes/mobile.org" "Phone Calls")
