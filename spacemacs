@@ -1366,6 +1366,10 @@ you should place your code here."
   (add-hook 'find-file-hook   #'bm-buffer-restore)
   (add-hook 'after-revert-hook #'bm-buffer-restore)
 
+  ;; Projectile
+  ;; this is incorrect as it requires the parent directory. It will work for work machine though.
+  (setq projectile-known-projects-file "~/.emacs-projects")
+
   ;; Macros
   (fset 'sa/new-log-entry
    [?$ ?a escape ?a tab tab return ?* ?* ?  ?  escape ?, ?! return ?a ?\[ ?\] backspace ?/ ?\] M-return return ?\M-l escape])
