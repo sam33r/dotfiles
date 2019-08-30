@@ -250,6 +250,9 @@ function install_pips()                                                         
   sudo easy_install pip
   sudo pip install --upgrade pip
   sudo pip install --upgrade virtualenv
+  sudo pip install --upgrade pyformat
+  sudo pip install --upgrade python-flake8
+  sudo pip install --upgrade functools32
 
   if [ ! -d "$HOME/py3env" ]; then
     virtualenv -p python3 $HOME/py3env
@@ -521,6 +524,8 @@ function install_update_fonts()                                                 
   cp /tmp/google-fonts/ofl/nunito/* $HOME/.fonts/nunito
   mkdir -p $HOME/.fonts/librebaskerville
   cp /tmp/google-fonts/ofl/librebaskerville/* $HOME/.fonts/librebaskerville
+  mkdir -p $HOME/.fonts/lexenddeca
+  cp /tmp/google-fonts/ofl/lexenddeca/* $HOME/.fonts/lexenddeca
 
   yes | rm -R /tmp/google-fonts
 
