@@ -661,7 +661,7 @@ With prefix argument, also display headlines without a TODO keyword."
   ;; Font faces
   (custom-theme-set-faces
    'user
-   '(variable-pitch ((t (:family "Lexend Deca"))))
+   '(variable-pitch ((t (:family "Lexend Deca" :height 1.2))))
    '(fixed-pitch ((t ( :family "Input" :slant normal :weight normal :height 1.0 :width normal)))))
   (let* ((headline `(:inherit default :weight bold :family "EtBembo")))
 
