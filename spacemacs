@@ -1475,7 +1475,9 @@ you should place your code here."
 
   ;; Centered cursor minor mode.
   ;; C-M-- and C-M-= to change the vertical position (ccm-vpos-*).
-  (spacemacs/toggle-centered-point-globally-on)
+  ;; This is nice, but makes j/k navigation extremely slow in large org-mode
+  ;; files. So best to enable as needed.
+  ;; (spacemacs/toggle-centered-point-globally-on)
 
   ;; j/k go to next visual line.
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
