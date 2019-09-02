@@ -1680,7 +1680,8 @@ you should place your code here."
     (interactive)
     (save-some-buffers t)
     (bm-buffer-save-all)
-    (bm-repository-save))
+    (bm-repository-save)
+    (projectile-save-known-projects))
   (add-hook 'focus-out-hook 'save-all)
 
   ;; load any local user config.
