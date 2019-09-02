@@ -6,5 +6,7 @@ convert /tmp/screen_locked.png -scale 10% -scale 1000% /tmp/screen_locked2.png
 rm -f /tmp/screen_locked.png
 touch /tmp/screen-locked
 
+emacsclient -e "(save-all)"
+
 (sleep 10; pgrep i3lock && xset dpms force off) &
 i3lock -i /tmp/screen_locked2.png -n; ~/dotfiles/utils/screen-unlock; ~/.dwm/xsetroot.sh

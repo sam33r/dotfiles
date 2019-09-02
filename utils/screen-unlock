@@ -1,7 +1,10 @@
 #!/bin/bash
 # Script that runs when screen is unlocked.
-
 rm -f /tmp/screen-locked
+
+# Revert all emacs buffers. Emacs cannot automatically revert all buffers, since some of
+# the fuse mounts I use don't do a good job of exposing updates.
+emacsclient -e "(sa/revert-all-buffers)"
 
 # Setup xautolock.
 killall xautolock
