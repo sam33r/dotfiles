@@ -436,14 +436,17 @@ values."
   (setq org-directory orgdir)
 
   ;; Agenda location
-  (setq sa/extra-org-files
-        (split-string
-         (shell-command-to-string
-          "find ~/work-notes ~/mobile-notes -not -path '*/.*' -name '*.org' -o -name '*.org.gpg' 2> /dev/null"
-          )
-         "[\n]+"
-         ))
-  (setq org-agenda-files (append (list orgdir) sa/extra-org-files))
+  (defun sa/set-org-agenda-files()
+    (interactive)
+    (setq sa/extra-org-files
+          (split-string
+           (shell-command-to-string
+            "find ~/work-notes ~/mobile-notes -not -path '*/.*' -name '*.org' -o -name '*.org.gpg' 2> /dev/null"
+            )
+           "[\n]+"
+           ))
+    (setq org-agenda-files (append (list org-directory) sa/extra-org-files)))
+  (sa/set-org-agenda-files)
 
   (setq rmh-elfeed-org-files (list "~/mobile-notes/feeds.org"))
   (elfeed-org)
@@ -882,13 +885,30 @@ within an Org EXAMPLE block and a backlink to the file."
   "Revert all non-modified buffers associated with a file.
 This is to update existing buffers after a Git pull of their underlying files."
   (interactive)
+  (clean-buffer-list)
   (save-current-buffer
     (mapc (lambda (b)
             (set-buffer b)
+            ;; Kill dired buffers.
+            ;; TODO: Kill other unnecessary buffers.
+            (when (eq 'dired-mode (buffer-local-value 'major-mode b))
+              (message "Killed dired buffer %s\n" (buffer-name))
+              (kill-buffer b))
             (unless (or (null (buffer-file-name)) (buffer-modified-p))
-              (revert-buffer t t)
-              (message "Reverted %s\n" (buffer-file-name))))
-          (buffer-list))))
+              (if (file-exists-p (buffer-file-name))
+                  (progn
+                    (revert-buffer t t)
+                    (message "Reverted %s\n" (buffer-file-name))
+                    )
+                (progn
+                  (kill-buffer b)
+                  (message "Killed buffer, file doesn't exist: %s\n" (buffer-file-name))
+                  ))
+              )
+            )
+          (buffer-list)))
+  ;; Tangentially related: Also update the list of org-agenda files. These can change over time.
+  (sa/set-org-agenda-files))
 
 ;; See https://emacs.stackexchange.com/questions/12121/org-mode-parsing-rich-html-directly-when-pasting/12124
 (defun sa/paste-formatted-text-as-org ()
@@ -1679,8 +1699,7 @@ you should place your code here."
     (interactive)
     (save-some-buffers t)
     (bm-buffer-save-all)
-    (bm-repository-save)
-    (projectile-save-known-projects))
+    (bm-repository-save))
   (add-hook 'focus-out-hook 'save-all)
 
   ;; load any local user config.
@@ -1747,6 +1766,9 @@ you should place your code here."
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
  '(bm-highlight-style (quote bm-highlight-line-and-fringe))
  '(ccm-vpos-inverted -1)
+ '(clean-buffer-list-delay-general 2)
+ '(clean-buffer-list-delay-special 120)
+ '(clean-buffer-list-kill-regexps (quote ("\\`magit.*" "\\`\\*Man " "\\`EGLOT.*")))
  '(compilation-error-regexp-alist
    (quote
     (google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google3-build-log-parser-info google3-build-log-parser-warning google3-build-log-parser-error google-blaze-error google-log-error google-log-warning google-log-info google-log-fatal-message google-forge-python gunit-stack-trace absoft ada aix ant bash borland python-tracebacks-and-caml comma cucumber msft edg-1 edg-2 epc ftnchek iar ibm irix java jikes-file maven jikes-line clang-include gcc-include ruby-Test::Unit gnu lcc makepp mips-1 mips-2 msft omake oracle perl php rxp sparc-pascal-file sparc-pascal-line sparc-pascal-example sun sun-ada watcom 4bsd gcov-file gcov-header gcov-nomark gcov-called-line gcov-never-called perl--Pod::Checker perl--Test perl--Test2 perl--Test::Harness weblint guile-file guile-line)))
