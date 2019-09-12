@@ -111,6 +111,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      beacon
                                       bm
                                       helm-bm
                                       helm-org
@@ -214,7 +215,7 @@ values."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(solarized-light sanityinc-tomorrow-day sanityinc-tomorrow-night spacemacs-light zenburn solarized-dark spacemacs-light dracula spacemacs-dark ujelly)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
-   dotspacemacs-colorize-cursor-according-to-state nil
+   dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Input"
@@ -1764,6 +1765,10 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+ '(beacon-blink-when-focused t)
+ '(beacon-blink-when-point-moves-vertically 10)
+ '(beacon-blink-when-window-scrolls t)
+ '(beacon-mode t)
  '(bm-highlight-style (quote bm-highlight-line-and-fringe))
  '(ccm-vpos-inverted -1)
  '(clean-buffer-list-delay-general 2)
