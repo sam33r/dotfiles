@@ -585,8 +585,12 @@ values."
     "K" 'outline-backward-same-level
     "L" 'org-down-element
     "Y" 'ox-clip-formatted-copy
-    "P" 'sa/paste-formatted-text-as-org)
+    "P" 'sa/paste-formatted-text-as-org
+    )
   (define-key org-mode-map (kbd "RET")  #'sa/org-return)
+  (spacemacs/set-leader-keys-for-major-mode 'org-mode
+    ":"     'org-set-tags-command
+    ";"     'org-set-tags-command)
 
   ;; Appearance
   (setq org-bullets-bullet-list '(" ")
