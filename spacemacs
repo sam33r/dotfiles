@@ -994,7 +994,8 @@ of change will be 23:59 on that day"
               (widen))))
             ;; (widen-buffer buffer))
         (buffer-list))
-  (helm-org-agenda-files-headings))
+  (helm-org-rifle-agenda-files)
+  )
 
 (defun sa/reset()
   (interactive)
