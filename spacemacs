@@ -442,7 +442,7 @@ values."
     (setq sa/extra-org-files
           (split-string
            (shell-command-to-string
-            "find ~/work-notes ~/mobile-notes -not -path '*/.*' -name '*.org' -o -name '*.org.gpg' 2> /dev/null"
+            "find -L ~/work-notes ~/mobile-notes -not -path '*/.*' -name '*.org' -o -name '*.org.gpg' 2> /dev/null"
             )
            "[\n]+"
            ))
@@ -990,7 +990,7 @@ of change will be 23:59 on that day"
               (widen))))
             ;; (widen-buffer buffer))
         (buffer-list))
-  (helm-org-agenda-files-headings))
+  (helm-org-rifle-agenda-files))
 
 (defun sa/reset()
   (interactive)
