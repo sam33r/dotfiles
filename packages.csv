@@ -21,6 +21,7 @@ i3,tiling windows manager
 inotify-tools,Wait on file changes.
 inxi,System information
 iotop,disk IO
+keepassxc,Password management.
 libevent-dev,Library dependency for building tmux
 libtool-bin,Requirement for building nvim
 libxapian-dev,Dependency for mu
