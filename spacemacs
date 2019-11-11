@@ -1789,7 +1789,7 @@ you should place your code here."
  '(elfeed-goodies/entry-pane-position (quote right))
  '(elfeed-goodies/entry-pane-size 0.5)
  '(elfeed-goodies/powerline-default-separator (quote box))
- '(elfeed-goodies/show-mode-padding 30)
+ '(elfeed-goodies/show-mode-padding 5)
  '(elfeed-search-date-format (quote ("%Y-%m-%d" 10 :right)))
  '(epa-file-cache-passphrase-for-symmetric-encryption t)
  '(epa-pinentry-mode (quote loopback))
