@@ -67,10 +67,13 @@ def get_date_hashes_from_line(line):
 def get_vacation_list():
   filepath = os.path.expanduser('~/.vacations')
   vacations = []
-  with open(filepath) as fp:
-    content = fp.readlines()
-    for line in content:
-      vacations.extend(get_date_hashes_from_line(line))
+  try:
+      with open(filepath) as fp:
+        content = fp.readlines()
+        for line in content:
+          vacations.extend(get_date_hashes_from_line(line))
+  except FileNotFoundError:
+      print("Vacations file not found.")
   return vacations
 
 
