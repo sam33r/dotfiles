@@ -23,6 +23,9 @@ $HOME/.config/i3/config,i3config
 $HOME/.config/liquidpromtrc,liquidpromptrc
 $HOME/.config/ranger/rc.conf,ranger.conf
 $HOME/.config/redshift.conf,redshift.conf
+$HOME/.doom.d/config.el,doom/config.el
+$HOME/.doom.d/init.el,doom/init.el
+$HOME/.doom.d/packages.el,doom/packages.el
 $HOME/.dwm/autostart.sh,dwm/autostart.sh
 $HOME/.dwm/xsetroot.sh,dwm/xsetroot.sh
 $HOME/.emacs.d/private/snippets/org-mode/source_code_block,snippets/source_code_block
