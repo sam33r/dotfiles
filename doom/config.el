@@ -1,5 +1,4 @@
-;;; .doom.d/config.el -*- lexical-binding: t; -*-
-
+;;; .doom.d/config.el --- Custom doom config.
 ;; Place your private configuration here
 
 (setq sa-local-config "~/.doom.d/config.local.el")
@@ -426,14 +425,6 @@ Use a prefix arg to get regular RET. "
   (setq org-agenda-custom-commands
         (quote
          (
-("s" "Small Agenda*"
-            tags-todo "PRIORITY=\"A\""
-            ;;tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
-                       ((org-agenda-overriding-header "
-Important"))
-           nil)
-
-
           ("n" "Small Agenda"
            ((agenda "" nil)
             (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
@@ -722,10 +713,10 @@ Random someday items")
 
   (font-lock-add-keywords
    'org-mode `(("^\\*+ \\(TODO\\) "
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⚪")
+                (1 (progn (compose-region (match-beginning 1) (match-end 1) "•")
                           nil)))
                ("^\\*+ \\(TRIAGE\\) "
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⬛")
+                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⚬")
                           nil)))
                ("^\\*+ \\(ICKY\\) "
                 (1 (progn (compose-region (match-beginning 1) (match-end 1) "☕")
@@ -749,7 +740,7 @@ Random someday items")
                 (1 (progn (compose-region (match-beginning 1) (match-end 1) "🕮")
                           nil)))
                ("^ *\\([-]\\) "
-                (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))
+                (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "―"))))
                ))
   (add-hook 'org-mode-hook
             (lambda ()
