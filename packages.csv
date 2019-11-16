@@ -76,5 +76,6 @@ xbacklight,Change display brightness
 xbindkeys-config,xbindkeys config
 xbindkeys,x keybindings
 xdotool,control mouse cursor with keyboard
+xnest,Debug dwm.
 xprintidle,Print user idle time.
 zsh,z shell
