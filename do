@@ -541,6 +541,13 @@ function install_update_spacemacs()
   cd $dir
 }
 
+function install_doom()
+{
+  mv ~/.emacs.d ~/.emacs.d.old
+  git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
+  ~/.emacs.d/bin/doom install
+}
+
 function install_mu4e_from_tarball()                                             # Install mu4e from github tarball (apt version is too old).
 {
   if type "mu" > /dev/null; then
