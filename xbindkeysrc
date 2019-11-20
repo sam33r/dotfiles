@@ -150,5 +150,10 @@
     m:0x41 + c:42
     Shift+Mod4 + g 
 
+#Run keepmenu
+"~/.local/bin/keepmenu"
+    m:0x41 + c:33
+    Shift+Mod4 + p 
+
 #
 # End of xbindkeys configuration
