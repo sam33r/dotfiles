@@ -20,6 +20,7 @@ $HOME/.config/i3blocks/volume,i3blocks/volume
 $HOME/.config/i3blocks/wifi,i3blocks/wifi
 $HOME/.config/i3blocks/window_title,i3blocks/window_title
 $HOME/.config/i3/config,i3config
+$HOME/.config/keepassxc/keepassxc.ini,keepassxc/keepassxc.ini
 $HOME/.config/liquidpromtrc,liquidpromptrc
 $HOME/.config/ranger/rc.conf,ranger.conf
 $HOME/.config/redshift.conf,redshift.conf
