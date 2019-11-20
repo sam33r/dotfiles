@@ -18,7 +18,6 @@
 
 ;; ;;;; Window and frame manipulation for org workflow.
 
-
 (defadvice org-agenda-quit
     (after close-agenda-quickview)
   (if (equal "agenda" (frame-parameter nil 'name))
@@ -106,7 +105,7 @@
   )
 
 (defun sa/task-clocked-time ()
-  "Return a string with the clocked time and effort, if any"
+  "Return a string with the clocked time and effort, if any."
   (interactive)
   (let* ((clocked-time (org-clock-get-clocked-time))
          (h (floor clocked-time 60))
