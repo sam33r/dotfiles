@@ -41,6 +41,7 @@
   (setq word-wrap 1)
   (setq truncate-lines nil)
   (org-capture))
+
 (defun sa/local-shell-command (command)
   """Run command in local machine's shell."""
   (let ((default-directory "~"))
@@ -54,7 +55,7 @@
   )
 
 (defun sa/notify (headline-string message-string)
-  """Send message to notification"""
+  """Send message to notification."""
   (sa/local-shell-command (concat "notify-send --expire-time=30000 --icon=emacs \""
                                   headline-string
                                   "\" \""
@@ -73,7 +74,12 @@
   (select-frame-by-name "agenda")
   (org-agenda nil key)
   (delete-other-windows)
+
+  ;; TODO: It's a bug that these following function calls are needed.
   (org-agenda-goto-today)
+  (setq org-agenda-log-mode-items '(closed clock state))
+  (org-agenda-log-mode)
+  (org-agenda-log-mode)
   )
 
 (defun sa/current ()
@@ -84,10 +90,11 @@
                   (height . 100)))
     (delete-frame)
     (select-frame-by-name "current")
-    (delete-other-windows))
+    (delete-other-windows)
+    )
   (org-clock-goto)
   (org-tree-to-indirect-buffer)
-  (delete-window)
+  ;; (delete-window)
   (org-narrow-to-subtree)
   )
 
@@ -354,7 +361,7 @@ Use a prefix arg to get regular RET. "
   (setq org-directory orgdir)
 
   ;; In org-agenda log show completed recurring tasks.
-  (setq org-agenda-log-mode-items '(closed clock state))
+  ;; (setq org-agenda-log-mode-items '(closed clock state))
 
   ;; Agenda location
   (defun sa/set-org-agenda-files()
@@ -761,13 +768,12 @@ With prefix argument, also display headlines without a TODO keyword."
   ;; Font faces
   (custom-theme-set-faces
    'user
-   '(variable-pitch ((t (:family "Lexend Deca" :height 1.2))))
+   '(variable-pitch ((t (:family "Source Sans Pro" :height 1.2))))
    '(fixed-pitch ((t ( :family "Input" :slant normal :weight normal :height 1.0 :width normal)))))
-  (let* ((headline `(:inherit default :weight bold :family "EtBembo")))
+  (let* ((headline `(:inherit default :weight normal :family "EtBembo")))
 
     (custom-theme-set-faces
      'user
-     `(org-headline-done ((t (,@headline))))
      `(org-level-8 ((t (,@headline :height 1.1))))
      `(org-level-7 ((t (,@headline :height 1.1))))
      `(org-level-6 ((t (,@headline :height 1.1))))
@@ -777,22 +783,35 @@ With prefix argument, also display headlines without a TODO keyword."
      `(org-level-2 ((t (,@headline :height 1.4))))
      `(org-level-1 ((t (,@headline :height 1.5))))
      `(org-document-title ((t (,@headline :height 1.8 :underline nil))))))
-  (custom-theme-set-faces
-   'user
-   '(avy-background-face       ((t (:inherit nil :foreground "gray"))))
-   '(bm-face                   ((t (:overline nil :background "#e5ffcc"))))
-   '(bm-persistent-face        ((t (:overline nil :background "#e5ffcc"))))
-   '(org-block                 ((t (:inherit fixed-pitch))))
-   '(org-link                  ((t (:underline nil :weight bold))))
-   '(org-meta-line             ((t (:inherit (shadow fixed-pitch)))))
-   '(org-property-value        ((t (:inherit fixed-pitch))) t)
-   '(org-special-keyword       ((t (:inherit fixed-pitch))))
-   '(org-code                  ((t (:inherit fixed-pitch))))
-   '(org-date                  ((t (:inherit (shadow fixed-pitch) :underline nil :height 0.8))))
-   '(org-tag                   ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
-   '(org-verbatim              ((t (:inherit (shadow fixed-pitch)))))
-   '(org-table                 ((t (:inherit (shadow fixed-pitch)))))
-   '(org-indent                ((t (:inherit (org-hide fixed-pitch))))))
+
+  ;; (custom-theme-set-faces
+  ;;    'user
+  ;;    `(org-level-8 ((t (,@headline :height 1.1))))
+  ;;    `(org-level-7 ((t (,@headline :height 1.1))))
+  ;;    `(org-level-6 ((t (,@headline :height 1.1))))
+  ;;    `(org-level-5 ((t (,@headline :height 1.1))))
+  ;;    `(org-level-4 ((t (,@headline :height 1.2))))
+  ;;    `(org-level-3 ((t (,@headline :height 1.3))))
+  ;;    `(org-level-2 ((t (,@headline :height 1.4))))
+  ;;    `(org-level-1 ((t (,@headline :height 1.5))))
+  ;;    `(org-document-title ((t (,@headline :height 1.8 :underline nil))))))
+
+  ;; (custom-theme-set-faces
+  ;;  'user
+  ;;  '(avy-background-face       ((t (:inherit nil :foreground "gray"))))
+  ;;  '(bm-face                   ((t (:overline nil :background "#e5ffcc"))))
+  ;;  '(bm-persistent-face        ((t (:overline nil :background "#e5ffcc"))))
+  ;;  '(org-block                 ((t (:inherit fixed-pitch))))
+  ;;  '(org-link                  ((t (:underline nil :weight bold))))
+  ;;  '(org-meta-line             ((t (:inherit (shadow fixed-pitch)))))
+  ;;  '(org-property-value        ((t (:inherit fixed-pitch))) t)
+  ;;  '(org-special-keyword       ((t (:inherit fixed-pitch))))
+  ;;  '(org-code                  ((t (:inherit fixed-pitch))))
+  ;;  '(org-date                  ((t (:inherit (shadow fixed-pitch) :underline nil :height 0.8))))
+  ;;  '(org-tag                   ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+  ;;  '(org-verbatim              ((t (:inherit (shadow fixed-pitch)))))
+  ;;  '(org-table                 ((t (:inherit (shadow fixed-pitch)))))
+  ;;  '(org-indent                ((t (:inherit (org-hide fixed-pitch))))))
 
   ;; Hooks
   (add-hook 'org-clock-in-hook 'sa/clock-in)
