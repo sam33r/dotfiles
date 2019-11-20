@@ -245,6 +245,11 @@ function install_git_gnome_support() {
   git config --global credential.helper /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
 }
 
+# TODO: Evaluating this.
+function install_keepmenu() {
+  pip3 install --upgrade keepmenu
+}
+
 function install_pips()                                                          # virtual envs for pip, and packages
 {
   sudo easy_install pip
