@@ -23,6 +23,9 @@ fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
+export PATH="$PATH:$HOME/py3env/bin" # Add py3env.
+export PATH="$PATH:$HOME/.emacs.d/bin" # Add doom binary.
+
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 export PATH="$HOME/emacs/src:$PATH:/usr/local/go/bin:$HOME/go/bin:$HOME/bin:$HOME/.local/bin:$HOME/bin:$HOME/dotfiles/utils" # Add local binaries.
