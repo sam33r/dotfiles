@@ -138,5 +138,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$PATH:$HOME/py3env/bin" # Add py3env.
+export PATH="$PATH:$HOME/.emacs.d/bin" # Add doom binary.
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

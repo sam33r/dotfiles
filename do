@@ -253,13 +253,13 @@ function install_pips()                                                         
   fi
 
   $HOME/py3env/bin/pip3 install --upgrade pip
-
   $HOME/py3env/bin/pip3 install urllib3[secure]
   $HOME/py3env/bin/pip3 install --upgrade howdoi
   $HOME/py3env/bin/pip3 install --upgrade youtube_dl
   $HOME/py3env/bin/pip3 install --upgrade mps-youtube
   # Packages used by ~/hosts
   $HOME/py3env/bin/pip3 install --upgrade lxml bs4
+  $HOME/py3env/bin/pip3 install --upgrade keepmenu
 }
 
 function install_update_vim_plugins()
