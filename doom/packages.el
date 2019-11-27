@@ -15,3 +15,6 @@
 (package! org-web-tools)
 (package! helm-org-rifle)
 (package! memento-mori)
+
+(provide 'packages)
+;;; packages.el ends here

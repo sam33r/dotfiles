@@ -815,8 +815,12 @@ With prefix argument, also display headlines without a TODO keyword."
   ;; Hooks
   (add-hook 'org-clock-in-hook 'sa/clock-in)
   (add-hook 'org-clock-out-hook 'sa/clock-out)
+
+  (add-to-list '+word-wrap-visual-modes 'org-mode)
   (add-hook 'org-mode-hook #'(lambda ()
                                ;;(adaptive-wrap-prefix-mode 1)
+                               (auto-fill-mode -1)
+                               (+word-wrap-mode)
                                (auto-revert-mode 1)
                                ;; (hidden-mode-line-mode)
                                (setq line-spacing 0.6)
@@ -826,3 +830,5 @@ With prefix argument, also display headlines without a TODO keyword."
                                ))
   )
 (sa/setup-org-mode "~/notes")
+
+(load! "bindings")
