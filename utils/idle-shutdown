@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ "$#" -lt 1 ]
+then
+  echo "Usage: idle-shutdown <hours>"
+  exit 1
+fi
+
+idletime=$((1000*60*60*$1)) # In milliseconds
+echo $idletime
+
+while true; do
+    idle=`xprintidle`
+    if (( $idle > $idletime )); then
+        dbus-send --system \
+            --print-reply \
+            --dest=org.freedesktop.login1 \
+            /org/freedesktop/login1 \
+            "org.freedesktop.login1.Manager.PowerOff" \
+            boolean:true
+    fi
+    sleep 5
+done
