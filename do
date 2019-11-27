@@ -227,17 +227,6 @@ function install_kitty()
   cd $dir
 }
 
-function install_alacritty()
-{
-  cd $HOME
-  git clone https://github.com/jwilm/alacritty.git
-  cd alacritty
-  git pull origin master
-  cargo install cargo-deb
-  cargo deb --install
-  cd $dir
-}
-
 function install_git_gnome_support() {
   sudo apt-get install libsecret-1-0 libsecret-1-dev
   cd /usr/share/doc/git/contrib/credential/libsecret
