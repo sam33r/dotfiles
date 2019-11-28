@@ -7,9 +7,9 @@
 ;; (package! builtin-package :disable t)
 
 
-(setq sa-local-packages "~/.doom.d/packages.local.el")
-(if (file-readable-p sa-local-packages)
-    (load-file sa-local-packages)
+(setq sa/local-packages "~/.doom.d/packages.local.el")
+(if (file-readable-p sa/local-packages)
+    (load-file sa/local-packages)
   (message "No local packages found."))
 
 (package! org-web-tools)
