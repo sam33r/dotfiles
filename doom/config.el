@@ -1,9 +1,9 @@
 ;;; .doom.d/config.el --- Custom doom config.
 ;; Place your private configuration here
 
-(setq sa-local-config "~/.doom.d/config.local.el")
-(if (file-readable-p sa-local-config)
-    (load-file sa-local-config)
+(setq sa/local-config "~/.doom.d/config.local.el")
+(if (file-readable-p sa/local-config)
+    (load-file sa/local-config)
   (message "No local config found."))
 
 ;; Enable opening encrypted files.
@@ -11,12 +11,7 @@
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 (setq doom-theme 'doom-one-light)
 
-;; Launch debugger on error.
-;; (setq debug-on-error t)
-
 ;; ;; Org mode setup.
-
-;; ;;;; Window and frame manipulation for org workflow.
 
 (defadvice org-agenda-quit
     (after close-agenda-quickview)
@@ -24,8 +19,8 @@
       (delete-frame)))
 (ad-activate 'org-agenda-quit)
 
-;; ;; make the frame contain a single window. by default org-capture
-;; ;; splits the window.
+;; Make the frame contain a single window. by default org-capture
+;; splits the window.
 (add-hook 'org-capture-mode-hook
           'delete-other-windows)
 
@@ -127,47 +122,6 @@
           (format "[%s/%s (%s)" work-done-str effort-str org-clock-heading))
       (format "[%s : %s]" work-done-str org-clock-heading))))
 
-;; (defun sa/todos ()
-;;   ;; Pick which TODO type on load.
-;;   (org-agenda nil "T")
-;;   (delete-other-windows))
-
-;; ;; Sending stuff to the currently clocked item.
-;; ;; http://www.howardism.org/Technical/Emacs/capturing-content.html
-;; (defun sa/org-capture-code-snippet (f)
-;;   "Given a file, F, this captures the currently selected text
-;; within an Org SRC block with a language based on the current mode
-;; and a backlink to the function and the file."
-;;   (with-current-buffer (find-buffer-visiting f)
-;;     (let ((org-src-mode (replace-regexp-in-string "-mode" "" (format "%s" major-mode)))
-;;           (func-name (which-function)))
-;;       (sa/org-capture-fileref-snippet f "SRC" org-src-mode func-name))))
-
-;; (defun sa/org-capture-clip-snippet (f)
-;;   "Given a file, F, this captures the currently selected text
-;; within an Org EXAMPLE block and a backlink to the file."
-;;   (with-current-buffer (find-buffer-visiting f)
-;;     (sa/org-capture-fileref-snippet f "EXAMPLE" "" nil)))
-
-;; (defun sa/org-capture-fileref-snippet (f type headers func-name)
-;;   (let* ((code-snippet
-;;           (buffer-substring-no-properties (mark) (- (point) 1)))
-;;          (file-name   (buffer-file-name))
-;;          (file-base   (file-name-nondirectory file-name))
-;;          (line-number (line-number-at-pos (region-beginning)))
-;;          (initial-txt (if (null func-name)
-;;                           (format "From [[file:%s::%s][%s]]:"
-;;                                   file-name line-number file-base)
-;;                         (format "From ~%s~ (in [[file:%s::%s][%s]]):"
-;;                                 func-name file-name line-number
-;;                                 file-base))))
-;;     (format "
-;;    %s
-
-;;    #+BEGIN_%s %s
-;; %s
-;;    #+END_%s" initial-txt type headers code-snippet type)))
-
 (defun org-line-element-context ()
   "Return the symbol of the current block element, e.g. paragraph or list-item."
   (let ((context (org-element-context)))
@@ -194,31 +148,6 @@ still be on an item element."
   (sa/local-shell-command "rm -f /tmp/org-clock-flag")
   (sa/notify "ORG CLOCK-OUT" (sa/task-clocked-time)))
 
-;; (defun sa/switch-to-elfeed ()
-;;   (interactive)
-;;   (switch-to-buffer "*elfeed-entry*")
-;;   )
-
-;; (defun sa/org-todo-custom-date (&optional arg)
-;;   "Like org-todo-yesterday, but prompt the user for a date. The time
-;; of change will be 23:59 on that day"
-;;   (interactive "P")
-;;   (let* ((hour (nth 2 (decode-time
-;;                        (org-current-time))))
-;;          (daysback (- (date-to-day (current-time-string)) (org-time-string-to-absolute (org-read-date))))
-;;          (org-extend-today-until (+ 1 (* 24 (- daysback 1)) hour))
-;;          (org-use-effective-time t)) ; use the adjusted timestamp for logging
-;;     (if (eq major-mode 'org-agenda-mode)
-;;         (org-agenda-todo arg)
-;;       (org-todo arg))))
-
-;; ;; (defun sa/kill-org-buffers ()
-;; ;;   (interactive)
-;; ;;   (mapc (lambda (buffer)
-;; ;;           (when (eq 'org-mode (buffer-local-value 'major-mode buffer))
-;; ;;             (kill-buffer buffer)))
-;; ;;         (buffer-list)))
-
 (defun sa/search-org-agenda-headings ()
   "Widen and search through all org-mode agenda buffers."
   (interactive)
@@ -232,63 +161,6 @@ still be on an item element."
         ;; (widen-buffer buffer))
         (buffer-list))
   (helm-org-rifle-agenda-files))
-
-;; ;; (defun sa/revert-all-buffers ()
-;; ;;   "Revert all non-modified buffers associated with a file.
-;; ;; This is to update existing buffers after a Git pull of their underlying files."
-;; ;;   (interactive)
-;; ;;   (clean-buffer-list)
-;; ;;   (save-current-buffer
-;; ;;     (mapc (lambda (b)
-;; ;;             (set-buffer b)
-;; ;;             ;; Kill dired buffers.
-;; ;;             ;; TODO: Kill other unnecessary buffers.
-;; ;;             (when (eq 'dired-mode (buffer-local-value 'major-mode b))
-;; ;;               (message "Killed dired buffer %s\n" (buffer-name))
-;; ;;               (kill-buffer b))
-;; ;;             (unless (or (null (buffer-file-name)) (buffer-modified-p))
-;; ;;               (if (file-exists-p (buffer-file-name))
-;; ;;                   (progn
-;; ;;                     (revert-buffer t t)
-;; ;;                     (message "Reverted %s\n" (buffer-file-name))
-;; ;;                     )
-;; ;;                 (progn
-;; ;;                   (kill-buffer b)
-;; ;;                   (message "Killed buffer, file doesn't exist: %s\n" (buffer-file-name))
-;; ;;                   ))
-;; ;;               )
-;; ;;             )
-;; ;;           (buffer-list)))
-;; ;;   ;; Tangentially related: Also update the list of org-agenda files. These can change over time.
-;; ;;   (sa/set-org-agenda-files))
-
-;; (defun sa/unfill-region (start end)
-;;   "Replace newline chars in region by single spaces.
-;; This command does the inverse of `fill-region'.
-;; From: http://ergoemacs.org/emacs/emacs_unfill-paragraph.html"
-;;   (interactive "r")
-;;   (let ((fill-column most-positive-fixnum))
-;;     (fill-region start end)))
-
-
-;; (defun sa/code-to-clock (&optional start end)
-;;   "Send the currently selected code to the currently clocked-in org-mode task."
-;;   (interactive)
-;;   (org-capture nil "F"))
-
-;; (defun sa/code-comment-to-clock (&optional start end)
-;;   "Send the currently selected code (with comments) to the
-;; currently clocked-in org-mode task."
-;;   (interactive)
-;;   (org-capture nil "f"))
-
-
-;; ;; See https://emacs.stackexchange.com/questions/12121/org-mode-parsing-rich-html-directly-when-pasting/12124
-;; (defun sa/paste-formatted-text-as-org ()
-;;   "Convert clipboard contents from HTML to Org and then paste (yank)."
-;;   (interactive)
-;;   (kill-new (shell-command-to-string "xclip -o -t TARGETS | grep -q text/html && (xclip -o -t text/html | pandoc -f html -t json | pandoc -f json -t org) || xclip -o"))
-;;   (yank))
 
 (defun sa/org-return ()
   "If at the end of a line, do something special based on the
@@ -387,7 +259,12 @@ Use a prefix arg to get regular RET. "
   ;; Allow creating new nodes when refiling.
   (setq org-refile-allow-creating-parent-nodes 'confirm)
 
-  ;; (setq org-contacts-files '("~/notes/people.org.gpg"))
+  (setq helm-org-rifle-close-unopened-file-buffers nil)
+  ;; There seems to be a bug that hides the headline when path is shown.
+  (setq helm-org-rifle-show-path nil)
+  (setq helm-org-rifle-show-todo-keywords nil)
+
+ ;; (setq org-contacts-files '("~/notes/people.org.gpg"))
 
   ;; Best-effort log CREATED timestamp.
   ;; Call (org-expiry-insert-created) to manually insert timestamps.
@@ -767,50 +644,21 @@ With prefix argument, also display headlines without a TODO keyword."
   ;; Font faces
   (custom-theme-set-faces
    'user
-   '(variable-pitch ((t (:family "Source Sans Pro" :height 1.2))))
+   '(variable-pitch ((t (:family "Literata" :height 1.2))))
    '(fixed-pitch ((t ( :family "Input" :slant normal :weight normal :height 1.0 :width normal)))))
-  (let* ((headline `(:inherit default :weight normal :family "EtBembo")))
+  (let* ((headline `(:inherit default :weight normal :family "Literata")))
 
     (custom-theme-set-faces
      'user
-     `(org-level-8 ((t (,@headline :height 1.1))))
-     `(org-level-7 ((t (,@headline :height 1.1))))
-     `(org-level-6 ((t (,@headline :height 1.1))))
-     `(org-level-5 ((t (,@headline :height 1.1))))
-     `(org-level-4 ((t (,@headline :height 1.2))))
-     `(org-level-3 ((t (,@headline :height 1.3))))
-     `(org-level-2 ((t (,@headline :height 1.4))))
-     `(org-level-1 ((t (,@headline :height 1.5))))
-     `(org-document-title ((t (,@headline :height 1.8 :underline nil))))))
-
-  ;; (custom-theme-set-faces
-  ;;    'user
-  ;;    `(org-level-8 ((t (,@headline :height 1.1))))
-  ;;    `(org-level-7 ((t (,@headline :height 1.1))))
-  ;;    `(org-level-6 ((t (,@headline :height 1.1))))
-  ;;    `(org-level-5 ((t (,@headline :height 1.1))))
-  ;;    `(org-level-4 ((t (,@headline :height 1.2))))
-  ;;    `(org-level-3 ((t (,@headline :height 1.3))))
-  ;;    `(org-level-2 ((t (,@headline :height 1.4))))
-  ;;    `(org-level-1 ((t (,@headline :height 1.5))))
-  ;;    `(org-document-title ((t (,@headline :height 1.8 :underline nil))))))
-
-  ;; (custom-theme-set-faces
-  ;;  'user
-  ;;  '(avy-background-face       ((t (:inherit nil :foreground "gray"))))
-  ;;  '(bm-face                   ((t (:overline nil :background "#e5ffcc"))))
-  ;;  '(bm-persistent-face        ((t (:overline nil :background "#e5ffcc"))))
-  ;;  '(org-block                 ((t (:inherit fixed-pitch))))
-  ;;  '(org-link                  ((t (:underline nil :weight bold))))
-  ;;  '(org-meta-line             ((t (:inherit (shadow fixed-pitch)))))
-  ;;  '(org-property-value        ((t (:inherit fixed-pitch))) t)
-  ;;  '(org-special-keyword       ((t (:inherit fixed-pitch))))
-  ;;  '(org-code                  ((t (:inherit fixed-pitch))))
-  ;;  '(org-date                  ((t (:inherit (shadow fixed-pitch) :underline nil :height 0.8))))
-  ;;  '(org-tag                   ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
-  ;;  '(org-verbatim              ((t (:inherit (shadow fixed-pitch)))))
-  ;;  '(org-table                 ((t (:inherit (shadow fixed-pitch)))))
-  ;;  '(org-indent                ((t (:inherit (org-hide fixed-pitch))))))
+     `(org-level-8 ((t (,@headline :height 1.0))))
+     `(org-level-7 ((t (,@headline :height 1.0))))
+     `(org-level-6 ((t (,@headline :height 1.0))))
+     `(org-level-5 ((t (,@headline :height 1.0))))
+     `(org-level-4 ((t (,@headline :height 1.1))))
+     `(org-level-3 ((t (,@headline :height 1.1))))
+     `(org-level-2 ((t (,@headline :height 1.2))))
+     `(org-level-1 ((t (,@headline :height 1.3))))
+     `(org-document-title ((t (,@headline :height 1.6 :underline nil))))))
 
   ;; Hooks
   (add-hook 'org-clock-in-hook 'sa/clock-in)
