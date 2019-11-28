@@ -520,6 +520,8 @@ function install_update_fonts()                                                 
   cp /tmp/google-fonts/ofl/librebaskerville/* $HOME/.fonts/librebaskerville
   mkdir -p $HOME/.fonts/lexenddeca
   cp /tmp/google-fonts/ofl/lexenddeca/* $HOME/.fonts/lexenddeca
+  mkdir -p $HOME/.fonts/literata
+  cp /tmp/google-fonts/ofl/literata/* $HOME/.fonts/literata
 
   yes | rm -R /tmp/google-fonts
 
