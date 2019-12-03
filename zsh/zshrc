@@ -33,6 +33,16 @@ vi-mode
 zdharma/fast-syntax-highlighting
 EOBUNDLES
 
+SAVEHIST=1000000000 # Number of entries
+HISTSIZE=1000000000
+HISTFILE=~/.zsh_history # File
+setopt APPEND_HISTORY # Don't erase history
+setopt EXTENDED_HISTORY # Add additional data to history like timestamp
+setopt INC_APPEND_HISTORY # Add immediately
+setopt HIST_FIND_NO_DUPS # Don't show duplicates in search
+setopt NO_HIST_BEEP # Don't beep
+setopt SHARE_HISTORY # Share history between session/terminals
+
 # Setup theme.
 antigen theme bhilburn/powerlevel9k
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir_writable dir vcs)
