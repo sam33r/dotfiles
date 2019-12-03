@@ -783,10 +783,13 @@ function help()
   awk '/^function /{s = ""; for (i = 4; i <= NF; i++) s = s $i " "; printf("%40s   %s\n",substr($2, 1, length($2) - 2), s)}' $0
 }
 
+mkdir -p ${backup_dir}
+cd $dir
 if [ "_$1" = "_" ]; then
-  help
+  fn=$(
+  awk '/^function /{s = ""; for (i = 4; i <= NF; i++) s = s $i " "; printf("%40s   %s\n",substr($2, 1, length($2) - 2), s)}' $0 | fzf | awk '{print $1;}')
+  "$fn"
 else
-  mkdir -p ${backup_dir}
-  cd $dir
+  # TODO: Check if the function exists.
   "$@"
 fi
