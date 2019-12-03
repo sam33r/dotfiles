@@ -15,7 +15,7 @@ fi
 
 # If we are currently clocking an org item, print that item instead of system stats.
 if [ ! -z "$ORGCLOCK" ]; then
-  xsetroot -name " ${ORGCLOCK} | ${DAYPROGRESS} | ${DATETIME} "
+  xsetroot -name " ${ORGCLOCK} | ${DATETIME} | ${BATTERYSTATE} "
 else
   # xsetroot -name "${TITLE} | ${BATTERYSTATE} | CPU $CPU | MEM $MEMORY | VOL ${VOLUME} | TEMP ${TMP} | Up ${UPTIME}h | ${DATETIME} | ${DAYPROGRESS}"
   xsetroot -name " ${DAYPROGRESS} | ${DATETIME} | ${BATTERYSTATE} "
