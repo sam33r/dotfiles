@@ -189,3 +189,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(org-agenda-log-mode-items (quote (closed clock state))))
+
+;; Change leader for current mode.
+(setq doom-localleader-key ",")
