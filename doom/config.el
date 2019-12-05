@@ -11,6 +11,7 @@
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 (setq doom-theme 'doom-one-light)
 
+
 ;; ;; Org mode setup.
 
 (defadvice org-agenda-quit
@@ -21,12 +22,13 @@
 
 ;; Make the frame contain a single window. by default org-capture
 ;; splits the window.
-(add-hook 'org-capture-mode-hook
-          'delete-other-windows)
+;; (add-hook 'org-capture-mode-hook
+;;           'delete-other-windows)
 
 (defun sa/make-capture-frame ()
   "Create a new frame and run org-capture."
   (interactive)
+  ()
   (make-frame '((name . "capture")
                 (width . 120)
                 (height . 15)))
@@ -122,24 +124,6 @@
           (format "[%s/%s (%s)" work-done-str effort-str org-clock-heading))
       (format "[%s : %s]" work-done-str org-clock-heading))))
 
-(defun org-line-element-context ()
-  "Return the symbol of the current block element, e.g. paragraph or list-item."
-  (let ((context (org-element-context)))
-    (while (member (car context) '(verbatim code bold italic underline))
-      (setq context (org-element-property :parent context)))
-    context))
-
-(defun org-really-in-item-p ()
-  "Similar to `org-in-item-p', however, this works around an
-issue where the point could actually be in some =code= words, but
-still be on an item element."
-  (save-excursion
-    (let ((location (org-element-property :contents-begin
-                                          (org-line-element-context))))
-      (when location
-        (goto-char location))
-      (org-in-item-p))))
-
 (defun sa/clock-in ()
   (sa/local-shell-command "touch /tmp/org-clock-flag")
   (sa/notify "ORG CLOCK-IN" (sa/task-clocked-time)))
@@ -162,61 +146,6 @@ still be on an item element."
         (buffer-list))
   (helm-org-rifle-agenda-files))
 
-(defun sa/org-return ()
-  "If at the end of a line, do something special based on the
-information about the line by calling `sa/org-special-return',
-otherwise, just call `org-return' as usual."
-  (interactive)
-  (if (eolp)
-      (sa/org-special-return)
-    (org-return)))
-
-;; From https://gitlab.com/howardabrams/spacemacs.d/
-(defun sa/org-special-return (&optional ignore)
-  "Add new list item, heading or table row with RET.
-A double return on an empty element deletes it.
-Use a prefix arg to get regular RET. "
-  (interactive "P")
-  (if ignore
-      (org-return)
-    (cond
-     ;; Open links like usual
-     ((eq 'link (car (org-element-context)))
-      (org-return))
-
-     ;; lists end with two blank lines, so we need to make sure
-     ;; we are also not at the beginning of a line to avoid a
-     ;; loop where a new entry gets created with only one blank
-     ;; line.
-     ((and (org-really-in-item-p) (not (bolp)))
-      (if (org-element-property :contents-begin (org-line-element-context))
-          (progn
-            (end-of-line)
-            (org-insert-item))
-        (delete-region (line-beginning-position) (line-end-position))
-        ))
-
-     ((org-at-heading-p)
-      (if (string= "" (org-element-property :title (org-element-context)))
-          (delete-region (line-beginning-position) (line-end-position))
-        (org-insert-heading-after-current)))
-
-     ((org-at-table-p)
-      (if (-any?
-           (lambda (x) (not (string= "" x)))
-           (nth
-            (- (org-table-current-dline) 1)
-            (org-table-to-lisp)))
-          (org-return)
-        ;; empty row
-        (beginning-of-line)
-        (setf (buffer-substring
-               (line-beginning-position) (line-end-position)) "")
-        (org-return)))
-
-     (t
-      (org-return)))))
-
 
 (defun sa/setup-org-mode (orgdir)
   """Setup org-mode configuration."""
@@ -231,6 +160,9 @@ Use a prefix arg to get regular RET. "
   (message (concat "Changing org dir to: " orgdir))
   (setq org-directory orgdir)
 
+  ;; Remove the default doom-emacs behaviour of enabling line numbers,
+  ;; only for text mode.
+  (remove-hook! '(text-mode-hook) #'display-line-numbers-mode)
   ;; In org-agenda log show completed recurring tasks.
   ;; (setq org-agenda-log-mode-items '(closed clock state))
 
@@ -641,13 +573,10 @@ With prefix argument, also display headlines without a TODO keyword."
 
   (org-add-link-type "tag" 'sa/follow-tag-link)
 
-  ;; Font faces
-  (custom-theme-set-faces
-   'user
-   '(variable-pitch ((t (:family "Literata" :height 1.2))))
-   '(fixed-pitch ((t ( :family "Input" :slant normal :weight normal :height 1.0 :width normal)))))
-  (let* ((headline `(:inherit default :weight normal :family "Literata")))
 
+  (setq doom-font (font-spec :family "Input" :size 18))
+  (setq doom-variable-pitch-font (font-spec :family "Literata" :size 20))
+  (let* ((headline `(:inherit default :weight normal :family "Literata")))
     (custom-theme-set-faces
      'user
      `(org-level-8 ((t (,@headline :height 1.0))))
