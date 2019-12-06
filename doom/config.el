@@ -203,6 +203,7 @@
   ;; There seems to be a bug that hides the headline when path is shown.
   (setq helm-org-rifle-show-path nil)
   (setq helm-org-rifle-show-todo-keywords nil)
+  (setq helm-org-rifle-test-against-path t)
 
   ;; (setq org-contacts-files '("~/notes/people.org.gpg"))
 
