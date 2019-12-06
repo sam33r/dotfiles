@@ -1,5 +1,10 @@
 ;;; .doom.d/config.el --- Custom doom config.
-;; Place your private configuration here
+;; Custom configuration on top of doom-emacs.
+;;
+;; Things to add:
+;; - Change bookmarks location to out of emacs dir.
+;; - Change auto-save files location.
+
 
 (setq sa/local-config "~/.doom.d/config.local.el")
 (if (file-readable-p sa/local-config)
@@ -11,8 +16,11 @@
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 (setq doom-theme 'doom-one-light)
 
-
-;; ;; Org mode setup.
+;; Save all buffers when focusing out of emacs window.
+(defun sa/save-all ()
+  (interactive)
+  (save-some-buffers t))
+(add-hook! 'focus-out-hook 'sa/save-all)
 
 (defadvice org-agenda-quit
     (after close-agenda-quickview)
@@ -196,7 +204,7 @@
   (setq helm-org-rifle-show-path nil)
   (setq helm-org-rifle-show-todo-keywords nil)
 
- ;; (setq org-contacts-files '("~/notes/people.org.gpg"))
+  ;; (setq org-contacts-files '("~/notes/people.org.gpg"))
 
   ;; Best-effort log CREATED timestamp.
   ;; Call (org-expiry-insert-created) to manually insert timestamps.
@@ -587,18 +595,36 @@ With prefix argument, also display headlines without a TODO keyword."
      `(org-level-3 ((t (,@headline :height 1.1))))
      `(org-level-2 ((t (,@headline :height 1.2))))
      `(org-level-1 ((t (,@headline :height 1.3))))
+     `(org-num-face ((t (,@doom-font))))
      `(org-document-title ((t (,@headline :height 1.6 :underline nil))))))
+
+  (custom-theme-set-faces
+   'user
+   '(org-block                 ((t (:inherit fixed-pitch))))
+   '(org-meta-line             ((t (:inherit (shadow fixed-pitch)))))
+   '(org-property-value        ((t (:inherit fixed-pitch))) t)
+   '(org-special-keyword       ((t (:inherit fixed-pitch))))
+   '(org-block-begin-line      ((t (:inherit (shadow fixed-pitch) :slant normal))))
+   '(org-block-end-line        ((t (:inherit (shadow fixed-pitch) :slant normal))))
+   '(org-code                  ((t (:inherit fixed-pitch))))
+   '(org-date                  ((t (:inherit (shadow fixed-pitch) :underline nil :height 0.8))))
+   '(org-tag                   ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+   '(org-verbatim              ((t (:inherit (shadow fixed-pitch)))))
+   '(org-table                 ((t (:inherit (shadow fixed-pitch)))))
+   '(org-indent                ((t (:inherit (org-hide fixed-pitch))))))
 
   ;; Hooks
   (add-hook 'org-clock-in-hook 'sa/clock-in)
   (add-hook 'org-clock-out-hook 'sa/clock-out)
 
   (add-to-list '+word-wrap-visual-modes 'org-mode)
+  (setq org-num-face 'line-number)
   (add-hook 'org-mode-hook #'(lambda ()
                                ;;(adaptive-wrap-prefix-mode 1)
                                (auto-fill-mode -1)
                                (+word-wrap-mode)
                                (auto-revert-mode 1)
+                               (org-num-mode)
                                ;; (hidden-mode-line-mode)
                                (setq line-spacing 0.6)
                                ;; (turn-off-fci-mode)
@@ -606,6 +632,7 @@ With prefix argument, also display headlines without a TODO keyword."
                                (visual-line-mode 1)
                                ))
   )
+
 (sa/setup-org-mode "~/notes")
 
 (load! "bindings")
