@@ -529,6 +529,18 @@ function install_update_fonts()                                                 
   cd $dir
 }
 
+function doom_refresh()
+{
+  ~/.emacs.d/bin/doom refresh
+}
+
+function post_sync()
+{
+  doom_refresh
+  install_dotfiles
+  install_update_fonts
+}
+
 function install_update_spacemacs()
 {
   git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d

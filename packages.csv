@@ -2,6 +2,7 @@ acpi,used to display battery status
 autoconf-archive,For manual make
 compton,Simple standalone composite manager (For use with xmonad)
 cryfs,Encryption.
+dex,Manage .desktop files
 docker-engine,docker
 fbterm,Framebuffer terminal emulator
 fdupes,Find duplicates
@@ -79,4 +80,5 @@ xbindkeys,x keybindings
 xdotool,control mouse cursor with keyboard
 xnest,Debug dwm.
 xprintidle,Print user idle time.
+xtrace,X Debugging.
 zsh,z shell
