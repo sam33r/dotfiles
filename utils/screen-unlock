@@ -4,7 +4,7 @@ rm -f /tmp/screen-locked
 
 # Revert all emacs buffers. Emacs cannot automatically revert all buffers, since some of
 # the fuse mounts I use don't do a good job of exposing updates.
-emacsclient -e "(sa/revert-all-buffers)"
+emacsclient -e "(sa/revert-all-org-buffers)"
 
 # Setup xautolock.
 killall xautolock

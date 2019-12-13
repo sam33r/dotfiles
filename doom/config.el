@@ -22,6 +22,27 @@
   (save-some-buffers t))
 (add-hook! 'focus-out-hook 'sa/save-all)
 
+;; This function is called when unlocking the xsession.
+(defun sa/revert-all-org-buffers ()
+  "Revert all non-modified org-mode buffers."
+  (interactive)
+  (clean-buffer-list)
+  (save-current-buffer
+    (mapc (lambda (b)
+            (set-buffer b)
+            (unless (or (null (buffer-file-name)) (buffer-modified-p))
+              (if (and (file-exists-p (buffer-file-name)) (eq 'org-mode (buffer-local-value 'major-mode b)))
+                  (progn
+                    (revert-buffer t t)
+                    (message "Reverted %s\n" (buffer-file-name))
+                    )
+                )
+              )
+            )
+          (buffer-list)))
+  ;; Tangentially related: Also update the list of org-agenda files. These can change over time.
+  (sa/set-org-agenda-files))
+
 (defadvice org-agenda-quit
     (after close-agenda-quickview)
   (if (equal "agenda" (frame-parameter nil 'name))
