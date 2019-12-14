@@ -536,9 +536,10 @@ function doom_refresh()
 
 function post_sync()
 {
-  doom_refresh
   install_dotfiles
+  install_update_packages
   install_update_fonts
+  doom_refresh
 }
 
 function install_update_spacemacs()
