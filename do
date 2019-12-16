@@ -762,6 +762,15 @@ function setup_termux()
   git config --global user.name $git_name
 }
 
+function install_update_grasp()
+{
+  google-chrome
+  cd $HOME
+  git clone https://github.com/karlicoss/grasp
+  cd grasp
+  git pull origin master
+}
+
 #--------------------------------------------------------------------------------
 # Common functions (Don't change)
 #--------------------------------------------------------------------------------
