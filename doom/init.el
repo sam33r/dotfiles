@@ -9,6 +9,7 @@
 ;; found in modules/README.org.
 
 ;;; Code:
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
 (doom! :input
        ;;chinese
        ;;japanese
