@@ -175,7 +175,6 @@
         (buffer-list))
   (helm-org-rifle-agenda-files))
 
-
 (defun sa/setup-org-mode (orgdir)
   """Setup org-mode configuration."""
 
@@ -606,19 +605,6 @@ With prefix argument, also display headlines without a TODO keyword."
 
   (setq doom-font (font-spec :family "Input" :size 18))
   (setq doom-variable-pitch-font (font-spec :family "Literata" :size 20))
-  (let* ((headline `(:inherit default :weight normal :family "Literata")))
-    (custom-theme-set-faces
-     'user
-     `(org-level-8 ((t (,@headline :height 1.0))))
-     `(org-level-7 ((t (,@headline :height 1.0))))
-     `(org-level-6 ((t (,@headline :height 1.0))))
-     `(org-level-5 ((t (,@headline :height 1.0))))
-     `(org-level-4 ((t (,@headline :height 1.1))))
-     `(org-level-3 ((t (,@headline :height 1.1))))
-     `(org-level-2 ((t (,@headline :height 1.2))))
-     `(org-level-1 ((t (,@headline :height 1.3))))
-     `(org-num-face ((t (,@doom-font))))
-     `(org-document-title ((t (,@headline :height 1.6 :underline nil))))))
 
   (custom-theme-set-faces
    'user
@@ -655,6 +641,7 @@ With prefix argument, also display headlines without a TODO keyword."
                                ))
   )
 
-(sa/setup-org-mode "~/notes")
+(after! org
+  (sa/setup-org-mode "~/notes"))
 
 (load! "bindings")
