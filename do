@@ -280,7 +280,8 @@ function install_copyq()                                             # Install c
     libqt5svg5-dev \
     libxfixes-dev \
     libxtst-dev \
-    libqt5svg5
+    libqt5svg5 \
+    libqt5x11extras5-dev
   git clone https://github.com/hluk/CopyQ.git
   cd CopyQ
   git pull origin master
