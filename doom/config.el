@@ -271,6 +271,10 @@
   (setq org-agenda-custom-commands
         (quote
          (
+          ("p" "Projects"
+           ((todo "PROJECT"))
+           nil)
+
           ("n" "Small Agenda"
            ((agenda "" nil)
             (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
@@ -436,6 +440,11 @@ Random someday items")
         )
   (define-key global-map "\C-cc" 'org-capture)
 
+  (setq!
+   org-agenda-dim-blocked-tasks 't  ;; Revert to the default that doom-emacs changes.
+   org-agenda-start-day nil         ;; Revert to default.
+   org-agenda-span 7                ;; Revert to default.
+   )
 
   (setq org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
   (setq org-agenda-skip-scheduled-if-done t)
