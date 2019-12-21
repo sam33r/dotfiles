@@ -38,7 +38,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'majutsushi/tagbar'
 
 " Snippets manager
-Plugin 'SirVer/ultisnips'
+" Plugin 'SirVer/ultisnips'
 " Snippets list
 Plugin 'honza/vim-snippets'
 
@@ -130,11 +130,11 @@ let NERDTreeQuitOnOpen=1
 nmap <F8> :TagbarToggle<CR>
 
 " ultisnips config:
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" let g:UltiSnipsExpandTrigger="<c-j>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+" let g:UltiSnipsEditSplit="vertical"
 
 " airline config:
 let g:airline_powerline_fonts = 1

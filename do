@@ -280,7 +280,8 @@ function install_copyq()                                             # Install c
     libqt5svg5-dev \
     libxfixes-dev \
     libxtst-dev \
-    libqt5svg5
+    libqt5svg5 \
+    libqt5x11extras5-dev
   git clone https://github.com/hluk/CopyQ.git
   cd CopyQ
   git pull origin master
@@ -769,6 +770,25 @@ function install_update_grasp()
   git clone https://github.com/karlicoss/grasp
   cd grasp
   git pull origin master
+}
+
+function install_firefox()
+{
+  cd $HOME
+  wget -O ~/firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
+  tar xjf firefox.tar.bz2
+  rm firefox.tar.bz2
+  ln -fs ~/firefox/firefox ~/bin/firefox
+}
+
+function setup_git()
+{
+  echo "Email for global git: "
+  read git_email
+  echo "Name for global git: "
+  read git_name
+  git config --global user.email $git_email
+  git config --global user.name $git_name
 }
 
 #--------------------------------------------------------------------------------
