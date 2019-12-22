@@ -426,6 +426,29 @@ function custom_install_emacs_snapshot()                                        
   sudo update-alternatives --config emacs
 }
 
+function fix_xbacklight()                                                        # Fix xbacklight not finding devices to change brightness.
+{
+  # See https://unix.stackexchange.com/questions/301724/xbacklight-not-working
+  backlight=`ls /sys/class/backlight`
+  echo "Find the right identifier:"
+  xrandr --verbose | grep -B 1 Identifier
+  echo "Identifier: "
+  read identifier
+  cat >/tmp/xorg.conf <<EOL
+Section "Device"
+    Identifier  "$identifier"
+    Driver      "intel"
+    Option      "Backlight"  "$backlight"
+EndSection
+EOL
+  if [ -f "/etc/X11/xorg.conf" ]; then
+    echo "Copy following to xorg.conf:"
+    cat /tmp/xorg.conf
+  else
+    sudo cp /tmp/xorg.conf /etc/X11/
+  fi
+}
+
 function custom_install_arc_theme_ubuntu_1604_only()                             # Install gnome theme of choice.
 {
   sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/Horst3180/xUbuntu_16.04/ /' > /etc/apt/sources.list.d/arc-theme.list"
