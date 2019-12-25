@@ -31,7 +31,14 @@ if [ "$?" -ne "0" ]; then
    echo "Not in a git repository!";
 fi
 
+first_run=true
 while true; do
+  if [ "$first_run" = true ] ; then
+    first_run=false
+  else
+    timeout $polltime inotifywait $1 -e modify -e move -e move_self -e create -e delete -r --exclude "(.git)"
+  fi
+  sleep 3
   date
   git fetch origin
   git status | grep behind
@@ -54,6 +61,6 @@ while true; do
   if (( $num_commits > 0)); then
     git push origin master
   fi
-  echo "Sleeping for $polltime seconds."
-  sleep $polltime
+  # echo "Sleeping for $polltime seconds."
+  # sleep $polltime
 done
