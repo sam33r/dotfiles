@@ -47,15 +47,16 @@ while true; do
     notify-send "$1 has diverged from origin/master." -t $notifymillis -u normal
     echo "Diverged"
   fi
-  sleep $polltime
-  sleep 1
-
   # Grab the timestamp of the last fetch.
   last_fetch=`stat -c %Y .git/FETCH_HEAD`
   secs_since_fetch=$((`date +"%s"` - $last_fetch))
   # If there hasn't been a fetch in the last minute or so, it means fetch
   # is broken.
-  if (( $secs_since_fetch > 180 )); then
+  if (( $secs_since_fetch > 200 )); then
     notify-send "$1 isn't being fetched!" -t $notifymillis -u normal
   fi
+
+  sleep $polltime
+  sleep 1
+
 done
