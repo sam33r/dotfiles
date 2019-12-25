@@ -4,7 +4,7 @@
 
 if [ "$#" -lt 1 ]
 then
-  echo "Usage: git-sync.sh <dir> <polling freq>"
+  echo "Usage: git-alert <dir> <polling freq>"
   exit 1
 fi
 
@@ -22,7 +22,15 @@ if [ "$?" -ne "0" ]; then
 fi
 
 while true; do
-  git remote update
+
+  num_changes=`git status --porcelain | wc -l`
+  if (( $num_changes > 0)); then
+    notify-send "$1 has $num_changes uncommitted changes!" -t $notifymillis -u normal
+  fi
+
+  # This can hang if git is waiting on credentials. The num_changes block above guards against
+  # git commands in perpetual wait.
+  timeout 60 git remote update
   UPSTREAM='@{u}'
   LOCAL=$(git rev-parse @)
   REMOTE=$(git rev-parse "$UPSTREAM")
@@ -32,11 +40,22 @@ while true; do
     echo "Up-to-date"
   elif [ $LOCAL = $BASE ]; then
     notify-send "$1 is out of date, need to pull" -t $notifymillis -u normal
+    echo "Need to pull"
   elif [ $REMOTE = $BASE ]; then
     echo "Need to push"
   else
+    notify-send "$1 has diverged from origin/master." -t $notifymillis -u normal
     echo "Diverged"
   fi
   sleep $polltime
   sleep 1
+
+  # Grab the timestamp of the last fetch.
+  last_fetch=`stat -c %Y .git/FETCH_HEAD`
+  secs_since_fetch=$((`date +"%s"` - $last_fetch))
+  # If there hasn't been a fetch in the last minute or so, it means fetch
+  # is broken.
+  if (( $secs_since_fetch > 180 )); then
+    notify-send "$1 isn't being fetched!" -t $notifymillis -u normal
+  fi
 done
