@@ -239,9 +239,6 @@
   ;; Max width for inline images
   (setq org-image-actual-width 800)
 
-  ;; Accept encrypted files.
-  (setq org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
-
   ;; Don't subscript on encountering underscore.
   (setq org-use-sub-superscripts (quote {}))
   ;; Set location for sunrise/sunset.
@@ -444,8 +441,10 @@ Random someday items")
    org-agenda-start-day nil         ;; Revert to default.
    org-agenda-span 7                ;; Revert to default.
    )
-
-  (setq org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
+  (unless (string-match-p "\\.gpg" org-agenda-file-regexp)
+    (setq org-agenda-file-regexp
+          (replace-regexp-in-string "\\\\\\.org" "\\\\.org\\\\(\\\\.gpg\\\\)?"
+                                    org-agenda-file-regexp)))
   (setq org-agenda-skip-scheduled-if-done t)
   (setq org-agenda-span (quote day))
   (setq org-agenda-start-with-log-mode (quote (closed clock)))
