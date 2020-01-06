@@ -43,6 +43,7 @@ pavucontrol,Pulse audio controls
 pcmanfm,PCMan File Manager
 pdfgrep,Grep pdf files
 pdftk,PDF Password Protection
+pinentry-gtk2,Pinentry.
 powertop,Find battery consuming culprits.
 python3-pip,pip for python3
 python-dev,python
