@@ -39,5 +39,7 @@ while true; do
   sleep 30
 done &
 
+(sleep 60 && ~/grasp/server/grasp_server.py --path "~/notes/grasp-inbox.org")
+
 # Open the screen unlock dialogs
 (sleep 60 && ~/dotfiles/utils/screen-unlock) &

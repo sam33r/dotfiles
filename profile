@@ -28,7 +28,7 @@ export PATH="$PATH:$HOME/.emacs.d/bin" # Add doom binary.
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-export PATH="$HOME/emacs/src:$PATH:/usr/local/go/bin:$HOME/go/bin:$HOME/bin:$HOME/.local/bin:$HOME/bin:$HOME/dotfiles/utils" # Add local binaries.
+export PATH="$HOME/emacs/src:/usr/local/go/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/bin:$HOME/dotfiles/utils:$PATH" # Add local binaries.
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH="$PATH:$ANDROID_HOME/tools"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"

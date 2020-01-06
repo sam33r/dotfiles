@@ -5,6 +5,11 @@
 # is assumed to be running as a daemon on all my machines.
 # TODO: Send a mail or something when things break.
 
+# Use GUI editor to prevent blocking on merges when this script is run in the
+# background.
+export VISUAL=gvim
+export EDITOR="$VISUAL"
+
 if [ "$#" -lt 1 ]
 then
   echo "Usage: git-sync.sh <dir> <polling freq> <optional command to run on pulls>"
@@ -26,7 +31,14 @@ if [ "$?" -ne "0" ]; then
    echo "Not in a git repository!";
 fi
 
+first_run=true
 while true; do
+  if [ "$first_run" = true ] ; then
+    first_run=false
+  else
+    timeout $polltime inotifywait $1 -e modify -e move -e move_self -e create -e delete -r --exclude "(.git)"
+  fi
+  sleep 3
   date
   git fetch origin
   git status | grep behind
@@ -41,9 +53,14 @@ while true; do
     dt=`date`
     host=`hostname`
     commit="$num_changes files changed from $host at $dt"
-    git add -A; git commit -m "$commit"; git push origin master
+    git add -A; git commit -m "$commit"
     echo $commit
   fi
-  echo "Sleeping for $polltime seconds."
-  sleep $polltime
+  num_commits=`git cherry -v origin/master | wc -l`
+  echo "Found $num_commits commits to push to origin."
+  if (( $num_commits > 0)); then
+    git push origin master
+  fi
+  # echo "Sleeping for $polltime seconds."
+  # sleep $polltime
 done

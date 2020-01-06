@@ -175,7 +175,6 @@
         (buffer-list))
   (helm-org-rifle-agenda-files))
 
-
 (defun sa/setup-org-mode (orgdir)
   """Setup org-mode configuration."""
 
@@ -240,9 +239,6 @@
   ;; Max width for inline images
   (setq org-image-actual-width 800)
 
-  ;; Accept encrypted files.
-  (setq org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
-
   ;; Don't subscript on encountering underscore.
   (setq org-use-sub-superscripts (quote {}))
   ;; Set location for sunrise/sunset.
@@ -271,6 +267,10 @@
   (setq org-agenda-custom-commands
         (quote
          (
+          ("p" "Projects"
+           ((todo "PROJECT"))
+           nil)
+
           ("n" "Small Agenda"
            ((agenda "" nil)
             (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
@@ -436,8 +436,15 @@ Random someday items")
         )
   (define-key global-map "\C-cc" 'org-capture)
 
-
-  (setq org-agenda-file-regexp "\\`[^.].*\\.org\\.gpg\\'")
+  (setq!
+   org-agenda-dim-blocked-tasks 't  ;; Revert to the default that doom-emacs changes.
+   org-agenda-start-day nil         ;; Revert to default.
+   org-agenda-span 7                ;; Revert to default.
+   )
+  (unless (string-match-p "\\.gpg" org-agenda-file-regexp)
+    (setq org-agenda-file-regexp
+          (replace-regexp-in-string "\\\\\\.org" "\\\\.org\\\\(\\\\.gpg\\\\)?"
+                                    org-agenda-file-regexp)))
   (setq org-agenda-skip-scheduled-if-done t)
   (setq org-agenda-span (quote day))
   (setq org-agenda-start-with-log-mode (quote (closed clock)))
@@ -606,19 +613,6 @@ With prefix argument, also display headlines without a TODO keyword."
 
   (setq doom-font (font-spec :family "Input" :size 18))
   (setq doom-variable-pitch-font (font-spec :family "Literata" :size 20))
-  (let* ((headline `(:inherit default :weight normal :family "Literata")))
-    (custom-theme-set-faces
-     'user
-     `(org-level-8 ((t (,@headline :height 1.0))))
-     `(org-level-7 ((t (,@headline :height 1.0))))
-     `(org-level-6 ((t (,@headline :height 1.0))))
-     `(org-level-5 ((t (,@headline :height 1.0))))
-     `(org-level-4 ((t (,@headline :height 1.1))))
-     `(org-level-3 ((t (,@headline :height 1.1))))
-     `(org-level-2 ((t (,@headline :height 1.2))))
-     `(org-level-1 ((t (,@headline :height 1.3))))
-     `(org-num-face ((t (,@doom-font))))
-     `(org-document-title ((t (,@headline :height 1.6 :underline nil))))))
 
   (custom-theme-set-faces
    'user
@@ -655,6 +649,7 @@ With prefix argument, also display headlines without a TODO keyword."
                                ))
   )
 
-(sa/setup-org-mode "~/notes")
+(after! org
+  (sa/setup-org-mode "~/notes"))
 
 (load! "bindings")
