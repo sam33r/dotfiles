@@ -30,6 +30,7 @@ libxml2-dev,Required for eww
 lm-sensors,sensors information
 meld,Diff tool.
 mpv,Media player
+mu4e,Emacs email client.
 network-manager-gnome,network management ui
 network-manager,Network management applet
 notmuch,Email search
