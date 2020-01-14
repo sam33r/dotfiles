@@ -804,6 +804,25 @@ function install_firefox()
   ln -fs ~/firefox/firefox ~/bin/firefox
 }
 
+function install_libinput_gestures()                                            # Trackpad gestures.
+{
+  # See https://github.com/bulletmark/libinput-gestures
+  cd $HOME
+  # Add user to input group.
+  sudo gpasswd -a $USER input
+  echo "Added user to input group, typically need to relogin after this step."
+  read
+  # Install requirements.
+  sudo apt install libinput-tools
+  git clone https://github.com/bulletmark/libinput-gestures.git
+  cd libinput-gestures
+  git pull origin master
+  sudo make install
+
+  libinput-gestures-setup autostart
+  libinput-gestures-setup start
+}
+
 function setup_git()
 {
   echo "Email for global git: "
