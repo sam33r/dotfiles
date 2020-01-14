@@ -15,6 +15,7 @@
 (package! org-web-tools)
 (package! helm-org-rifle)
 (package! memento-mori)
+(package! writeroom-mode)
 
 (package! mu4e-maildirs-extension :disable t)
 

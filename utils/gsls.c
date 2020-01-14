@@ -27,8 +27,8 @@ void main() {
     case 4:  // Color at 1200K
       gl_FragColor = vec4(c.r, c.g * 0.33, 0.0, 1.0);
       break;
-    case 5:  // 2500K
-      gl_FragColor = vec4(y, y * 0.63, y * 0.28, 1.0);
+    case 5:  // 3700K Mono
+      gl_FragColor = vec4(y, y * 0.79, y * 0.58, 1.0);
       break;
     case 6:  // 2100K Mono
       gl_FragColor = vec4(y, y * 0.57, y * 0.13, 1.0);
