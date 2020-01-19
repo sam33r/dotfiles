@@ -46,11 +46,11 @@ function install_update_packages()
   sudo apt-get clean
 }
 
-function custom_install_esoteric_packages()                                      # Packages and crap only needed for custom hardware
+function custom_install_esoteric_packages()                                      # Packages only needed for custom hardware
 {
+  # TODO: Move to device specific localdots.
   sudo add-apt-repository ppa:graphics-drivers/ppa
   sudo add-apt-repository ppa:lexical/hwe-wireless
-
   sudo apt-get install broadcom-sta-dkms
   sudo apt-get install nvidia-370
 }
