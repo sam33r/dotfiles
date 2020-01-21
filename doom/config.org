@@ -275,7 +275,11 @@ These functions are called externally (and usually set to some keybindings with 
            ((agenda "" nil)
             (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
                        ((org-agenda-overriding-header "
-Important"))))
+Important")))
+            (todo "IN-PROGRESS"
+                  ((org-agenda-overriding-header "
+In-Progress Items")))
+            )
            nil)
           ("N" "Comprehensive Agenda"
            ((agenda "" nil)
