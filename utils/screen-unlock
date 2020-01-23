@@ -10,11 +10,3 @@ emacsclient -e "(sa/revert-all-org-buffers)"
 killall xautolock
 nohup sh -c \
     'xautolock -time 10 -notify 30 -locker "$HOME/dotfiles/utils/screen-lock"' &
-
-# Clean the desktop
-clean=$(echo "no|yes" | \
-             rofi -dmenu -p "Clean Desktop? " \
-                  -fullscreen -padding 200 -sep '|' -only-match)
-if [ "$clean" = "yes" ]; then
-  ~/dotfiles/utils/close-windows
-fi
