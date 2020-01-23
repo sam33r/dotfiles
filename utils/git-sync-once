@@ -46,7 +46,7 @@ if (( $secs_since_fetch > 61 )); then
   exit 1
 fi
 
-notification="Syncing $dir\n"
+notification=""
 
 # Track if local was behind the changes in origin.
 local_is_behind=false
@@ -82,8 +82,6 @@ if [[ $? -ne 0 ]]; then
   # shell for manual merge.
   echo "TODO local|TODO remote|manual" | rofi -dmenu -i -sep "|" -p "There was a conflict. Pick which version to use (or manually resolve)"
   cd $dir && (nohup st -e zsh &)
-else
-  notification+="Merged origin/master with no conflicts."
 fi
 
 if [ "$local_is_behind" = true ] && [ "$conflicts_resolved" = true ]; then
@@ -91,4 +89,5 @@ if [ "$local_is_behind" = true ] && [ "$conflicts_resolved" = true ]; then
   notification+="Post-sync command was run.\n"
 fi
 
-notify-send "Sync $dir" "$notification"
+# Only notify the user if something interesting happened.
+[ ! -z "$notification" ] && notify-send "Sync $dir" "$notification"
