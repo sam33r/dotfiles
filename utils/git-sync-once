@@ -5,11 +5,6 @@
 # xsession. It uses `notify-send` and `rofi` to interact with the
 # user.
 #
-# 0. Fetch from origin.
-# 1. If behind origin, master then pull (and run post-pull command).
-# 2. If there are local changes, then commit them.
-# 3. If
-
 # Use GUI editor to prevent blocking on merges when this script is run in the
 # background.
 export VISUAL=gvim
@@ -48,19 +43,9 @@ fi
 
 notification=""
 
-# Track if local was behind the changes in origin.
-local_is_behind=false
-git status | grep behind
-status=$?
-if [ "$status" -eq "0" ]; then
-  local_is_behind=true
-  notification+="Local was behind.\n"
-fi
-
-
 # Number of local uncommitted changes.
 num_changes=`git status --porcelain | wc -l`
-echo "Found $num_changes changes."
+echo "Found $num_changes changes to commit."
 if (( $num_changes > 0)); then
   dt=`date`
   host=`hostname`
@@ -70,23 +55,45 @@ if (( $num_changes > 0)); then
   echo $commit
 fi
 
-# Now try to merge local and origin changes.
-git merge --no-edit
+changes=`git rev-list --left-right --count origin/master...master`
+# Changes in origin not pulled to local master.
+num_remote_changes=`echo $changes | cut -f1 -d" "`
+# Changes in local master not pushed to origin
+num_local_changes=`echo $changes | cut -f2 -d" "`
+echo "$num_remote_changes remote changes, $num_local_changes local changes."
+
+if [[ $num_remote_changes -ne 0 ]]; then
+  notification+="Local was behind by $num_remote_changes changes.\n"
+fi
 
 conflicts_resolved=true
-
+# Now try to merge local and origin changes.
+git merge --no-edit
 # If git merge returns non-zero, there were conflicts.
 if [[ $? -ne 0 ]]; then
   conflicts_resolved=false
   # TODO: Automate dealing with conflicts. For now, we can just open a
   # shell for manual merge.
-  echo "TODO local|TODO remote|manual" | rofi -dmenu -i -sep "|" -p "There was a conflict. Pick which version to use (or manually resolve)"
-  cd $dir && (nohup st -e zsh &)
+  echo "TODO local|TODO remote|manual" | \
+    rofi -dmenu -i -sep "|" -p "There was a conflict. Pick which version to use (or manually resolve)."
+  cd $dir && st -e zsh
+  # Assume that the user fixed conflicts.
+  conflicts_resolved=true
 fi
 
-if [ "$local_is_behind" = true ] && [ "$conflicts_resolved" = true ]; then
+if [[ $num_remote_changes -ne 0 ]] && [ "$conflicts_resolved" = true ]; then
   $cmd
   notification+="Post-sync command was run.\n"
+fi
+
+# Push local changes to origin.
+if [[ $num_local_changes -ne 0 ]]; then 
+  git push origin master
+  if [[ $? -ne 0 ]]; then
+    notification+="Pushing $num_local_changes commits to origin failed."
+  else
+    notification+="$num_local_changes local commits were pushed to origin."
+  fi
 fi
 
 # Only notify the user if something interesting happened.
