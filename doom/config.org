@@ -113,6 +113,10 @@ These functions are called externally (and usually set to some keybindings with 
   (sa/current)
   (org-add-note))
 #+END_SRC
+* TODO Setup Tmux Integration
+Need to append to:
+- org-src-lang-modes
+- +org-babel-mode-alist
 
 * Remaining untangled code.
 #+BEGIN_SRC elisp
