@@ -1,0 +1,91 @@
+# Perform one-time sync between origin/master and the local clone.
+# This script assumes that it's run in background with an active
+# xsession. It uses `notify-send` and `rofi` to interact with the
+# user.
+#
+# 0. Fetch from origin.
+# 1. If behind origin, master then pull (and run post-pull command).
+# 2. If there are local changes, then commit them.
+# 3. If
+
+# Use GUI editor to prevent blocking on merges when this script is run in the
+# background.
+export VISUAL=gvim
+export EDITOR="$VISUAL"
+
+if [ "$#" -lt 1 ]
+then
+  echo "Usage: git-sync <dir> <optional command to run on pull>"
+  exit 1
+fi
+
+dir=$1
+cmd=${@:2}
+
+# Fail if not in a git repository.
+cd $dir
+git rev-parse
+if [ "$?" -ne "0" ]; then
+  notify-send "$dir is not a git repository, quitting!" -u urgent;
+  exit 1
+fi
+
+# Try to fetch
+timeout 60 git fetch
+
+# If the last fetch wasn't done within the past minute,
+# then that means the fetch is broken (Usually due to a
+# broken credentials provider). This script should fail
+# in such circumstance.
+last_fetch=`stat -c %Y .git/FETCH_HEAD`
+secs_since_fetch=$((`date +"%s"` - $last_fetch))
+if (( $secs_since_fetch > 61 )); then
+  notify-send "$dir git fetch is broken!" -u urgent
+  exit 1
+fi
+
+notification=""
+
+# Track if local was behind the changes in origin.
+local_is_behind=false
+git status | grep behind
+status=$?
+if [ "$status" -eq "0" ]; then
+  local_is_behind=true
+  notification+="Local was behind.\n"
+fi
+
+
+# Number of local uncommitted changes.
+num_changes=`git status --porcelain | wc -l`
+echo "Found $num_changes changes."
+if (( $num_changes > 0)); then
+  dt=`date`
+  host=`hostname`
+  commit="$num_changes files changed from $host at $dt"
+  git add -A; git commit -m "$commit"
+  notification+="Committed $commit.\n"
+  echo $commit
+fi
+
+# Number of local commits not pushed to origin.
+# num_local_commits=`git log origin/master..master --oneline | wc -l`
+
+# Now try to merge local and origin changes.
+git merge --no-edit
+
+conflicts_resolved=true
+
+# If git merge returns non-zero, there were conflicts.
+if [[ $? -ne 0 ]]; then
+  conflicts_resolved=false
+  # TODO:: Deal with the conflict.
+  echo "local|remote|manual" | rofi -dmenu -p "There was a conflict. Pick which version to use (or manually resolve)"
+fi
+
+if [ "$local_is_behind" = true ] && [ "$conflicts_resolved" = true ]; then
+  $cmd
+  notification+="Post-sync command was run.\n"
+fi
+
+notify-send $notification
