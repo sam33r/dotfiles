@@ -7,41 +7,36 @@ void main() {
   vec4 c = texture2D(tex, gl_TexCoord[0].xy);
   float y = dot(c.rgb, vec3(0.299, 0.587, 0.114));
 
-  int mode = {Mode} % 10;
+  int mode = {Mode};
 
-  switch (mode) {
-    default:
-    // See https://andi-siess.de/rgb-to-color-temperature/
-    case 0:  // Default: No transform
-      gl_FragColor = vec4(c.r, c.g, c.b, 1.0);
-      break;
-    case 1:  // Color at 3700K
-      gl_FragColor = vec4(c.r, c.g * 0.79, c.b * 0.58, 1.0);
-      break;
-    case 2:  // Color at 2700K
-      gl_FragColor = vec4(c.r, c.g * 0.66, c.b * 0.34, 1.0);
-      break;
-    case 3:  // Color at 2100K
-      gl_FragColor = vec4(c.r, c.g * 0.57, c.b * 0.13, 1.0);
-      break;
-    case 4:  // Color at 1200K
-      gl_FragColor = vec4(c.r, c.g * 0.33, 0.0, 1.0);
-      break;
-    case 5:  // 3700K Mono
-      gl_FragColor = vec4(y, y * 0.79, y * 0.58, 1.0);
-      break;
-    case 6:  // 2100K Mono
-      gl_FragColor = vec4(y, y * 0.57, y * 0.13, 1.0);
-      break;
-    case 7:  // 1700K Mono
-      gl_FragColor = vec4(y, y * 0.47, 0.0, 1.0);
-      break;
-    case 8:  // 1200K Mono
-      gl_FragColor = vec4(y, y * 0.33, 0.0, 1.0);
-      break;
-    case 9:  // Dark Mode (1700K Mono + Invert)
-      y = 1.0 - y;
-      gl_FragColor = vec4(y, y * 0.47, 0.0, 1.0);
-      break;
+  gl_FragColor = vec4(y, y * 0.79, y * 0.58, 1.0);
+
+  /* See https://andi-siess.de/rgb-to-color-temperature/
+   * for color conversion calculations. */
+  /* `switch` doesn't work with all versions of GSLS,
+   * hence the long if-else block. */
+  if (mode == 0) {  // Default: No transform
+    gl_FragColor = vec4(c.r, c.g, c.b, 1.0);
+  } else if (mode == 1) {  // Color at 3700K
+    gl_FragColor = vec4(c.r, c.g * 0.79, c.b * 0.58, 1.0);
+  } else if (mode == 2) {  // Color at 2700K
+    gl_FragColor = vec4(c.r, c.g * 0.66, c.b * 0.34, 1.0);
+  } else if (mode == 3) {  // Color at 1200K
+    gl_FragColor = vec4(c.r, c.g * 0.33, 0.0, 1.0);
+  } else if (mode == 4) {  // Invert +  2700K
+    y = 1.0 - y;
+    gl_FragColor =
+        vec4((1.0 - c.r), (1.0 - c.g) * 0.66, (1.0 - c.b) * 0.34, 1.0);
+  } else if (mode == 5) {  // 3700K Mono
+    gl_FragColor = vec4(y, y * 0.79, y * 0.58, 1.0);
+  } else if (mode == 6) {  // 2100K Mono
+    gl_FragColor = vec4(y, y * 0.57, y * 0.13, 1.0);
+  } else if (mode == 7) {  // 1700K Mono
+    gl_FragColor = vec4(y, y * 0.47, 0.0, 1.0);
+  } else if (mode == 8) {  // 1200K Mono
+    gl_FragColor = vec4(y, y * 0.33, 0.0, 1.0);
+  } else if (mode == 9) {  // Dark Mode (1700K Mono + Invert)
+    y = 1.0 - y;
+    gl_FragColor = vec4(y, y * 0.47, 0.0, 1.0);
   }
 }

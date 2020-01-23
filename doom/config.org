@@ -229,10 +229,13 @@ These functions are called externally (and usually set to some keybindings with 
   (setq
    org-expiry-inactive-timestamps t
    org-expiry-created-property-name "CREATED")
+  (org-expiry-insinuate)
 
   ;; Give up on aligning tags
   (setq org-tags-column 0)
 
+  ;; Log timestamp when an item is completed.
+  (setq org-log-done 'time)
   ;; Max width for inline images
   (setq org-image-actual-width 800)
 
@@ -272,7 +275,11 @@ These functions are called externally (and usually set to some keybindings with 
            ((agenda "" nil)
             (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
                        ((org-agenda-overriding-header "
-Important"))))
+Important")))
+            (todo "IN-PROGRESS"
+                  ((org-agenda-overriding-header "
+In-Progress Items")))
+            )
            nil)
           ("N" "Comprehensive Agenda"
            ((agenda "" nil)
