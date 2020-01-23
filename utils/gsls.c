@@ -21,10 +21,12 @@ void main() {
     gl_FragColor = vec4(c.r, c.g * 0.79, c.b * 0.58, 1.0);
   } else if (mode == 2) {  // Color at 2700K
     gl_FragColor = vec4(c.r, c.g * 0.66, c.b * 0.34, 1.0);
-  } else if (mode == 3) {  // Color at 2100K
-    gl_FragColor = vec4(c.r, c.g * 0.57, c.b * 0.13, 1.0);
-  } else if (mode == 4) {  // Color at 1200K
+  } else if (mode == 3) {  // Color at 1200K
     gl_FragColor = vec4(c.r, c.g * 0.33, 0.0, 1.0);
+  } else if (mode == 4) {  // Invert +  2700K
+    y = 1.0 - y;
+    gl_FragColor =
+        vec4((1.0 - c.r), (1.0 - c.g) * 0.66, (1.0 - c.b) * 0.34, 1.0);
   } else if (mode == 5) {  // 3700K Mono
     gl_FragColor = vec4(y, y * 0.79, y * 0.58, 1.0);
   } else if (mode == 6) {  // 2100K Mono
