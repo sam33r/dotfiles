@@ -3,7 +3,7 @@
 colormode=""
 if [ "$#" -lt 1 ]
 then
-  colormode=$(cat ~/dotfiles/utils/gsls.c | grep "case .:" | rofi -dmenu | grep -o "[0-9]:" | cut -d':' -f1)
+  colormode=$(cat ~/dotfiles/utils/gsls.c | grep "mode == ." | rofi -dmenu | grep -o "== [0-9]" | cut -d' ' -f2)
 else
   colormode=$1
 fi
