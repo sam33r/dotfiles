@@ -39,7 +39,7 @@ while true; do
     timeout $polltime inotifywait $1 -e modify -e move -e move_self -e create -e delete -r --exclude "(.git)"
   fi
   # This is just a hack to prevent a burst of commits.
-  sleep 10
+  sleep 60
   # TODO: Ideally, we would throttle the inotifywait to trigger sync:
   # (a) for every N file-changes, or
   # (b) every M minutes,
