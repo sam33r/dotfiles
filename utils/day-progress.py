@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+# TODO: Add commentary.
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -78,7 +79,7 @@ def get_vacation_list():
 
 
 def gen_all_days_list():
-  all_days = [0]
+  all_days = [(-1,-1)]
   valid_days = 0
   last_valid_day = 0
   vacations = get_vacation_list()
@@ -96,7 +97,6 @@ def gen_all_days_list():
       all_days.append((last_valid_day, valid_days))
   return all_days
 
-
 all_days = gen_all_days_list()
 
 out = ""
@@ -106,6 +106,7 @@ minutes_in_day = (_END_HOUR - _START_HOUR) * 60
 is_today_valid = all_days[get_date_hash(now.month, now.day)][0] == get_date_hash(
     now.month, now.day
 )
+
 if is_today_valid:
   if now.hour >= _END_HOUR:
     today_minutes = minutes_in_day
