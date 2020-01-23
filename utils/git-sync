@@ -38,29 +38,11 @@ while true; do
   else
     timeout $polltime inotifywait $1 -e modify -e move -e move_self -e create -e delete -r --exclude "(.git)"
   fi
-  sleep 3
-  date
-  git fetch origin
-  git status | grep behind
-  status=$?
-  git pull origin master
-  if [ "$status" -eq "0" ]; then
-    $cmd
-  fi
-  num_changes=`git status --porcelain | wc -l`
-  echo "Found $num_changes changes."
-  if (( $num_changes > 0)); then
-    dt=`date`
-    host=`hostname`
-    commit="$num_changes files changed from $host at $dt"
-    git add -A; git commit -m "$commit"
-    echo $commit
-  fi
-  num_commits=`git cherry -v origin/master | wc -l`
-  echo "Found $num_commits commits to push to origin."
-  if (( $num_commits > 0)); then
-    git push origin master
-  fi
-  # echo "Sleeping for $polltime seconds."
-  # sleep $polltime
+  # This is just a hack to prevent a burst of commits.
+  sleep 10
+  # TODO: Ideally, we would throttle the inotifywait to trigger sync:
+  # (a) for every N file-changes, or
+  # (b) every M minutes,
+  # whichever happens earlier.
+  git-sync-once $dir $cmd
 done
