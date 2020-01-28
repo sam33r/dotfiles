@@ -280,7 +280,7 @@ Need to append to:
             (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
                        ((org-agenda-overriding-header "
 Important")))
-            (todo "IN-PROGRESS"
+            (todo "NEXT"
                   ((org-agenda-overriding-header "
 In-Progress Items")))
             )
@@ -290,12 +290,9 @@ In-Progress Items")))
             (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
                        ((org-agenda-overriding-header "
 Important")))
-            (todo "IN-PROGRESS"
-                  ((org-agenda-overriding-header "
-In-Progress Items")))
             (todo "NEXT"
                   ((org-agenda-overriding-header "
-Unscheduled next items")
+Next items")
                    (org-agenda-skip-function
                     (quote
                      (org-agenda-skip-entry-if
@@ -558,7 +555,8 @@ Random someday items")
   (setq org-outline-path-complete-in-steps nil)
   (setq org-refile-targets
         '((org-agenda-files :todo . "PROJECT")
-          (org-agenda-files :todo . "LIST")))
+          (org-agenda-files :todo . "LIST")
+          ))
 
   ;; Task tags
   (setq org-todo-keywords
@@ -572,11 +570,6 @@ Random someday items")
           ("CANCELED" . (:foreground "gray" :weight bold))
           ("PROJECT" . (:weight bold))
           ("LIST" . (:weight bold))
-          ("DONE" . (:foreground "green" :weight bold))))
-
-  (font-lock-add-keywords
-   'org-mode `(("^\\*+ \\(TODO\\) "
-
           ("DONE" . (:foreground "green" :weight bold))))
 
   (font-lock-add-keywords
