@@ -557,11 +557,12 @@ Random someday items")
   (setq org-refile-use-outline-path t)
   (setq org-outline-path-complete-in-steps nil)
   (setq org-refile-targets
-        '((org-agenda-files :todo . "PROJECT")))
+        '((org-agenda-files :todo . "PROJECT")
+          (org-agenda-files :todo . "LIST")))
 
   ;; Task tags
   (setq org-todo-keywords
-        '((sequence "TRIAGE(a)" "PROJECT" "TODO(t)" "ICKY(i)" "NEXT(n!)" "WAIT(w@/!)" "IN-PROGRESS(p!)" "|" "DONE(d!)" "CANCELED(c@)")))
+        '((sequence "TRIAGE(a)" "PROJECT(p)" "LIST(l)" "TODO(t)" "ICKY(i)" "NEXT(n!)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
   (setq org-todo-keyword-faces
         '(("TRIAGE" . org-warning)
           ("TODO" . (:foreground "orange" :weight bold))
@@ -570,6 +571,12 @@ Random someday items")
           ("WAIT" .(:foreground "purple" :weight bold))
           ("CANCELED" . (:foreground "gray" :weight bold))
           ("PROJECT" . (:weight bold))
+          ("LIST" . (:weight bold))
+          ("DONE" . (:foreground "green" :weight bold))))
+
+  (font-lock-add-keywords
+   'org-mode `(("^\\*+ \\(TODO\\) "
+
           ("DONE" . (:foreground "green" :weight bold))))
 
   (font-lock-add-keywords
@@ -583,22 +590,22 @@ Random someday items")
                 (1 (progn (compose-region (match-beginning 1) (match-end 1) "☕")
                           nil)))
                ("^\\*+ \\(NEXT\\) "
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⏩")
+                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⯈")
                           nil)))
                ("^\\*+ \\(WAIT\\) "
                 (1 (progn (compose-region (match-beginning 1) (match-end 1) "🤚")
                           nil)))
-               ("^\\*+ \\(IN-PROGRESS\\) "
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⯈")
-                          nil)))
                ("^\\*+ \\(CANCELED\\) "
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "✘")
+                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⨯")
                           nil)))
                ("^\\*+ \\(DONE\\) "
                 (1 (progn (compose-region (match-beginning 1) (match-end 1) "✔")
                           nil)))
                ("^\\*+ \\(PROJECT\\) "
                 (1 (progn (compose-region (match-beginning 1) (match-end 1) "🕮")
+                          nil)))
+               ("^\\*+ \\(LIST\\) "
+                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⠇")
                           nil)))
                ("^ *\\([-]\\) "
                 (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "―"))))
