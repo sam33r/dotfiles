@@ -72,12 +72,29 @@ git merge --no-edit
 # If git merge returns non-zero, there were conflicts.
 if [[ $? -ne 0 ]]; then
   conflicts_resolved=false
-  # TODO: Automate dealing with conflicts. For now, we can just open a
-  # shell for manual merge.
-  echo "TODO local|TODO remote|manual" | \
-    rofi -dmenu -i -sep "|" -p "There was a conflict. Pick which version to use (or manually resolve)."
-  cd $dir && st -e zsh
-  # Assume that the user fixed conflicts.
+
+  # Generate listing of local-only and remote-only changes.
+  localdesc="local\nTODO: Not Implemented.\n$num_local_changes changes.\n"
+  localdesc+=`git log --pretty=format:'%s' origin/master..master`
+  remotedesc="remote\n$num_remote_changes changes.\n"
+  remotedesc+=`git log --pretty=format:'%s' master..origin/master`
+
+  # Compute lines per entry (rofi requires fixed number of lines per option).
+  a=`echo -en $localdesc | wc -l`
+  b=`echo -en $remotedesc | wc -l`
+  max=$([ $a -ge $b ] && echo "$a" || echo "$b")
+
+  # Ask user.
+  option=`echo -en "$localdesc|$remotedesc|manual" | \
+    rofi -dmenu -fullscreen -eh $max -i -sep "|" -p "There was a conflict. Pick which version to use (or manually resolve)."`
+  option=`echo $option | head -1`
+
+  # TODO: Implement local 
+  if [[ "$option" == "remote" ]]; then
+    git reset --hard origin/master
+  else
+    cd $dir && st -e zsh
+  fi
   conflicts_resolved=true
 fi
 
