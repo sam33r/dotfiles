@@ -302,12 +302,18 @@ function install_dwm()
   make
   sudo make install
   cd $dir
+  cat >/tmp/startdwm <<EOL
+#!/bin/sh
+dbus-launch --sh-syntax --exit-with-session dwm
+EOL
+  sudo cp -f /tmp/startdwm /usr/local/bin/startdwm
+  sudo chmod a+x /usr/local/bin/startdwm
+
   cat >/tmp/dwm.desktop <<EOL
 [Desktop Entry]
 Name=dwm
 Comment=dynamic window manager
-Exec=dwm
-TryExec=dwm
+Exec=startdwm
 Type=Application
 X-LightDM-DesktopName=dwm
 DesktopNames=dwm
