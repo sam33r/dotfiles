@@ -114,9 +114,14 @@ These functions are called externally (and usually set to some keybindings with 
   (org-add-note))
 #+END_SRC
 * TODO Setup Tmux Integration
-Need to append to:
-- org-src-lang-modes
-- +org-babel-mode-alist
+
+#+BEGIN_SRC elisp
+(after! org
+    (add-to-list 'org-src-lang-modes (quote ("run-in-tmux" . sh)))
+    (require 'ob-shell)
+    (add-to-list 'org-babel-shell-names (quote "run-in-tmux"))
+    (org-babel-shell-initialize))
+#+END_SRC
 
 * Remaining untangled code.
 #+BEGIN_SRC elisp
