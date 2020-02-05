@@ -113,7 +113,7 @@ These functions are called externally (and usually set to some keybindings with 
   (sa/current)
   (org-add-note))
 #+END_SRC
-* TODO Setup Tmux Integration
+* Setup Tmux Integration
 
 #+BEGIN_SRC elisp
 (after! org
