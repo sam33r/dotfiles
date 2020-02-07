@@ -51,3 +51,4 @@ $HOME/.vimrc,vimrc
 $HOME/.xbindkeysrc,xbindkeysrc
 $HOME/.Xresources,Xresources
 $HOME/.zshrc,zsh/zshrc
+$HOME/.zprofile,zsh/zprofile
