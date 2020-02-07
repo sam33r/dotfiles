@@ -16,22 +16,7 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-export PATH="$PATH:$HOME/py3env/bin:$HOME/.local/bin" # Add py3env.
-export PATH="$PATH:$HOME/.emacs.d/bin" # Add doom binary.
-
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-export PATH="$HOME/emacs/src:/usr/local/go/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/bin:$HOME/dotfiles/utils:$PATH" # Add local binaries.
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH="$PATH:$ANDROID_HOME/tools"
-export PATH="$PATH:$ANDROID_HOME/platform-tools"
 
 export VISUAL="vim"
 export EDITOR="vim"
@@ -86,4 +71,20 @@ fi
 # For android studio
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PATH=/usr/local/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+export PATH="$PATH:$HOME/py3env/bin:$HOME/.local/bin" # Add py3env.
+export PATH="$PATH:$HOME/.emacs.d/bin" # Add doom binary.
+export PATH="$HOME/emacs/src:/usr/local/go/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/bin:$HOME/dotfiles/utils:$PATH" # Add local binaries.
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH="$PATH:$ANDROID_HOME/tools"
+export PATH="$PATH:$ANDROID_HOME/platform-tools"
+
 export PATH="$HOME/.cargo/bin:$PATH"
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi

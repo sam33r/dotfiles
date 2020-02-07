@@ -118,8 +118,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-export PATH=/usr/local/cuda/bin:$PATH
-export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 
 # Enable fasd
 eval "$(fasd --init auto)"
@@ -135,10 +133,5 @@ fi
 
 # For android studio
 export _JAVA_AWT_WM_NONREPARENTING=1
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$PATH:$HOME/py3env/bin:$HOME/.local/bin" # Add py3env.
-export PATH="$PATH:$HOME/.emacs.d/bin" # Add doom binary.
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

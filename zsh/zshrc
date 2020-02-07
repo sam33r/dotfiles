@@ -8,14 +8,6 @@ case "$TERM" in
     ;;
 esac
 
-export PATH="$HOME/emacs/src:$HOME/bin:$HOME/.local/bin:$HOME/dotfiles/utils:$PATH"
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-export PATH="$HOME/.cargo/bin:$PATH" # Add rust binaries.
-export PATH="$HOME/py3env/bin:$PATH" # Add py3env.
-export PATH="$HOME/.emacs.d/bin:$PATH" # Add doom binary.
-
 source ~/antigen.zsh
 
 antigen use oh-my-zsh
