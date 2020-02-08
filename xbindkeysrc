@@ -40,11 +40,6 @@
     m:0x40 + c:61
     Mod4 + slash 
 
-#Open file
-"rofi -show find -modi find:~/dotfiles/utils/file-open -markup-rows"
-    m:0x40 + c:41
-    Mod4 + f 
-
 #Screen Lock
 "~/dotfiles/utils/screen-lock"
     m:0x40 + c:53
@@ -159,6 +154,11 @@
 "rofi -show window"
     m:0x40 + c:65
     Mod4 + space 
+
+#Switch to Firefox
+"wmctrl -x -a firefox"
+    m:0x40 + c:41
+    Mod4 + f 
 
 #
 # End of xbindkeys configuration
