@@ -3,6 +3,7 @@ $HOME/.bashrc,bashrc
 $HOME/.config/compton.conf,compton.conf
 $HOME/.config/copyq/copyq.conf,copyq.conf
 $HOME/.config/dunst/dunstrc,dunstrc
+$HOME/.config/fonts.conf,fonts.conf
 $HOME/.config/i3blocks/bandwidth,i3blocks/bandwidth
 $HOME/.config/i3blocks/battery,i3blocks/battery
 $HOME/.config/i3blocks/calendar,i3blocks/calendar
@@ -23,6 +24,7 @@ $HOME/.config/i3/config,i3config
 $HOME/.config/keepassxc/keepassxc.ini,keepassxc/keepassxc.ini
 $HOME/.config/libinput-gestures.conf,libinput-gestures.conf
 $HOME/.config/liquidpromtrc,liquidpromptrc
+$HOME/.config/nixpkgs/config.nix,nixpkgs/config.nix
 $HOME/.config/ranger/rc.conf,ranger.conf
 $HOME/.config/redshift.conf,redshift.conf
 $HOME/.doom.d/bindings.el,doom/bindings.el
@@ -50,5 +52,5 @@ $HOME/.tmux.conf,tmux.conf
 $HOME/.vimrc,vimrc
 $HOME/.xbindkeysrc,xbindkeysrc
 $HOME/.Xresources,Xresources
-$HOME/.zshrc,zsh/zshrc
 $HOME/.zprofile,zsh/zprofile
+$HOME/.zshrc,zsh/zshrc

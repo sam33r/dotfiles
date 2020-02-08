@@ -75,10 +75,9 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
-
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export PATH=/usr/local/cuda/bin:$PATH
-export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 export PATH="$PATH:$HOME/py3env/bin:$HOME/.local/bin" # Add py3env.
 export PATH="$PATH:$HOME/.emacs.d/bin" # Add doom binary.
 export PATH="$HOME/emacs/src:/usr/local/go/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/bin:$HOME/dotfiles/utils:$PATH" # Add local binaries.
@@ -87,4 +86,8 @@ export PATH="$PATH:$ANDROID_HOME/tools"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
 
 export PATH="$HOME/.cargo/bin:$PATH"
-if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi
+
+# Nix Environment.
+# if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi
+# export LOCALE_ARCHIVE="$(nix-env --installed --no-name --out-path --query glibc-locales)/lib/locale/locale-archive"
+# export FONTCONFIG_FILE="$HOME/.config/fonts.conf"
