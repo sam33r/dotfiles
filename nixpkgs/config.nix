@@ -4,60 +4,74 @@
     myPackages = pkgs.buildEnv {
       name = "my-packages";
       paths = [
-        glibcLocales # For C locales issue.
+        # System monitoring
         acpi
-        autoconf-archive
-        cryfs
-        fbterm
-        fdupes
-        feh
-        font-manager
-        gcc
-        gnome3.gnome-tweaks
-        gnupg20
-        google-chrome
-        gparted
-        inotify-tools
         inxi
         iotop
-        keepassxc
         lm_sensors
-        meld
-        networkmanagerapplet
-        networkmanager
-        notmuch
-        offlineimap
-        pandoc
-        parallel
-        pasystray
-        pavucontrol
-        pdfgrep
-        pdftk
-        pinentry
         powertop
-        rclone
-        ripgrep
-        rofi
-        sqlite
-        stow
-        dmenu
-        i3lock
-        tmux
-        unclutter
-        vim
-        vlc
         vnstat
+
+        # X Utils
         wmctrl
         xautolock
-        xorg.xbacklight
         xbindkeys
         xbindkeys-config
         xdotool
+        xorg.xbacklight
         xprintidle-ng
         xtrace
+
+        # Command line tools
+        fdupes
+        inotify-tools
+        pandoc
+        parallel
+        pdfgrep
+        pdftk
+        rclone
+        ripgrep
+        stow
+        tmux
         zsh
+
+        # Apps
+        emacs
         firefox
-        xorg.libX11  #for dwm.
+        google-chrome
+        vim
+        vlc
+
+        # Desktop Tools
+        dmenu
+        feh
+        font-manager
+        fontconfig
+        fontconfig-penultimate
+        gnome3.gnome-tweaks
+        gparted
+        i3lock
+        meld
+        networkmanager
+        networkmanagerapplet
+        pasystray
+        pavucontrol
+        rofi
+        unclutter
+
+        # Email
+        notmuch
+        offlineimap
+
+        # Crypt
+        cryfs
+        gnupg20
+        keepassxc
+        pinentry
+
+        # Misc
+        fbterm
+        sqlite
       ];
     };
   };
