@@ -122,6 +122,135 @@ These functions are called externally (and usually set to some keybindings with 
     (add-to-list 'org-babel-shell-names (quote "run-in-tmux"))
     (org-babel-shell-initialize))
 #+END_SRC
+* Org-Mode
+** Define stuck projects
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-stuck-projects '("TODO=\"PROJECT\"" ("NEXT") nil nil)))
+#+END_SRC
+** Custom Agenda Commands
+#+BEGIN_SRC elisp
+;; Set up agenda custom commands.
+(setq org-agenda-custom-commands
+      (quote
+       (
+        ("i" "Mail Inbox"
+         (
+          (tags-todo "work+mail"
+                     ((org-agenda-overriding-header "
+Work")))
+          (tags-todo "mobile+mail"
+                     ((org-agenda-overriding-header "
+Personal")))
+          )
+         nil)
+        ("p" "Projects"
+         ((todo "PROJECT"))
+         nil)
+        ("n" "Small Agenda"
+         ((agenda "" nil)
+          (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
+                     ((org-agenda-overriding-header "
+Important")))
+          (todo "NEXT"
+                ((org-agenda-overriding-header "
+In-Progress Items")))
+          )
+         nil)
+        ("N" "Comprehensive Agenda"
+         ((agenda "" nil)
+          (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
+                     ((org-agenda-overriding-header "
+Important")))
+          (todo "NEXT"
+                ((org-agenda-overriding-header "
+Next items")
+                 (org-agenda-skip-function
+                  (quote
+                   (org-agenda-skip-entry-if
+                    (quote scheduled))))))
+          (todo "TRIAGE"
+                ((org-agenda-overriding-header "
+Items to Triage")))
+          (todo "ICKY"
+                ((org-agenda-overriding-header "
+Items to Breakdown")
+                 (org-agenda-skip-function
+                  (quote
+                   (org-agenda-skip-entry-if
+                    (quote scheduled))))))
+          (todo "WAIT"
+                ((org-agenda-overriding-header "
+Waiting on others")
+                 (org-agenda-skip-function
+                  (quote
+                   (org-agenda-skip-entry-if
+                    (quote scheduled))))))
+          (tags-todo "+email+work"
+                     ((org-agenda-overriding-header "
+Work Email Tasks")
+                      (org-agenda-skip-function
+                       (quote
+                        (org-agenda-skip-entry-if
+                         (quote scheduled))))))
+          (tags-todo "+email-work"
+                     ((org-agenda-overriding-header "
+Personal Email Tasks")
+                      (org-agenda-skip-function
+                       (quote
+                        (org-agenda-skip-entry-if
+                         (quote scheduled))))))
+          (tags-todo "+people|+social"
+                     ((org-agenda-overriding-header "
+People")
+                      (org-agenda-skip-function
+                       (quote
+                        (org-agenda-skip-entry-if
+                         (quote scheduled))))))
+          (tags-todo "+work"
+                     ((org-agenda-overriding-header "
+Unscheduled Work TODOs")
+                      (org-agenda-skip-function
+                       (quote
+                        (org-agenda-skip-entry-if
+                         (quote scheduled))))))
+          (tags-todo "+refile"
+                     ((org-agenda-overriding-header "
+Items to Refile")))
+          (tags-todo "-work-someday"
+                     ((org-agenda-overriding-header "
+Unscheduled Non-Work TODOs")
+                      (org-agenda-skip-function
+                       (quote
+                        (org-agenda-skip-entry-if
+                         (quote scheduled))))))
+          (tags-todo "+fun"
+                     ((org-agenda-max-entries 3)
+                      (org-agenda-cmp-user-defined
+                       (quote sa/org-random-cmp))
+                      (org-agenda-sorting-strategy
+                       (quote
+                        (user-defined-up)))
+                      (org-agenda-overriding-header "
+Random fun items")
+                      (org-agenda-skip-function
+                       (quote
+                        (org-agenda-skip-entry-if
+                         (quote scheduled))))))
+          (tags-todo "+someday"
+                     ((org-agenda-max-entries 3)
+                      (org-agenda-cmp-user-defined
+                       (quote sa/org-random-cmp))
+                      (org-agenda-sorting-strategy
+                       (quote
+                        (user-defined-up)))
+                      (org-agenda-overriding-header "
+Random someday items")
+                      (org-agenda-skip-function
+                       (quote
+                        (org-agenda-skip-entry-if
+                         (quote scheduled)))))))))))
+#+END_SRC
 
 * Remaining untangled code.
 #+BEGIN_SRC elisp
@@ -220,7 +349,9 @@ These functions are called externally (and usually set to some keybindings with 
   ;; Narrow to item when following.
   (advice-add 'org-agenda-goto :after
               (lambda (&rest args)
-                (org-narrow-to-subtree)))
+                (org-narrow-to-subtree)
+                (org-show-subtree)
+                ))
 
   ;; Allow creating new nodes when refiling.
   (setq org-refile-allow-creating-parent-nodes 'confirm)
@@ -272,117 +403,6 @@ These functions are called externally (and usually set to some keybindings with 
     (concat "* TRIAGE %? %^G\n"
             (org-web-tools--org-link-for-url)))
 
-  ;; Set up agenda custom commands.
-  (setq org-agenda-custom-commands
-        (quote
-         (
-          ("p" "Projects"
-           ((todo "PROJECT"))
-           nil)
-
-          ("n" "Small Agenda"
-           ((agenda "" nil)
-            (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
-                       ((org-agenda-overriding-header "
-Important")))
-            (todo "NEXT"
-                  ((org-agenda-overriding-header "
-In-Progress Items")))
-            )
-           nil)
-          ("N" "Comprehensive Agenda"
-           ((agenda "" nil)
-            (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
-                       ((org-agenda-overriding-header "
-Important")))
-            (todo "NEXT"
-                  ((org-agenda-overriding-header "
-Next items")
-                   (org-agenda-skip-function
-                    (quote
-                     (org-agenda-skip-entry-if
-                      (quote scheduled))))))
-            (todo "TRIAGE"
-                  ((org-agenda-overriding-header "
-Items to Triage")))
-            (todo "ICKY"
-                  ((org-agenda-overriding-header "
-Items to Breakdown")
-                   (org-agenda-skip-function
-                    (quote
-                     (org-agenda-skip-entry-if
-                      (quote scheduled))))))
-            (todo "WAIT"
-                  ((org-agenda-overriding-header "
-Waiting on others")
-                   (org-agenda-skip-function
-                    (quote
-                     (org-agenda-skip-entry-if
-                      (quote scheduled))))))
-            (tags-todo "+email+work"
-                       ((org-agenda-overriding-header "
-Work Email Tasks")
-                        (org-agenda-skip-function
-                         (quote
-                          (org-agenda-skip-entry-if
-                           (quote scheduled))))))
-            (tags-todo "+email-work"
-                       ((org-agenda-overriding-header "
-Personal Email Tasks")
-                        (org-agenda-skip-function
-                         (quote
-                          (org-agenda-skip-entry-if
-                           (quote scheduled))))))
-            (tags-todo "+people|+social"
-                       ((org-agenda-overriding-header "
-People")
-                        (org-agenda-skip-function
-                         (quote
-                          (org-agenda-skip-entry-if
-                           (quote scheduled))))))
-            (tags-todo "+work"
-                       ((org-agenda-overriding-header "
-Unscheduled Work TODOs")
-                        (org-agenda-skip-function
-                         (quote
-                          (org-agenda-skip-entry-if
-                           (quote scheduled))))))
-            (tags-todo "+refile"
-                       ((org-agenda-overriding-header "
-Items to Refile")))
-            (tags-todo "-work-someday"
-                       ((org-agenda-overriding-header "
-Unscheduled Non-Work TODOs")
-                        (org-agenda-skip-function
-                         (quote
-                          (org-agenda-skip-entry-if
-                           (quote scheduled))))))
-            (tags-todo "+fun"
-                       ((org-agenda-max-entries 3)
-                        (org-agenda-cmp-user-defined
-                         (quote sa/org-random-cmp))
-                        (org-agenda-sorting-strategy
-                         (quote
-                          (user-defined-up)))
-                        (org-agenda-overriding-header "
-Random fun items")
-                        (org-agenda-skip-function
-                         (quote
-                          (org-agenda-skip-entry-if
-                           (quote scheduled))))))
-            (tags-todo "+someday"
-                       ((org-agenda-max-entries 3)
-                        (org-agenda-cmp-user-defined
-                         (quote sa/org-random-cmp))
-                        (org-agenda-sorting-strategy
-                         (quote
-                          (user-defined-up)))
-                        (org-agenda-overriding-header "
-Random someday items")
-                        (org-agenda-skip-function
-                         (quote
-                          (org-agenda-skip-entry-if
-                           (quote scheduled)))))))))))
 
 
   ;; Set up capture mode.
@@ -508,7 +528,6 @@ Random someday items")
   ;;     ("zsh" . sh)
   ;;     ("run-in-tmux" . sh))))
   (setq org-startup-truncated nil)
-  (setq org-stuck-projects (quote ("+LEVEL=1/-DONE" ("NEXT") nil "")))
   (setq org-use-sub-superscripts (quote {}))
 
   ;; Publishing notes.
