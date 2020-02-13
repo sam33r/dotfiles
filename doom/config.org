@@ -156,7 +156,8 @@ Important")))
                 ((org-agenda-overriding-header "
 In-Progress Items")))
           )
-         nil)
+         nil
+         ("~/notes/agenda.txt"))
         ("N" "Comprehensive Agenda"
          ((agenda "" nil)
           (tags-todo "+PRIORITY=\"A\"|PRIORITY=\"B\""
