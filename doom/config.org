@@ -324,7 +324,6 @@ With prefix argument, also display headlines without a TODO keyword."
             (save-excursion
               (set-buffer buffer)
               (widen))))
-        ;; (widen-buffer buffer))
         (buffer-list))
   (helm-org-rifle-agenda-files))
 
@@ -347,18 +346,7 @@ With prefix argument, also display headlines without a TODO keyword."
   ;; In org-agenda log show completed recurring tasks.
   (setq org-agenda-log-mode-items '(closed clock state))
 
-  ;; Agenda location
-  (defun sa/set-org-agenda-files()
-    (interactive)
-    (setq sa/extra-org-files
-          (split-string
-           (shell-command-to-string
-            "find -L ~/work-notes ~/mobile-notes -not -path '*/.*' -name '*.org' -o -name '*.org.gpg' 2> /dev/null"
-            )
-           "[\n]+"
-           ))
-    (setq org-agenda-files (append (list org-directory) sa/extra-org-files)))
-  (sa/set-org-agenda-files)
+  (setq org-agenda-files '("~/notes" "~/mobile-notes" "~/work-notes"))
 
   ;; TODO: Re-enable Elfeed Org.
   ;; (setq rmh-elfeed-org-files (list "~/mobile-notes/feeds.org"))
