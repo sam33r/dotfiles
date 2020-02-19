@@ -252,6 +252,23 @@ Random someday items")
                         (org-agenda-skip-entry-if
                          (quote scheduled)))))))))))
 #+END_SRC
+** Custom Link Types
+
+#+BEGIN_SRC elisp
+(after! org
+  (defun sa/follow-tag-link (tag)
+    "Display a list of TODO headlines with tag TAG.
+With prefix argument, also display headlines without a TODO keyword."
+    (org-tags-view (null current-prefix-arg) tag))
+  (org-add-link-type "tag" 'sa/follow-tag-link)
+
+  (defun sa/follow-agenda-link (key)
+    "Open org-agenda in a modal window."
+    (org-agenda nil key))
+  (org-add-link-type "agenda" 'sa/follow-agenda-link)
+
+  )
+#+END_SRC
 
 * Remaining untangled code.
 #+BEGIN_SRC elisp
@@ -636,12 +653,6 @@ Random someday items")
               (prettify-symbols-mode)
               ))
 
-  (defun sa/follow-tag-link (tag)
-    "Display a list of TODO headlines with tag TAG.
-With prefix argument, also display headlines without a TODO keyword."
-    (org-tags-view (null current-prefix-arg) tag))
-
-  (org-add-link-type "tag" 'sa/follow-tag-link)
 
 
   (setq doom-font (font-spec :family "Input" :size 18))
