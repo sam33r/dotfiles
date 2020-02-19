@@ -51,8 +51,7 @@ Revert org-mode buffers from filesystem. This function is useful as a post-sync 
               )
             )
           (buffer-list)))
-  ;; Tangentially related: Also update the list of org-agenda files. These can change over time.
-  (sa/set-org-agenda-files))
+  )
 #+END_SRC
 ** Utility functions to interact with user session
 #+BEGIN_SRC elisp
