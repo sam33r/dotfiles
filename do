@@ -227,6 +227,12 @@ function install_kitty()
   cd $dir
 }
 
+function install_brotab()
+{
+  pip3 install --upgrade brotab
+  brotab install
+}
+
 function install_git_gnome_support() {
   sudo apt-get install libsecret-1-0 libsecret-1-dev
   cd /usr/share/doc/git/contrib/credential/libsecret
