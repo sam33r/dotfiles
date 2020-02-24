@@ -7,16 +7,21 @@
     (load-file sa/local-config)
   (message "No local config found."))
 #+END_SRC
+* General Config
 
-* Enable file encryption
+** Enable file encryption
 #+BEGIN_SRC elisp
 (epa-file-enable)
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 #+END_SRC
 
-* Set Light Theme
+** Set Light Theme
 #+BEGIN_SRC elisp
 (setq doom-theme 'doom-one-light)
+#+END_SRC
+** Don't create a new workspace per frame
+#+BEGIN_SRC elisp
+;; (setq persp-init-frame-behaviour ())
 #+END_SRC
 
 * Functions
@@ -112,6 +117,59 @@ These functions are called externally (and usually set to some keybindings with 
   (sa/current)
   (org-add-note))
 #+END_SRC
+** Write recent files list to a file
+#+BEGIN_SRC elisp
+(defun sa/write-locations-file (file)
+  (delete-file file)
+  (dolist (f recentf-list)
+    (append-to-file (concat f "\n") nil file)
+    ))
+#+END_SRC
+** Write org-headings to cache
+#+BEGIN_SRC elisp
+;; (recentf-list)
+
+(defun sa/write-headings-for-dir (dir headings-file)
+  (dolist (f (directory-files dir nil "\.org$" t))
+    (sa/write-headings (concat dir "/" f) headings-file)
+    )
+  )
+
+(defun sa/write-headings (org-file headings-file)
+  ;; (find-file org-file)
+  (let ((org-headings (org-ql-query
+                        :select '(org-get-heading t nil)
+                        :from org-file
+                        :where '(and (level 1 5)
+                                     (todo "PROJECT" "LIST" "NEXT"))
+                        )))
+    (dolist (h org-headings)
+      (append-to-file (concat org-file "|" h "\n") nil headings-file)
+      )))
+
+(defun sa/write-all-headings (headings-file)
+  (delete-file headings-file)
+  (sa/write-headings-for-dir "~/mobile-notes" headings-file)
+  (sa/write-headings-for-dir "~/work-notes" headings-file))
+#+END_SRC
+
+#+RESULTS:
+: sa/write-all-headings
+
+
+** Go to specific org heading
+
+#+BEGIN_SRC elisp
+(defun sa/open-org-heading (file heading)
+  (find-file file)
+  (sit-for 0.5)
+  (beginning-of-buffer)
+  (search-forward heading))
+#+END_SRC
+
+#+RESULTS:
+: sa/open-org-heading
+
 * Setup Tmux Integration
 
 #+BEGIN_SRC elisp

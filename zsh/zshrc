@@ -36,7 +36,7 @@ setopt NO_HIST_BEEP # Don't beep
 setopt SHARE_HISTORY # Share history between session/terminals
 
 # Setup theme.
-antigen theme romkatv/powerlevel10k
+antigen theme romkatv/powerlevel9k
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir_writable dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status command_execution_time root_indicator background_jobs time)
 POWERLEVEL9K_HOME_FOLDER_ABBREVIATION="•"

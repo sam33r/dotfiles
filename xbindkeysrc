@@ -45,61 +45,6 @@
     m:0x40 + c:53
     Mod4 + x 
 
-#Org Capture
-"(~/.emacs.d/bin/org-capture &) ; (sleep 1 &&  ~/dotfiles/utils/center-window)"
-    m:0x44 + c:54
-    Control+Mod4 + c 
-
-#Org Agenda
-"(emacsclient -c -e '(sa/agenda "n")' &) ; (sleep 0.7 &&  ~/dotfiles/utils/center-window)"
-    m:0x40 + c:57
-    Mod4 + n 
-
-#Org Agenda Tags
-"(emacsclient -c -e '(sa/agenda "m")' &) ; (sleep 1 &&  ~/dotfiles/utils/center-window)"
-    m:0x44 + c:57
-    Control+Mod4 + n 
-
-#Org Agenda Search
-"(emacsclient -c -e '(sa/agenda "N")' &) ; (sleep 0.7 &&  ~/dotfiles/utils/center-window)"
-    m:0x41 + c:57
-    Shift+Mod4 + n 
-
-#Org Currently Clocked Item
-"(emacsclient -c -e '(sa/current)' &) ; (sleep 1 &&  ~/dotfiles/utils/center-window)"
-    m:0x40 + c:31
-    Mod4 + i 
-
-#Org Currently Clocked Item-Add Note
-"(emacsclient -c -e '(sa/current-add-note)' &) ; (sleep 1 &&  ~/dotfiles/utils/center-window)"
-    m:0x41 + c:31
-    Shift+Mod4 + i 
-
-#Open chrome with selected URL
-"~/dotfiles/utils/chrome-open google-chrome"
-    m:0x40 + c:33
-    Mod4 + p 
-
-#Run macro
-"~/dotfiles/utils/run-macro"
-    m:0x41 + c:25
-    Shift+Mod4 + w 
-
-#Search in chrome
-"~/dotfiles/utils/chrome-search"
-    m:0x40 + c:39
-    Mod4 + s 
-
-#Change volume
-"~/dotfiles/utils/vol"
-    m:0x40 + c:55
-    Mod4 + v 
-
-#Change brightness
-"~/dotfiles/utils/b"
-    m:0x40 + c:56
-    Mod4 + b 
-
 #Open Application from Launcher Shortcut
 "rofi -show drun"
     m:0x40 + c:38
@@ -135,23 +80,13 @@
     m:0x41 + c:54
     Shift+Mod4 + c 
 
-#Open recoll search
-"~/zzzfoo/zzzfoo -o gvfs-open -n 200 -r ' -fullscreen'"
-    m:0x41 + c:41
-    Shift+Mod4 + f 
-
-#Toggle Grayscale
-"~/dotfiles/utils/toggle-grayscale"
-    m:0x41 + c:42
-    Shift+Mod4 + g 
-
 #Run keepmenu
 "~/.local/bin/keepmenu"
     m:0x41 + c:33
     Shift+Mod4 + p 
 
 #Switch to window
-"~/dotfiles/utils/switcher"
+"~/goosey/goose"
     m:0x40 + c:65
     Mod4 + space 
 

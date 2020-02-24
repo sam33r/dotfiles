@@ -40,8 +40,17 @@ $HOME/hosts/blacklist,hosts/blacklist
 $HOME/.i3blocks.conf,i3blocks.conf
 $HOME/.inputrc,inputrc
 $HOME/.local/share/applications/emacs-capture.desktop,shortcuts/emacs-capture.desktop
+$HOME/.macros/change-brightness,utils/b
+$HOME/.macros/change-volume,utils/vol
 $HOME/.macros/current-date-and-time,utils/current-date-and-time
 $HOME/.macros/current-date,utils/current-date
+$HOME/.macros/org-agenda,macros/org-agenda
+$HOME/.macros/org-capture,macros/org-capture
+$HOME/.macros/org-current-item,macros/org-current-item
+$HOME/.macros/org-mail-inbox,macros/org-mail-inbox
+$HOME/.macros/org-projects,macros/org-projects
+$HOME/.macros/recoll-search,macros/recoll-search
+$HOME/.macros/toggle-grayscale,utils/toggle-grayscale
 $HOME/.profile,profile
 $HOME/.screenrc,screenrc
 $HOME/.spacemacs.local.template,spacemacs.local.template

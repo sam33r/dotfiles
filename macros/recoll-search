@@ -1,0 +1,2 @@
+#!/bin/bash
+~/zzzfoo/zzzfoo -o gvfs-open -n 200 -r ' -fullscreen'

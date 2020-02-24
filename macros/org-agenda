@@ -1,0 +1,4 @@
+#!/bin/bash
+
+(emacsclient -c -e '(sa/agenda "n")') &
+sleep 0.7 &&  ~/dotfiles/utils/center-window

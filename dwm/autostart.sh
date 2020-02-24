@@ -39,7 +39,13 @@ while true; do
   sleep 30
 done &
 
+while true; do
+  bash $HOME/goosey/goose bg
+  sleep 300
+done &
+
 (sleep 180 && ~/grasp/server/grasp_server.py --path "~/notes/grasp-inbox.org") &
 
 # Open the screen unlock dialogs
 (sleep 60 && ~/dotfiles/utils/screen-unlock) &
+

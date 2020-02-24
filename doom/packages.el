@@ -13,6 +13,7 @@
   (message "No local packages found."))
 
 (package! org-web-tools)
+(package! org-ql)
 (package! helm-org-rifle)
 (package! memento-mori)
 (package! writeroom-mode)
