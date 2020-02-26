@@ -61,5 +61,6 @@ $HOME/.tmux.conf,tmux.conf
 $HOME/.vimrc,vimrc
 $HOME/.xbindkeysrc,xbindkeysrc
 $HOME/.Xresources,Xresources
+$HOME/.xsessionrc,xsessionrc
 $HOME/.zprofile,zsh/zprofile
 $HOME/.zshrc,zsh/zshrc
