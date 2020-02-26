@@ -25,6 +25,8 @@ xbindkeys -f ~/.xbindkeysrc
 
 start-pulseaudio-x11 &
 
+dex -a &
+
 if [[ -e "$HOME/.Xmodmap" ]]; then
   xmodmap "$HOME/.Xmodmap"
 fi
