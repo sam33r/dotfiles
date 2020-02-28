@@ -87,8 +87,8 @@ These functions are called externally (and usually set to some keybindings with 
 (defun sa/agenda (key)
   "Open org-agenda in a modal window."
   (make-frame '((name . "agenda")
-                (width . 120)
-                (height . 100)))
+                (width . 180)
+                (height . 60)))
   (delete-frame)
   (select-frame-by-name "agenda")
   (org-agenda nil key)
@@ -99,8 +99,8 @@ These functions are called externally (and usually set to some keybindings with 
   (interactive)
   (when (display-graphic-p)
     (make-frame '((name . "current")
-                  (width . 120)
-                  (height . 100)))
+                  (width . 140)
+                  (height . 50)))
     (delete-frame)
     (select-frame-by-name "current")
     (delete-other-windows)
@@ -117,13 +117,19 @@ These functions are called externally (and usually set to some keybindings with 
   (sa/current)
   (org-add-note))
 #+END_SRC
-** Write recent files list to a file
+** Write recent files and projectile files list
 #+BEGIN_SRC elisp
 (defun sa/write-locations-file (file)
   (delete-file file)
   (dolist (f recentf-list)
     (append-to-file (concat f "\n") nil file)
-    ))
+    )
+  (dolist (dir projectile-known-projects)
+    (dolist (f (projectile-dir-files dir))
+      (append-to-file (concat (expand-file-name f dir) "\n") nil file)
+      )
+    )
+  )
 #+END_SRC
 ** Write org-headings to cache
 #+BEGIN_SRC elisp

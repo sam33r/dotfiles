@@ -1,3 +1,2 @@
 #!/bin/bash
 (emacsclient -c -e '(sa/current)') &
-sleep 1 &&  ~/dotfiles/utils/center-window

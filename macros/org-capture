@@ -1,3 +1,2 @@
 #!/bin/bash
 ~/.emacs.d/bin/org-capture &
-sleep 1 &&  ~/dotfiles/utils/center-window

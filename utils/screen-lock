@@ -8,6 +8,7 @@ touch /tmp/screen-locked
 
 emacsclient -e "(save-all)"
 (emacsclient -e "(org-store-agenda-views)") &
+($HOME/goosey/goose bg) &
 
 (sleep 10; pgrep i3lock && xset dpms force off) &
 i3lock -i /tmp/screen_locked2.png -n; ~/dotfiles/utils/screen-unlock; ~/.dwm/xsetroot.sh
