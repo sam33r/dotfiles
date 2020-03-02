@@ -26,3 +26,8 @@ rofi.kb-remove-char-back:            BackSpace
 !rofi.kb-accept-entry:                Return,KP_Enter
 !rofi.kb-row-up:                      Up,Control+p,Shift+Tab,Shift+ISO_Left_Tab,Control+k
 !rofi.kb-row-down:                    Down,Control+n,Tab,Control+j
+rofi.kb-remove-to-sol:               Control+Shift+u
+rofi.kb-remove-char-forward:         Control+Shift+d
+rofi.kb-page-prev:                   Control+u
+rofi.kb-page-next:                   Control+d
+rofi.kb-toggle-sort:                 Control+s
