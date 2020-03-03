@@ -82,8 +82,8 @@
 
 #Run keepmenu
 "~/.local/bin/keepmenu"
-    m:0x41 + c:33
-    Shift+Mod4 + p 
+    m:0x40 + c:33
+    Mod4 + p 
 
 #Switch to window
 "~/goosey/goose"
