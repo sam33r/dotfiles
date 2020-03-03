@@ -120,6 +120,8 @@ These functions are called externally (and usually set to some keybindings with 
 ** Write recent files and projectile files list
 #+BEGIN_SRC elisp
 (defun sa/write-locations-file (file)
+  ;; Force-load the projectile package.
+  (use-package! projectile :demand t)
   (delete-file file)
   (dolist (f recentf-list)
     (append-to-file (concat f "\n") nil file)
@@ -154,6 +156,7 @@ These functions are called externally (and usually set to some keybindings with 
 
 (defun sa/write-all-headings (headings-file)
   (delete-file headings-file)
+  (sa/write-headings-for-dir "~/notes" headings-file)
   (sa/write-headings-for-dir "~/mobile-notes" headings-file)
   (sa/write-headings-for-dir "~/work-notes" headings-file))
 #+END_SRC
