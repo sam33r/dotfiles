@@ -12,3 +12,5 @@ rm -f /tmp/screen-locked
 killall xautolock
 nohup sh -c \
     'xautolock -time 10 -notify 30 -locker "$HOME/dotfiles/utils/screen-lock"' &
+
+~/dotfiles/utils/user-session-bg &

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Things I want to do in the background, but only when the graphical session is active.
+
+while true; do
+    # Force-update tabs.
+    ~/goosey/goose -i -n -p tabs
+    # Update any pending lists.
+    ~/goosey/goose -n
+    sleep 29
+done
