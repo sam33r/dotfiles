@@ -137,28 +137,49 @@ These functions are called externally (and usually set to some keybindings with 
 #+BEGIN_SRC elisp
 ;; (recentf-list)
 
-(defun sa/write-headings-for-dir (dir headings-file)
+(defun sa/write-headings-for-dir (dir headings-file selector)
   (dolist (f (directory-files dir nil "\.org$" t))
-    (sa/write-headings (concat dir "/" f) headings-file)
+    (sa/write-headings (concat dir "/" f) headings-file selector)
     )
   )
 
-(defun sa/write-headings (org-file headings-file)
+(defun sa/write-headings (org-file headings-file selector)
   ;; (find-file org-file)
-  (let ((org-headings (org-ql-query
-                        :select '(org-get-heading t nil)
-                        :from org-file
-                        :where '(level 1 3)
-                        )))
+  (let ((org-headings (funcall selector org-file)))
     (dolist (h org-headings)
       (append-to-file (concat org-file "|" h "\n") nil headings-file)
       )))
 
-(defun sa/write-all-headings (headings-file)
+(defun sa/write-headings-for-all-dirs (headings-file selector)
   (delete-file headings-file)
-  (sa/write-headings-for-dir "~/notes" headings-file)
-  (sa/write-headings-for-dir "~/mobile-notes" headings-file)
-  (sa/write-headings-for-dir "~/work-notes" headings-file))
+  (sa/write-headings-for-dir "~/notes" headings-file selector)
+  (sa/write-headings-for-dir "~/mobile-notes" headings-file selector)
+  (sa/write-headings-for-dir "~/work-notes" headings-file selector))
+
+(defun sa/all-headings-selector (org-file)
+  (org-ql-query
+    :select '(org-get-heading t nil)
+    :from org-file
+    :where '(level 1 3)
+    )
+  )
+(defun sa/write-all-headings (headings-file)
+  (sa/write-headings-for-all-dirs headings-file #'sa/all-headings-selector )
+  )
+
+(defun sa/due-headings-selector (org-file)
+  (org-ql-query
+    :select '(org-get-heading t nil)
+    :from org-file
+    :where '(and (or (deadline :to +1)
+                     (scheduled :to +1)
+                     (ts-active :from today :to +1))
+                 (not (done)))
+    :order-by '(date priority todo)
+    ))
+  (defun sa/write-due-headings (headings-file)
+    (sa/write-headings-for-all-dirs headings-file #'sa/due-headings-selector )
+    )
 #+END_SRC
 
 #+RESULTS:
@@ -458,7 +479,7 @@ With prefix argument, also display headlines without a TODO keyword."
   (setq calendar-location-name "San Francisco, CA")
 
   ;; Archive in a datetree.
-  (setq org-archive-location (concat orgdir "/journal.org.gpg::datetree/* Finished Tasks"))
+  (setq org-archive-location (concat orgdir "/archive.org::datetree/* Finished Tasks"))
 
   ;; Keep inherited tags when archiving.
   (defadvice org-archive-subtree
@@ -493,7 +514,7 @@ With prefix argument, also display headlines without a TODO keyword."
            )
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
            "* %? :journal:\n%T\n%i\n")
-          ("c" "Current Item" entry (file+olp+datetree "journal.org.gpg")
+          ("c" "Current Item" entry (file+olp+datetree "archive.org")
            "* %? %^G\n%i\n" :clock-in t :clock-keep t)
           ("d" "Journal: End of Day" entry (file+olp+datetree "journal.org.gpg")
            "* End of Day :end-of-day:\n%T\n** Three things about today\n\"
@@ -502,7 +523,7 @@ With prefix argument, also display headlines without a TODO keyword."
            :immediate-finish t)
           ("Q" "Journal: Quote" entry (file+olp+datetree "journal.org.gpg")
            "* %^{title|A quote} :quote:\n%T\n#+BEGIN_QUOTE\n%x\n#+END_QUOTE\n%?\n")
-          ("s" "Social Call" entry (file+olp+datetree "journal.org.gpg")
+          ("s" "Social Call" entry (file+olp+datetree "archive.org")
            "* %^{title} :social:\n%T\n%?\n")
           ;; ("F" "Code Reference to Current Task"
           ;;  plain (clock)
@@ -542,10 +563,10 @@ With prefix argument, also display headlines without a TODO keyword."
    org-agenda-start-day nil         ;; Revert to default.
    org-agenda-span 7                ;; Revert to default.
    )
-  (unless (string-match-p "\\.gpg" org-agenda-file-regexp)
-    (setq org-agenda-file-regexp
-          (replace-regexp-in-string "\\\\\\.org" "\\\\.org\\\\(\\\\.gpg\\\\)?"
-                                    org-agenda-file-regexp)))
+  ;; (unless (string-match-p "\\.gpg" org-agenda-file-regexp)
+  ;;   (setq org-agenda-file-regexp
+  ;;         (replace-regexp-in-string "\\\\\\.org" "\\\\.org\\\\(\\\\.gpg\\\\)?"
+  ;;                                   org-agenda-file-regexp)))
   (setq org-agenda-skip-scheduled-if-done t)
   (setq org-agenda-span (quote day))
   (setq org-agenda-start-with-log-mode (quote (closed clock)))
