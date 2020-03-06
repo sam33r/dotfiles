@@ -158,7 +158,7 @@ These functions are called externally (and usually set to some keybindings with 
 
 (defun sa/all-headings-selector (org-file)
   (org-ql-query
-    :select '(org-get-heading t nil)
+    :select '(org-get-heading)
     :from org-file
     :where '(level 1 3)
     )
@@ -169,7 +169,7 @@ These functions are called externally (and usually set to some keybindings with 
 
 (defun sa/due-headings-selector (org-file)
   (org-ql-query
-    :select '(org-get-heading t nil)
+    :select '(org-get-heading)
     :from org-file
     :where '(and (or (deadline :to +1)
                      (scheduled :to +1)
