@@ -33,6 +33,7 @@ $HOME/.doom.d/init.el,doom/init.el
 $HOME/.doom.d/packages.el,doom/packages.el
 $HOME/.dwm/autostart.sh,dwm/autostart.sh
 $HOME/.dwm/xsetroot.sh,dwm/xsetroot.sh
+$HOME/.editorconfig,editorconfig
 $HOME/.emacs.d/private/snippets/org-mode/source_code_block,snippets/source_code_block
 $HOME/.fbtermrc,fbtermrc
 $HOME/.gnupg/gpg-agent.conf,gpg-agent.conf
