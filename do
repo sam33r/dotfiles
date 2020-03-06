@@ -835,6 +835,11 @@ function install_libinput_gestures()                                            
   libinput-gestures-setup start
 }
 
+function install_shfmt()
+{
+  GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
+}
+
 function setup_git()
 {
   echo "Email for global git: "
