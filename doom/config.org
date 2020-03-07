@@ -23,6 +23,35 @@
 #+BEGIN_SRC elisp
 ;; (setq persp-init-frame-behaviour ())
 #+END_SRC
+** Formatting
+Use editorconfig mode.
+#+BEGIN_SRC elisp
+(editorconfig-mode 1)
+(setq-default indent-tabs-mode nil)
+#+END_SRC
+
+There is some weirdness in doom-emacs integration with format-all that screws up sh-mode formatting. Disable it and just do it by ourselves.
+#+BEGIN_SRC elisp
+(after! format
+  (setq format-all-debug t)
+  (setq +format-on-save-enabled-modes
+  '(not emacs-lisp-mode  ; elisp's mechanisms are good enough
+        sql-mode         ; sqlformat is currently broken
+        tex-mode         ; latexindent is broken
+        latex-mode
+        ;; Above modes are disabled by default in doom-emacs
+        sh-mode          ; tab gets preference somewhere in format-all+doom-emacs+shfmt.
+        ))
+  (defun sa/format-sh-buffer()
+    (interactive)
+    (message "Formatting shell script buffer.")
+    (shell-command-on-region (point-min) (point-max) "shfmt" nil t)
+    )
+  (defun sa/before-save-hook()
+    (when (eq major-mode 'sh-mode)
+      (sa/format-sh-buffer)))
+  (add-hook 'before-save-hook #'sa/before-save-hook))
+#+END_SRC
 
 * Functions
 
