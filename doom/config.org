@@ -35,17 +35,19 @@ There is some weirdness in doom-emacs integration with format-all that screws up
 (after! format
   (setq format-all-debug t)
   (setq +format-on-save-enabled-modes
-  '(not emacs-lisp-mode  ; elisp's mechanisms are good enough
-        sql-mode         ; sqlformat is currently broken
-        tex-mode         ; latexindent is broken
-        latex-mode
-        ;; Above modes are disabled by default in doom-emacs
-        sh-mode          ; tab gets preference somewhere in format-all+doom-emacs+shfmt.
-        ))
+        '(not emacs-lisp-mode  ; elisp's mechanisms are good enough
+              sql-mode         ; sqlformat is currently broken
+              tex-mode         ; latexindent is broken
+              latex-mode
+              ;; Above modes are disabled by default in doom-emacs
+              sh-mode          ; tab gets preference somewhere in format-all+doom-emacs+shfmt.
+              ))
   (defun sa/format-sh-buffer()
     (interactive)
     (message "Formatting shell script buffer.")
+    (setq sa/last-position (point))
     (shell-command-on-region (point-min) (point-max) "shfmt" nil t)
+    (goto-char sa/last-position)
     )
   (defun sa/before-save-hook()
     (when (eq major-mode 'sh-mode)

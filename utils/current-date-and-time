@@ -1,2 +1,2 @@
-p=$(date "+%m/%d/%Y %H:%M")
+p=$(date "+<%Y-%m-%d %a %H:%M>")
 xdotool type "$p"
