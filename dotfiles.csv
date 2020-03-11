@@ -27,6 +27,7 @@ $HOME/.config/liquidpromtrc,liquidpromptrc
 $HOME/.config/nixpkgs/config.nix,nixpkgs/config.nix
 $HOME/.config/ranger/rc.conf,ranger.conf
 $HOME/.config/redshift.conf,redshift.conf
+$HOME/.config/rofi/sa.rasi,rofi/sa.rasi
 $HOME/.doom.d/bindings.el,doom/bindings.el
 $HOME/.doom.d/config.org,doom/config.org
 $HOME/.doom.d/init.el,doom/init.el
