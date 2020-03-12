@@ -45,20 +45,10 @@
     m:0x40 + c:53
     Mod4 + x 
 
-#Open Application from Launcher Shortcut
-"rofi -show drun"
-    m:0x40 + c:38
-    Mod4 + a 
-
 #Open Application as Administrator
 "rofi -show drun -run-command 'gksudo {cmd}' "
     m:0x44 + c:38
     Control+Mod4 + a 
-
-#Open Application
-"rofi -show run"
-    m:0x41 + c:38
-    Shift+Mod4 + a 
 
 #Open Editor
 "wmctrl -x -a emacs || wmctrl -F -x -a sun-awt-X11-XFramePeer.jetbrains-studio || emacsclient -c --alternate-editor """
