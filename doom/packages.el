@@ -18,6 +18,10 @@
 (package! memento-mori)
 (package! writeroom-mode)
 (package! editorconfig)
+(package! modus-operandi-theme)
+(package! org-roam
+  :recipe (:host github :repo "jethrokuan/org-roam"))
+(package! org-journal)
 
 (package! mu4e-maildirs-extension :disable t)
 
