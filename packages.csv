@@ -83,6 +83,7 @@ xbacklight,Change display brightness
 xbindkeys-config,xbindkeys config
 xbindkeys,x keybindings
 xdotool,control mouse cursor with keyboard
+xinput,X Input devices.
 xnest,Debug dwm.
 xprintidle,Print user idle time.
 xtrace,X Debugging.
