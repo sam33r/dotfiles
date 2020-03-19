@@ -17,7 +17,12 @@
 
 ** Set Light Theme
 #+BEGIN_SRC elisp
-(setq doom-theme 'doom-one-light)
+;;(setq doom-theme 'doom-one-light)
+#+END_SRC
+** Set Modus Theme
+#+BEGIN_SRC elisp
+(require 'modus-operandi-theme)
+(setq doom-theme 'modus-operandi)
 #+END_SRC
 ** Don't create a new workspace per frame
 #+BEGIN_SRC elisp
@@ -386,6 +391,93 @@ With prefix argument, also display headlines without a TODO keyword."
 
   )
 #+END_SRC
+** Appearance
+
+Prettify symbols.
+#+BEGIN_SRC elisp
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (push '("[ ]" .  "🞎") prettify-symbols-alist)
+              (push '("[X]" . "🗹" ) prettify-symbols-alist)
+              (push '("[-]" . "◫" ) prettify-symbols-alist)
+              (prettify-symbols-mode)
+              ))
+#+END_SRC
+
+Font styling:
+#+BEGIN_SRC elisp
+
+  (setq doom-font (font-spec :family "Input" :size 18))
+  (setq doom-variable-pitch-font (font-spec :family "Literata"))
+
+  (custom-theme-set-faces
+   'user
+   '(org-block                 ((t (:inherit fixed-pitch))))
+   '(org-level-1                 ((t (:inherit variable-pitch :weight normal))))
+   '(org-level-2                 ((t (:inherit variable-pitch :weight normal))))
+   '(org-level-3                 ((t (:inherit variable-pitch :weight normal))))
+   '(org-level-4                 ((t (:inherit variable-pitch :weight normal))))
+   '(org-level-5                 ((t (:inherit variable-pitch :weight normal))))
+   '(org-meta-line             ((t (:inherit (shadow fixed-pitch)))))
+   '(org-property-value        ((t (:inherit fixed-pitch))) t)
+   '(org-special-keyword       ((t (:inherit fixed-pitch))))
+   '(org-block-begin-line      ((t (:inherit (shadow fixed-pitch) :slant normal))))
+   '(org-block-end-line        ((t (:inherit (shadow fixed-pitch) :slant normal))))
+   '(org-code                  ((t (:inherit fixed-pitch))))
+   '(org-date                  ((t (:inherit (shadow fixed-pitch) :underline nil :height 0.9))))
+   '(org-tag                   ((t (:inherit (shadow fixed-pitch) :weight normal :height 0.9))))
+   '(org-verbatim              ((t (:inherit (shadow fixed-pitch)))))
+   '(org-table                 ((t (:inherit (shadow fixed-pitch)))))
+   '(org-indent                ((t (:inherit (org-hide fixed-pitch))))))
+
+;; Set variable pitch font.
+(custom-theme-set-faces
+ 'user
+ '(variable-pitch ((t (:family "Literata")))))
+
+#+END_SRC
+** Experimenting with org-roam
+
+#+BEGIN_SRC elisp
+(use-package! org-roam
+  :commands (org-roam-insert org-roam-find-file org-roam-switch-to-buffer org-roam)
+  :hook
+  (after-init . org-roam-mode)
+  :init
+  (map! :leader
+        :prefix "n"
+        :desc "org-roam" "r" #'org-roam
+        :desc "org-roam-insert" "i" #'org-roam-insert
+        :desc "org-roam-switch-to-buffer" "b" #'org-roam-switch-to-buffer
+        :desc "org-roam-find-file" "/" #'org-roam-find-file
+        :desc "org-roam-show-graph" "g" #'org-roam-show-graph
+        )
+  (setq org-roam-directory "~/roam")
+  )
+(after! (company org-roam)
+  (set-company-backend! 'org-mode
+    '(company-org-roam :with company-dabbrev :with company-yasnippet)))
+#+END_SRC
+** Experimenting with org-journal
+This is mostly in conjunction with org-roam, as described [[https://org-roam.readthedocs.io/en/master/ecosystem/][here]].
+#+BEGIN_SRC elisp
+(use-package! org-journal
+  :init
+  (map! :leader
+        :prefix "n"
+        :desc "New Journal Entry" "j" #'org-journal-new-entry
+        :desc "Today Journal" "t" #'org-journal-today
+        )
+  :custom
+  (org-journal-date-prefix "#+TITLE: ")
+  (org-journal-file-format "%Y-%m-%d.org")
+  (org-journal-dir "~/roam/")
+  (org-journal-date-format "%A, %d %B %Y")
+  :config
+  (defun org-journal-today ()
+    (interactive)
+    (org-journal-new-entry t)))
+#+END_SRC
 
 * Remaining untangled code.
 #+BEGIN_SRC elisp
@@ -750,33 +842,6 @@ With prefix argument, also display headlines without a TODO keyword."
                ("^ *\\([-]\\) "
                 (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "―"))))
                ))
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (push '("[ ]" .  "🞎") prettify-symbols-alist)
-              (push '("[X]" . "🗹" ) prettify-symbols-alist)
-              (push '("[-]" . "◫" ) prettify-symbols-alist)
-              (prettify-symbols-mode)
-              ))
-
-
-
-  (setq doom-font (font-spec :family "Input" :size 18))
-  (setq doom-variable-pitch-font (font-spec :family "Literata" :size 20))
-
-  (custom-theme-set-faces
-   'user
-   '(org-block                 ((t (:inherit fixed-pitch))))
-   '(org-meta-line             ((t (:inherit (shadow fixed-pitch)))))
-   '(org-property-value        ((t (:inherit fixed-pitch))) t)
-   '(org-special-keyword       ((t (:inherit fixed-pitch))))
-   '(org-block-begin-line      ((t (:inherit (shadow fixed-pitch) :slant normal))))
-   '(org-block-end-line        ((t (:inherit (shadow fixed-pitch) :slant normal))))
-   '(org-code                  ((t (:inherit fixed-pitch))))
-   '(org-date                  ((t (:inherit (shadow fixed-pitch) :underline nil :height 0.8))))
-   '(org-tag                   ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
-   '(org-verbatim              ((t (:inherit (shadow fixed-pitch)))))
-   '(org-table                 ((t (:inherit (shadow fixed-pitch)))))
-   '(org-indent                ((t (:inherit (org-hide fixed-pitch))))))
 
   ;; Hooks
   (add-hook 'org-clock-in-hook 'sa/clock-in)
