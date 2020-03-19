@@ -220,16 +220,30 @@ These functions are called externally (and usually set to some keybindings with 
 
 #+RESULTS:
 : sa/write-all-headings
-
+** Write org tags to cache
+#+BEGIN_SRC elisp
+(defun sa/write-tags-to-file (file)
+  "Write org tags to provided file."
+(delete-file file)
+(mapcar (lambda (tag)
+          (append-to-file (format "%s\n" (substring-no-properties (car tag))) nil file)
+          )
+        (org-global-tags-completion-table))
+  )
+#+END_SRC
 
 ** Go to specific org heading
 
 #+BEGIN_SRC elisp
 (defun sa/open-org-heading (file heading)
   (find-file file)
-  (sit-for 0.5)
+  (sit-for 0.3)
+  (widen)
   (beginning-of-buffer)
-  (search-forward heading))
+  (search-forward heading)
+  (org-narrow-to-subtree)
+  (+org/open-fold)
+  )
 #+END_SRC
 
 #+RESULTS:
