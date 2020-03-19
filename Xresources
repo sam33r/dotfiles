@@ -7,14 +7,6 @@ Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 
 ! Rofi customization
-rofi.lines: 30
-rofi.opacity: 95
-rofi.separator-style: none
-rofi.color-enabled: true
-rofi.color-window: #393939, #393939, #666666
-rofi.color-normal: #393939, #ffffff, #393939, #666666, #ffffff
-rofi.color-active: #393939, #666666, #393939, #666666, #205171
-rofi.color-urgent: #393939, #f3843d, #393939, #666666, #ffc39c
 rofi.kb-row-up:                      Up,Control+k,Shift+Tab,Shift+ISO_Left_Tab
 rofi.kb-row-down:                    Down,Control+j
 rofi.kb-accept-entry:                Control+m,Return,KP_Enter
