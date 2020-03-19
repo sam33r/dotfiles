@@ -67,8 +67,8 @@
 
 #Open copyq
 "copyq show"
-    m:0x41 + c:54
-    Shift+Mod4 + c 
+    m:0x40 + c:54
+    Mod4 + c 
 
 #Run keepmenu
 "~/.local/bin/keepmenu"
