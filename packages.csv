@@ -15,6 +15,7 @@ gnupg-agent,Password entry agent
 gnutls-bin,mu4e dependency
 gparted,partition management utility
 gpick,Color picker.
+graphviz,Graph visualization.
 gscan2pdf,Scan to PDF
 i3blocks,scheduler for i3bar blocks
 i3,tiling windows manager
