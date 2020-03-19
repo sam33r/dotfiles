@@ -6,7 +6,7 @@
 
 # Where to backup any existing dotfiles before linking to new
 # dotfiles.
-backup_dir=$HOME/dotfiles_backup/`date +%s`
+backup_dir=$HOME/dotfiles_backup/$(date +%s)
 
 # dotfiles config file.
 # This is a dumber-than-csv file, each line should be of the form
@@ -18,7 +18,7 @@ dotfiles_list="dotfiles.csv"
 packages_list="packages.csv"
 #--------------------------------------------------------------------------------
 
-dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 #--------------------------------------------------------------------------------
 # Configuration Functions
@@ -32,22 +32,19 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #   should have the "install_" prefix.
 #--------------------------------------------------------------------------------
 
-function install_update_packages()
-{
+function install_update_packages() {
   sudo apt-get update
   sudo apt-get dist-upgrade
-  while IFS=, read package description
-  do
+  while IFS=, read package description; do
     printf "\n\n\n$package : $description\n\n"
     yes | sudo apt-get install $package
-  done < $dir/$packages_list
+  done <$dir/$packages_list
   sudo apt-get autoremove
   sudo apt-get autoclean
   sudo apt-get clean
 }
 
-function custom_install_esoteric_packages()                                      # Packages only needed for custom hardware
-{
+function custom_install_esoteric_packages() { # Packages only needed for custom hardware
   # TODO: Move to device specific localdots.
   sudo add-apt-repository ppa:graphics-drivers/ppa
   sudo add-apt-repository ppa:lexical/hwe-wireless
@@ -56,10 +53,8 @@ function custom_install_esoteric_packages()                                     
 }
 
 # TODO: Just use stow.
-function install_dotfiles()
-{
-  while IFS=, read config_path dotfile_path
-  do
+function install_dotfiles() {
+  while IFS=, read config_path dotfile_path; do
     printf "\n\n"
     cpath=$(eval echo $config_path)
     dpath=$(eval echo $dotfile_path)
@@ -68,16 +63,14 @@ function install_dotfiles()
     printf "\n ⇒ ${backup_dir}"
     mv "${cpath}" "${backup_dir}"/"${dpath}" 2>/dev/null
     printf "\n ← ${dir}/${dpath}\n"
-    mkdir -p `dirname ${cpath}`
+    mkdir -p $(dirname ${cpath})
     ln -fs "${dir}"/"${dpath}" "${cpath}"
-  done < $dir/$dotfiles_list
+  done <$dir/$dotfiles_list
 }
 
 # TODO: Just use stow.
-function install_some_dotfiles()
-{
-  while IFS=, read config_path dotfile_path
-  do
+function install_some_dotfiles() {
+  while IFS=, read config_path dotfile_path; do
     printf "\n\n"
     # Expand any env variables in the config.
     cpath=$(eval echo $config_path)
@@ -85,28 +78,26 @@ function install_some_dotfiles()
 
     echo "${dir}/${dpath} ⇒ ${cpath}"
     read -p "Do this? (y/n)" answer </dev/tty
-    if echo "$answer" | grep -iq "^n" ;then
+    if echo "$answer" | grep -iq "^n"; then
       echo "Skipped."
       continue
     fi
 
     mv "${cpath}" "${backup_dir}"/"${dpath}" 2>/dev/null
-    mkdir -p `dirname ${cpath}`
+    mkdir -p $(dirname ${cpath})
     ln -fs "${dir}"/"${dpath}" "${cpath}"
     echo "Moved."
-  done < $dir/$dotfiles_list
+  done <$dir/$dotfiles_list
 }
 
-function install_fbterm()
-{
+function install_fbterm() {
   sudo apt-get install fbterm fbset
   # Add current user to the video group.
   sudo gpasswd -a $USER video
   sudo chmod u+s /usr/bin/fbterm
 }
 
-function install_indicator_kdeconnect_from_source()
-{
+function install_indicator_kdeconnect_from_source() {
   cd $HOME
   # A recent fork that fixes the issue with kdeconnect icon not showing in system tray.
   git clone https://github.com/Bajoja/indicator-kdeconnect
@@ -121,22 +112,20 @@ function install_indicator_kdeconnect_from_source()
   sudo apt install python3-requests-oauthlib
   sudo apt install kde-cli-tools
   sudo apt install python-nautilus
-	mkdir build
-	cd build
-	meson .. --prefix=/usr/  --libdir=/usr/lib/
-	meson configure -Dextensions=python
-	ninja
-	ninja install
+  mkdir build
+  cd build
+  meson .. --prefix=/usr/ --libdir=/usr/lib/
+  meson configure -Dextensions=python
+  ninja
+  ninja install
   cd $dir
 }
 
-function install_rclone()
-{
+function install_rclone() {
   curl https://rclone.org/install.sh | sudo bash
 }
 
-function install_emacs_from_source()
-{
+function install_emacs_from_source() {
   cd $HOME
 
   # Install necessary packages.
@@ -144,7 +133,6 @@ function install_emacs_from_source()
     xorg-dev libgtk2.0-dev libjpeg-dev libncurses5-dev libdbus-1-dev \
     libgif-dev libtiff-dev libm17n-dev libpng-dev librsvg2-dev \
     libotf-dev libgnutls28-dev libxml2-dev
-
 
   git clone https://github.com/mirrors/emacs.git
   cd ~/emacs
@@ -166,8 +154,7 @@ function install_emacs_from_source()
   cd $dir
 }
 
-function install_scrcpy_from_source()
-{
+function install_scrcpy_from_source() {
   cd $HOME
 
   # runtime dependencies
@@ -175,8 +162,8 @@ function install_scrcpy_from_source()
 
   # client build dependencies
   sudo apt install make gcc pkg-config meson \
-       libavcodec-dev libavformat-dev libavutil-dev \
-       libsdl2-dev
+    libavcodec-dev libavformat-dev libavutil-dev \
+    libsdl2-dev
 
   # server build dependencies
   sudo apt install openjdk-8-jdk
@@ -193,8 +180,7 @@ function install_scrcpy_from_source()
   cd $dir
 }
 
-function install_tmux_persist()
-{
+function install_tmux_persist() {
   cd $HOME
   git clone https://github.com/sam33r/tmux-persist
   cd tmux-persist
@@ -202,8 +188,7 @@ function install_tmux_persist()
   cd $dir
 }
 
-function install_update_cargo_rust()
-{
+function install_update_cargo_rust() {
   if (which rustup); then
     rustup update
   else
@@ -213,22 +198,19 @@ function install_update_cargo_rust()
   fi
 }
 
-function install_fd()
-{
+function install_fd() {
   install_update_cargo_rust
   cargo install fd-find
 }
 
-function install_kitty()
-{
+function install_kitty() {
   install_update_cargo_rust
   cd $HOME
   curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
   cd $dir
 }
 
-function install_brotab()
-{
+function install_brotab() {
   pip3 install --upgrade brotab
   brotab install
 }
@@ -245,8 +227,7 @@ function install_keepmenu() {
   pip3 install --upgrade keepmenu
 }
 
-function install_pips()                                                          # virtual envs for pip, and packages
-{
+function install_pips() { # virtual envs for pip, and packages
   sudo easy_install pip
   sudo pip install --upgrade pip
   sudo pip install --upgrade virtualenv
@@ -268,14 +249,12 @@ function install_pips()                                                         
   $HOME/py3env/bin/pip3 install --upgrade keepmenu
 }
 
-function install_update_vim_plugins()
-{
+function install_update_vim_plugins() {
   git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
   vim +PluginInstall! +qall
 }
 
-function install_copyq()                                             # Install copyq clipboard manager.
-{
+function install_copyq() { # Install copyq clipboard manager.
   cd $HOME
   sudo apt install \
     git cmake \
@@ -297,14 +276,13 @@ function install_copyq()                                             # Install c
   cd $dir
 }
 
-function install_dwm()
-{
+function install_dwm() {
   cd $HOME
   git clone https://github.com/sam33r/dwm
   cd dwm
   sudo apt-get update
   sudo apt-get install build-essential libx11-dev libxinerama-dev sharutils \
-      libxft-dev
+    libxft-dev
   make
   sudo make install
   cd $dir
@@ -329,8 +307,7 @@ EOL
   cat /usr/share/xsessions/dwm.desktop
 }
 
-function install_st()
-{
+function install_st() {
   cd $HOME
   git clone https://github.com/sam33r/st
   cd st
@@ -339,8 +316,7 @@ function install_st()
   cd $dir
 }
 
-function install_fpp()                                                           # Install FB Path Picker
-{
+function install_fpp() { # Install FB Path Picker
   cd $HOME
   git clone https://github.com/facebook/PathPicker.git
   cd PathPicker/
@@ -351,8 +327,7 @@ function install_fpp()                                                          
   cd $dir
 }
 
-function install_update_fasd()
-{
+function install_update_fasd() {
   cd $HOME
   git clone https://github.com/clvv/fasd
   cd fasd
@@ -361,14 +336,12 @@ function install_update_fasd()
   cd $dir
 }
 
-function install_update_spacevim()
-{
+function install_update_spacevim() {
   cd $HOME
   curl -sLf https://spacevim.org/install.sh | bash
 }
 
-function install_update_liquidprompt()                                           # Install liquidprompt, outstanding bash prompt.
-{
+function install_update_liquidprompt() { # Install liquidprompt, outstanding bash prompt.
   cd $HOME
   git clone https://github.com/nojhan/liquidprompt.git
   cd liquidprompt
@@ -377,15 +350,13 @@ function install_update_liquidprompt()                                          
   cd $dir
 }
 
-function install_youtube_dl()                                                    # Install global youtube-dl command.
-{
+function install_youtube_dl() { # Install global youtube-dl command.
   sudo curl -L https://yt-dl.org/latest/youtube-dl -o /usr/local/bin/youtube-dl
   sudo chmod a+rx /usr/local/bin/youtube-dl
 }
 
-function install_update_fzf()                                                    # Install fzf for command searches.
-{
-  if type "fzf" > /dev/null; then
+function install_update_fzf() { # Install fzf for command searches.
+  if type "fzf" >/dev/null; then
     echo "fzf already exists, updating."
     cd $HOME/.fzf
     git pull origin master
@@ -396,8 +367,7 @@ function install_update_fzf()                                                   
   $HOME/.fzf/install
 }
 
-function install_keybase()
-{
+function install_keybase() {
   cd $HOME
   curl -O https://prerelease.keybase.io/keybase_amd64.deb
   # if you see an error about missing `libappindicator1`
@@ -409,11 +379,10 @@ function install_keybase()
   cd $dir
 }
 
-function install_playerctl()                                                     # PlayerCTL provides command-line tools to manage media playback.
-{
+function install_playerctl() { # PlayerCTL provides command-line tools to manage media playback.
   # This retrieves download link of latest release.
-  dlink=`curl -s https://api.github.com/repos/acrisci/playerctl/releases \
-              | grep browser_download_url | head -n 1 | cut -d '"' -f 4`
+  dlink=$(curl -s https://api.github.com/repos/acrisci/playerctl/releases |
+    grep browser_download_url | head -n 1 | cut -d '"' -f 4)
   dpath="$HOME/Downloads/playerctl.deb"
   wget -O $dpath $dlink
   sudo dpkg -i $dpath
@@ -421,8 +390,7 @@ function install_playerctl()                                                    
   rm -f $dpath
 }
 
-function install_googler()                                                       # Command-line tool to query google.
-{
+function install_googler() { # Command-line tool to query google.
   cd $HOME
   git clone https://github.com/jarun/googler
   cd googler
@@ -430,18 +398,16 @@ function install_googler()                                                      
   sudo make install
 }
 
-function custom_install_emacs_snapshot()                                         # Install emacs nightly snapshots.
-{
+function custom_install_emacs_snapshot() { # Install emacs nightly snapshots.
   sudo add-apt-repository ppa:ubuntu-elisp/ppa
   sudo apt-get update
   sudo apt-get install emacs-snapshot
   sudo update-alternatives --config emacs
 }
 
-function fix_xbacklight()                                                        # Fix xbacklight not finding devices to change brightness.
-{
+function fix_xbacklight() { # Fix xbacklight not finding devices to change brightness.
   # See https://unix.stackexchange.com/questions/301724/xbacklight-not-working
-  backlight=`ls /sys/class/backlight`
+  backlight=$(ls /sys/class/backlight)
   echo "Find the right identifier:"
   xrandr --verbose | grep -B 1 Identifier
   echo "Identifier: "
@@ -461,26 +427,24 @@ EOL
   fi
 }
 
-function custom_install_arc_theme_ubuntu_1604_only()                             # Install gnome theme of choice.
-{
+function custom_install_arc_theme_ubuntu_1604_only() { # Install gnome theme of choice.
   sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/Horst3180/xUbuntu_16.04/ /' > /etc/apt/sources.list.d/arc-theme.list"
   sudo apt-get update
   sudo apt-get install arc-theme
   gsettings set org.gnome.desktop.interface gtk-theme Arc-Darker
 }
 
-function install_rofi_manually()                                                 # install rofi manually (not available on apt-get in 14.04)
-{
-  if type "rofi" > /dev/null; then
+function install_rofi_manually() { # install rofi manually (not available on apt-get in 14.04)
+  if type "rofi" >/dev/null; then
     echo "rofi already exists"
     return
   fi
   # install deps.
   yes | sudo apt-get install libxinerama-dev libxft2 libpango1.0-dev \
-             libpangocairo-1.0-0 libcairo2-dev libglib2.0-dev libx11-dev \
-             libstartup-notification0-dev libxkbcommon-dev libxkbcommon-x11-dev \
-             libxcb1-dev libx11-xcb-dev libxcb-ewmh-dev libxcb-icccm4-dev \
-             libxcb-util0-dev libxcb-xinerama0-dev
+    libpangocairo-1.0-0 libcairo2-dev libglib2.0-dev libx11-dev \
+    libstartup-notification0-dev libxkbcommon-dev libxkbcommon-x11-dev \
+    libxcb1-dev libx11-xcb-dev libxcb-ewmh-dev libxcb-icccm4-dev \
+    libxcb-util0-dev libxcb-xinerama0-dev
   wget https://github.com/DaveDavenport/rofi/releases/download/1.1.0/rofi-1.1.0.tar.gz -O $HOME/rofi.tgz
   cd $HOME
   tar xvzf rofi.tgz
@@ -492,9 +456,8 @@ function install_rofi_manually()                                                
   rm -rf $HOME/rofi*
 }
 
-function install_i3blocks_manually()                                             # install i3blocks manually (not available on apt-get in 14.04)
-{
-  if type "i3blocks" > /dev/null; then
+function install_i3blocks_manually() { # install i3blocks manually (not available on apt-get in 14.04)
+  if type "i3blocks" >/dev/null; then
     echo "i3blocks already exists"
     return
   fi
@@ -508,20 +471,19 @@ function install_i3blocks_manually()                                            
   cd $dir
 }
 
-function install_update_fonts()                                                  # Install fonts, including powerline.
-{
+function install_update_fonts() { # Install fonts, including powerline.
   mkdir -p $HOME/.fonts
 
   # Install San Francisco.
   git clone https://github.com/supermarin/YosemiteSanFranciscoFont.git \
-      $HOME/.fonts/san-francisco
+    $HOME/.fonts/san-francisco
   cd $HOME/.fonts/san-francisco
   git pull origin master
 
   # Install ET Book.
   cd $HOME
   git clone https://github.com/edwardtufte/et-book.git \
-      $HOME/.fonts/et-book
+    $HOME/.fonts/et-book
   cd $HOME/.fonts/et-book
   git pull origin master
 
@@ -538,7 +500,7 @@ function install_update_fonts()                                                 
   wget "http://input.fontbureau.com/build/?fontSelection=fourStyleFamily&regular=InputMono-Regular&italic=InputMono-Italic&bold=InputMono-Bold&boldItalic=InputMono-BoldItalic&a=0&g=ss&i=serif&l=serifs_round&zero=slash&asterisk=height&braces=straight&preset=dejavu&line-height=1.3&accept=I+do&email=" -O tmp_input/font.zip
   yes | unzip tmp_input/font.zip -d $HOME/tmp_input
   sudo mkdir -p /usr/share/fonts/truetype/input
-  sudo cp $HOME/tmp_input/Input_Fonts/Input/*  /usr/share/fonts/truetype/input/
+  sudo cp $HOME/tmp_input/Input_Fonts/Input/* /usr/share/fonts/truetype/input/
   rm -R tmp_input
 
   # Install Open Sans, Merriweather, Source Sans Pro and Libre Baskerville
@@ -565,41 +527,36 @@ function install_update_fonts()                                                 
   cd $dir
 }
 
-function doom_refresh()
-{
+function doom_refresh() {
   ~/.emacs.d/bin/doom refresh
 }
 
-function post_sync()
-{
+function post_sync() {
   install_dotfiles
   install_update_packages
   install_update_fonts
   doom_refresh
 }
 
-function install_update_spacemacs()
-{
+function install_update_spacemacs() {
   git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
   cd ~/.emacs.d
   git pull origin master
   cd $dir
 }
 
-function install_doom()
-{
+function install_doom() {
   mv ~/.emacs.d ~/.emacs.d.old
   git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
   ~/.emacs.d/bin/doom install
 }
 
-function install_mu4e_from_tarball()                                             # Install mu4e from github tarball (apt version is too old).
-{
-  if type "mu" > /dev/null; then
+function install_mu4e_from_tarball() { # Install mu4e from github tarball (apt version is too old).
+  if type "mu" >/dev/null; then
     echo "mu already exists"
     echo -n "Do you still want to run this? (y/n) "
     read answer
-    if echo "$answer" | grep -iq "^n" ;then
+    if echo "$answer" | grep -iq "^n"; then
       return
     fi
   fi
@@ -610,7 +567,7 @@ function install_mu4e_from_tarball()                                            
   sudo apt-get install libgmime-3.0-dev
 
   wget -O "$HOME/Downloads/mu.tar.xz" \
-      "https://github.com/djcb/mu/releases/download/1.2/mu-1.2.0.tar.xz"
+    "https://github.com/djcb/mu/releases/download/1.2/mu-1.2.0.tar.xz"
   cd $HOME/Downloads
   tar -xf mu.tar.xz
   cd "mu-1.2.0"
@@ -623,8 +580,7 @@ function install_mu4e_from_tarball()                                            
   cd $dir
 }
 
-function install_nvim_from_source()
-{
+function install_nvim_from_source() {
   # install build prerequisites
   sudo apt-get install libtool autoconf automake cmake g++ pkg-config python-pip python-dev
 
@@ -647,8 +603,7 @@ function install_nvim_from_source()
   cd $dir
 }
 
-function install_tmux_plugins()
-{
+function install_tmux_plugins() {
   cd $HOME
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
   cd $dir
@@ -656,8 +611,7 @@ function install_tmux_plugins()
   # plugins.
 }
 
-function install_tmux_from_source()
-{
+function install_tmux_from_source() {
   cd $HOME
   git clone https://github.com/tmux/tmux.git
   cd tmux
@@ -670,13 +624,11 @@ function install_tmux_from_source()
   install_tmux_plugins
 }
 
-function install_update_antigen()
-{
-  curl -L git.io/antigen > $HOME/antigen.zsh
+function install_update_antigen() {
+  curl -L git.io/antigen >$HOME/antigen.zsh
 }
 
-function update_hosts()                                                          # Update the system hosts file (Via StevenBlack/hosts)
-{
+function update_hosts() { # Update the system hosts file (Via StevenBlack/hosts)
   cd $HOME
   git clone https://github.com/StevenBlack/hosts.git
   cd hosts
@@ -688,15 +640,13 @@ function update_hosts()                                                         
   cd $dir
 }
 
-function set_gnome_preferences()
-{
+function set_gnome_preferences() {
   gsettings set org.gnome.desktop.background show-desktop-icons false
   gsettings set com.canonical.desktop.interface scrollbar-mode normal
   gsettings set org.gnome.desktop.interface cursor-size 48
 }
 
-function dotify()                                                                # Move an existing dotfile to this project.
-{
+function dotify() { # Move an existing dotfile to this project.
   set -e
 
   echo "Enter source file path (relative to $HOME):"
@@ -709,14 +659,13 @@ function dotify()                                                               
 
   echo "Moving $HOME/$src_path to $dir/$dest_path"
 
-  mkdir -p `dirname $dir/$dest_path`
+  mkdir -p $(dirname $dir/$dest_path)
   mv $HOME/$src_path $dir/$dest_path
 
   echo "Adding to dotfiles config"
-  echo \$HOME/$src_path,$dest_path >> $dir/dotfiles.csv
+  echo \$HOME/$src_path,$dest_path >>$dir/dotfiles.csv
 
   sort $dir/$dotfiles_list -o $dir/$dotfiles_list
-
 
   echo "Linking $HOME/$src_path to $dir/$dest_path"
   ln -fs $dir/$dest_path $HOME/$src_path
@@ -724,8 +673,7 @@ function dotify()                                                               
   echo "Done."
 }
 
-function add_package()                                                           # Install a package and add it to the package list
-{
+function add_package() { # Install a package and add it to the package list
   set -e
 
   echo "Package: "
@@ -739,24 +687,21 @@ function add_package()                                                          
   sudo apt-get install $package
 
   echo "Installed package, now adding to registry."
-  echo "$package,$description" >> $dir/$packages_list
+  echo "$package,$description" >>$dir/$packages_list
   sort $dir/$packages_list -o $dir/$packages_list
 
   echo "Done."
 }
 
-function edit()
-{
+function edit() {
   vim $0
 }
 
-function edit_packages()                                                         # Edit the packages list.
-{
+function edit_packages() { # Edit the packages list.
   vim $dir/$packages_list
 }
 
-function edit_dotfiles()                                                         # Edit the dotfiles list.
-{
+function edit_dotfiles() { # Edit the dotfiles list.
   vim $dir/$dotfiles_list
 }
 
@@ -764,31 +709,28 @@ function edit_dotfiles()                                                        
 # Docker Functions:
 # Experimenting with using docker to load tui/gui apps.
 # -------------------------------------------------------------------------------
-function htop()                                                                  # Run htop
-{
+function htop() { # Run htop
   docker run --rm -it --pid host jess/htop
 }
 
-function docker_cleanup()
-{
-	local containers
-	containers=( $(docker ps -aq 2>/dev/null) )
-	docker rm "${containers[@]}" 2>/dev/null
-	local volumes
-	volumes=( $(docker ps --filter status=exited -q 2>/dev/null) )
-	docker rm -v "${volumes[@]}" 2>/dev/null
-	local images
-	images=( $(docker images --filter dangling=true -q 2>/dev/null) )
-	docker rmi "${images[@]}" 2>/dev/null
+function docker_cleanup() {
+  local containers
+  containers=($(docker ps -aq 2>/dev/null))
+  docker rm "${containers[@]}" 2>/dev/null
+  local volumes
+  volumes=($(docker ps --filter status=exited -q 2>/dev/null))
+  docker rm -v "${volumes[@]}" 2>/dev/null
+  local images
+  images=($(docker images --filter dangling=true -q 2>/dev/null))
+  docker rmi "${images[@]}" 2>/dev/null
 }
 
-function setup_termux()
-{
-	pkg install termux-api curl tmux python man vim emacs
-	install_dotfiles
-	install_tmux_plugins
-	install_update_vim_plugins
-	install_update_spacemacs
+function setup_termux() {
+  pkg install termux-api curl tmux python man vim emacs
+  install_dotfiles
+  install_tmux_plugins
+  install_update_vim_plugins
+  install_update_spacemacs
 
   echo "Email for global git: "
   read git_email
@@ -798,8 +740,7 @@ function setup_termux()
   git config --global user.name $git_name
 }
 
-function install_update_grasp()
-{
+function install_update_grasp() {
   google-chrome
   cd $HOME
   git clone https://github.com/karlicoss/grasp
@@ -807,8 +748,7 @@ function install_update_grasp()
   git pull origin master
 }
 
-function install_firefox()
-{
+function install_firefox() {
   cd $HOME
   wget -O ~/firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
   tar xjf firefox.tar.bz2
@@ -816,8 +756,7 @@ function install_firefox()
   ln -fs ~/firefox/firefox ~/bin/firefox
 }
 
-function install_libinput_gestures()                                            # Trackpad gestures.
-{
+function install_libinput_gestures() { # Trackpad gestures.
   # See https://github.com/bulletmark/libinput-gestures
   cd $HOME
   # Add user to input group.
@@ -835,13 +774,11 @@ function install_libinput_gestures()                                            
   libinput-gestures-setup start
 }
 
-function install_shfmt()
-{
+function install_shfmt() {
   GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
 }
 
-function setup_git()
-{
+function setup_git() {
   echo "Email for global git: "
   read git_email
   echo "Name for global git: "
@@ -854,18 +791,16 @@ function setup_git()
 # Common functions (Don't change)
 #--------------------------------------------------------------------------------
 
-function everystall()                                                            # Run all installation functions.
-{
-  install_fns=`awk '/^function install_/{ print substr($2, 1, length($2) - 2)}' $0`
+function everystall() { # Run all installation functions.
+  install_fns=$(awk '/^function install_/{ print substr($2, 1, length($2) - 2)}' $0)
   printf "The following functions will be run, in the order specified here:"
   printf "\n\n$install_fns\n\n"
 
-  for install_fn in $install_fns
-  do
+  for install_fn in $install_fns; do
     printf "\n\n$install_fn\n\n"
     echo -n "Run this? (y/n) "
     read answer
-    if echo "$answer" | grep -iq "^n" ;then
+    if echo "$answer" | grep -iq "^n"; then
       continue
     fi
     cd $dir
@@ -874,8 +809,7 @@ function everystall()                                                           
   done
 }
 
-function help()
-{
+function help() {
   printf "\n"
   echo "Usage: do <function>"
   printf "\n"
@@ -888,7 +822,8 @@ mkdir -p ${backup_dir}
 cd $dir
 if [ "_$1" = "_" ]; then
   fn=$(
-  awk '/^function /{s = ""; for (i = 4; i <= NF; i++) s = s $i " "; printf("%40s   %s\n",substr($2, 1, length($2) - 2), s)}' $0 | fzf | awk '{print $1;}')
+    awk '/^function /{s = ""; for (i = 4; i <= NF; i++) s = s $i " "; printf("%40s   %s\n",substr($2, 1, length($2) - 2), s)}' $0 | fzf | awk '{print $1;}'
+  )
   "$fn"
 else
   # TODO: Check if the function exists.
