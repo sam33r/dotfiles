@@ -51,7 +51,7 @@ There is some weirdness in doom-emacs integration with format-all that screws up
     (interactive)
     (message "Formatting shell script buffer.")
     (setq sa/last-position (point))
-    (shell-command-on-region (point-min) (point-max) "shfmt" nil t)
+    (shell-command-on-region (point-min) (point-max) "shfmt" nil "*shfmt-error*" t)
     (goto-char sa/last-position)
     )
   (defun sa/before-save-hook()
