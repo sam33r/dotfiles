@@ -182,7 +182,6 @@ These functions are called externally (and usually set to some keybindings with 
 ** Write org-headings to cache
 #+BEGIN_SRC elisp
 ;; (recentf-list)
-
 (defun sa/org-get-entry-section ()
   "Get the entry text, after heading, without subtree."
   (save-excursion
@@ -217,6 +216,13 @@ These functions are called externally (and usually set to some keybindings with 
 
 (defun sa/write-headings-for-all-dirs (headings-file selector)
   (delete-file headings-file)
+  (sa/write-headings-for-dir "~/.doom.d" headings-file selector)
+  (sa/write-headings-for-dir "~/notes" headings-file selector)
+  (sa/write-headings-for-dir "~/mobile-notes" headings-file selector)
+  (sa/write-headings-for-dir "~/work-notes" headings-file selector))
+(defun sa/write-headings-for-agenda-dirs (headings-file selector)
+  (delete-file headings-file)
+  (sa/write-headings-for-dir "~/roam" headings-file selector)
   (sa/write-headings-for-dir "~/notes" headings-file selector)
   (sa/write-headings-for-dir "~/mobile-notes" headings-file selector)
   (sa/write-headings-for-dir "~/work-notes" headings-file selector))
@@ -236,15 +242,17 @@ These functions are called externally (and usually set to some keybindings with 
   (org-ql-query
     :select '(sa/get-org-heading-and-content-single-line)
     :from org-file
-    :where '(and (or (deadline :to +1)
+    :where '(or (and (or (deadline :to +1)
                      (scheduled :to +1)
                      (ts-active :from today :to +1))
-                 (not (done)))
+                 (not (done))
+                 )
+                (and (level 1) (tags "mail"))
+                )
     :order-by '(date priority todo)
     ))
   (defun sa/write-due-headings (headings-file)
-    (sa/write-headings-for-all-dirs headings-file #'sa/due-headings-selector )
-    )
+    (sa/write-headings-for-agenda-dirs headings-file #'sa/due-headings-selector ))
 #+END_SRC
 
 #+RESULTS:
@@ -320,6 +328,13 @@ Important")))
           (todo "NEXT"
                 ((org-agenda-overriding-header "
 In-Progress Items")))
+          (tags-todo "mail"
+                     ((org-agenda-overriding-header "
+Mail Inbox")
+                      (org-agenda-skip-function
+                       (quote
+                        (org-agenda-skip-entry-if
+                         (quote scheduled))))))
           )
          nil
          ("~/notes/agenda.txt"))
@@ -515,7 +530,10 @@ This is mostly in conjunction with org-roam, as described [[https://org-roam.rea
   (org-journal-date-prefix "#+TITLE: ")
   (org-journal-file-format "%Y-%m-%d.org")
   (org-journal-dir "~/roam/")
+  (org-journal-carryover-items nil)
   (org-journal-date-format "%A, %d %B %Y")
+  (org-journal-time-format "<%Y-%m-%d %a %H:%M> ")
+  (org-journal-time-prefix "* ")
   :config
   (defun org-journal-today ()
     (interactive)
@@ -598,7 +616,7 @@ This is mostly in conjunction with org-roam, as described [[https://org-roam.rea
   ;; In org-agenda log show completed recurring tasks.
   (setq org-agenda-log-mode-items '(closed clock state))
 
-  (setq org-agenda-files '("~/notes" "~/mobile-notes" "~/work-notes"))
+  (setq org-agenda-files '("~/notes" "~/mobile-notes" "~/work-notes" "~/roam"))
 
   ;; TODO: Re-enable Elfeed Org.
   ;; (setq rmh-elfeed-org-files (list "~/mobile-notes/feeds.org"))
@@ -786,6 +804,7 @@ This is mostly in conjunction with org-roam, as described [[https://org-roam.rea
   ;;     ("zsh" . sh)
   ;;     ("run-in-tmux" . sh))))
   (setq org-startup-truncated nil)
+  (setq! org-startup-folded t)
   (setq org-use-sub-superscripts (quote {}))
 
   ;; Publishing notes.
