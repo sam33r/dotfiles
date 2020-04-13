@@ -9,16 +9,14 @@
 export VISUAL=gvim
 export EDITOR="$VISUAL"
 
-if [ "$#" -lt 1 ]
-then
+if [ "$#" -lt 1 ]; then
   echo "Usage: git-sync.sh <dir> <polling freq> <optional command to run on pulls>"
   exit 1
 fi
 
 dir=$1
 polltime="300"
-if [ "$#" -ge 2 ]
-then
+if [ "$#" -ge 2 ]; then
   polltime=$2
 fi
 cmd=${@:3}
@@ -27,15 +25,21 @@ cd $dir
 git rev-parse
 
 if [ "$?" -ne "0" ]; then
-   echo "Not in a git repository!";
+  echo "Not in a git repository!"
 fi
 
 first_run=true
 while true; do
-  if [ "$first_run" = true ] ; then
+  if [ "$first_run" = true ]; then
     first_run=false
   else
-    timeout $polltime inotifywait $1 -e modify -e move -e move_self -e create -e delete -r --exclude "(.git)"
+    timeout $polltime inotifywait $1 \
+      -e modify \
+      -e move \
+      -e move_self \
+      -e create \
+      -e delete \
+      -r --exclude "(.git)"
   fi
   # This is just a hack to prevent a burst of commits.
   sleep 60
@@ -43,5 +47,5 @@ while true; do
   # (a) for every N file-changes, or
   # (b) every M minutes,
   # whichever happens earlier.
-  git-sync-once $dir $cmd
+  git-sync-once -d $dir -c "$cmd"
 done
