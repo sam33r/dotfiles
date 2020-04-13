@@ -48,6 +48,7 @@ $HOME/.macros/change-volume,utils/vol
 $HOME/.macros/current-date-and-time,utils/current-date-and-time
 $HOME/.macros/current-date,utils/current-date
 $HOME/.macros/org-agenda,macros/org-agenda
+$HOME/.macros/org-journal,macros/org-journal
 $HOME/.macros/org-capture,macros/org-capture
 $HOME/.macros/org-current-item,macros/org-current-item
 $HOME/.macros/org-mail-inbox,macros/org-mail-inbox

@@ -13,10 +13,13 @@ gnome-tweak-tool,UI Tweaks
 gnupg2,Encryption/decryption
 gnupg-agent,Password entry agent
 gnutls-bin,mu4e dependency
+gocryptfs,Crypt.
 gparted,partition management utility
 gpick,Color picker.
 graphviz,Graph visualization.
 gscan2pdf,Scan to PDF
+howdoi,Stack Overflow
+htop,Better top.
 i3blocks,scheduler for i3bar blocks
 i3,tiling windows manager
 inotify-tools,Wait on file changes.
@@ -51,6 +54,7 @@ python-dev,python
 python-pip,pip installer
 ranger,ls on steroids
 rclone,Sync google-drive
+recoll,Text search
 redshift-gtk,reduce blue light at night
 redshift,reduce blue light at night
 remind,Sophisticated calendar reminders.
@@ -79,6 +83,7 @@ vnstat,Network traffic monitor
 vrms,List non-free packages.
 w3m,command line based web browser
 wmctrl,Control window focus.
+wordnet,Lexical database.
 xautolock,Lock screen.
 xbacklight,Change display brightness
 xbindkeys-config,xbindkeys config
