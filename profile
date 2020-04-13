@@ -84,7 +84,6 @@ export PATH="$HOME/emacs/src:/usr/local/go/bin:$HOME/go/bin:$HOME/.local/bin:$HO
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH="$PATH:$ANDROID_HOME/tools"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
-
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # Nix Environment.
