@@ -10,20 +10,50 @@
 export VISUAL=gvim
 export EDITOR="$VISUAL"
 
-if [ "$#" -lt 1 ]
-then
-  echo "Usage: git-sync <dir> <optional command to run on pull>"
+# Parse command line params.
+PARAMS=""
+dir=""
+cmd=""
+nocommit=false
+while (("$#")); do
+  case "$1" in
+  -d | --dir)
+    dir=$2
+    shift 2
+    ;;
+  -c | --cmd)
+    cmd="$2"
+    shift 2
+    ;;
+  -n | --nocommit)
+    nocommit=true
+    shift 1
+    ;;
+  --) # end argument parsing
+    shift
+    break
+    ;;
+  -* | --*=) # unsupported flags
+    echo "Error: Unsupported flag $1" >&2
+    exit 1
+    ;;
+  *) # preserve positional arguments
+    PARAMS="$PARAMS $1"
+    shift
+    ;;
+  esac
+done
+
+if [ -z "$dir" ]; then
+  echo "Usage: git-sync -d <dir> -c <cmd>"
   exit 1
 fi
-
-dir=$1
-cmd=${@:2}
 
 # Fail if not in a git repository.
 cd $dir
 git rev-parse
 if [ "$?" -ne "0" ]; then
-  notify-send "$dir is not a git repository, quitting!" -u urgent;
+  notify-send "$dir is not a git repository, quitting!" -u urgent
   exit 1
 fi
 
@@ -34,9 +64,9 @@ timeout 60 git fetch
 # then that means the fetch is broken (Usually due to a
 # broken credentials provider). This script should fail
 # in such circumstance.
-last_fetch=`stat -c %Y .git/FETCH_HEAD`
-secs_since_fetch=$((`date +"%s"` - $last_fetch))
-if (( $secs_since_fetch > 61 )); then
+last_fetch=$(stat -c %Y .git/FETCH_HEAD)
+secs_since_fetch=$(($(date +"%s") - $last_fetch))
+if (($secs_since_fetch > 61)); then
   notify-send "$dir git fetch is broken!" -u urgent
   exit 1
 fi
@@ -44,23 +74,24 @@ fi
 notification=""
 
 # Number of local uncommitted changes.
-num_changes=`git status --porcelain | wc -l`
+num_changes=$(git status --porcelain | wc -l)
 echo "Found $num_changes changes to commit."
-if (( $num_changes > 0)); then
-  dt=`date`
-  host=`hostname`
+if (($num_changes > 0)); then
+  dt=$(date)
+  host=$(hostname)
   commit="$num_changes files changed from $host at $dt"
-  git add -A; git commit -m "$commit"
+  git add -A
+  git commit -m "$commit"
   notification+="Committed $commit.\n"
   echo $commit
 fi
 
-changes=`git rev-list --left-right --count origin/master...master`
+changes=$(git rev-list --left-right --count origin/master...master)
 # Changes in origin not pulled to local master.
-num_remote_changes=`echo $changes | cut -f1 -d" "`
+num_remote_changes=$(echo $changes | cut -f1 -d" ")
 # Changes in local master not pushed to origin
-num_local_changes=`echo $changes | cut -f2 -d" "`
-echo "$num_remote_changes remote changes, $num_local_changes local changes."
+num_local_changes=$(echo $changes | cut -f2 -d" ")
+notification+="$num_remote_changes remote changes, $num_local_changes local changes.\n"
 
 if [[ $num_remote_changes -ne 0 ]]; then
   notification+="Local was behind by $num_remote_changes changes.\n"
@@ -75,21 +106,24 @@ if [[ $? -ne 0 ]]; then
 
   # Generate listing of local-only and remote-only changes.
   localdesc="local\nTODO: Not Implemented.\n$num_local_changes changes.\n"
-  localdesc+=`git log --pretty=format:'%s' origin/master..master`
+  localdesc+=$(git log --pretty=format:'%s' origin/master..master)
   remotedesc="remote\n$num_remote_changes changes.\n"
-  remotedesc+=`git log --pretty=format:'%s' master..origin/master`
+  remotedesc+=$(git log --pretty=format:'%s' master..origin/master)
 
   # Compute lines per entry (rofi requires fixed number of lines per option).
-  a=`echo -en $localdesc | wc -l`
-  b=`echo -en $remotedesc | wc -l`
+  a=$(echo -en $localdesc | wc -l)
+  b=$(echo -en $remotedesc | wc -l)
   max=$([ $a -ge $b ] && echo "$a" || echo "$b")
 
   # Ask user.
-  option=`echo -en "$localdesc|$remotedesc|manual" | \
-    rofi -dmenu -fullscreen -eh $max -i -sep "|" -p "There was a conflict. Pick which version to use (or manually resolve)."`
-  option=`echo $option | head -1`
+  option=$(echo -en "$localdesc|$remotedesc|manual" |
+    rofi -dmenu \
+      -fullscreen \
+      -eh $max -i -sep "|" \
+      -p "There was a conflict in $dir. Pick which version to use (or manually resolve).")
+  option=$(echo $option | head -1)
 
-  # TODO: Implement local 
+  # TODO: Implement local
   if [[ "$option" == "remote" ]]; then
     git reset --hard origin/master
   else
@@ -104,7 +138,7 @@ if [[ $num_remote_changes -ne 0 ]] && [ "$conflicts_resolved" = true ]; then
 fi
 
 # Push local changes to origin.
-if [[ $num_local_changes -ne 0 ]]; then 
+if [[ $num_local_changes -ne 0 ]]; then
   git push origin master
   if [[ $? -ne 0 ]]; then
     notification+="Pushing $num_local_changes commits to origin failed."
