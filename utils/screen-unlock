@@ -11,6 +11,11 @@ rm -f /tmp/screen-locked
 # Setup xautolock.
 killall xautolock
 nohup sh -c \
-    'xautolock -time 10 -notify 30 -locker "$HOME/dotfiles/utils/screen-lock"' &
+  'xautolock -time 10 -notify 30 -locker "$HOME/dotfiles/utils/screen-lock"' &
 
 ~/dotfiles/utils/user-session-bg &
+
+# Local
+if [ -x ~/.screen-unlock ]; then
+  . ~/.screen-unlock
+fi

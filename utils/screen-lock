@@ -11,5 +11,15 @@ emacsclient -e "(save-all)"
 
 killall user-session-bg
 
-(sleep 10; pgrep i3lock && xset dpms force off) &
-i3lock -i /tmp/screen_locked2.png -n; ~/dotfiles/utils/screen-unlock; ~/.dwm/xsetroot.sh
+# Local
+if [ -x ~/.screen-lock ]; then
+  . ~/.screen-lock
+fi
+
+(
+  sleep 10
+  pgrep i3lock && xset dpms force off
+) &
+i3lock -i /tmp/screen_locked2.png -n
+~/dotfiles/utils/screen-unlock
+~/.dwm/xsetroot.sh
