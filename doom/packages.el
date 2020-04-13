@@ -17,7 +17,6 @@
 (package! helm-org-rifle)
 (package! memento-mori)
 (package! writeroom-mode)
-(package! editorconfig)
 (package! modus-operandi-theme)
 (package! org-roam
   :recipe (:host github :repo "jethrokuan/org-roam"))
