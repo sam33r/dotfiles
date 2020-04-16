@@ -35,6 +35,7 @@ Use editorconfig mode.
 (setq-default indent-tabs-mode nil)
 #+END_SRC
 
+
 There is some weirdness in doom-emacs integration with format-all that screws up sh-mode formatting. Disable it and just do it by ourselves.
 #+BEGIN_SRC elisp
 (after! format
@@ -833,7 +834,7 @@ This is mostly in conjunction with org-roam, as described [[https://org-roam.rea
     "Y" 'ox-clip-formatted-copy
     ;; "P" 'sa/paste-formatted-text-as-org
     )
-  (define-key org-mode-map (kbd "RET")  #'sa/org-return)
+  ;; (define-key org-mode-map (kbd "RET")  #'sa/org-return)
 
   ;; TODO: Look-up the relevant binding for doom.
   ;; (spacemacs/set-leader-keys-for-major-mode 'org-mode
