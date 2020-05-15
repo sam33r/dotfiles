@@ -9,13 +9,13 @@
 (map! :leader :prefix ("F" . "File Bookmarks (Custom)."))
 (map! :leader "F i" (lambda()
                       (interactive)
-                      (find-file "~/mobile-notes/inbox.org")))
+                      (find-file "~/notes/inbox.org")))
 (map! :leader "F m" (lambda()
                       (interactive)
-                      (find-file "~/mobile-notes/mobile.org")))
+                      (find-file "~/notes/mobile.org")))
 (map! :leader "F e" (lambda()
                       (interactive)
-                      (find-file "~/mobile-notes/mail-inbox.org")))
+                      (find-file "~/notes/mail-inbox.org")))
 
 ;; add shortcut to search email.
 (map! :leader "s e" #'counsel-notmuch)

@@ -1,6 +1,5 @@
 acpi,used to display battery status
 autoconf-archive,For manual make
-compton,Simple standalone composite manager (For use with xmonad)
 cryfs,Encryption.
 dex,Manage .desktop files
 docker-engine,docker
@@ -82,15 +81,5 @@ vnstati,Visual traffic monitor
 vnstat,Network traffic monitor
 vrms,List non-free packages.
 w3m,command line based web browser
-wmctrl,Control window focus.
 wordnet,Lexical database.
-xautolock,Lock screen.
-xbacklight,Change display brightness
-xbindkeys-config,xbindkeys config
-xbindkeys,x keybindings
-xdotool,control mouse cursor with keyboard
-xinput,X Input devices.
-xnest,Debug dwm.
-xprintidle,Print user idle time.
-xtrace,X Debugging.
 zsh,z shell

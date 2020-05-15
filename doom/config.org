@@ -48,18 +48,27 @@ There is some weirdness in doom-emacs integration with format-all that screws up
               ;; Above modes are disabled by default in doom-emacs
               sh-mode          ; tab gets preference somewhere in format-all+doom-emacs+shfmt.
               ))
-  (defun sa/format-sh-buffer()
-    (interactive)
-    (message "Formatting shell script buffer.")
-    (setq sa/last-position (point))
-    (shell-command-on-region (point-min) (point-max) "shfmt" nil "*shfmt-error*" t)
-    (goto-char sa/last-position)
-    )
-  (defun sa/before-save-hook()
-    (when (eq major-mode 'sh-mode)
-      (sa/format-sh-buffer)))
-  (add-hook 'before-save-hook #'sa/before-save-hook))
+  ;; (defun sa/format-sh-buffer()
+  ;;   (interactive)
+  ;;   (message "Formatting shell script buffer.")
+  ;;   (setq sa/last-position (point))
+  ;;   (shell-command-on-region (point-min) (point-max) "shfmt" nil "*shfmt-error*" t)
+  ;;   (goto-char sa/last-position)
+  ;;   )
+  ;; (defun sa/before-save-hook()
+  ;;   (when (eq major-mode 'sh-mode)
+  ;;     (sa/format-sh-buffer)))
+  ;; (add-hook 'before-save-hook #'sa/before-save-hook)
+  )
+
+(use-package! shfmt
+  :init
+  (add-hook 'shell-mode-hook 'shfmt-on-save-mode)
+  (add-hook 'sh-mode-hook 'shfmt-on-save-mode)
+  )
 #+END_SRC
+
+
 
 * Functions
 
@@ -219,18 +228,16 @@ These functions are called externally (and usually set to some keybindings with 
   (delete-file headings-file)
   (sa/write-headings-for-dir "~/.doom.d" headings-file selector)
   (sa/write-headings-for-dir "~/notes" headings-file selector)
-  (sa/write-headings-for-dir "~/mobile-notes" headings-file selector)
   (sa/write-headings-for-dir "~/work-notes" headings-file selector))
 (defun sa/write-headings-for-agenda-dirs (headings-file selector)
   (delete-file headings-file)
-  (sa/write-headings-for-dir "~/roam" headings-file selector)
   (sa/write-headings-for-dir "~/notes" headings-file selector)
-  (sa/write-headings-for-dir "~/mobile-notes" headings-file selector)
   (sa/write-headings-for-dir "~/work-notes" headings-file selector))
 
 (defun sa/all-headings-selector (org-file)
   (org-ql-query
-    :select '(sa/get-org-heading-and-content-single-line)
+    ;; Use (sa/get-org-heading-and-content-single-line) to get content as well.
+    :select '(org-get-heading)
     :from org-file
     :where '(level 1 5)
     )
@@ -241,7 +248,8 @@ These functions are called externally (and usually set to some keybindings with 
 
 (defun sa/due-headings-selector (org-file)
   (org-ql-query
-    :select '(sa/get-org-heading-and-content-single-line)
+    ;; Use (sa/get-org-heading-and-content-single-line) to get content as well.
+    :select '(org-get-heading)
     :from org-file
     :where '(or (and (or (deadline :to +1)
                      (scheduled :to +1)
@@ -466,8 +474,8 @@ Prettify symbols.
 Font styling:
 #+BEGIN_SRC elisp
 
-  (setq doom-font (font-spec :family "Input" :size 18))
-  (setq doom-variable-pitch-font (font-spec :family "Literata"))
+  ;; (setq doom-font (font-spec :family "Input" :size 18))
+  (setq doom-variable-pitch-font (font-spec :family "Literata" :size 18))
 
   (custom-theme-set-faces
    'user
@@ -511,7 +519,13 @@ Font styling:
         :desc "org-roam-find-file" "/" #'org-roam-find-file
         :desc "org-roam-show-graph" "g" #'org-roam-show-graph
         )
-  (setq org-roam-directory "~/roam")
+  :custom
+  (org-roam-directory "~/notes")
+  (org-roam-db-location "~/org-roam.db")
+  (org-roam-capture-templates '(("d" "default" plain #'org-roam-capture--get-point "%?"
+                                                     :file-name "${slug}"
+                                                     :head "#+TITLE: ${title}\n"
+                                                     :unnarrowed t)))
   )
 (after! (company org-roam)
   (set-company-backend! 'org-mode
@@ -528,17 +542,23 @@ This is mostly in conjunction with org-roam, as described [[https://org-roam.rea
         :desc "Today Journal" "t" #'org-journal-today
         )
   :custom
-  (org-journal-date-prefix "#+TITLE: ")
-  (org-journal-file-format "%Y-%m-%d.org")
-  (org-journal-dir "~/roam/")
+  (org-journal-date-prefix "* ")
+  (org-journal-file-type (quote monthly))
+  (org-journal-file-format "%Y-%m.org")
+  (org-journal-dir "~/notes/")
   (org-journal-carryover-items nil)
   (org-journal-date-format "%A, %d %B %Y")
   (org-journal-time-format "<%Y-%m-%d %a %H:%M> ")
-  (org-journal-time-prefix "* ")
+  (org-journal-created-property-timestamp-format "[%Y-%m-%d %a %H:%M]")
+  (org-journal-time-prefix "** ")
   :config
   (defun org-journal-today ()
     (interactive)
     (org-journal-new-entry t)))
+#+END_SRC
+** Deft
+#+BEGIN_SRC elisp
+(setq deft-directory "~/notes")
 #+END_SRC
 
 * Remaining untangled code.
@@ -617,7 +637,7 @@ This is mostly in conjunction with org-roam, as described [[https://org-roam.rea
   ;; In org-agenda log show completed recurring tasks.
   (setq org-agenda-log-mode-items '(closed clock state))
 
-  (setq org-agenda-files '("~/notes" "~/mobile-notes" "~/work-notes" "~/roam"))
+  (setq org-agenda-files '("~/notes" "~/work-notes"))
 
   ;; TODO: Re-enable Elfeed Org.
   ;; (setq rmh-elfeed-org-files (list "~/mobile-notes/feeds.org"))
@@ -685,16 +705,16 @@ This is mostly in conjunction with org-roam, as described [[https://org-roam.rea
   ;; Set up capture mode.
   (setq org-capture-templates
         '(
-          ("t" "Todo" entry (file "~/mobile-notes/inbox.org")
+          ("t" "Todo" entry (file "~/notes/inbox.org")
            "* TRIAGE %? %^G\n%i\n%x\n")
-          ("e" "Todo from email" entry (file "~/mobile-notes/inbox.org")
+          ("e" "Todo from email" entry (file "~/notes/inbox.org")
            "* TRIAGE %:subject %^G\n%?\n %i\n %a\n")
-          ("l" "Todo from link" entry (file "~/mobile-notes/inbox.org")
+          ("l" "Todo from link" entry (file "~/notes/inbox.org")
            (function sa/generate-todo-link-template))
-          ("b" "Bookmark" entry (file+headline "~/mobile-notes/mobile.org" "Bookmarks")
+          ("b" "Bookmark" entry (file+headline "~/notes/bookmarks.org" "Bookmarks")
            (function sa/generate-bookmark-template)
            )
-          ("B" "Manual Bookmark" entry (file+headline "~/mobile-notes/mobile.org" "Bookmarks")
+          ("B" "Manual Bookmark" entry (file+headline "~/notes/bookmarks.org" "Bookmarks")
            "* %? %^G\nBookmarked on %U"
            )
           ("j" "Journal" entry (file+olp+datetree "journal.org.gpg")
@@ -732,13 +752,6 @@ This is mostly in conjunction with org-roam, as described [[https://org-roam.rea
            "* %? %^G\n%i\n" :clock-in t :clock-keep t)
           ("wm" "Meeting Notes" entry (file+olp+datetree "~/work-notes/work-journal.org")
            "* %^{meeting-title} :meeting:\n%T\n%?\n")
-
-          ("m" "Mobile")
-          ("me" "Errand" entry (file+headline "~/mobile-notes/mobile.org" "Errands")
-           "* TODO %? %^G\n")
-          ("mp" "Phone Call" entry (file+headline "~/mobile-notes/mobile.org" "Phone Calls")
-           "* TODO %? %^G\n")
-
           )
         )
   (define-key global-map "\C-cc" 'org-capture)

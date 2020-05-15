@@ -21,8 +21,8 @@
 (package! org-roam
   :recipe (:host github :repo "jethrokuan/org-roam"))
 (package! org-journal)
-
+(package! shfmt
+          :recipe (:host github :repo "purcell/emacs-shfmt"))
 (package! mu4e-maildirs-extension :disable t)
-
 (provide 'packages)
 ;;; packages.el ends here

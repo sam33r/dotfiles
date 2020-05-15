@@ -2,10 +2,22 @@
 
 # Things I want to do in the background, but only when the graphical session is active.
 
-while true; do
-  # Force-update tabs.
-  ~/goosey/goose -i -n -p tabs
-  # Update any pending lists.
-  nohup sh -c "(~/goosey/goose -n)" &
-  sleep 29
-done
+function update_goose_corpus() {
+  while true; do
+    # Force-update tabs.
+    ~/goosey/goose -i -n -p tabs
+    # Update any pending lists.
+    nohup sh -c "(~/goosey/goose -n)" &
+    sleep 29
+  done
+}
+
+function git_sync_periodically() {
+  while true; do
+    sleep 900
+    $HOME/.git-sync
+  done
+}
+
+update_goose_corpus &
+git_sync_periodically &

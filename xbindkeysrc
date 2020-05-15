@@ -86,7 +86,7 @@
     Shift+Mod4 + space 
 
 #Switch to Firefox
-"wmctrl -x -a firefox"
+"wmctrl -x -a firefox || firefox"
     m:0x40 + c:41
     Mod4 + f 
 

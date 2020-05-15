@@ -19,6 +19,9 @@ feh --randomize --bg-fill ~/Wallpapers/* &
 unclutter &
 copyq &
 run_keybase &
+# Start recoll indexer
+(recollindex -w 60 -m) &
+
 xbindkeys -f ~/.xbindkeysrc
 ~/dotfiles/utils/chrome-to-copyq ~/.config/google-chrome/Default/History &
 ~/dotfiles/utils/chrome-to-copyq ~/.config/google-chrome-beta/Default/History &

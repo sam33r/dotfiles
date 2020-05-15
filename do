@@ -20,6 +20,9 @@ packages_list="packages.csv"
 
 dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+src_dir="$HOME/src"
+mkdir -p $src_dir
+
 #--------------------------------------------------------------------------------
 # Configuration Functions
 #--------------------------------------------------------------------------------
@@ -31,6 +34,173 @@ dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # - Installation functions that should be run at least once on a new install
 #   should have the "install_" prefix.
 #--------------------------------------------------------------------------------
+
+function prompt_user() {
+  while true; do
+    read -p "$1" yn
+    case $yn in
+    [Yy]*)
+      return "true"
+      ;;
+    [Nn]*)
+      return "false"
+      ;;
+    *) echo "Please answer yes or no." ;;
+    esac
+  done
+}
+
+function install_dwm_from_src() {
+  cd $src_dir
+  git clone https://github.com/sam33r/dwm
+  cd dwm
+  sudo apt-get update
+  sudo apt-get install build-essential libx11-dev libxinerama-dev sharutils \
+    libxft-dev
+  make
+  sudo make install
+  cd $dir
+  cat >/tmp/startdwm <<EOL
+#!/bin/sh
+dbus-launch --sh-syntax --exit-with-session dwm
+EOL
+  sudo cp -f /tmp/startdwm /usr/local/bin/startdwm
+  sudo chmod a+x /usr/local/bin/startdwm
+
+  cat >/tmp/dwm.desktop <<EOL
+[Desktop Entry]
+Name=dwm
+Comment=dynamic window manager
+Exec=startdwm
+Type=Application
+X-LightDM-DesktopName=dwm
+DesktopNames=dwm
+EOL
+  sudo cp -f /tmp/dwm.desktop /usr/share/xsessions/dwm.desktop
+  sudo chmod a+r /usr/share/xsessions/dwm.desktop
+  cat /usr/share/xsessions/dwm.desktop
+}
+
+function init_dotfiles() {
+  while IFS=, read config_path dotfile_path; do
+    printf "\n\n"
+    cpath=$(eval echo $config_path)
+    dpath=$(eval echo $dotfile_path)
+
+    printf "\n${cpath}"
+    printf "\n ⇒ ${backup_dir}"
+    mv "${cpath}" "${backup_dir}"/"${dpath}" 2>/dev/null
+    printf "\n ← ${dir}/${dpath}\n"
+    mkdir -p $(dirname ${cpath})
+    ln -fs "${dir}"/"${dpath}" "${cpath}"
+  done <$dir/$dotfiles_list
+}
+
+function init_debian_desktop_environment() {
+  echo "This function sets up the desktop environment."
+
+  # dwm
+  install_dwm_from_src
+
+  # General X manipulation packages.
+  sudo apt update
+  sudo apt install \
+    xautolock \
+    xbacklight \
+    xbindkeys \
+    xbindkeys-config \
+    xdotool \
+    wmctrl \
+    xinput \
+    xnest \
+    xprintidle \
+    xtrace \
+    compton \
+    unclutter
+
+  # goose
+
+}
+
+function init_debian_shell() {
+  echo "This function sets up terminal environment and packages."
+
+  sudo apt update
+  sudo apt install \
+    acpi \
+    fdupes \
+    gnupg2 \
+    gnupg-agent \
+    gocryptfs \
+    howdoi \
+    htop \
+    inotify-tools \
+    inxi \
+    iotop \
+    jq \
+    lm-sensors \
+    notmuch \
+    offlineimap \
+    pandoc \
+    parallel \
+    pdfgrep \
+    pdftk \
+    powertop \
+    python3-pip \
+    python-dev \
+    rclone \
+    remind \
+    ripgrep \
+    rlwrap \
+    sqlite3 \
+    stow \
+    dmenu \
+    tmux \
+    vim \
+    zsh
+
+  # Other things to install from source.
+  install_update_fasd_from_git
+  install_update_liquidprompt_from_git
+  install_update_fzf_from_git
+  install_update_antigen_from_web
+  install_tmux_persist_from_git
+
+  p=$(prompt_user "Install tmux from source?")
+  if [[ "$p" == "true" ]]; then
+    install_update_tmux_from_src
+  fi
+  install_tmux_plugins_from_git
+
+  p=$(prompt_user "Install rclone from rclone.org?")
+  if [[ "$p" == "true" ]]; then
+    install_rclone_from_rclone_org
+  fi
+
+  # Install Cargo packages.
+  if (which rustup); then
+    rustup update
+  else
+    sudo /usr/local/lib/rustlib/uninstall.sh
+    curl https://sh.rustup.rs -sSf | sh
+    source $HOME/.cargo/env
+  fi
+  # fd (find alternative).
+  cargo install fd-find
+
+}
+
+function init_emacs() {
+  echo "emacs"
+
+  # install emacs from source or package manager.
+  # doom emacs
+}
+
+function init_desktop_software() {
+  echo "software"
+
+}
 
 function install_update_apt_packages() {
   sudo apt-get update
@@ -52,43 +222,7 @@ function custom_install_esoteric_apt_packages() { # Packages only needed for cus
   sudo apt-get install nvidia-370
 }
 
-# TODO: Just use stow.
-function install_dotfiles() {
-  while IFS=, read config_path dotfile_path; do
-    printf "\n\n"
-    cpath=$(eval echo $config_path)
-    dpath=$(eval echo $dotfile_path)
-
-    printf "\n${cpath}"
-    printf "\n ⇒ ${backup_dir}"
-    mv "${cpath}" "${backup_dir}"/"${dpath}" 2>/dev/null
-    printf "\n ← ${dir}/${dpath}\n"
-    mkdir -p $(dirname ${cpath})
-    ln -fs "${dir}"/"${dpath}" "${cpath}"
-  done <$dir/$dotfiles_list
-}
-
-# TODO: Just use stow.
-function install_some_dotfiles() {
-  while IFS=, read config_path dotfile_path; do
-    printf "\n\n"
-    # Expand any env variables in the config.
-    cpath=$(eval echo $config_path)
-    dpath=$(eval echo $dotfile_path)
-
-    echo "${dir}/${dpath} ⇒ ${cpath}"
-    read -p "Do this? (y/n)" answer </dev/tty
-    if echo "$answer" | grep -iq "^n"; then
-      echo "Skipped."
-      continue
-    fi
-
-    mv "${cpath}" "${backup_dir}"/"${dpath}" 2>/dev/null
-    mkdir -p $(dirname ${cpath})
-    ln -fs "${dir}"/"${dpath}" "${cpath}"
-    echo "Moved."
-  done <$dir/$dotfiles_list
-}
+# Older (deprecated recipes) --------------------------------------------------------------
 
 function install_apt_fbterm() {
   sudo apt-get install fbterm fbset
@@ -126,7 +260,7 @@ function install_rclone_from_rclone_org() {
 }
 
 function install_apt_emacs_from_source() {
-  cd $HOME
+  cd $src_dir
 
   # Install necessary packages.
   sudo apt install autoconf automake libtool texinfo build-essential \
@@ -134,8 +268,8 @@ function install_apt_emacs_from_source() {
     libgif-dev libtiff-dev libm17n-dev libpng-dev librsvg2-dev \
     libotf-dev libgnutls28-dev libxml2-dev
 
-  git clone https://github.com/mirrors/emacs.git
-  cd ~/emacs
+  git clone --depth 1 https://github.com/mirrors/emacs.git
+  cd emacs
   # discard stuff from last build
   git reset --hard
   # delete all of the last build stuff
@@ -203,13 +337,6 @@ function install_fd_from_cargo() {
   cargo install fd-find
 }
 
-function install_kitty_from_cargo() {
-  install_update_cargo_rust
-  cd $HOME
-  curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-  cd $dir
-}
-
 function install_brotab_from_pip() {
   pip3 install --upgrade brotab
   brotab install
@@ -275,37 +402,6 @@ function install_copyq_with_apt_deps() { # Install copyq clipboard manager.
   cd $dir
 }
 
-function install_dwm_from_src() {
-  cd $HOME
-  git clone https://github.com/sam33r/dwm
-  cd dwm
-  sudo apt-get update
-  sudo apt-get install build-essential libx11-dev libxinerama-dev sharutils \
-    libxft-dev
-  make
-  sudo make install
-  cd $dir
-  cat >/tmp/startdwm <<EOL
-#!/bin/sh
-dbus-launch --sh-syntax --exit-with-session dwm
-EOL
-  sudo cp -f /tmp/startdwm /usr/local/bin/startdwm
-  sudo chmod a+x /usr/local/bin/startdwm
-
-  cat >/tmp/dwm.desktop <<EOL
-[Desktop Entry]
-Name=dwm
-Comment=dynamic window manager
-Exec=startdwm
-Type=Application
-X-LightDM-DesktopName=dwm
-DesktopNames=dwm
-EOL
-  sudo cp -f /tmp/dwm.desktop /usr/share/xsessions/dwm.desktop
-  sudo chmod a+r /usr/share/xsessions/dwm.desktop
-  cat /usr/share/xsessions/dwm.desktop
-}
-
 function install_st_from_src() {
   cd $HOME
   git clone https://github.com/sam33r/st
@@ -327,7 +423,7 @@ function install_fpp_from_git() { # Install FB Path Picker
 }
 
 function install_update_fasd_from_git() {
-  cd $HOME
+  cd $src_dir
   git clone https://github.com/clvv/fasd
   cd fasd
   git pull origin master
@@ -341,7 +437,7 @@ function install_update_spacevim_from_web() {
 }
 
 function install_update_liquidprompt_from_git() {
-  cd $HOME
+  cd $src_dir
   git clone https://github.com/nojhan/liquidprompt.git
   cd liquidprompt
   git pull origin master
@@ -568,12 +664,13 @@ function install_tmux_plugins_from_git() {
   cd $HOME
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
   cd $dir
+  echo "Use <Ctrl+a> I in a tmux session to install and update plugins."
   # TODO: Find shell alternative of <Ctrl+a> I to to install
   # plugins.
 }
 
-function install_tmux_from_src() {
-  cd $HOME
+function install_update_tmux_from_src() {
+  cd $src_dir
   git clone https://github.com/tmux/tmux.git
   cd tmux
   git pull origin master
@@ -581,8 +678,6 @@ function install_tmux_from_src() {
   sh autogen.sh
   ./configure && make
   sudo make install
-
-  install_tmux_plugins
 }
 
 function install_update_antigen_from_web() {

@@ -10,3 +10,5 @@ indent_size = 2
 [*.sh]
 shell_variant      = bash
 switch_case_indent = true
+indent_style = space
+indent_size = 2
