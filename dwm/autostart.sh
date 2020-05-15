@@ -18,7 +18,6 @@ pasystray &
 feh --randomize --bg-fill ~/Wallpapers/* &
 unclutter &
 copyq &
-run_keybase &
 # Start recoll indexer
 (recollindex -w 60 -m) &
 
@@ -46,4 +45,3 @@ done &
 
 # Open the screen unlock dialogs
 (sleep 60 && ~/dotfiles/utils/screen-unlock) &
-
