@@ -228,11 +228,11 @@ These functions are called externally (and usually set to some keybindings with 
   (delete-file headings-file)
   (sa/write-headings-for-dir "~/.doom.d" headings-file selector)
   (sa/write-headings-for-dir "~/notes" headings-file selector)
-  (sa/write-headings-for-dir "~/work-notes" headings-file selector))
+  )
 (defun sa/write-headings-for-agenda-dirs (headings-file selector)
   (delete-file headings-file)
   (sa/write-headings-for-dir "~/notes" headings-file selector)
-  (sa/write-headings-for-dir "~/work-notes" headings-file selector))
+  )
 
 (defun sa/all-headings-selector (org-file)
   (org-ql-query
