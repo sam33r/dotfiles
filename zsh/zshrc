@@ -1,11 +1,13 @@
+#!/bin/zsh
+
 # Attempting to fix 256 color issues with fbterm.
 case "$TERM" in
-  xterm*)
-    export TERM=xterm-256color
-    ;;
-  linux)
-    export TERM=fbterm
-    ;;
+xterm*)
+  export TERM=xterm-256color
+  ;;
+linux)
+  export TERM=fbterm
+  ;;
 esac
 
 source ~/antigen.zsh
@@ -27,24 +29,27 @@ EOBUNDLES
 
 SAVEHIST=1000000000 # Number of entries
 HISTSIZE=1000000000
-HISTFILE=~/.zsh_history # File
-setopt APPEND_HISTORY # Don't erase history
-setopt EXTENDED_HISTORY # Add additional data to history like timestamp
+HISTFILE=~/.zsh_history   # File
+setopt APPEND_HISTORY     # Don't erase history
+setopt EXTENDED_HISTORY   # Add additional data to history like timestamp
 setopt INC_APPEND_HISTORY # Add immediately
-setopt HIST_FIND_NO_DUPS # Don't show duplicates in search
-setopt NO_HIST_BEEP # Don't beep
-setopt SHARE_HISTORY # Share history between session/terminals
+setopt HIST_FIND_NO_DUPS  # Don't show duplicates in search
+setopt NO_HIST_BEEP       # Don't beep
+setopt SHARE_HISTORY      # Share history between session/terminals
 
 # Setup theme.
 antigen theme romkatv/powerlevel10k
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir_writable dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status command_execution_time root_indicator background_jobs time)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status command_execution_time battery root_indicator background_jobs time)
 POWERLEVEL9K_HOME_FOLDER_ABBREVIATION="•"
 POWERLEVEL9K_VI_INSERT_MODE_STRING=""
 POWERLEVEL9K_VI_COMMAND_MODE_STRING="✱"
 POWERLEVEL9K_STATUS_OK=false
 
 POWERLEVEL9K_COLOR_SCHEME='light'
+
+POWERLEVEL9K_BATTERY_HIDE_ABOVE_THRESHOLD='20'
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD='0.1'
 
 POWERLEVEL9K_VCS_CLEAN_BACKGROUND='none'
 POWERLEVEL9K_VCS_CLEAN_FOREGROUND='076'
@@ -61,10 +66,9 @@ POWERLEVEL9K_DIR_HOME_FOREGROUND='246'
 POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='none'
 POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='246'
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND='233'
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND='172'
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND='253'
 POWERLEVEL9K_VI_MODE_INSERT_BACKGROUND='none'
 POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND='none'
-
 
 POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
 POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
@@ -74,7 +78,7 @@ POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=""
 # TODO: Setup appropriate syntax highlight styles for light background.
 # https://github.com/zdharma/fast-syntax-highlighting/issues/49
 
-DEFAULT_USER=`whoami`
+DEFAULT_USER=$(whoami)
 
 antigen apply
 
@@ -104,7 +108,7 @@ export VISUAL="vim"
 # Setup vi text objects for older versions of the shell.
 if [[ $(zsh --version | awk '{print $2}') < 5.0.8 ]]; then
   echo "Older version of zsh, sourcing opp.sh for vi text objects."
-  pd=`pwd`
+  pd=$(pwd)
   cd $HOME
   if [[ ! -e "opp.zsh" ]]; then
     git clone https://github.com/hchbaw/opp.zsh
@@ -152,7 +156,6 @@ bindkey -M menuselect '^j' vi-down-line-or-history
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 # Finally, source any local config.
-if [[ -x "$HOME/.zshrc.local" ]]
-then
-    source ~/.zshrc.local
+if [[ -x "$HOME/.zshrc.local" ]]; then
+  source ~/.zshrc.local
 fi
