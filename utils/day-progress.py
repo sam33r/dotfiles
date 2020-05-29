@@ -20,14 +20,14 @@ now = datetime.datetime.now()
 
 def progress_bar(percent):
   out = u""
-  for i in range(1, 10):
-    if percent >= i * 10:
+  for i in range(1, 6):
+    if percent >= i * 10 * 2:
       out += u"█"
-    elif percent >= (((i - 1) * 10) + 7.5):
+    elif percent >= (((i - 1) * 10) + 7.5)*2:
       out += u"▓"
-    elif percent >= (((i - 1) * 10) + 5):
+    elif percent >= (((i - 1) * 10) + 5)*2:
       out += u"▒"
-    elif percent >= (((i - 1) * 10) + 2.5):
+    elif percent >= (((i - 1) * 10) + 2.5)*2:
       out += u"░"
     else:
       out += u"•"
@@ -149,13 +149,13 @@ year_percent = (
     / (valid_days_in_year * minutes_in_day)
 ) * 100.00
 
-out = u"Day %03.2f%% " % day_percent
+out = u"D %d%% " % day_percent
 out += progress_bar(day_percent)
-out += u"  Week %03.2f%% " % week_percent
+out += u"  W %d%% " % week_percent
 out += progress_bar(week_percent)
-out += u"  Month %03.2f%% " % month_percent
+out += u"  M %d%% " % month_percent
 out += progress_bar(month_percent)
-out += u"  Year %03.2f%% " % year_percent
+out += u"  Y %d%% " % year_percent
 out += progress_bar(year_percent)
 
 print(out.encode("utf-8"), end=u"")

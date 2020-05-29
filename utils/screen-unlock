@@ -8,6 +8,8 @@ rm -f /tmp/screen-locked
 # affected.
 # emacsclient -e "(sa/revert-all-org-buffers)"
 
+emacsclient -e "(sa/org-notifications)" &
+
 # Setup xautolock.
 killall xautolock
 nohup sh -c \

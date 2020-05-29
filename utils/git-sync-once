@@ -77,9 +77,7 @@ notification=""
 num_changes=$(git status --porcelain | wc -l)
 echo "Found $num_changes changes to commit."
 if (($num_changes > 0)); then
-  dt=$(date)
-  host=$(hostname)
-  commit="$num_changes files changed from $host at $dt"
+  commit="$num_changes files changed"
   git add -A
   git commit -m "$commit"
   notification+="Committed $commit.\n"
@@ -91,10 +89,9 @@ changes=$(git rev-list --left-right --count origin/master...master)
 num_remote_changes=$(echo $changes | cut -f1 -d" ")
 # Changes in local master not pushed to origin
 num_local_changes=$(echo $changes | cut -f2 -d" ")
-notification+="$num_remote_changes remote changes, $num_local_changes local changes.\n"
 
-if [[ $num_remote_changes -ne 0 ]]; then
-  notification+="Local was behind by $num_remote_changes changes.\n"
+if [[ $num_remote_changes -ne 0 || $num_local_changes -ne 0 ]]; then
+  notification+="$num_remote_changes remote changes, $num_local_changes local changes.\n"
 fi
 
 conflicts_resolved=true

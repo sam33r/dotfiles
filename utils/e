@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# TODO: Make this determine whether to edit in terminal or in a new frame.
+
+dest="$1"
+
+if [ -z "$dest" ]; then
+  dest="."
+fi
+
+emacsclient -c "$dest"

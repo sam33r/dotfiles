@@ -16,7 +16,7 @@ my $t_show = 0;
 my $t_warn = 50;
 my $t_crit = 80;
 my $cpu_usage = -1;
-my $decimals = 2;
+my $decimals = 0;
 
 sub help {
     print "Usage: cpu_usage [-w <warning>] [-c <critical>] [-d <decimals>]\n";
