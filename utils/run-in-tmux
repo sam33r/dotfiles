@@ -1,21 +1,21 @@
 #!/bin/zsh
 
-if ! tmux ls
-then
+if ! tmux ls; then
   echo tmux not running >&2
   exit 1
 fi
 
-tempfile=`mktemp`
+tempfile=$(mktemp)
 cat >$tempfile
 chmod +x $tempfile
-session_name="T `date '+%m/%d %H:%M'`"
+window_name="T $(date '+%m/%d %H:%M')"
 mkdir -p $HOME/.run-tmux-sessions
-export script_path="$HOME/.run-tmux-sessions/`date '+%y_%m_%d__%H_%M_%S'`.txt"
-echo "IN\n------------------------\n\n" >> $script_path
-cat $tempfile >> $script_path
-echo "\n\n\nOUT\n------------------------\n\n" >> $script_path
+export script_path="$HOME/.run-tmux-sessions/$(date '+%y_%m_%d__%H_%M_%S').txt"
+echo "IN\n------------------------\n\n" >>$script_path
+cat $tempfile >>$script_path
+echo "\n\n\nOUT\n------------------------\n\n" >>$script_path
 
 # TODO: script generated files have unnecessary carriage returns,
 # clean those up automatically.
-tmux new-window -n "${session_name}" "script -q -f -a $script_path -c 'zsh -i $tempfile; echo ...finished...; read; rm $tempfile'"
+tmux switch-client -t "persistent"
+tmux new-window -n "${window_name}" "script -q -f -a $script_path -c 'zsh -i $tempfile; echo ...finished...; read; rm $tempfile'"

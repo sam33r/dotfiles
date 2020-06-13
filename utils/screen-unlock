@@ -15,6 +15,13 @@ killall xautolock
 nohup sh -c \
   'xautolock -time 10 -notify 30 -locker "$HOME/dotfiles/utils/screen-lock"' &
 
+# xbindkeys seems to get in a bad state where it
+# stops recognizing shortcuts with space in them.
+# Restart fixes it.
+killall xbindkeys
+xbindkeys &
+
+wallpaper &
 ~/dotfiles/utils/user-session-bg &
 
 # Local

@@ -5,8 +5,10 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import sys
 import calendar
 import datetime
+from dateutil import relativedelta
 import json
 import os
 
@@ -19,83 +21,101 @@ now = datetime.datetime.now()
 
 
 def progress_bar(percent):
-  out = u""
-  for i in range(1, 6):
-    if percent >= i * 10 * 2:
-      out += u"█"
-    elif percent >= (((i - 1) * 10) + 7.5)*2:
-      out += u"▓"
-    elif percent >= (((i - 1) * 10) + 5)*2:
-      out += u"▒"
-    elif percent >= (((i - 1) * 10) + 2.5)*2:
-      out += u"░"
-    else:
-      out += u"•"
-  return out
+    out = u""
+    for i in range(1, 6):
+        if percent >= i * 10 * 2:
+            out += u"█"
+        elif percent >= (((i - 1) * 10) + 7.5) * 2:
+            out += u"▓"
+        elif percent >= (((i - 1) * 10) + 5) * 2:
+            out += u"▒"
+        elif percent >= (((i - 1) * 10) + 2.5) * 2:
+            out += u"░"
+        else:
+            out += u"•"
+    return out
 
 
 def get_date_hash(month, day):
-  return datetime.date(now.year, month, day).timetuple().tm_yday
+    return datetime.date(now.year, month, day).timetuple().tm_yday
+
+
+def get_age():
+    filepath = os.path.expanduser("~/.birthday")
+    bday = now
+    try:
+        with open(filepath) as fp:
+            content = fp.readlines()
+            bday = datetime.datetime.strptime(content[0].rstrip(), "%Y-%m-%d")
+    except:
+        print("Error reading birthday: ", sys.exc_info()[0])
+
+    diff = relativedelta.relativedelta(now, bday)
+    years = diff.years
+    months = diff.months
+    days = diff.days
+    return "{}y, {}m and {}d".format(years, months, days)
 
 
 def get_date_hash_from_string(datestr):
-  tokens = datestr.split('/')
-  if len(tokens) != 2:
-    return None
-  month = int(tokens[0])
-  day = int(tokens[1])
-  return get_date_hash(month, day)
+    tokens = datestr.split("/")
+    if len(tokens) != 2:
+        return None
+    month = int(tokens[0])
+    day = int(tokens[1])
+    return get_date_hash(month, day)
 
 
 def get_date_hashes_from_line(line):
-  line = ''.join(line.split())
-  dates = line.split('-')
-  if len(dates) > 2 or len(dates) == 0:
-    return []
-  start = get_date_hash_from_string(dates[0])
-  if not start:
-    return []
-  if len(dates) == 1:
-    return [start]
-  end = get_date_hash_from_string(dates[1])
-  if not end:
-    return []
-  if end <= start:
-    raise ValueError
-  return list(range(start, end + 1))
+    line = "".join(line.split())
+    dates = line.split("-")
+    if len(dates) > 2 or len(dates) == 0:
+        return []
+    start = get_date_hash_from_string(dates[0])
+    if not start:
+        return []
+    if len(dates) == 1:
+        return [start]
+    end = get_date_hash_from_string(dates[1])
+    if not end:
+        return []
+    if end <= start:
+        raise ValueError
+    return list(range(start, end + 1))
 
 
 def get_vacation_list():
-  filepath = os.path.expanduser('~/.vacations')
-  vacations = []
-  try:
-      with open(filepath) as fp:
-        content = fp.readlines()
-        for line in content:
-          vacations.extend(get_date_hashes_from_line(line))
-  except FileNotFoundError:
-      print("Vacations file not found.")
-  return vacations
+    filepath = os.path.expanduser("~/.vacations")
+    vacations = []
+    try:
+        with open(filepath) as fp:
+            content = fp.readlines()
+            for line in content:
+                vacations.extend(get_date_hashes_from_line(line))
+    except FileNotFoundError:
+        print("Vacations file not found.")
+    return vacations
 
 
 def gen_all_days_list():
-  all_days = [(-1,-1)]
-  valid_days = 0
-  last_valid_day = 0
-  vacations = get_vacation_list()
-  for month in range(1, 13):
-    month_days = calendar.monthrange(now.year, month)[1]
-    for day in range(1, month_days + 1):
-      thisdate = datetime.date(now.year, month, day)
-      ydate = get_date_hash(month, day)
-      if (
-          thisdate.weekday() >= _START_WEEKDAY
-          and thisdate.weekday() <= _END_WEEKDAY
-      ) and ydate not in vacations:
-        last_valid_day = ydate
-        valid_days += 1
-      all_days.append((last_valid_day, valid_days))
-  return all_days
+    all_days = [(-1, -1)]
+    valid_days = 0
+    last_valid_day = 0
+    vacations = get_vacation_list()
+    for month in range(1, 13):
+        month_days = calendar.monthrange(now.year, month)[1]
+        for day in range(1, month_days + 1):
+            thisdate = datetime.date(now.year, month, day)
+            ydate = get_date_hash(month, day)
+            if (
+                thisdate.weekday() >= _START_WEEKDAY
+                and thisdate.weekday() <= _END_WEEKDAY
+            ) and ydate not in vacations:
+                last_valid_day = ydate
+                valid_days += 1
+            all_days.append((last_valid_day, valid_days))
+    return all_days
+
 
 all_days = gen_all_days_list()
 
@@ -108,14 +128,14 @@ is_today_valid = all_days[get_date_hash(now.month, now.day)][0] == get_date_hash
 )
 
 if is_today_valid:
-  if now.hour >= _END_HOUR:
-    today_minutes = minutes_in_day
-  elif now.hour >= _START_HOUR:
-    today_minutes = (now.hour - _START_HOUR) * 60 + now.minute
+    if now.hour >= _END_HOUR:
+        today_minutes = minutes_in_day
+    elif now.hour >= _START_HOUR:
+        today_minutes = (now.hour - _START_HOUR) * 60 + now.minute
 
 day_percent = 0
 if is_today_valid:
-  day_percent = (today_minutes / minutes_in_day) * 100.00
+    day_percent = (today_minutes / minutes_in_day) * 100.00
 
 today_index = get_date_hash(now.month, now.day)
 week_start_index = today_index - now.weekday()
@@ -149,13 +169,23 @@ year_percent = (
     / (valid_days_in_year * minutes_in_day)
 ) * 100.00
 
-out = u"D %d%% " % day_percent
-out += progress_bar(day_percent)
-out += u"  W %d%% " % week_percent
-out += progress_bar(week_percent)
-out += u"  M %d%% " % month_percent
-out += progress_bar(month_percent)
-out += u"  Y %d%% " % year_percent
-out += progress_bar(year_percent)
+out = ""
+
+slot = int(now.minute / 10)
+
+if slot == 0:
+    out = get_age()
+elif slot == 1:
+    out = u"D %d%% " % day_percent
+    out += progress_bar(day_percent)
+elif slot == 2:
+    out += u"  W %d%% " % week_percent
+    out += progress_bar(week_percent)
+elif slot == 3:
+    out += u"  M %d%% " % month_percent
+    out += progress_bar(month_percent)
+else:
+    out += u"  Y %d%% " % year_percent
+    out += progress_bar(year_percent)
 
 print(out.encode("utf-8"), end=u"")

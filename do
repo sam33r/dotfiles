@@ -199,7 +199,6 @@ function init_emacs() {
 
 function init_desktop_software() {
   echo "software"
-
 }
 
 function install_update_apt_packages() {

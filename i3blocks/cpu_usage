@@ -51,8 +51,8 @@ if ($cpu_usage <= $t_show) {
 }
 
 # Print short_text, full_text
-printf "%.${decimals}f%%\n", $cpu_usage;
-printf "%.${decimals}f%%\n", $cpu_usage;
+printf "%.${decimals}f\n", $cpu_usage;
+printf "%.${decimals}f\n", $cpu_usage;
 
 # Print color, if needed
 if ($cpu_usage >= $t_crit) {
